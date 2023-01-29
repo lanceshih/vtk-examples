@@ -1,4 +1,4 @@
-﻿# Python Examples
+# Python Examples
 
 Please see [this page](https://www.vtk.org/Wiki/VTK/PythonDevelopment) to learn how to setup your environment to use VTK in Python.
 
@@ -41,6 +41,7 @@ If you are new to VTK then these [tutorials](#tutorial) will help to get you sta
 | Example Name | Description | Image |
 | -------------- | ------------- | ------- |
 [ReadExodusData](/Python/IO/ReadExodusData) | A simple script for reading and viewing ExodusII data interactively.
+[ReadPLOT3D](/Python/IO/ReadPLOT3D) | Read CFD (computational fluid dynamics) data produced by PLOT3D.
 [ReadSLC](/Python/IO/ReadSLC) | Read an SLC file.
 [ReadSTL](/Python/IO/ReadSTL) | Read an STL file.
 [ReadUnstructuredGrid](/Python/IO/ReadUnstructuredGrid) | Using vtkUnstructuredGridReader to read a (legacy) *.vtk file
