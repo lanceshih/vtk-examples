@@ -80,7 +80,8 @@ int main(int, char* argv[])
   vtkNew<vtkActor> cubeActor;
   cubeActor->SetMapper(cubeMapper);
   cubeActor->GetProperty()->SetOpacity(0.5);
-  cubeActor->GetProperty()->SetColor(colors->GetColor3d("SandyBrown").GetData());
+  cubeActor->GetProperty()->SetColor(
+      colors->GetColor3d("SandyBrown").GetData());
 
   // Points mapper, actor
   // First, apply vtkVertexGlyphFilter to make cells around points, vtk only
@@ -95,7 +96,8 @@ int main(int, char* argv[])
   vtkNew<vtkActor> pointsActor;
   pointsActor->SetMapper(pointsMapper);
   pointsActor->GetProperty()->SetPointSize(5);
-  pointsActor->GetProperty()->SetColor(colors->GetColor3d("GreenYellow").GetData());
+  pointsActor->GetProperty()->SetColor(
+      colors->GetColor3d("GreenYellow").GetData());
 
   // Create a renderer, render window, and interactor
   vtkNew<vtkRenderer> renderer;

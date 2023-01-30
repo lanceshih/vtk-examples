@@ -1072,7 +1072,7 @@ void AdjustFrequencyRanges(std::map<int, std::vector<double>>& bands,
   }
   std::map<int, std::vector<double>> adjBands;
   idx = 0;
-  for (auto const & p : bands)
+  for (auto const& p : bands)
   {
     adjBands[idx] = p.second;
     ++idx;

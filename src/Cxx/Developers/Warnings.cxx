@@ -1,12 +1,12 @@
-#include <vtkSmartPointer.h>
 #include <vtkDataObject.h>
 #include <vtkObjectFactory.h>
+#include <vtkSmartPointer.h>
 
 class TestClass : public vtkDataObject
 {
-  public:
-  static TestClass *New();
-  vtkTypeRevisionMacro(TestClass,vtkDataObject);
+public:
+  static TestClass* New();
+  vtkTypeRevisionMacro(TestClass, vtkDataObject);
   TestClass()
   {
     vtkWarningMacro("Test warning.");
@@ -15,11 +15,10 @@ class TestClass : public vtkDataObject
 
 vtkStandardNewMacro(TestClass);
 
-int main(int, char *[])
+int main(int, char*[])
 {
 
-  vtkSmartPointer<TestClass> test =
-      vtkSmartPointer<TestClass>::New();
+  vtkSmartPointer<TestClass> test = vtkSmartPointer<TestClass>::New();
 
   return EXIT_SUCCESS;
 }

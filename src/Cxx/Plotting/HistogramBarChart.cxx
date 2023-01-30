@@ -1,28 +1,29 @@
-#include <vtkBarChartActor.h>
 #include <vtkActor.h>
+#include <vtkBarChartActor.h>
 #include <vtkFieldData.h>
 #include <vtkImageAccumulate.h>
 #include <vtkImageData.h>
 #include <vtkImageExtractComponents.h>
+#include <vtkImageReader2.h>
+#include <vtkImageReader2Factory.h>
 #include <vtkIntArray.h>
 #include <vtkLegendBoxActor.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkProperty2D.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkNew.h>
-#include <vtkStdString.h>
-#include <vtkNamedColors.h>
-#include <vtkImageReader2Factory.h>
-#include <vtkImageReader2.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
+#include <vtkStdString.h>
 
-int main( int argc, char *argv[] )
+int main(int argc, char* argv[])
 {
   // Handle the arguments
   if (argc < 2)
   {
-    std::cout << "Required arguments: filename [optional ignore zero:] <y/n> e.g. Pileated.jpg"
+    std::cout << "Required arguments: filename [optional ignore zero:] <y/n> "
+                 "e.g. Pileated.jpg"
               << std::endl;
     return EXIT_FAILURE;
   }
@@ -190,5 +191,5 @@ int main( int argc, char *argv[] )
   interactor->Initialize();
   interactor->Start();
 
-  return  EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

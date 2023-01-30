@@ -169,14 +169,14 @@ int main(int argc, char* argv[])
 
   // Make the planes.
   auto actors = MakePlanesActors(colors);
-  for (auto const & actor : actors)
+  for (auto const& actor : actors)
   {
     ren->AddViewProp(actor);
   }
 
   // Label them.
   auto textActors = AddTextToPlanes();
-  for (auto const & actor : textActors)
+  for (auto const& actor : textActors)
   {
     ren->AddViewProp(actor);
   }

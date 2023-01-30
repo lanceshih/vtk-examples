@@ -11,7 +11,6 @@
 #include <vtkRenderer.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
-#include <vtkTransformPolyDataFilter.h>
 
 int main(int, char*[])
 {

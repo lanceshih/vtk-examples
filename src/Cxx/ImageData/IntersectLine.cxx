@@ -8,12 +8,12 @@
 #include <vtkIntArray.h>
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkShrinkFilter.h>
-#include <vtkNew.h>
 #include <vtkThreshold.h>
 #include <vtkUnstructuredGrid.h>
 

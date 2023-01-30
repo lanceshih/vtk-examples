@@ -11,9 +11,9 @@
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 
@@ -81,7 +81,8 @@ int main(int argc, char* argv[])
   scene->SetFrameRate(5);
   scene->SetStartTime(0);
   scene->SetEndTime(20);
-  scene->AddObserver(vtkCommand::AnimationCueTickEvent, renWin.GetPointer(), &vtkWindow::Render);
+  scene->AddObserver(vtkCommand::AnimationCueTickEvent, renWin.GetPointer(),
+                     &vtkWindow::Render);
 
   // Create an Animation Cue for each actor
   auto cue1 = vtkSmartPointer<vtkAnimationCue>::New();

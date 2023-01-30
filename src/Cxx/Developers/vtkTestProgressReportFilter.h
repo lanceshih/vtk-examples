@@ -6,19 +6,23 @@
 class vtkTestProgressReportFilter : public vtkPolyDataAlgorithm
 {
 public:
-  static vtkTestProgressReportFilter *New();
-  vtkTypeMacro(vtkTestProgressReportFilter,vtkAlgorithm);
+  static vtkTestProgressReportFilter* New();
+  vtkTypeMacro(vtkTestProgressReportFilter, vtkAlgorithm);
 
 protected:
-  vtkTestProgressReportFilter(){}
-  ~vtkTestProgressReportFilter() {}
+  vtkTestProgressReportFilter()
+  {
+  }
+  ~vtkTestProgressReportFilter()
+  {
+  }
 
-  int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *) override;
+  int RequestData(vtkInformation*, vtkInformationVector**,
+                  vtkInformationVector*) override;
 
 private:
   vtkTestProgressReportFilter(const vtkTestProgressReportFilter&) = delete;
   void operator=(const vtkTestProgressReportFilter&) = delete;
-
 };
 
 #endif

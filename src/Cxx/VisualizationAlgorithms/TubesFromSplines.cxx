@@ -1,22 +1,19 @@
+#include <vtkActor.h>
+#include <vtkDoubleArray.h>
 #include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 #include <vtkNew.h>
 #include <vtkParametricFunctionSource.h>
 #include <vtkParametricSpline.h>
-#include <vtkTubeFilter.h>
-#include <vtkTupleInterpolator.h>
-#include <vtkDoubleArray.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkActor.h>
-#include <vtkNamedColors.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkTubeFilter.h>
+#include <vtkTupleInterpolator.h>
 
 int main(int, char*[])
 {

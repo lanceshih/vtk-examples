@@ -3,7 +3,7 @@
 #include <vtkSphereSource.h>
 #include <vtkXMLPUnstructuredGridWriter.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();

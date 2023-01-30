@@ -22,7 +22,7 @@ public:
 
 private:
   // Designer form
-  Ui::ShareCameraQt *ui;
+  Ui::ShareCameraQt* ui;
 
 public slots:
   void slotExit();

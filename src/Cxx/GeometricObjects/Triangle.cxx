@@ -4,13 +4,13 @@
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkTriangle.h>
 
-int main(int , char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 

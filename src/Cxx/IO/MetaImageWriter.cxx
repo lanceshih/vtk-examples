@@ -1,18 +1,17 @@
+#include <vtkImageActor.h>
+#include <vtkImageCast.h>
+#include <vtkImageData.h>
+#include <vtkImageMandelbrotSource.h>
+#include <vtkImageMapper3D.h>
+#include <vtkMetaImageReader.h>
+#include <vtkMetaImageWriter.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkImageData.h>
-#include <vtkImageMapper3D.h>
-#include <vtkImageCast.h>
-#include <vtkMetaImageWriter.h>
-#include <vtkMetaImageReader.h>
-#include <vtkImageMandelbrotSource.h>
-#include <vtkImageActor.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
@@ -54,5 +53,5 @@ int main(int, char *[])
   renderWindow->Render();
   renderWindowInteractor->Start();
 
-   return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

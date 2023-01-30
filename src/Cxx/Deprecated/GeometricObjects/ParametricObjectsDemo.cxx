@@ -33,14 +33,14 @@
 #include <array>
 #include <vector>
 
-int main(int, char* [])
+int main(int, char*[])
 {
   vtkSmartPointer<vtkNamedColors> colors =
-    vtkSmartPointer<vtkNamedColors>::New();
+      vtkSmartPointer<vtkNamedColors>::New();
 
   // Set the background color.
-  std::array<unsigned char , 4> bkg{{26, 51, 102, 255}};
-    colors->SetColor("BkgColor", bkg.data());
+  std::array<unsigned char, 4> bkg{{26, 51, 102, 255}};
+  colors->SetColor("BkgColor", bkg.data());
 
   std::vector<vtkSmartPointer<vtkParametricFunction>> parametricObjects;
   parametricObjects.push_back(vtkSmartPointer<vtkParametricBoy>::New());
@@ -50,52 +50,52 @@ int main(int, char* [])
 
   parametricObjects.push_back(vtkSmartPointer<vtkParametricEllipsoid>::New());
   static_cast<vtkParametricEllipsoid*>(parametricObjects.back().GetPointer())
-    ->SetXRadius(.5);
+      ->SetXRadius(.5);
   static_cast<vtkParametricEllipsoid*>(parametricObjects.back().GetPointer())
-    ->SetYRadius(2.0);
+      ->SetYRadius(2.0);
 
   parametricObjects.push_back(vtkSmartPointer<vtkParametricEnneper>::New());
   parametricObjects.push_back(
-    vtkSmartPointer<vtkParametricFigure8Klein>::New());
+      vtkSmartPointer<vtkParametricFigure8Klein>::New());
   parametricObjects.push_back(vtkSmartPointer<vtkParametricKlein>::New());
   parametricObjects.push_back(vtkSmartPointer<vtkParametricMobius>::New());
   static_cast<vtkParametricMobius*>(parametricObjects.back().GetPointer())
-    ->SetRadius(2.0);
+      ->SetRadius(2.0);
   static_cast<vtkParametricMobius*>(parametricObjects.back().GetPointer())
-    ->SetMinimumV(-0.5);
+      ->SetMinimumV(-0.5);
   static_cast<vtkParametricMobius*>(parametricObjects.back().GetPointer())
-    ->SetMaximumV(0.5);
+      ->SetMaximumV(0.5);
 
   vtkSmartPointer<vtkParametricRandomHills> randomHills =
-    vtkSmartPointer<vtkParametricRandomHills>::New();
+      vtkSmartPointer<vtkParametricRandomHills>::New();
   randomHills->AllowRandomGenerationOff();
   parametricObjects.push_back(randomHills);
 
   parametricObjects.push_back(vtkSmartPointer<vtkParametricRoman>::New());
 
   parametricObjects.push_back(
-    vtkSmartPointer<vtkParametricSuperEllipsoid>::New());
+      vtkSmartPointer<vtkParametricSuperEllipsoid>::New());
   static_cast<vtkParametricSuperEllipsoid*>(
-    parametricObjects.back().GetPointer())
-    ->SetN1(.50);
+      parametricObjects.back().GetPointer())
+      ->SetN1(.50);
   static_cast<vtkParametricSuperEllipsoid*>(
-    parametricObjects.back().GetPointer())
-    ->SetN2(.1);
+      parametricObjects.back().GetPointer())
+      ->SetN2(.1);
 
   parametricObjects.push_back(vtkSmartPointer<vtkParametricSuperToroid>::New());
   static_cast<vtkParametricSuperToroid*>(parametricObjects.back().GetPointer())
-    ->SetN1(.2);
+      ->SetN1(.2);
   static_cast<vtkParametricSuperToroid*>(parametricObjects.back().GetPointer())
-    ->SetN2(3.0);
+      ->SetN2(3.0);
 
   parametricObjects.push_back(vtkSmartPointer<vtkParametricTorus>::New());
 
   // The spline needs points
   vtkSmartPointer<vtkParametricSpline> spline =
-    vtkSmartPointer<vtkParametricSpline>::New();
+      vtkSmartPointer<vtkParametricSpline>::New();
   vtkSmartPointer<vtkPoints> inputPoints = vtkSmartPointer<vtkPoints>::New();
   vtkSmartPointer<vtkMinimalStandardRandomSequence> rng =
-    vtkSmartPointer<vtkMinimalStandardRandomSequence>::New();
+      vtkSmartPointer<vtkMinimalStandardRandomSequence>::New();
   rng->SetSeed(8775070); // For testing.
   for (auto i = 0; i < 10; ++i)
   {
@@ -111,7 +111,7 @@ int main(int, char* [])
   parametricObjects.push_back(spline);
 
   std::vector<vtkSmartPointer<vtkParametricFunctionSource>>
-    parametricFunctionSources;
+      parametricFunctionSources;
   std::vector<vtkSmartPointer<vtkRenderer>> renderers;
   std::vector<vtkSmartPointer<vtkPolyDataMapper>> mappers;
   std::vector<vtkSmartPointer<vtkActor>> actors;
@@ -120,12 +120,12 @@ int main(int, char* [])
 
   // Create one text property for all
   vtkSmartPointer<vtkTextProperty> textProperty =
-    vtkSmartPointer<vtkTextProperty>::New();
+      vtkSmartPointer<vtkTextProperty>::New();
   textProperty->SetFontSize(12);
   textProperty->SetJustificationToCentered();
 
   vtkSmartPointer<vtkProperty> backProperty =
-    vtkSmartPointer<vtkProperty>::New();
+      vtkSmartPointer<vtkProperty>::New();
   backProperty->SetColor(colors->GetColor3d("Tomato").GetData());
 
   // Create a parametric function source, renderer, mapper, and actor
@@ -133,7 +133,7 @@ int main(int, char* [])
   for (auto i = 0; i < parametricObjects.size(); i++)
   {
     parametricFunctionSources.push_back(
-      vtkSmartPointer<vtkParametricFunctionSource>::New());
+        vtkSmartPointer<vtkParametricFunctionSource>::New());
     parametricFunctionSources[i]->SetParametricFunction(parametricObjects[i]);
     parametricFunctionSources[i]->SetUResolution(51);
     parametricFunctionSources[i]->SetVResolution(51);
@@ -142,7 +142,7 @@ int main(int, char* [])
 
     mappers.push_back(vtkSmartPointer<vtkPolyDataMapper>::New());
     mappers[i]->SetInputConnection(
-      parametricFunctionSources[i]->GetOutputPort());
+        parametricFunctionSources[i]->GetOutputPort());
 
     actors.push_back(vtkSmartPointer<vtkActor>::New());
     actors[i]->SetMapper(mappers[i]);
@@ -158,7 +158,7 @@ int main(int, char* [])
     textactors.push_back(vtkSmartPointer<vtkActor2D>::New());
     textactors[i]->SetMapper(textmappers[i]);
     textactors[i]->SetPosition(100, 16);
-  
+
     renderers.push_back(vtkSmartPointer<vtkRenderer>::New());
     renderers[i]->AddActor(actors[i]);
     renderers[i]->AddActor(textactors[i]);
@@ -170,26 +170,25 @@ int main(int, char* [])
   auto yGridDimensions = 4;
   auto rendererSize = 200;
   vtkSmartPointer<vtkRenderWindow> renderWindow =
-    vtkSmartPointer<vtkRenderWindow>::New();
+      vtkSmartPointer<vtkRenderWindow>::New();
   renderWindow->SetWindowName("Parametric Objects Demonstration");
   renderWindow->SetSize(rendererSize * xGridDimensions,
                         rendererSize * yGridDimensions);
 
-  for(auto row = 0; row < yGridDimensions; row++)
+  for (auto row = 0; row < yGridDimensions; row++)
   {
-    for(auto col = 0; col < xGridDimensions; col++)
+    for (auto col = 0; col < xGridDimensions; col++)
     {
       int index = row * xGridDimensions + col;
 
       // (xmin, ymin, xmax, ymax)
       double viewport[4] = {
-        static_cast<double>(col) / xGridDimensions,
-        static_cast<double>(yGridDimensions - (row + 1))/ yGridDimensions,
-        static_cast<double>(col + 1) / xGridDimensions,
-        static_cast<double>(yGridDimensions - row) / yGridDimensions
-      };
+          static_cast<double>(col) / xGridDimensions,
+          static_cast<double>(yGridDimensions - (row + 1)) / yGridDimensions,
+          static_cast<double>(col + 1) / xGridDimensions,
+          static_cast<double>(yGridDimensions - row) / yGridDimensions};
 
-      if(index > int(actors.size()) - 1)
+      if (index > int(actors.size()) - 1)
       {
         // Add a renderer even if there is no actor.
         // This makes the render window background all the same color.
@@ -210,7 +209,7 @@ int main(int, char* [])
   }
 
   vtkSmartPointer<vtkRenderWindowInteractor> interactor =
-    vtkSmartPointer<vtkRenderWindowInteractor>::New();
+      vtkSmartPointer<vtkRenderWindowInteractor>::New();
   interactor->SetRenderWindow(renderWindow);
 
   renderWindow->Render();

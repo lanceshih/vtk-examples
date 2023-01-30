@@ -208,12 +208,12 @@ int main(int, char*[])
   auto scaleFactor = 1.0;
   if (desiredSurface == "Hills")
   {
-     scaleFactor = 0.5;
- }
+    scaleFactor = 0.5;
+  }
   if (desiredSurface == "Sphere")
- {
+  {
     scaleFactor = 2.0;
- }
+  }
   std::cout << desiredSurface << std::endl;
 
   auto gaussianCurvature = true;
@@ -1359,7 +1359,7 @@ void AdjustFrequencyRanges(std::map<int, std::vector<double>>& bands,
   }
   std::map<int, std::vector<double>> adjBands;
   idx = 0;
-  for (auto const & p : bands)
+  for (auto const& p : bands)
   {
     adjBands[idx] = p.second;
     ++idx;

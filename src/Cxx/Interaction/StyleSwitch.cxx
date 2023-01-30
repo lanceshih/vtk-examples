@@ -1,23 +1,20 @@
-#include <vtkNew.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderer.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkPolyData.h>
-#include <vtkSphereSource.h>
 #include <vtkInteractorStyleSwitch.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkSphereSource.h>
 
-
-int main (int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-
-   vtkNew<vtkSphereSource> sphereSource;
+  vtkNew<vtkSphereSource> sphereSource;
 
   // Create a mapper and actor
   vtkNew<vtkPolyDataMapper> mapper;
@@ -32,7 +29,6 @@ int main (int, char *[])
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("StyleSwitch");
-
 
   // An interactor
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
@@ -51,6 +47,6 @@ int main (int, char *[])
 
   // Begin mouse interaction
   renderWindowInteractor->Start();
-  
+
   return EXIT_SUCCESS;
 }

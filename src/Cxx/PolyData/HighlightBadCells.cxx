@@ -57,7 +57,7 @@ int main(int, char*[])
   }
 
   vtkNew<vtkThreshold> selectCells;
-  //selectCells->ThresholdByLower(.02);
+  // selectCells->ThresholdByLower(.02);
   selectCells->SetLowerThreshold(0.02);
   selectCells->SetThresholdFunction(vtkThreshold::THRESHOLD_LOWER);
   selectCells->SetInputArrayToProcess(0, 0, 0,

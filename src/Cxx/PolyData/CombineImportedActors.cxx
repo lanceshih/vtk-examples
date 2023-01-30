@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
   std::string extension = "";
   int filePrefixArgOffset = 0; // depends on importer
 
-       // Make the extension lowercase
+  // Make the extension lowercase
   std::transform(extension.begin(), extension.end(), extension.begin(),
                  ::tolower);
   if (fileName.find_last_of(".") != std::string::npos)

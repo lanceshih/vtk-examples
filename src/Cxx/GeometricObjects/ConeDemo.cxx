@@ -1,18 +1,18 @@
-#include <vtkNew.h>
-#include <vtkConeSource.h>
-#include <vtkCamera.h>
-#include <vtkProperty.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderer.h>
-#include <vtkRenderWindowInteractor.h>
+#include <vtkCamera.h>
+#include <vtkColor.h>
+#include <vtkConeSource.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
-#include <vtkColor.h>
+#include <vtkNew.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 

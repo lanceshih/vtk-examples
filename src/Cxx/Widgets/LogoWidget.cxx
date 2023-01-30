@@ -11,7 +11,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkSphereSource.h>
 
 #include <array>
@@ -20,7 +19,7 @@ int main(int, char*[])
 {
 
   vtkNew<vtkNamedColors> colors;
-  //colors->SetColor("Bkg", 0.2, 0.3, 0.4);
+  // colors->SetColor("Bkg", 0.2, 0.3, 0.4);
 
   // A sphere
   vtkNew<vtkSphereSource> sphereSource;

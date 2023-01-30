@@ -133,7 +133,7 @@ int main(int, char*[])
   rightRenderer->AddActor(selectedActor);
 
   leftRenderer->ResetCamera();
-  //rightRenderer->ResetCamera();
+  // rightRenderer->ResetCamera();
 
   renderWindow->Render();
   interactor->Start();

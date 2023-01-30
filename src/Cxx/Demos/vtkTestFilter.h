@@ -7,25 +7,29 @@
 class vtkTestFilter : public vtkPolyDataAlgorithm
 {
 public:
-  vtkTypeMacro(vtkTestFilter,vtkPolyDataAlgorithm);
-  static vtkTestFilter *New();
+  vtkTypeMacro(vtkTestFilter, vtkPolyDataAlgorithm);
+  static vtkTestFilter* New();
 
-  vtkPolyData* GetIntermediateOutput() {return this->Output;}
+  vtkPolyData* GetIntermediateOutput()
+  {
+    return this->Output;
+  }
 
   int RefreshEvent;
-  
+
 protected:
   vtkTestFilter();
 
-  int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *);
+  int RequestData(vtkInformation*, vtkInformationVector**,
+                  vtkInformationVector*);
 
   void Iterate(unsigned int iteration);
 
   vtkSmartPointer<vtkPolyData> Output;
+
 private:
   vtkTestFilter(const vtkTestFilter&);  // Not implemented.
-  void operator=(const vtkTestFilter&);  // Not implemented.
-
+  void operator=(const vtkTestFilter&); // Not implemented.
 };
 
 #endif

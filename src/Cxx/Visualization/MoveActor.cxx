@@ -1,16 +1,14 @@
 #include <vtkActor.h>
 #include <vtkInteractorStyleTrackballActor.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkSphereSource.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 
 int main(int, char*[])
 {

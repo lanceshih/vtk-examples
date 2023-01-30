@@ -1,12 +1,13 @@
 #include <vtkCellArray.h>
 #include <vtkIdList.h>
 #include <vtkKdTreePointLocator.h>
+#include <vtkNew.h>
 #include <vtkPointSource.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkNew.h>
 
-int main(int, char *[]) {
+int main(int, char*[])
+{
   // Create some random points
   vtkNew<vtkPointSource> pointSource;
   pointSource->SetNumberOfPoints(10);
@@ -24,7 +25,8 @@ int main(int, char *[]) {
 
   pointTree->FindClosestNPoints(k, testPoint, result);
 
-  for (vtkIdType i = 0; i < k; i++) {
+  for (vtkIdType i = 0; i < k; i++)
+  {
     vtkIdType point_ind = result->GetId(i);
     double p[3];
     pointSource->GetOutput()->GetPoint(point_ind, p);
@@ -34,6 +36,6 @@ int main(int, char *[]) {
 
   // Should return:
   // Closest point 0: Point 2: (-0.136162, -0.0276359, 0.0369441)
-  
+
   return EXIT_SUCCESS;
 }

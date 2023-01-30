@@ -4,16 +4,16 @@
 #include <vtkMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkOpenVRRenderWindow.h>
+#include <vtkOpenVRRenderWindowInteractor.h>
+#include <vtkOpenVRRenderer.h>
 #include <vtkPlanes.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkOpenVRRenderWindow.h>
-#include <vtkOpenVRRenderer.h>
-#include <vtkOpenVRRenderWindowInteractor.h>
 #include <vtkShrinkPolyData.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 

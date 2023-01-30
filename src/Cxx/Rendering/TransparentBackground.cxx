@@ -7,7 +7,8 @@
   background is transparent.
   5. Pressing '0' on the keyboard will let you manipulate the objects in
   layer 0.
-  6. Pressing '1' on the keyboard will let you manipulate the objects in layer 1.
+  6. Pressing '1' on the keyboard will let you manipulate the objects in
+  layer 1.
 */
 
 #include <vtkActor.h>

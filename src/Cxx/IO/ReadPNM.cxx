@@ -1,12 +1,10 @@
-#include <vtkNew.h>
 #include <vtkImageViewer2.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPNMReader.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-
 
 int main(int argc, char* argv[])
 {

@@ -1,34 +1,32 @@
-#include <vtkNew.h>
-#include <vtkProperty.h>
-#include <vtkNew.h>
-#include <vtkCellArray.h>
-#include <vtkCellLocator.h>
-#include <vtkDataObject.h>
-#include <vtkIdList.h>
-#include <vtkUnstructuredGrid.h>
-#include <vtkXMLUnstructuredGridReader.h>
-#include <vtkCellData.h>
-#include <vtkLineSource.h>
-#include <vtkUnsignedCharArray.h>
-#include <vtkShrinkFilter.h>
 #include <vtkActor.h>
 #include <vtkCamera.h>
+#include <vtkCellArray.h>
+#include <vtkCellData.h>
+#include <vtkCellLocator.h>
+#include <vtkDataObject.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDataSetSurfaceFilter.h>
+#include <vtkIdList.h>
+#include <vtkLineSource.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
+#include <vtkShrinkFilter.h>
+#include <vtkUnsignedCharArray.h>
+#include <vtkUnstructuredGrid.h>
+#include <vtkXMLUnstructuredGridReader.h>
 
 int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " filename.vtu e.g. Disc_BiQuadraticQuads_0_0.vtu" << std::endl;
+    std::cout << "Usage: " << argv[0]
+              << " filename.vtu e.g. Disc_BiQuadraticQuads_0_0.vtu"
+              << std::endl;
     return EXIT_FAILURE;
   }
 

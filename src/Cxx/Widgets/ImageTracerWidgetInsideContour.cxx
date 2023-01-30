@@ -116,10 +116,10 @@ void CallbackFunction(vtkObject* caller, long unsigned int vtkNotUsed(eventId),
   imageAccumulate->Update();
   std::cout << "Voxel count: " << imageAccumulate->GetVoxelCount() << std::endl;
 
-  //vtkNew<vtkPNGWriter> writer;
-  //writer->SetFileName("selection.png");
-  //writer->SetInputConnection(imageStencilToImage->GetOutputPort());
-  //writer->Write();
+  // vtkNew<vtkPNGWriter> writer;
+  // writer->SetFileName("selection.png");
+  // writer->SetInputConnection(imageStencilToImage->GetOutputPort());
+  // writer->Write();
 }
 
 void CreateImage1(vtkImageData* image)

@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
   auto uncapped = false;
   auto showLine = false;
 
-       // The command line arguments
+  // The command line arguments
   std::vector<std::string> cmdVec;
   for (auto i = 1; i < argc; ++i)
   {
@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
   {
     // Look for parameters
     auto posCnt = 0;
-    for (auto const & token : cmdVec)
+    for (auto const& token : cmdVec)
     {
       if (token == "-h" || token == "--help")
       {
@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
 
   auto pts = GetLine(angle, step, radius, uncapped, start);
 
-       // Setup points and lines
+  // Setup points and lines
   vtkNew<vtkPoints> points;
   vtkNew<vtkCellArray> lines;
   for (auto pt : pts)
@@ -135,15 +135,15 @@ int main(int argc, char* argv[])
   polydata->SetPoints(points);
   polydata->SetLines(lines);
 
-       // Extrude the profile to make the capped sphere
+  // Extrude the profile to make the capped sphere
   vtkNew<vtkRotationalExtrusionFilter> extrude;
   extrude->SetInputData(polydata);
   extrude->SetResolution(60);
 
-       //  Visualize
+  //  Visualize
   vtkNew<vtkNamedColors> colors;
 
-       // To see the line
+  // To see the line
   vtkNew<vtkPolyDataMapper> lineMapper;
   lineMapper->SetInputData(polydata);
 
@@ -152,7 +152,7 @@ int main(int argc, char* argv[])
   lineActor->GetProperty()->SetLineWidth(4);
   lineActor->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
 
-       // To see the surface
+  // To see the surface
   vtkNew<vtkPolyDataMapper> surfaceMapper;
   surfaceMapper->SetInputConnection(extrude->GetOutputPort());
 

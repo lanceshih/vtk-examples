@@ -10,15 +10,16 @@ class ActorAnimator
 {
 public:
   ActorAnimator()
-    : Actor (nullptr)
-    , StartPosition(0, 0, 0)
-    , EndPosition(0.5, 0.5, 0.5)
+    : Actor(nullptr), StartPosition(0, 0, 0), EndPosition(0.5, 0.5, 0.5)
   {
   }
 
   ~ActorAnimator() = default;
 
-  void SetActor(vtkActor* actor) { this->Actor = actor; }
+  void SetActor(vtkActor* actor)
+  {
+    this->Actor = actor;
+  }
 
   void SetStartPosition(const vtkVector3d& position)
   {
@@ -31,9 +32,12 @@ public:
 
   void AddObserversToCue(vtkAnimationCue* cue)
   {
-    cue->AddObserver(vtkCommand::StartAnimationCueEvent, this, &ActorAnimator::Start);
-    cue->AddObserver(vtkCommand::EndAnimationCueEvent, this, &ActorAnimator::End);
-    cue->AddObserver(vtkCommand::AnimationCueTickEvent, this, &ActorAnimator::Tick);
+    cue->AddObserver(vtkCommand::StartAnimationCueEvent, this,
+                     &ActorAnimator::Start);
+    cue->AddObserver(vtkCommand::EndAnimationCueEvent, this,
+                     &ActorAnimator::End);
+    cue->AddObserver(vtkCommand::AnimationCueTickEvent, this,
+                     &ActorAnimator::Tick);
   }
 
 private:
@@ -47,13 +51,15 @@ private:
     this->Actor->SetPosition(this->StartPosition.GetData());
   }
 
-  void Tick(vtkObject* vtkNotUsed(caller), unsigned long vtkNotUsed(event), void* calldata)
+  void Tick(vtkObject* vtkNotUsed(caller), unsigned long vtkNotUsed(event),
+            void* calldata)
   {
     vtkAnimationCue::AnimationCueInfo* info =
-      reinterpret_cast<vtkAnimationCue::AnimationCueInfo*>(calldata);
+        reinterpret_cast<vtkAnimationCue::AnimationCueInfo*>(calldata);
     const double t = (info->AnimationTime - info->StartTime) /
         (info->EndTime - info->StartTime);
-    vtkVector3d position = this->StartPosition + (this->EndPosition - this->StartPosition) * t;
+    vtkVector3d position =
+        this->StartPosition + (this->EndPosition - this->StartPosition) * t;
     this->Actor->SetPosition(position.GetData());
   }
 

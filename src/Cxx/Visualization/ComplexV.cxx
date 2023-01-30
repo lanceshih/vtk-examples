@@ -49,8 +49,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkActor> outlineActor;
   outlineActor->SetMapper(outlineMapper);
-  outlineActor->GetProperty()->SetColor(
-      colors->GetColor3d("Black").GetData());
+  outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
   vtkNew<vtkRenderer> aRenderer;
   vtkNew<vtkRenderWindow> aRenderWindow;

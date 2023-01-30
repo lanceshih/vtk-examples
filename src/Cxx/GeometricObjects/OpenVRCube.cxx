@@ -2,13 +2,13 @@
 #include <vtkCubeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkOpenVRRenderWindow.h>
 #include <vtkOpenVRRenderWindowInteractor.h>
 #include <vtkOpenVRRenderer.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   // Create a cube.
   vtkNew<vtkCubeSource> cubeSource;

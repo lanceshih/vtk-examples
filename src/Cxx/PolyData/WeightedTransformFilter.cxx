@@ -1,6 +1,7 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkFloatArray.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
@@ -9,14 +10,10 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkTransformFilter.h>
 #include <vtkWeightedTransformFilter.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 
 int main(int, char*[])
 {

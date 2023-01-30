@@ -1,14 +1,14 @@
 #include <vtkDataSetAttributes.h>
-#include <vtkGeoAssignCoordinates.h>
 #include <vtkDoubleArray.h>
+#include <vtkGeoAssignCoordinates.h>
 #include <vtkGraphMapper.h>
+#include <vtkMutableDirectedGraph.h>
 #include <vtkNew.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkMutableDirectedGraph.h>
+#include <vtkRenderer.h>
 
-int main(int, char* [])
+int main(int, char*[])
 {
 
   vtkNew<vtkMutableDirectedGraph> g;
@@ -19,9 +19,9 @@ int main(int, char* [])
   vtkNew<vtkDoubleArray> longitude;
   longitude->SetName("longitude");
 
-  for(int lat = -90; lat <= 90; lat += 10)
+  for (int lat = -90; lat <= 90; lat += 10)
   {
-    for(int lon = -180; lon <= 180; lon += 20)
+    for (int lon = -180; lon <= 180; lon += 20)
     {
       g->AddVertex();
       latitude->InsertNextValue(lat);

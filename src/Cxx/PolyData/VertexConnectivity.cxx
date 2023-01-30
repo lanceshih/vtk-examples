@@ -7,6 +7,7 @@
 #include <vtkExtractSelection.h>
 #include <vtkIdList.h>
 #include <vtkIdTypeArray.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
 #include <vtkProperty.h>
@@ -19,9 +20,6 @@
 #include <vtkSphereSource.h>
 #include <vtkTriangleFilter.h>
 #include <vtkVertexGlyphFilter.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 
 // Note that:
 // vtkExtractEdges moved from vtkFiltersExtraction to vtkFiltersCore in

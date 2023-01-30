@@ -1,7 +1,7 @@
 #include <vtkNew.h>
 #include <vtkTesting.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   // Locate VTK_DATA_ROOT
   vtkNew<vtkTesting> testHelper;

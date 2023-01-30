@@ -1,21 +1,21 @@
-#include <vtkImageData.h>
-#include <vtkInteractorStyleImage.h>
-#include <vtkTIFFWriter.h>
-#include <vtkSmartPointer.h>
-#include <vtkImageCanvasSource2D.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
 #include <vtkImageActor.h>
+#include <vtkImageCanvasSource2D.h>
+#include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
-#include <vtkTIFFReader.h>
+#include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkSmartPointer.h>
+#include <vtkTIFFReader.h>
+#include <vtkTIFFWriter.h>
 
 #include <array>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 

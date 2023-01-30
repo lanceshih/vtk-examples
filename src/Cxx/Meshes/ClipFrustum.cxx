@@ -28,8 +28,7 @@
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
-void PositionCamera(vtkRenderer* renderer, double* viewUp,
-                    double* position);
+void PositionCamera(vtkRenderer* renderer, double* viewUp, double* position);
 } // namespace
 
 int main(int argc, char* argv[])

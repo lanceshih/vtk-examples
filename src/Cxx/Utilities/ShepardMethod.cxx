@@ -4,6 +4,7 @@
 #include <vtkColorTransferFunction.h>
 #include <vtkContourFilter.h>
 #include <vtkFloatArray.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
@@ -14,9 +15,6 @@
 #include <vtkShepardMethod.h>
 #include <vtkUnsignedCharArray.h>
 #include <vtkVertexGlyphFilter.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 
 // For compatibility with new VTK generic data arrays
 #ifdef vtkGenericDataArray_h
@@ -144,7 +142,6 @@ int main(int, char*[])
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ShepardMethod");
-
 
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);

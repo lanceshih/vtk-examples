@@ -1,16 +1,16 @@
 #include <vtkActor.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRegularPolygonSource.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 #include <vtkShrinkPolyData.h>
-#include <vtkNew.h>
 
-int main(int , char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
@@ -49,6 +49,6 @@ int main(int , char *[])
 
   renderWindow->Render();
   renderWindowInteractor->Start();
- 
+
   return EXIT_SUCCESS;
 }

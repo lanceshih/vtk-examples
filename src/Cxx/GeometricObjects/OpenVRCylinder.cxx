@@ -2,13 +2,13 @@
 #include <vtkCylinderSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkOpenVRRenderWindow.h>
+#include <vtkOpenVRRenderWindowInteractor.h>
+#include <vtkOpenVRRenderer.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkOpenVRRenderWindow.h>
-#include <vtkOpenVRRenderer.h>
-#include <vtkOpenVRRenderWindowInteractor.h>
 
-int main(int, char *argv[])
+int main(int, char* argv[])
 {
   // Create a sphere
   vtkNew<vtkCylinderSource> cylinderSource;
@@ -24,7 +24,7 @@ int main(int, char *argv[])
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  //Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor
   vtkNew<vtkOpenVRRenderer> renderer;
   vtkNew<vtkOpenVRRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

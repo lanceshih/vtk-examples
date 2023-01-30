@@ -6,33 +6,33 @@
 class vtkTestFilter : public vtkPolyDataAlgorithm
 {
 public:
-  vtkTypeMacro(vtkTestFilter,vtkPolyDataAlgorithm);
-  static vtkTestFilter *New();
+  vtkTypeMacro(vtkTestFilter, vtkPolyDataAlgorithm);
+  static vtkTestFilter* New();
 
   int RefreshEvent;
 
 protected:
   vtkTestFilter();
 
-  int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *) override;
+  int RequestData(vtkInformation*, vtkInformationVector**,
+                  vtkInformationVector*) override;
 
 private:
   vtkTestFilter(const vtkTestFilter&);  // Not implemented.
-  void operator=(const vtkTestFilter&);  // Not implemented.
-
+  void operator=(const vtkTestFilter&); // Not implemented.
 };
 
 #endif
 
-#include <vtkObjectFactory.h>
-#include <vtkCommand.h>
-#include <vtkStreamingDemandDrivenPipeline.h>
-#include <vtkInformationVector.h>
-#include <vtkInformation.h>
-#include <vtkDataObject.h>
-#include <vtkSmartPointer.h>
 #include <vtkAppendPolyData.h>
+#include <vtkCommand.h>
+#include <vtkDataObject.h>
+#include <vtkInformation.h>
+#include <vtkInformationVector.h>
+#include <vtkObjectFactory.h>
+#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
+#include <vtkStreamingDemandDrivenPipeline.h>
 
 vtkStandardNewMacro(vtkTestFilter);
 
@@ -41,18 +41,16 @@ vtkTestFilter::vtkTestFilter()
   this->SetNumberOfInputPorts(0);
 
   this->RefreshEvent = vtkCommand::UserEvent + 1;
-
 }
 
-int vtkTestFilter::RequestData(vtkInformation *vtkNotUsed(request),
- vtkInformationVector **,
- vtkInformationVector *)
+int vtkTestFilter::RequestData(vtkInformation* vtkNotUsed(request),
+                               vtkInformationVector**, vtkInformationVector*)
 {
   // Get the info object
-//  auto outInfo = outputVector->GetInformationObject(0);
+  //  auto outInfo = outputVector->GetInformationObject(0);
 
-//  auto output = vtkPolyData::SafeDownCast(
-//      outInfo->Get(vtkDataObject::DATA_OBJECT()));
+  //  auto output = vtkPolyData::SafeDownCast(
+  //      outInfo->Get(vtkDataObject::DATA_OBJECT()));
   this->InvokeEvent(this->RefreshEvent, nullptr);
 
   return 1;

@@ -64,15 +64,13 @@ int main(int argc, char* argv[])
   rangeRenderer->SetViewport(rangeViewport);
   rangeRenderer->AddActor(rangeActor);
   rangeRenderer->ResetCamera();
-  rangeRenderer->SetBackground(
-      colors->GetColor3d("SteelBlue").GetData());
+  rangeRenderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->AddRenderer(originalRenderer);
   renderWindow->AddRenderer(rangeRenderer);
   renderWindow->SetWindowName("ImageRange3D");
-
 
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;

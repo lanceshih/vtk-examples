@@ -1,24 +1,24 @@
-#include <vtkNew.h>
 #include <vtkGraph.h>
-#include <vtkMutableUndirectedGraph.h>
 #include <vtkMutableDirectedGraph.h>
+#include <vtkMutableUndirectedGraph.h>
+#include <vtkNew.h>
 
 #include "vtkTestGraphAlgorithmFilter.h"
 
 void TestDirected();
 void TestUndirected();
 
-int main(int, char *[])
+int main(int, char*[])
 {
   TestDirected();
   TestUndirected();
-  
+
   return EXIT_SUCCESS;
 }
 
 void TestDirected()
 {
-  
+
   vtkNew<vtkMutableDirectedGraph> g;
   vtkIdType v1 = g->AddVertex();
   vtkIdType v2 = g->AddVertex();
@@ -30,8 +30,10 @@ void TestDirected()
   filter->SetInputData(g);
   filter->Update();
 
-  std::cout << "Output type: " << filter->GetOutput()->GetClassName() << std::endl;
-  std::cout << "Output has " << filter->GetOutput()->GetNumberOfVertices() << " vertices." << std::endl;
+  std::cout << "Output type: " << filter->GetOutput()->GetClassName()
+            << std::endl;
+  std::cout << "Output has " << filter->GetOutput()->GetNumberOfVertices()
+            << " vertices." << std::endl;
   std::cout << std::endl;
 }
 
@@ -49,6 +51,8 @@ void TestUndirected()
   filter->SetInputData(g);
   filter->Update();
 
-  std::cout << "Output type: " << filter->GetOutput()->GetClassName() << std::endl;
-  std::cout << "Output has " << filter->GetOutput()->GetNumberOfVertices() << " vertices." << std::endl;
+  std::cout << "Output type: " << filter->GetOutput()->GetClassName()
+            << std::endl;
+  std::cout << "Output has " << filter->GetOutput()->GetNumberOfVertices()
+            << " vertices." << std::endl;
 }

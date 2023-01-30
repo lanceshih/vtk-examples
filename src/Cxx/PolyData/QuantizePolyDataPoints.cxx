@@ -1,23 +1,19 @@
-#include <vtkNew.h>
-#include <vtkProperty.h>
-#include <vtkQuantizePolyDataPoints.h>
-#include <vtkSmartPointer.h>
 #include <vtkCamera.h>
 #include <vtkGlyph3DMapper.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPointSource.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
+#include <vtkQuantizePolyDataPoints.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
-
 
 int main(int, char*[])
 {
@@ -64,9 +60,7 @@ int main(int, char*[])
 
   vtkNew<vtkActor> inputActor;
   inputActor->SetMapper(inputMapper);
-  inputActor->GetProperty()->SetColor(
-      colors->GetColor3d("Orchid").GetData());
-
+  inputActor->GetProperty()->SetColor(colors->GetColor3d("Orchid").GetData());
 
   vtkNew<vtkGlyph3DMapper> quantizedMapper;
   quantizedMapper->SetInputConnection(quantizeFilter->GetOutputPort());

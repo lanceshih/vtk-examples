@@ -31,8 +31,7 @@ int main(int, char*[])
 
   vtkNew<vtkActor> sphereActor;
   sphereActor->SetMapper(sphereMapper);
-  sphereActor->GetProperty()->SetColor(
-      colors->GetColor3d("Silver").GetData());
+  sphereActor->GetProperty()->SetColor(colors->GetColor3d("Silver").GetData());
 
   vtkNew<vtkConeSource> cone;
   cone->SetResolution(6);
@@ -49,8 +48,7 @@ int main(int, char*[])
 
   vtkNew<vtkActor> spikeActor;
   spikeActor->SetMapper(spikeMapper);
-  spikeActor->GetProperty()->SetColor(
-      colors->GetColor3d("Silver").GetData());
+  spikeActor->GetProperty()->SetColor(colors->GetColor3d("Silver").GetData());
 
   renderer->AddActor(sphereActor);
   renderer->AddActor(spikeActor);

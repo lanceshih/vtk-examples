@@ -1,6 +1,6 @@
-#include <vtkNew.h>
 #include <vtkCell.h>
 #include <vtkImageData.h>
+#include <vtkNew.h>
 
 namespace {
 
@@ -9,8 +9,7 @@ void GetCellCenter(vtkImageData* imageData, const unsigned int cellId,
 
 }
 
-
-int main(int, char *[])
+int main(int, char*[])
 {
   // Create an image data
   vtkNew<vtkImageData> imageData;

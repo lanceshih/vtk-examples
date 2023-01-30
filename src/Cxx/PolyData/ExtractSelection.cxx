@@ -17,7 +17,7 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkVertexGlyphFilter.h>
 
-//#include <array>
+// #include <array>
 
 int main(int, char*[])
 {
@@ -64,10 +64,9 @@ int main(int, char*[])
   vtkNew<vtkUnstructuredGrid> selected;
   selected->ShallowCopy(extractSelection->GetOutput());
 
-  std::cout << "There are " << selected->GetNumberOfPoints()
-            << " points and ";
-  std::cout << selected->GetNumberOfCells()
-            << " cells in the selection." << std::endl;
+  std::cout << "There are " << selected->GetNumberOfPoints() << " points and ";
+  std::cout << selected->GetNumberOfCells() << " cells in the selection."
+            << std::endl;
 
   // Get points that are NOT in the selection.
   selectionNode->GetProperties()->Set(vtkSelectionNode::INVERSE(),
@@ -79,8 +78,8 @@ int main(int, char*[])
 
   std::cout << "There are " << notSelected->GetNumberOfPoints()
             << " points and ";
-  std::cout << notSelected->GetNumberOfCells()
-            << " cells NOT in the selection." << std::endl;
+  std::cout << notSelected->GetNumberOfCells() << " cells NOT in the selection."
+            << std::endl;
 
   vtkNew<vtkDataSetMapper> inputMapper;
   inputMapper->SetInputConnection(pointSource->GetOutputPort());

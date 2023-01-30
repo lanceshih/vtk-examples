@@ -14,15 +14,20 @@
 vtkNew<vtkRenderer> ren;
 vtkNew<vtkRenderWindow> renWin;
 
-void Reshape(int width, int height) { renWin->SetSize(width, height); }
+void Reshape(int width, int height)
+{
+  renWin->SetSize(width, height);
+}
 
-void Draw() {
+void Draw()
+{
   renWin->Render();
   ren->GetActiveCamera()->Azimuth(1);
   glutPostRedisplay();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv)
+{
   // GLUT initialization
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);

@@ -12,13 +12,13 @@
 
 #include <array>
 
-int main(int, char* [])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
   // Set the background color.
-  std::array<unsigned char , 4> bkg{{26, 51, 102, 255}};
-    colors->SetColor("Bkg", bkg.data());
+  std::array<unsigned char, 4> bkg{{26, 51, 102, 255}};
+  colors->SetColor("Bkg", bkg.data());
 
   // Create the rendering objects.
   vtkNew<vtkRenderer> ren1;

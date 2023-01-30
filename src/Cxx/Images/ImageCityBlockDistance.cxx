@@ -22,7 +22,8 @@ int main(int argc, char* argv[])
   // Verify command line arguments
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " BinaryImage e.g. Yinyang.jpg" << std::endl;
+    std::cout << "Usage: " << argv[0] << " BinaryImage e.g. Yinyang.jpg"
+              << std::endl;
     return EXIT_FAILURE;
   }
 

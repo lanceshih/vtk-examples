@@ -4,12 +4,12 @@
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkOpenVRRenderWindow.h>
+#include <vtkOpenVRRenderWindowInteractor.h>
+#include <vtkOpenVRRenderer.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkOpenVRRenderWindow.h>
-#include <vtkOpenVRRenderer.h>
-#include <vtkOpenVRRenderWindowInteractor.h>
 #include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
@@ -18,14 +18,13 @@
 
 #define USER_MATRIX
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
   // Set the background color.
-  std::array<unsigned char, 4> bkg{ { 26, 51, 77, 255 } };
+  std::array<unsigned char, 4> bkg{{26, 51, 77, 255}};
   colors->SetColor("BkgColor", bkg.data());
-
 
   // Create a cylinder.
   // Cylinder height vector is (0,1,0).
@@ -87,12 +86,12 @@ int main(int, char *[])
   transform->Scale(1.0, length, 1.0); // scale along the height vector
   transform->Translate(0, .5, 0);     // translate to start of cylinder
 
-                    // Transform the polydata
+  // Transform the polydata
   vtkNew<vtkTransformPolyDataFilter> transformPD;
   transformPD->SetTransform(transform);
   transformPD->SetInputConnection(cylinderSource->GetOutputPort());
 
-  //Create a mapper and actor for the cylinder
+  // Create a mapper and actor for the cylinder
   vtkNew<vtkPolyDataMapper> mapper;
   vtkNew<vtkActor> actor;
 #ifdef USER_MATRIX
@@ -123,7 +122,7 @@ int main(int, char *[])
   sphereEnd->SetMapper(sphereEndMapper);
   sphereEnd->GetProperty()->SetColor(colors->GetColor3d("Magenta").GetData());
 
-  //Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor
   vtkNew<vtkOpenVRRenderer> renderer;
   vtkNew<vtkOpenVRRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -131,13 +130,13 @@ int main(int, char *[])
   vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  //Add the actor to the scene
+  // Add the actor to the scene
   renderer->AddActor(actor);
   renderer->AddActor(sphereStart);
   renderer->AddActor(sphereEnd);
   renderer->SetBackground(colors->GetColor3d("BkgColor").GetData());
 
-  //Render and interact
+  // Render and interact
   renderWindow->Render();
   renderWindowInteractor->Start();
 

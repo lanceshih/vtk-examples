@@ -1,29 +1,30 @@
+#include <vtkActor.h>
 #include <vtkImageData.h>
+#include <vtkImageMapper.h>
+#include <vtkImageSlice.h>
+#include <vtkImageSliceMapper.h>
+#include <vtkImageTranslateExtent.h>
+#include <vtkInteractorStyleImage.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkInteractorStyleImage.h>
 #include <vtkRenderer.h>
-#include <vtkImageMapper.h>
-#include <vtkImageSliceMapper.h>
-#include <vtkImageSlice.h>
 #include <vtkSphereSource.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkActor.h>
-#include <vtkImageTranslateExtent.h>
-#include <vtkProperty.h>
-#include <vtkNamedColors.h>
 
 namespace {
-  void CreateColorImage(vtkImageData* const);
+void CreateColorImage(vtkImageData* const);
 }
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkImageData> colorImage;
-  CreateColorImage(colorImage); // This image has (0,0) at the bottom left corner
+  CreateColorImage(
+      colorImage); // This image has (0,0) at the bottom left corner
 
   int extent[6];
   colorImage->GetExtent(extent);
@@ -32,7 +33,7 @@ int main(int, char *[])
             << extent[5] << std::endl;
 
   // This moves the (0,0) position in the image to the center of the image
-  //colorImage->SetExtent(extent[0] - (extent[1] - extent[0]) / 2,
+  // colorImage->SetExtent(extent[0] - (extent[1] - extent[0]) / 2,
   //                      extent[0] + (extent[1] - extent[0]) / 2,
   //                      extent[2] - (extent[3] - extent[2]) / 2,
   //                      extent[2] + (extent[3] - extent[2]) / 2,
@@ -63,7 +64,8 @@ int main(int, char *[])
 
   vtkNew<vtkActor> sphereActor;
   sphereActor->SetMapper(sphereMapper);
-  sphereActor->GetProperty()->SetColor(colors->GetColor3d("PeachPuff").GetData());
+  sphereActor->GetProperty()->SetColor(
+      colors->GetColor3d("PeachPuff").GetData());
 
   vtkNew<vtkImageSliceMapper> imageSliceMapper;
   imageSliceMapper->SetInputData(colorImage);
@@ -78,7 +80,6 @@ int main(int, char *[])
   renderer->AddViewProp(sphereActor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
-
 
   // Setup render window
   vtkNew<vtkRenderWindow> renderWindow;
@@ -111,10 +112,9 @@ void CreateColorImage(vtkImageData* const image)
   image->SetDimensions(10, 10, 1);
   image->AllocateScalars(VTK_UNSIGNED_CHAR, 3);
 
-    vtkNew<vtkNamedColors> colors;
+  vtkNew<vtkNamedColors> colors;
   unsigned char r, g, b, a;
-    colors->GetColor("Thistle", r, g, b, a);
-
+  colors->GetColor("Thistle", r, g, b, a);
 
   for (unsigned int x = 0; x < 10; x++)
   {

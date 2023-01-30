@@ -11,10 +11,9 @@ vtkTest1::vtkTest1()
 
 vtkTest1::~vtkTest1()
 {
-
 }
 
-void vtkTest1::PrintSelf( ostream& os, vtkIndent indent )
+void vtkTest1::PrintSelf(ostream& os, vtkIndent indent)
 {
-  this->Superclass::PrintSelf( os, indent );
+  this->Superclass::PrintSelf(os, indent);
 }

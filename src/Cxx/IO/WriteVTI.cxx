@@ -1,18 +1,17 @@
-#include <vtkNew.h>
-#include <vtkProperty.h>
-#include <vtkXMLImageDataWriter.h>
-#include <vtkXMLImageDataReader.h>
-#include <vtkImageData.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-#include <vtkImageDataGeometryFilter.h>
-#include <vtkRenderWindow.h>
 #include <vtkActor.h>
-#include <vtkPolyDataMapper.h>
+#include <vtkImageData.h>
+#include <vtkImageDataGeometryFilter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkXMLImageDataReader.h>
+#include <vtkXMLImageDataWriter.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
@@ -67,7 +66,6 @@ int main(int argc, char *argv[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetPointSize(3);
 
-
   // Setup rendering
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
@@ -77,7 +75,6 @@ int main(int argc, char *argv[])
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("WriteVTI");
-
 
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 

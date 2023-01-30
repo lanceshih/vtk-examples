@@ -1,16 +1,15 @@
 #include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereRepresentation.h>
 #include <vtkSphereWidget.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 
 namespace {
 
@@ -73,7 +72,7 @@ void MySphereWidget::ProcessEvents(vtkObject* vtkNotUsed(object),
 }
 
 vtkStandardNewMacro(MySphereWidget);
-}
+} // namespace
 
 int main(int, char*[])
 {

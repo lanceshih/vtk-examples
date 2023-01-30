@@ -3,6 +3,7 @@
 #include <vtkGlyph3D.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPoints.h>
 #include <vtkProperty.h>
 #include <vtkQuadraticHexahedron.h>
@@ -10,7 +11,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkNew.h>
 #include <vtkSphereSource.h>
 #include <vtkTessellatorFilter.h>
 #include <vtkUnstructuredGrid.h>

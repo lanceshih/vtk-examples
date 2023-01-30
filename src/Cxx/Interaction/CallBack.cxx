@@ -26,7 +26,7 @@ We also add call data.
 
 #define USE_CALLBACKCOMMAND_CLASS
 // Uncomment this if you want to use the function instead.
-//#undef USE_CALLBACKCOMMAND_CLASS
+// #undef USE_CALLBACKCOMMAND_CLASS
 
 namespace {
 void PrintCameraOrientation(vtkCamera* cam);

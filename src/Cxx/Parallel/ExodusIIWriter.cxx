@@ -3,14 +3,14 @@
 #include <vtkPolyData.h>
 #include <vtkTimeSourceExample.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
-   vtkNew<vtkTimeSourceExample> timeSource;
+  vtkNew<vtkTimeSourceExample> timeSource;
 
   vtkNew<vtkExodusIIWriter> exodusWriter;
   exodusWriter->SetFileName("output.exii");
-  exodusWriter->SetInputConnection (timeSource->GetOutputPort());
-  exodusWriter->WriteAllTimeStepsOn ();
+  exodusWriter->SetInputConnection(timeSource->GetOutputPort());
+  exodusWriter->WriteAllTimeStepsOn();
   exodusWriter->Write();
 
   return EXIT_SUCCESS;

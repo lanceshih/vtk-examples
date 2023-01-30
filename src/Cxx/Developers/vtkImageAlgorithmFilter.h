@@ -3,21 +3,23 @@
 
 #include <vtkImageAlgorithm.h>
 
-class vtkImageAlgorithmFilter : public vtkImageAlgorithm 
+class vtkImageAlgorithmFilter : public vtkImageAlgorithm
 {
 public:
-  static vtkImageAlgorithmFilter *New();
-  vtkTypeMacro(vtkImageAlgorithmFilter,vtkImageAlgorithm);
+  static vtkImageAlgorithmFilter* New();
+  vtkTypeMacro(vtkImageAlgorithmFilter, vtkImageAlgorithm);
 
-  vtkImageAlgorithmFilter(){}
-  
+  vtkImageAlgorithmFilter()
+  {
+  }
+
 protected:
-
-  int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *) override;
+  int RequestData(vtkInformation*, vtkInformationVector**,
+                  vtkInformationVector*) override;
 
 private:
-  vtkImageAlgorithmFilter(const vtkImageAlgorithmFilter&);  // Not implemented.
-  void operator=(const vtkImageAlgorithmFilter&);  // Not implemented.
+  vtkImageAlgorithmFilter(const vtkImageAlgorithmFilter&); // Not implemented.
+  void operator=(const vtkImageAlgorithmFilter&);          // Not implemented.
 };
 
 #endif

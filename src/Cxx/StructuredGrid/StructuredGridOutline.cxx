@@ -1,17 +1,15 @@
 #include <vtkActor.h>
 #include <vtkMath.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkStructuredGrid.h>
 #include <vtkStructuredGridOutlineFilter.h>
 #include <vtkXMLStructuredGridWriter.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 
 int main(int, char*[])
 {

@@ -1,16 +1,15 @@
-#include <vtkSmartPointer.h>
 #include <vtkGraphLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
 #include <vtkGraphWriter.h>
 #include <vtkMutableUndirectedGraph.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkSimple2DLayoutStrategy.h>
+#include <vtkNamedColors.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNamedColors.h>
+#include <vtkSimple2DLayoutStrategy.h>
+#include <vtkSmartPointer.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
@@ -36,6 +35,6 @@ int main(int, char *[])
   dynamic_cast<vtkSimple2DLayoutStrategy*>(graphLayoutView->GetLayoutStrategy())
       ->SetRandomSeed(0);
   graphLayoutView->GetInteractor()->Start();
-     
+
   return EXIT_SUCCESS;
 }

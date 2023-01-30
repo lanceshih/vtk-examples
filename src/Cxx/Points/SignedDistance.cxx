@@ -5,6 +5,7 @@
 #include <vtkImageMapper3D.h>
 #include <vtkLookupTable.h>
 #include <vtkMinimalStandardRandomSequence.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPCANormalEstimation.h>
 #include <vtkPointSource.h>
@@ -15,8 +16,6 @@
 #include <vtkScalarBarActor.h>
 #include <vtkSignedDistance.h>
 #include <vtkSmartPointer.h>
-#include <vtkNamedColors.h>
-
 
 // Readers
 #include <vtkBYUReader.h>

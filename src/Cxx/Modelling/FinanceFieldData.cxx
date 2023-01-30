@@ -8,6 +8,7 @@
 #include <vtkGaussianSplatter.h>
 #include <vtkImageData.h>
 #include <vtkMarchingContourFilter.h>
+#include <vtkNamedColors.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -15,9 +16,8 @@
 #include <vtkRenderer.h>
 #include <vtkTubeFilter.h>
 #include <vtkVectorText.h>
-#include <vtkNamedColors.h>
 
-int main (int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   if (argc < 2)
   {

@@ -2,6 +2,7 @@
 #include <vtkCamera.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkLookupTable.h>
+#include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
@@ -13,8 +14,6 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkMinimalStandardRandomSequence.h>
-
 
 #include <vtkBYUReader.h>
 #include <vtkOBJReader.h>
@@ -23,7 +22,7 @@
 #include <vtkSTLReader.h>
 #include <vtkXMLPolyDataReader.h>
 
-//#include <random>
+// #include <random>
 #include <vtksys/SystemTools.hxx>
 
 namespace {

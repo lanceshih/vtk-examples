@@ -1,6 +1,7 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCameraInterpolator.h>
+#include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
@@ -10,7 +11,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkMinimalStandardRandomSequence.h>
 
 #include <vtkBYUReader.h>
 #include <vtkOBJReader.h>
@@ -25,7 +25,7 @@
 #include <array>
 #include <chrono>
 #include <iterator>
-//#include <random>
+// #include <random>
 #include <thread>
 #include <vector>
 
@@ -115,7 +115,6 @@ int main(int argc, char* argv[])
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Silver").GetData());
 
-
   vtkNew<vtkCamera> camera;
   renderer->SetActiveCamera(camera);
 
@@ -196,8 +195,8 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName)
 void ComputeKeyPoints(vtkPolyData* polyData, std::array<double, 3>& center,
                       std::vector<std::array<double, 3>>& keyPoints)
 {
-  //std::mt19937 mt(4355412); // Standard mersenne_twister_engine
-  //std::uniform_real_distribution<double> dis(1.0, 3.0);
+  // std::mt19937 mt(4355412); // Standard mersenne_twister_engine
+  // std::uniform_real_distribution<double> dis(1.0, 3.0);
 
   vtkNew<vtkMinimalStandardRandomSequence> randomSequence;
   randomSequence->SetSeed(4355412);
@@ -246,7 +245,7 @@ void ComputeKeyPoints(vtkPolyData* polyData, std::array<double, 3>& center,
       direction[j] = points[i][j] - center[j];
     }
     vtkMath::Normalize(direction.data());
-    //double factor = dis(mt);
+    // double factor = dis(mt);
     double factor = randomSequence->GetRangeValue(1.0, 3.0);
     randomSequence->Next();
     keyPoints.resize(8);

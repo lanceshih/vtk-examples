@@ -26,7 +26,7 @@
 #else
 #undef USE_FLYING_EDGES
 #endif
-//#undef USE_FLYING_EDGES
+// #undef USE_FLYING_EDGES
 
 #ifdef USE_FLYING_EDGES
 #include <vtkDiscreteFlyingEdges3D.h>

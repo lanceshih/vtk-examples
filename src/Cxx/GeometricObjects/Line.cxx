@@ -1,15 +1,15 @@
 #include <vtkActor.h>
 #include <vtkLineSource.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkNew.h>
+#include <vtkRenderer.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   // Create two points, P0 and P1
   double p0[3] = {1.0, 0.0, 0.0};

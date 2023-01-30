@@ -3,22 +3,27 @@
 
 #include <vtkGraphAlgorithm.h>
 
-class vtkTestGraphAlgorithmFilter : public vtkGraphAlgorithm 
+class vtkTestGraphAlgorithmFilter : public vtkGraphAlgorithm
 {
 public:
-  vtkTypeMacro(vtkTestGraphAlgorithmFilter,vtkGraphAlgorithm);
-  static vtkTestGraphAlgorithmFilter *New();
-	
+  vtkTypeMacro(vtkTestGraphAlgorithmFilter, vtkGraphAlgorithm);
+  static vtkTestGraphAlgorithmFilter* New();
+
 protected:
-  vtkTestGraphAlgorithmFilter(){}
-  ~vtkTestGraphAlgorithmFilter(){}
-  
-  int RequestData(vtkInformation *, vtkInformationVector **, vtkInformationVector *) override;
+  vtkTestGraphAlgorithmFilter()
+  {
+  }
+  ~vtkTestGraphAlgorithmFilter()
+  {
+  }
+
+  int RequestData(vtkInformation*, vtkInformationVector**,
+                  vtkInformationVector*) override;
 
 private:
-  vtkTestGraphAlgorithmFilter(const vtkTestGraphAlgorithmFilter&);  // Not implemented.
-  void operator=(const vtkTestGraphAlgorithmFilter&);  // Not implemented.
-
+  vtkTestGraphAlgorithmFilter(
+      const vtkTestGraphAlgorithmFilter&);            // Not implemented.
+  void operator=(const vtkTestGraphAlgorithmFilter&); // Not implemented.
 };
 
 #endif

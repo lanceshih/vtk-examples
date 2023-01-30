@@ -2,15 +2,15 @@
 #include <vtkCamera.h>
 #include <vtkDataSetMapper.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkShrinkFilter.h>
-#include <vtkNew.h>
 #include <vtkTessellatedBoxSource.h>
 
-int main (int /* argc */, char * /* argv */ [])
+int main(int /* argc */, char* /* argv */[])
 {
   double bounds[6];
   bounds[0] = -10.0;

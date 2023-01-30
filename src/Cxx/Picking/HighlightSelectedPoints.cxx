@@ -24,7 +24,6 @@
 #include <vtkVersion.h>
 #include <vtkVertexGlyphFilter.h>
 
-
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1
 #endif

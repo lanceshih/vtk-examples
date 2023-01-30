@@ -10,10 +10,10 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkReverseSense.h>
+#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkSurfaceReconstructionFilter.h>
 #include <vtkXMLPolyDataReader.h>
-#include <vtkSmartPointer.h>
 
 int main(int argc, char* argv[])
 {

@@ -1,21 +1,19 @@
 #include <vtkActor.h>
+#include <vtkCamera.h>
 #include <vtkCellArray.h>
 #include <vtkCubeSource.h>
 #include <vtkGlyph3D.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkUnsignedCharArray.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
-#include <vtkCamera.h>
 
 // For compatibility with new VTK generic data arrays
 #ifdef vtkGenericDataArray_h
@@ -75,8 +73,7 @@ int main(int, char*[])
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   renderer->AddActor(actor);
-  renderer->SetBackground(
-      nc->GetColor3d("SlateGray").GetData());
+  renderer->SetBackground(nc->GetColor3d("SlateGray").GetData());
 
   renderWindow->Render();
 

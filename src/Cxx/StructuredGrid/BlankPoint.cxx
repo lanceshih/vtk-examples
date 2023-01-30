@@ -52,7 +52,7 @@ int main(int, char*[])
   structuredGrid->Modified();
 
   // Check.
-  auto isVisible = [&structuredGrid](int const & ptNum){
+  auto isVisible = [&structuredGrid](int const& ptNum) {
     if (structuredGrid->IsPointVisible(ptNum))
     {
       std::cout << "Point: " << ptNum << " is visible" << std::endl;

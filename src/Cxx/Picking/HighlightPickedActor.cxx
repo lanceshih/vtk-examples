@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
   style->SetDefaultRenderer(renderer);
 
   renderWindowInteractor->SetInteractorStyle(style);
-  
+
   vtkNew<vtkMinimalStandardRandomSequence> randomSequence;
   randomSequence->SetSeed(8775070);
   for (int i = 0; i < numberOfSpheres; ++i)

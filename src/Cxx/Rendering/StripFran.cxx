@@ -35,7 +35,6 @@ int main(int argc, char* argv[])
   renderWindow->AddRenderer(renderer2);
   renderWindow->SetWindowName("StripFran");
 
-
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 

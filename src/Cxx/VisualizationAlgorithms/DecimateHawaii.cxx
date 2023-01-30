@@ -48,7 +48,8 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkActor> decimatedActor;
   decimatedActor->SetMapper(decimatedMapper);
-  decimatedActor->GetProperty()->SetColor(colors->GetColor3d("Sienna").GetData());
+  decimatedActor->GetProperty()->SetColor(
+      colors->GetColor3d("Sienna").GetData());
   decimatedActor->GetProperty()->SetRepresentationToWireframe();
 
   vtkNew<vtkPolyDataMapper> originalMapper;
@@ -56,7 +57,8 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkActor> originalActor;
   originalActor->SetMapper(originalMapper);
-  originalActor->GetProperty()->SetColor(colors->GetColor3d("Sienna").GetData());
+  originalActor->GetProperty()->SetColor(
+      colors->GetColor3d("Sienna").GetData());
 
   // Create the RenderWindow, Renderer and both Actors
   //

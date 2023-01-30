@@ -1,18 +1,16 @@
 #include <vtkActor.h>
 #include <vtkInteractorStyleTrackball.h>
 #include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
-
 
 #include <vector>
 

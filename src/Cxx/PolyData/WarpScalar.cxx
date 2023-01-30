@@ -1,5 +1,7 @@
 #include <vtkActor.h>
 #include <vtkDoubleArray.h>
+#include <vtkMinimalStandardRandomSequence.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
@@ -7,11 +9,8 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkSphereSource.h>
 #include <vtkWarpScalar.h>
-#include <vtkMinimalStandardRandomSequence.h>
-#include <vtkNamedColors.h>
 
 int main(int, char*[])
 {

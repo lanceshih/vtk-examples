@@ -11,7 +11,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
-
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
@@ -53,8 +52,7 @@ int main(int, char*[])
   permutedRenderer->SetViewport(permutedViewport);
   permutedRenderer->AddActor(permutedActor);
   permutedRenderer->ResetCamera();
-  permutedRenderer->SetBackground(
-      colors->GetColor3d("SteelBlue").GetData());
+  permutedRenderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);

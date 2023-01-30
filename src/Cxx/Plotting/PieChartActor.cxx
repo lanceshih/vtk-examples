@@ -7,19 +7,19 @@
 #include <vtkLegendBoxActor.h>
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPieChartActor.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkProperty2D.h>
-#include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkNew.h>
+#include <vtkRenderer.h>
 #include <vtkTextProperty.h>
 
 #include <map>
 
-int main( int /*argc*/, char * /*argv*/ [] )
+int main(int /*argc*/, char* /*argv*/[])
 {
   typedef std::map<std::string, int> DataContainer;
   DataContainer movies;

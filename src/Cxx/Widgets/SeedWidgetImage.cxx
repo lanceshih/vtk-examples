@@ -3,6 +3,7 @@
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
 #include <vtkInteractorStyleImage.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointHandleRepresentation2D.h>
 #include <vtkPolyDataMapper.h>
@@ -15,8 +16,6 @@
 #include <vtkSeedWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
 
 #include <array>
 

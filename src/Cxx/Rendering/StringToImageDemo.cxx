@@ -5,6 +5,7 @@
 #include <vtkImageData.h>
 #include <vtkImageIterator.h>
 #include <vtkImageViewer2.h>
+#include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
@@ -12,10 +13,9 @@
 #include <vtkRenderer.h>
 #include <vtkStdString.h>
 #include <vtkTextProperty.h>
-#include <vtkMinimalStandardRandomSequence.h>
 
 #include <array>
-//#include <random>
+// #include <random>
 
 int main(int argc, char* argv[])
 {
@@ -56,15 +56,14 @@ int main(int argc, char* argv[])
   textProperty->SetJustificationToCentered();
 
   // Distributions for random parameters
-  //std::mt19937 mt(4355412); // Standard mersenne_twister_engine
-  //std::uniform_int_distribution<> extentXDist(0, 640);
-  //std::uniform_int_distribution<> extentYDist(0, 480);
-  //std::uniform_int_distribution<> fontDist(6, 42);
-  //std::uniform_real_distribution<double> orientationDist(-90, 90);
+  // std::mt19937 mt(4355412); // Standard mersenne_twister_engine
+  // std::uniform_int_distribution<> extentXDist(0, 640);
+  // std::uniform_int_distribution<> extentYDist(0, 480);
+  // std::uniform_int_distribution<> fontDist(6, 42);
+  // std::uniform_real_distribution<double> orientationDist(-90, 90);
 
   vtkNew<vtkMinimalStandardRandomSequence> randomSequence;
   randomSequence->SetSeed(8775070);
-
 
   // For each string, create an image and see if it overlaps with other images,
   // if so, skip it
@@ -72,10 +71,10 @@ int main(int argc, char* argv[])
   int accepted = 0;
   for (int i = 0; i < tried; ++i)
   {
-    //int fontSize = fontDist(mt);
+    // int fontSize = fontDist(mt);
     int fontSize = static_cast<int>(randomSequence->GetRangeValue(6, 42));
     randomSequence->Next();
-    //textProperty->SetOrientation(orientationDist(mt));
+    // textProperty->SetOrientation(orientationDist(mt));
     textProperty->SetOrientation(randomSequence->GetRangeValue(-90, 90));
     randomSequence->Next();
     textProperty->SetFontSize(fontSize);
@@ -86,8 +85,8 @@ int main(int argc, char* argv[])
     // Set the extent of the text image
     std::array<int, 4> bb;
     freeType->GetBoundingBox(textProperty, text, dpi, bb.data());
-    //int offsetX = extentXDist(mt);
-    //int offsetY = extentYDist(mt);
+    // int offsetX = extentXDist(mt);
+    // int offsetY = extentYDist(mt);
     int offsetX = static_cast<int>(randomSequence->GetRangeValue(0, 640));
     randomSequence->Next();
     int offsetY = static_cast<int>(randomSequence->GetRangeValue(0, 480));

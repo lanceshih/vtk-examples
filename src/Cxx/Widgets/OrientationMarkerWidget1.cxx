@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
   widget->SetOrientationMarker(iconActor);
   widget->SetInteractor(iren);
   widget->SetViewport(0.0, 0.0, 0.2, 0.2);
-  widget->SetOutlineColor(r,g,b);
+  widget->SetOutlineColor(r, g, b);
   widget->SetEnabled(1);
   widget->InteractiveOn();
 

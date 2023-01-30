@@ -15,7 +15,6 @@
 #include <vtkSampleFunction.h>
 #include <vtkSphere.h>
 
-
 int main(int /* argc */, char*[])
 {
   vtkNew<vtkNamedColors> colors;

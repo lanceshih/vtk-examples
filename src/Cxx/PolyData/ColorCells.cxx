@@ -2,6 +2,7 @@
 #include <vtkCellData.h>
 #include <vtkFloatArray.h>
 #include <vtkLookupTable.h>
+#include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>
@@ -10,8 +11,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkMinimalStandardRandomSequence.h>
-
 
 #include <algorithm>
 
@@ -22,7 +21,7 @@ void RandomColors(vtkLookupTable* lut, int numberOfColors);
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
-  
+
   // Provide some geometry
   int resolution = 3;
   vtkNew<vtkPlaneSource> aPlane;
@@ -107,4 +106,4 @@ void RandomColors(vtkLookupTable* lut, int numberOfColors)
   }
 }
 
-}
+} // namespace

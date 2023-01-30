@@ -2,8 +2,8 @@
 #include <vtkDataSetAttributes.h>
 #include <vtkGraphLayoutView.h>
 #include <vtkLookupTable.h>
-#include <vtkMutableUndirectedGraph.h>
 #include <vtkMutableDirectedGraph.h>
+#include <vtkMutableUndirectedGraph.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
@@ -11,25 +11,24 @@
 #include <vtkUnsignedCharArray.h>
 #include <vtkViewTheme.h>
 
-
 // For compatibility with new VTK generic data arrays
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkMutableUndirectedGraph> g;
 
-  //create 3 vertices
+  // create 3 vertices
   vtkIdType v0 = g->AddVertex();
   vtkIdType v1 = g->AddVertex();
   vtkIdType v2 = g->AddVertex();
   vtkIdType v3 = g->AddVertex();
 
-  //add edges
+  // add edges
   g->AddEdge(v0, v1);
   g->AddEdge(v0, v2);
   g->AddEdge(v2, v3);
@@ -39,16 +38,17 @@ int main(int, char *[])
   vertexColors->SetNumberOfComponents(3);
   vertexColors->SetName("color");
 
-  //setup colors
-   vertexColors->InsertNextTypedTuple(
-        colors->GetColor3ub("Blue").GetData()); // unconnected vertices
+  // setup colors
+  vertexColors->InsertNextTypedTuple(
+      colors->GetColor3ub("Blue").GetData()); // unconnected vertices
 
-  vertexColors->InsertNextTypedTuple(colors->GetColor3ub("Red").GetData()); // origin
+  vertexColors->InsertNextTypedTuple(
+      colors->GetColor3ub("Red").GetData()); // origin
 
   vtkNew<vtkAdjacentVertexIterator> iterator;
   g->GetAdjacentVertices(0, iterator);
 
-  while(iterator->HasNext())
+  while (iterator->HasNext())
   {
     vtkIdType nextVertex = iterator->Next();
     std::cout << "Next vertex: " << nextVertex << std::endl;
@@ -67,10 +67,9 @@ int main(int, char *[])
   graphLayoutView->ColorVerticesOn();
 
   vtkNew<vtkViewTheme> theme;
-  //theme->SetPointLookupTable(lookupTable);
+  // theme->SetPointLookupTable(lookupTable);
   theme->ScalePointLookupTableOff();
   graphLayoutView->ApplyViewTheme(theme);
-
 
   graphLayoutView->ResetCamera();
   graphLayoutView->GetInteractor()->Initialize();

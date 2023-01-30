@@ -1,5 +1,5 @@
-#include <vtkMutableUndirectedGraph.h>
 #include <vtkMutableDirectedGraph.h>
+#include <vtkMutableUndirectedGraph.h>
 #include <vtkNew.h>
 #include <vtkOutEdgeIterator.h>
 
@@ -9,7 +9,7 @@ void Undirected();
 
 void Directed();
 
-}
+} // namespace
 
 int main(int, char*[])
 {
@@ -87,4 +87,4 @@ void Directed()
   }
 }
 
-}
+} // namespace

@@ -5,20 +5,17 @@
 #include <vtkImageSlice.h>
 #include <vtkImageSliceMapper.h>
 #include <vtkInteractorStyleImage.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkNew.h>
 #include <vtkXMLPolyDataWriter.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
-
 
 int main(int, char*[])
 {
@@ -48,7 +45,7 @@ int main(int, char*[])
     }
   }
 
-  //Set two vectors
+  // Set two vectors
   {
     auto pixel = static_cast<float*>(image->GetScalarPointer(20, 20, 0));
     pixel[0] = -10.0;

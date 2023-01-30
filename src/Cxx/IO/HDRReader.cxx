@@ -44,8 +44,7 @@ int main(int argc, char* argv[])
   if (argc <= 1)
   {
     cout << "Usage: " << argv[0] << " <hdr file>" << endl;
-    cout << "For example: Skyboxes/spiaggia_di_mondello_1k.hdr"
-         << std::endl;
+    cout << "For example: Skyboxes/spiaggia_di_mondello_1k.hdr" << std::endl;
     return EXIT_FAILURE;
   }
 

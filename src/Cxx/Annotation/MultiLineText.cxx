@@ -51,13 +51,14 @@ int main(int, char*[])
   singleLineTextB->SetInput("Single line (bottom)");
   auto tprop = singleLineTextB->GetTextProperty();
   tprop->ShallowCopy(singleLineTextProp);
- 
+
   tprop->SetVerticalJustificationToBottom();
   tprop->SetColor(colors->GetColor3d("Tomato").GetData());
 
   vtkNew<vtkActor2D> singleLineTextActorB;
   singleLineTextActorB->SetMapper(singleLineTextB);
-  singleLineTextActorB->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+  singleLineTextActorB->GetPositionCoordinate()
+      ->SetCoordinateSystemToNormalizedDisplay();
   singleLineTextActorB->GetPositionCoordinate()->SetValue(0.05, 0.85);
 
   // The text is on a single line and center-justified (vertical
@@ -71,7 +72,8 @@ int main(int, char*[])
   vtkNew<vtkActor2D> singleLineTextActorC;
 
   singleLineTextActorC->SetMapper(singleLineTextC);
-  singleLineTextActorC->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+  singleLineTextActorC->GetPositionCoordinate()
+      ->SetCoordinateSystemToNormalizedDisplay();
   singleLineTextActorC->GetPositionCoordinate()->SetValue(0.05, 0.75);
 
   // The text is on a single line and top-justified.
@@ -84,7 +86,8 @@ int main(int, char*[])
 
   vtkNew<vtkActor2D> singleLineTextActorT;
   singleLineTextActorT->SetMapper(singleLineTextT);
-  singleLineTextActorT->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+  singleLineTextActorT->GetPositionCoordinate()
+      ->SetCoordinateSystemToNormalizedDisplay();
   singleLineTextActorT->GetPositionCoordinate()->SetValue(0.05, 0.65);
 
   // The text is on multiple lines and left- and top-justified.

@@ -19,7 +19,7 @@
 
 #define USE_POINT_DATA
 // Uncomment the next line if you want to use cell data instead
-//#undef USE_POINT_DATA
+// #undef USE_POINT_DATA
 
 int main(int, char*[])
 {
@@ -87,7 +87,7 @@ int main(int, char*[])
   it->Delete();
 
   std::cout << "Cells and their points" << std::endl;
-  for (auto const & cell : cellPointIds)
+  for (auto const& cell : cellPointIds)
   {
     std::cout << "Cell Id: " << cell.first << " Point Ids: ";
     for (auto id = cell.second.begin(); id != cell.second.end(); ++id)
@@ -104,7 +104,7 @@ int main(int, char*[])
   // The key is the point Id and the value is a set of corresponding cell Ids.
   std::map<vtkIdType, std::set<vtkIdType>>
       commonPointIds; // = cellPointIds.begin()->second;
-  for (auto const & cell : cellPointIds)
+  for (auto const& cell : cellPointIds)
   {
     for (auto pointId : cell.second)
     {

@@ -33,9 +33,9 @@
 #include <vtkShaderProperty.h>
 #endif
 
+#include <chrono>
 #include <fstream>
 #include <sstream>
-#include <chrono>
 #include <thread>
 
 #define DELAY 200
@@ -243,8 +243,7 @@ int main(int argc, char* argv[])
   renderWindow->AddRenderer(renderer);
   renderer->AddActor(actor);
 
-  auto style =
-    vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
+  auto style = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
 
   auto interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
   interactor->SetRenderWindow(renderWindow);

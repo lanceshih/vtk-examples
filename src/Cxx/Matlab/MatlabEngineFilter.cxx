@@ -1,9 +1,9 @@
-//need to set VTK_USE_MATLAB_MEX ON
+// need to set VTK_USE_MATLAB_MEX ON
 
-#include <vtkNew.h>
 #include <vtkMatlabEngineFilter.h>
+#include <vtkNew.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   vtkNew<vtkMatlabEngineFilter> matlabFilter;
 

@@ -5,11 +5,11 @@
 #define STR(x) STR2(x)
 #define STR2(x) #x
 
-int main(int, char *[])
+int main(int, char*[])
 {
-  #if VTK_MAJOR_VERSION>5 || (VTK_MAJOR_VERSION==5 && VTK_MINOR_VERSION>4)
-    #pragma message(STR(VTK_MAJOR_VERSION))
-  #endif
+#if VTK_MAJOR_VERSION > 5 || (VTK_MAJOR_VERSION == 5 && VTK_MINOR_VERSION > 4)
+#pragma message(STR(VTK_MAJOR_VERSION))
+#endif
 
   return EXIT_SUCCESS;
 }

@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkThreshold> thresh;
   thresh->SetUpperThreshold(80);
   thresh->SetThresholdFunction(vtkThreshold::THRESHOLD_UPPER);
-  //thresh->ThresholdByUpper(80);
+  // thresh->ThresholdByUpper(80);
   thresh->AllScalarsOff();
   thresh->SetInputConnection(reader->GetOutputPort());
 

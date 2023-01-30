@@ -4,12 +4,12 @@
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkProperty.h>
 #include <vtkOpenVRRenderWindow.h>
 #include <vtkOpenVRRenderWindowInteractor.h>
 #include <vtkOpenVRRenderer.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
@@ -18,15 +18,15 @@
 
 #define USER_MATRIX
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
   // Set the background color.
-  std::array<unsigned char, 4> bkg{ { 26, 51, 77, 255 } };
+  std::array<unsigned char, 4> bkg{{26, 51, 77, 255}};
   colors->SetColor("BkgColor", bkg.data());
 
-  //Create an arrow.
+  // Create an arrow.
   vtkNew<vtkArrowSource> arrowSource;
 
   // Generate a random start and end point
@@ -86,7 +86,7 @@ int main(int, char *[])
   transformPD->SetTransform(transform);
   transformPD->SetInputConnection(arrowSource->GetOutputPort());
 
-  //Create a mapper and actor for the arrow
+  // Create a mapper and actor for the arrow
   vtkNew<vtkPolyDataMapper> mapper;
   vtkNew<vtkActor> actor;
 #ifdef USER_MATRIX
@@ -117,7 +117,7 @@ int main(int, char *[])
   sphereEnd->SetMapper(sphereEndMapper);
   sphereEnd->GetProperty()->SetColor(colors->GetColor3d("Magenta").GetData());
 
-  //Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor
   vtkNew<vtkOpenVRRenderer> renderer;
   vtkNew<vtkOpenVRRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -125,13 +125,13 @@ int main(int, char *[])
   vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  //Add the actor to the scene
+  // Add the actor to the scene
   renderer->AddActor(actor);
   renderer->AddActor(sphereStart);
   renderer->AddActor(sphereEnd);
   renderer->SetBackground(colors->GetColor3d("BkgColor").GetData());
 
-  //Render and interact
+  // Render and interact
   renderWindow->Render();
   renderWindowInteractor->Start();
 

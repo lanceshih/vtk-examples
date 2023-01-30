@@ -48,8 +48,7 @@ int main(int, char*[])
 
   vtkNew<vtkActor> glyph3DActor;
   glyph3DActor->SetMapper(glyph3DMapper);
-  glyph3DActor->GetProperty()->SetColor(
-      colors->GetColor3d("Banana").GetData());
+  glyph3DActor->GetProperty()->SetColor(colors->GetColor3d("Banana").GetData());
 
   // Create graphics stuff
   //

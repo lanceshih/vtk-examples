@@ -1,21 +1,22 @@
-#include <vtkSmartPointer.h>
 #include <vtkMySQLDatabase.h>
 #include <vtkSQLQuery.h>
+#include <vtkSmartPointer.h>
 #include <vtkVariant.h>
 
-int main(int, char *[])
+int main(int, char*[])
 {
   vtkSmartPointer<vtkMySQLDatabase> db =
-    vtkSmartPointer<vtkMySQLDatabase>::Take(dynamic_cast<vtkMySQLDatabase*>(
-            vtkSQLDatabase::CreateFromURL( "mysql://root@localhost/TestDatabase" ) ));
+      vtkSmartPointer<vtkMySQLDatabase>::Take(
+          dynamic_cast<vtkMySQLDatabase*>(vtkSQLDatabase::CreateFromURL(
+              "mysql://root@localhost/TestDatabase")));
 
   bool status = db->Open();
 
   std::cout << "Database open? " << status << std::endl;
 
-  if(!status)
+  if (!status)
   {
-    //create database
+    // create database
     std::cout << "Database does not exist, create it!" << std::endl;
     db->CreateDatabase("TestDatabase", false);
   }

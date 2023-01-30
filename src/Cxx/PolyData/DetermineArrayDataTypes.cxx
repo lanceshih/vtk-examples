@@ -13,7 +13,8 @@ int main(int argc, char* argv[])
 {
   if (argc != 2)
   {
-    std::cout << "Usage: " << argv[0] << " InputFilename e.g. filledContours.vtp" << std::endl;
+    std::cout << "Usage: " << argv[0]
+              << " InputFilename e.g. filledContours.vtp" << std::endl;
     return EXIT_FAILURE;
   }
 
