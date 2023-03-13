@@ -1,5 +1,5 @@
 ---
-# This configuration requires clang-format 3.8 or higher.
+Language: Cpp
 BasedOnStyle: LLVM
 AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
@@ -28,12 +28,10 @@ ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 2
 Cpp11BracedListStyle: true
 IndentWidth: 2
-Language: Cpp
 NamespaceIndentation: None
 PointerAlignment: Left
-Standard: Cpp11
+Standard: Latest
 UseTab: Never
-# This requires clang-format 4.1 (at least).
-# FixNamespaceComments: true
-# ReflowComments: false
+FixNamespaceComments: true
+ReflowComments: true
 ...
