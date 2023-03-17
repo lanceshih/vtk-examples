@@ -32,6 +32,7 @@ int main(int, char*[])
       vtkSmartPointer<vtkOpenVRRenderer>::New();
   vtkSmartPointer<vtkOpenVRRenderWindow> renderWindow =
       vtkSmartPointer<vtkOpenVRRenderWindow>::New();
+  renderWindow->Initialize();
   renderWindow->AddRenderer(renderer);
   vtkSmartPointer<vtkOpenVRRenderWindowInteractor> renderWindowInteractor =
       vtkSmartPointer<vtkOpenVRRenderWindowInteractor>::New();
