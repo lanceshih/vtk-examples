@@ -11,25 +11,25 @@
 int main(int, char*[])
 {
   // Create a Sphere
-  vtkSmartPointer<vtkSphereSource> sphereSource;
+  vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(0.0, 0.0, 0.0);
   sphereSource->SetRadius(5.0);
 
   // Create a Mapper
-  vtkSmartPointer<vtkPolyDataMapper> mapper;
+  vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
   // Create an Actor
-  vtkSmartPointer<vtkNamedColors> colors;
-  vtkSmartPointer<vtkActor> actor;
+  vtkNew<vtkNamedColors> colors;
+  vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
   // Create a Renderer, RenderWindow, RenderWindowInteractor
-  vtkSmartPointer<vtkOpenVRRenderer> renderer;
-  vtkSmartPointer<vtkOpenVRRenderWindow> renderWindow;
+  vtkNew<vtkOpenVRRenderer> renderer;
+  vtkNew<vtkOpenVRRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("OpenVRSphere");
-  vtkSmartPointer<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
+  vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   // Add actor to the scene
