@@ -24,6 +24,7 @@ int main(int, char*[])
   // Create a renderer, render window, and interactor
   vtkNew<vtkOpenVRRenderer> renderer;
   vtkNew<vtkOpenVRRenderWindow> renderWindow;
+  renderWindow->Initialize();
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("OpenVRCube");
   vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
