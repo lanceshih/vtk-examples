@@ -1,40 +1,34 @@
 #include <vtkActor.h>
 #include <vtkConeSource.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkOpenVRRenderWindow.h>
 #include <vtkOpenVRRenderWindowInteractor.h>
 #include <vtkOpenVRRenderer.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkSmartPointer.h>
 // Chethana B
 // Organisation: Virtual Environments Lab, Chung-Ang Univeristy, Seoul.
 int main(int, char*[])
 {
   // Create a cone
-  vtkSmartPointer<vtkConeSource> coneSource =
-      vtkSmartPointer<vtkConeSource>::New();
+  vtkNew<vtkConeSource> coneSource;
   coneSource->Update();
 
   // Create a mapper and actor
-  vtkSmartPointer<vtkNamedColors> colors =
-      vtkSmartPointer<vtkNamedColors>::New();
-  vtkSmartPointer<vtkPolyDataMapper> mapper =
-      vtkSmartPointer<vtkPolyDataMapper>::New();
+  vtkNew<vtkNamedColors> colors;
+  vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(coneSource->GetOutputPort());
 
-  vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+  vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
   // Create a renderer, render window, and interactor
-  vtkSmartPointer<vtkOpenVRRenderer> renderer =
-      vtkSmartPointer<vtkOpenVRRenderer>::New();
-  vtkSmartPointer<vtkOpenVRRenderWindow> renderWindow =
-      vtkSmartPointer<vtkOpenVRRenderWindow>::New();
+  vtkNew<vtkOpenVRRenderer> renderer;
+  vtkNew<vtkOpenVRRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
-  vtkSmartPointer<vtkOpenVRRenderWindowInteractor> renderWindowInteractor =
-      vtkSmartPointer<vtkOpenVRRenderWindowInteractor>::New();
+  vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   // Add the actors to the scene
