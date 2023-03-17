@@ -27,6 +27,7 @@ int main(int, char*[])
   // Create a Renderer, RenderWindow, RenderWindowInteractor
   vtkSmartPointer<vtkOpenVRRenderer> renderer;
   vtkSmartPointer<vtkOpenVRRenderWindow> renderWindow;
+  renderWindow->Initialize();
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("OpenVRSphere");
   vtkSmartPointer<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
