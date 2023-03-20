@@ -36,17 +36,17 @@ def main():
     # Using frustum planes.
     titles.append('Using frustum planes')
     camera = vtkCamera()
-    planesArray = [0] * 24
-    camera.GetFrustumPlanes(1, planesArray)
+    planes_array = [0] * 24
+    camera.GetFrustumPlanes(1, planes_array)
     planes.append(vtkPlanes())
-    planes[0].SetFrustumPlanes(planesArray)
+    planes[0].SetFrustumPlanes(planes_array)
 
     # Using bounds.
     titles.append('Using bounds')
-    sphereSource = vtkSphereSource()
-    sphereSource.Update()
+    sphere_source = vtkSphereSource()
+    sphere_source.Update()
     bounds = [0] * 6
-    sphereSource.GetOutput().GetBounds(bounds)
+    sphere_source.GetOutput().GetBounds(bounds)
     planes.append(vtkPlanes())
     planes[1].SetBounds(bounds)
 
@@ -57,24 +57,24 @@ def main():
     # and visualise it.
 
     # Create a common text property.
-    textProperty = vtkTextProperty()
-    textProperty.SetFontSize(16)
-    textProperty.SetJustificationToCentered()
+    text_property = vtkTextProperty()
+    text_property.SetFontSize(16)
+    text_property.SetJustificationToCentered()
 
-    renWin = vtkRenderWindow()
-    renWin.SetSize(600, 600)
-    renWin.SetWindowName('Planes')
+    ren_win = vtkRenderWindow()
+    ren_win.SetSize(600, 600)
+    ren_win.SetWindowName('Planes')
 
-    iRen = vtkRenderWindowInteractor()
-    iRen.SetRenderWindow(renWin)
+    iren = vtkRenderWindowInteractor()
+    iren.SetRenderWindow(ren_win)
 
     hulls = list()
     pds = list()
     mappers = list()
     actors = list()
     renderers = list()
-    textMappers = list()
-    textActors = list()
+    text_mappers = list()
+    text_actors = list()
     for i in range(0, len(planes)):
         hulls.append(vtkHull())
         hulls[i].SetPlanes(planes[i])
@@ -99,31 +99,31 @@ def main():
         renderers.append(vtkRenderer())
         renderers[i].AddActor(actors[i])
 
-        textMappers.append(vtkTextMapper())
-        textMappers[i].SetInput(titles[i])
-        textMappers[i].SetTextProperty(textProperty)
+        text_mappers.append(vtkTextMapper())
+        text_mappers[i].SetInput(titles[i])
+        text_mappers[i].SetTextProperty(text_property)
 
-        textActors.append(vtkActor2D())
-        textActors[i].SetMapper(textMappers[i])
-        textActors[i].SetPosition(100, 10)
-        renderers[i].AddViewProp(textActors[i])
+        text_actors.append(vtkActor2D())
+        text_actors[i].SetMapper(text_mappers[i])
+        text_actors[i].SetPosition(100, 10)
+        renderers[i].AddViewProp(text_actors[i])
 
-        renWin.AddRenderer(renderers[i])
+        ren_win.AddRenderer(renderers[i])
 
     # Setup the viewports
-    xGridDimensions = 2
-    yGridDimensions = 1
-    rendererSize = 300
-    renWin.SetSize(rendererSize * xGridDimensions, rendererSize * yGridDimensions)
-    for row in range(0, yGridDimensions):
-        for col in range(0, xGridDimensions):
-            index = row * xGridDimensions + col
+    x_grid_dimensions = 2
+    y_grid_dimensions = 1
+    renderer_size = 300
+    ren_win.SetSize(renderer_size * x_grid_dimensions, renderer_size * y_grid_dimensions)
+    for row in range(0, y_grid_dimensions):
+        for col in range(0, x_grid_dimensions):
+            index = row * x_grid_dimensions + col
 
             # (xmin, ymin, xmax, ymax)
-            viewport = [float(col) / xGridDimensions,
-                        float(yGridDimensions - (row + 1)) / yGridDimensions,
-                        float(col + 1) / xGridDimensions,
-                        float(yGridDimensions - row) / yGridDimensions]
+            viewport = [float(col) / x_grid_dimensions,
+                        float(y_grid_dimensions - (row + 1)) / y_grid_dimensions,
+                        float(col + 1) / x_grid_dimensions,
+                        float(y_grid_dimensions - row) / y_grid_dimensions]
 
             if index > (len(actors) - 1):
                 # Add a renderer even if there is no actor.
@@ -131,7 +131,7 @@ def main():
                 ren = vtkRenderer()
                 ren.SetBackground(colors.GetColor3d('DarkSlateGray'))
                 ren.SetViewport(viewport)
-                renWin.AddRenderer(ren)
+                ren_win.AddRenderer(ren)
                 continue
 
             renderers[index].SetViewport(viewport)
@@ -141,9 +141,9 @@ def main():
             renderers[index].GetActiveCamera().Elevation(-30)
             renderers[index].ResetCameraClippingRange()
 
-    iRen.Initialize()
-    renWin.Render()
-    iRen.Start()
+    iren.Initialize()
+    ren_win.Render()
+    iren.Start()
 
 
 if __name__ == '__main__':
