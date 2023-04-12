@@ -27,6 +27,7 @@ int main(int, char*[])
   // Create a renderer, render window, and interactor
   vtkNew<vtkOpenVRRenderer> renderer;
   vtkNew<vtkOpenVRRenderWindow> renderWindow;
+  renderWindow->Initialize();
   renderWindow->AddRenderer(renderer);
   vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
