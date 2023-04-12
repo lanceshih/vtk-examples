@@ -34,6 +34,9 @@ set(KIT_LIBS ${VTK_LIBRARIES})
 # Build all .cxx files in the directory
 file(GLOB ALL_FILES *.cxx)
 
+include(${WikiExamples_SOURCE_DIR}/CMake/RequiresModule.cmake)
+Requires_Module(OpenVRVolume RenderingOpenVR)
+
 if (VTK_RENDERING_BACKEND STREQUAL "OpenGL2")
   list(REMOVE_ITEM ALL_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/SmartVolumeMapper.cxx)
