@@ -1,17 +1,12 @@
 #include <vtkActor.h>
-#include <vtkConeSource.h>
+#include <vtkColorSeries.h>
+#include <vtkColorTransferFunction.h>
 #include <vtkImageData.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenVRRenderWindow.h>
 #include <vtkOpenVRRenderWindowInteractor.h>
 #include <vtkOpenVRRenderer.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkProperty.h>
-
-#include <vtkColorSeries.h>
-#include <vtkColorTransferFunction.h>
-#include <vtkNamedColors.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkSmartVolumeMapper.h>
 #include <vtkVolumeProperty.h>
@@ -19,7 +14,7 @@
 int main(int, char* [])
 {
 	int dim[3] = { 10, 10, 10 };
-	double spc[3] = { 0.5, 0.5, 0.5 };
+	double spc[3] = { 0.05, 0.05, 0.05 };
 	vtkNew<vtkImageData> img;
 	img->SetDimensions(dim);
 	img->AllocateScalars(VTK_INT, 1);
@@ -56,13 +51,6 @@ int main(int, char* [])
 	volProp->Modified();
 	volProp->SetScalarOpacityUnitDistance(1);
 
-	vtkNew<vtkConeSource> coneSource;
-	coneSource->Update();
-	vtkNew<vtkPolyDataMapper> mapper;
-	mapper->SetInputConnection(coneSource->GetOutputPort());
-	vtkNew<vtkActor> actor;
-	actor->SetMapper(mapper);
-
 	vtkNew<vtkOpenVRRenderWindow> renderWindow;
 	renderWindow->Initialize();
 	vtkNew<vtkOpenVRRenderWindowInteractor> renderWindowInteractor;
@@ -72,9 +60,9 @@ int main(int, char* [])
 	renderWindow->AddRenderer(renderer);
 	vtkNew<vtkNamedColors> namedColors;
 	renderer->SetBackground(namedColors->GetColor3d("ForestGreen").GetData());
-	renderer->AddActor(actor);
 	renderer->AddVolume(volume);
-	volume->SetPosition(0, 1, 0);
+	volume->SetPosition(0, 0.5, 0);
+
 
 	renderWindow->Render();
 	renderWindowInteractor->Start();
