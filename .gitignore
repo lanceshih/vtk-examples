@@ -1,6 +1,9 @@
 BoneYard
 docs
-__pycache__
+
+# Python
+__pycache__/
+.idea/
 
 # Microsoft shortcuts.
 *.lnk
