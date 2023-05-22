@@ -178,6 +178,7 @@ If you are new to VTK then these [tutorials](#tutorial) will help to get you sta
 | Example Name | Description | Image |
 | -------------- | ------------- | ------- |
 [BooleanOperationImplicitFunctions](/Python/ImplicitFunctions/BooleanOperationImplicitFunctions) | Demonstrate booleans of two different implicit functions
+[ContourTriangulator](/Python/Modelling/ContourTriangulator) | Create a contour from a structured point set (image) and triangulate it.
 [CutWithScalars](/Python/VisualizationAlgorithms/CutWithScalars) | Cut a surface with scalars.
 [DiscreteMarchingCubes](/Cxx/Python/DiscreteMarchingCubes) | Generate surfaces from labeled data.
 [ExtractData](/Python/VisualizationAlgorithms/ExtractData) | Implicit functions used to select data: Two ellipsoids are combined using the union operation used to select voxels from a volume. Voxels are shrunk 50 percent.
