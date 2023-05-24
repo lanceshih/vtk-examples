@@ -60,8 +60,7 @@ def main():
     # PART 3 Show the data
     # also demonstrate a composite aware filter
     # this filter aggregates all blocks into one polydata
-    # this is handy for display, although fairly limited
-    # see vtkCompositePolyDataMapper2 for something better
+    # this is handy for display, although fairly limited.
     polydata = vtkCompositeDataGeometryFilter()
     polydata.SetInputConnection(edges.GetOutputPort())
 
