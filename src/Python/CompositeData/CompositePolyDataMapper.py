@@ -2,17 +2,19 @@
 
 # noinspection PyUnresolvedReferences
 import vtkmodules.vtkInteractionStyle
+# noinspection PyUnresolvedReferences
+import vtkmodules.vtkRenderingOpenGL2
 from vtkmodules.vtkCommonColor import vtkNamedColors
 from vtkmodules.vtkCommonDataModel import vtkMultiBlockDataSet
 from vtkmodules.vtkFiltersSources import vtkSphereSource
 from vtkmodules.vtkRenderingCore import (
     vtkActor,
     vtkCompositeDataDisplayAttributes,
+    vtkCompositePolyDataMapper,
     vtkRenderWindow,
     vtkRenderWindowInteractor,
     vtkRenderer
 )
-from vtkmodules.vtkRenderingOpenGL2 import vtkCompositePolyDataMapper2
 
 
 def main():
@@ -39,7 +41,8 @@ def main():
     # NULL in this process.
     mbds.SetBlock(2, sphere2.GetOutput())
 
-    mapper = vtkCompositePolyDataMapper2()
+    # Use vtkCompositePolyDataMapper2 if VTK Version < 90020230516
+    mapper = vtkCompositePolyDataMapper()
     mapper.SetInputDataObject(mbds)
     cdsa = vtkCompositeDataDisplayAttributes()
     mapper.SetCompositeDataDisplayAttributes(cdsa)
