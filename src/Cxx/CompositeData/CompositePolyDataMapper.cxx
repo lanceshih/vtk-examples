@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCompositeDataDisplayAttributes.h>
-#include <vtkCompositePolyDataMapper2.h>
 #include <vtkMultiBlockDataSet.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -8,6 +7,16 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
+#include <vtkVersion.h>
+
+#ifdef VTK_VERSION_NUMBER
+#if VTK_VERSION_NUMBER >= 90020230516ULL
+#define VTK_USE_CPD 1
+#include <vtkCompositePolyDataMapper.h>
+#else
+#include <vtkCompositePolyDataMapper2.h>
+#endif
+#endif
 
 int main(int /* argc */, char* /* argv */[])
 {
@@ -31,7 +40,11 @@ int main(int /* argc */, char* /* argv */[])
   // NULL in this process.
   mbds->SetBlock(2, sphere2->GetOutput());
 
+#ifdef VTK_USE_CPD
+  vtkNew<vtkCompositePolyDataMapper> mapper;
+#else
   vtkNew<vtkCompositePolyDataMapper2> mapper;
+#endif
   mapper->SetInputDataObject(mbds.GetPointer());
   vtkNew<vtkCompositeDataDisplayAttributes> cdsa;
   mapper->SetCompositeDataDisplayAttributes(cdsa.Get());
