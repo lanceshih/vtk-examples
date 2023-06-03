@@ -144,7 +144,7 @@ def disp_components(modules, module_implements):
         for key in keys:
             res.append(
                 f'    # {key.split("::")[1]:<{max_width}} # implements {", ".join(sorted(module_implements[key]))}')
-    res.append(')')
+    res.append(')\n')
 
     return res
 
