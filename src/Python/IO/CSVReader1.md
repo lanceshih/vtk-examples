@@ -1,10 +1,10 @@
 ### Description
 
-This example creates a PolyData object containing lines and points from a CSV file and writes it to a .vtp file.
+This example loads a CSV file, edits it and visualises the result.
 
-It demonstrates the use of [pandas](https://pandas.pydata.org/) to read the CSV input file and to create a temporary file containing the desired columns. This temporary file is subsequently read and parsed using vtkDelimitedTextReader.
+It demonstrates the use of [pandas](https://pandas.pydata.org/) to read and edit the CSV input file, then create a temporary file containing the desired columns. This temporary file is subsequently read and parsed using vtkDelimitedTextReader.
 
-The key thing about `pandas` is it can read/write data in various formats: CSV and text files, Microsoft Excel, SQL databases, and the fast HDF5 format. It is highly optimized for performance and the DataFrame object allows for extensive row/column manipulation. So we can edit the data, creating new columns, and, finally, selecting only relevant columns for further analysis by VTK.
+The key thing about `pandas` is it can read/write data in various formats: CSV and text files, Microsoft Excel, SQL databases, and the fast HDF5 format. It is highly optimized for performance and the DataFrame object allows for extensive row/column manipulation. So we can edit the data, creating new columns, and, finally, select only relevant columns for further analysis by VTK.
 
 In this case we create a CSV file of selected columns and read this with vtkDelimitedTextReader.
 
