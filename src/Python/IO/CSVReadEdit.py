@@ -35,32 +35,33 @@ from vtkmodules.vtkRenderingCore import (
 
 def get_program_parameters():
     import argparse
-    description = 'Create a PolyData object containing lines and points from a CSV file and write it to a .vtp file.'
+    description = 'Edit data from a CSV file and visualise it.'
     epilogue = '''
     This program selects ECEF or UTM coordinates from the input file and:
-       1) Creates a VTP file.
-       2) Optionally saves the edited file used to create the visualisation as a CSV file.
-       3) Visualises the resultant points and lines.
+       1) Visualises the resultant points and lines.
+       2) Optionally creates a VTP file for further analysis.
+       3) Optionally saves the edited file used to create the visualisation as a CSV file.
     If Geographic coordinates are selected, just the resultant CSV file is saved.
     '''
     parser = argparse.ArgumentParser(description=description, epilog=epilogue,
                                      formatter_class=argparse.RawTextHelpFormatter)
-    group = parser.add_mutually_exclusive_group(required=True)
     parser.add_argument('file_name', help='The CSV file containing the data.')
+    parser.add_argument('-v', '--generate_vtp', action='store_true', help='Generate the .vtp file.')
     parser.add_argument('-o', '--out_csv_fn', default=None, help='The file name for the edited CSV file.')
     parser.add_argument('-p', '--path', default='.',
                         help='The path to be appended to the .vtp and optional .csv file')
 
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-e', '--ecef', action='store_true', help='Use ECEF coordinates.')
     group.add_argument('-u', '--utm', action='store_true', help='Use UTM coordinates.')
     group.add_argument('-g', '--geo', action='store_true', help='Use geographic coordinates (latitude/longitude).')
 
     args = parser.parse_args()
-    return args.file_name, args.out_csv_fn, args.path, args.ecef, args.utm, args.geo
+    return args.file_name, args.generate_vtp, args.out_csv_fn, args.path, args.ecef, args.utm, args.geo
 
 
 def main():
-    ifn, ofn, sp, ecef, utm, geo = get_program_parameters()
+    ifn, generate_vtp, ofn, sp, ecef, utm, geo = get_program_parameters()
     file_name = Path(ifn)
     if not file_name.is_file():
         print('Unable to read:', file_name)
@@ -72,25 +73,22 @@ def main():
             return
     pth.mkdir(parents=True, exist_ok=True)
 
-    vtp_fn = Path(ifn).with_suffix('.vtp')
-    if not vtp_fn.root:
-        vtp_fn = pth / vtp_fn.name
+    # Build the output paths.
+    vtp_fn = Path(pth / Path(ifn).stem).with_suffix('.vtp')
     if ecef:
-        vtp_fn = Path(vtp_fn.parent, vtp_fn.stem + '_ecef' + vtp_fn.suffix)
+        vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_ecef')
     if utm:
-        vtp_fn = Path(vtp_fn.parent, vtp_fn.stem + '_utm' + vtp_fn.suffix)
+        vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_utm')
     if ofn:
-        csv_fn = Path(ofn)
-        if not csv_fn.root:
-            csv_fn = pth / csv_fn.name
+        csv_fn = Path(pth / Path(ofn).name)
         if not csv_fn.suffix.lower() == '.csv':
             csv_fn = csv_fn.with_suffix('.csv')
         if ecef:
-            csv_fn = Path(vtp_fn.parent, csv_fn.stem + '_ecef' + csv_fn.suffix)
+            csv_fn = csv_fn.with_stem(csv_fn.stem + '_ecef')
         if utm:
-            csv_fn = Path(vtp_fn.parent, csv_fn.stem + '_utm' + csv_fn.suffix)
+            csv_fn = csv_fn.with_stem(csv_fn.stem + '_utm')
         if geo:
-            csv_fn = Path(vtp_fn.parent, csv_fn.stem + '_geo' + csv_fn.suffix)
+            csv_fn = csv_fn.with_stem(csv_fn.stem + '_geo')
     else:
         csv_fn = None
 
@@ -177,17 +175,18 @@ def main():
     transform_filter.SetTransform(transform)
     transform_filter.Update()
 
-    writer = vtkXMLPolyDataWriter()
-    writer.SetFileName(vtp_fn)
-    writer.SetInputConnection(transform_filter.GetOutputPort())
-    writer.SetDataModeToBinary()
-    writer.Write()
+    if generate_vtp:
+        writer = vtkXMLPolyDataWriter()
+        writer.SetFileName(vtp_fn)
+        writer.SetInputConnection(transform_filter.GetOutputPort())
+        writer.SetDataModeToBinary()
+        writer.Write()
 
     colors = vtkNamedColors()
     colors.SetColor("ParaViewBkg", [82, 87, 110, 255])
 
     lut = get_diverging_lut('cool_warm')
-    # lut = get_diverging_lut1('MidnightBlue', 'Gainsboro', 'DarkOrange')
+    # lut = get_diverging_lut1('DarkRed', 'Gainsboro', 'Green')
 
     mapper = vtkPolyDataMapper()
     mapper.SetInputConnection(transform_filter.GetOutputPort())

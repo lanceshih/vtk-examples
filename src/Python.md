@@ -30,11 +30,6 @@ If you are new to VTK then these [tutorials](#tutorial) will help to get you sta
 
 ## Input and Output
 
-| Example Name | Description | Image |
-| -------------- | ------------- | ------- |
-[CSVReader](/Python/IO/CSVReader) | Create a vtkPolyData object containing lines and points from a CSV file and write it to a .vtp file.
-[CSVReader1](/Python/IO/CSVReader1) | Create a vtkPolyData object containing lines and points from a CSV file and write it to a .vtp file.
-
 ### Graph Formats
 
 ### 3D File Formats
@@ -45,6 +40,8 @@ If you are new to VTK then these [tutorials](#tutorial) will help to get you sta
 
 | Example Name | Description | Image |
 | -------------- | ------------- | ------- |
+[CSVReadEdit](/Python/IO/CSVReadEdit) | Read and edit a CSV file using pandas and numpy.
+[CSVReadEdit1](/Python/IO/CSVReadEdit1) | Read and edit a CSV file using pandas and vtkDelimitedTextReader.
 [ReadExodusData](/Python/IO/ReadExodusData) | A simple script for reading and viewing ExodusII data interactively.
 [ReadPLOT3D](/Python/IO/ReadPLOT3D) | Read CFD (computational fluid dynamics) data produced by PLOT3D.
 [ReadSLC](/Python/IO/ReadSLC) | Read an SLC file.
