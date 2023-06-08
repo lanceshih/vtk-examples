@@ -8,6 +8,14 @@ The key thing about `pandas` is it can read/write data in various formats: CSV a
 
 In this case we select columns using numpy to create the three-dimensional point data array data. The numpy objects are then converted to vtk data structures and integrated into a vtkPolyData object.
 
+The process is this:
+
+``` text
+CSV->pandas(read/edit/select)->numpy->numpy_to_vtk->vtkPolyData
+```
+
+Note how easy it is the get the three-dimensional coordinates using numpy.
+
 The files used to generate the example are:
 
 ``` text
@@ -34,5 +42,6 @@ The parameters for typical usage are something like this:
 
 Further information:
 
-- This example was inspired by [Easy Data Conversion to VTK with Python](https://www.kitware.com/easy-data-conversion-to-vtk-with-python/).
-- See [Installing pandas](https://pandas.pydata.org/docs/getting_started/install.html).
+- [Easy Data Conversion to VTK with Python](https://www.kitware.com/easy-data-conversion-to-vtk-with-python/).
+- [Installing pandas](https://pandas.pydata.org/docs/getting_started/install.html).
+- [VTK Examples - New CVS Examples](https://discourse.vtk.org/t/vtk-examples-new-cvs-examples/11632)
