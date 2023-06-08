@@ -39,15 +39,15 @@ def get_program_parameters():
     epilogue = '''
     This program selects ECEF or UTM coordinates from the input file and:
        1) Visualises the resultant points and lines.
-       2) Optionally creates a VTP file for further analysis.
-       3) Optionally saves the edited file used to create the visualisation as a CSV file.
-    If Geographic coordinates are selected, just the resultant CSV file is saved.
+       2) Optionally creates and saves a VTP file for further analysis.
+       3) Optionally saves the CSV file.
+    If Geographic coordinates are selected, only the resultant CSV file can be saved.
     '''
     parser = argparse.ArgumentParser(description=description, epilog=epilogue,
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('file_name', help='The CSV file containing the data.')
-    parser.add_argument('-v', '--generate_vtp', action='store_true', help='Generate the .vtp file.')
-    parser.add_argument('-o', '--out_csv_fn', default=None, help='The file name for the edited CSV file.')
+    parser.add_argument('-c', '--csv', action='store_true', help='Save the resultant CSV file.')
+    parser.add_argument('-v', '--vtp', action='store_true', help='Save the .vtp file.')
     parser.add_argument('-p', '--path', default='.',
                         help='The path to be appended to the .vtp and optional .csv file')
 
@@ -57,11 +57,11 @@ def get_program_parameters():
     group.add_argument('-g', '--geo', action='store_true', help='Use geographic coordinates (latitude/longitude).')
 
     args = parser.parse_args()
-    return args.file_name, args.generate_vtp, args.out_csv_fn, args.path, args.ecef, args.utm, args.geo
+    return args.file_name, args.csv, args.vtp, args.path, args.ecef, args.utm, args.geo
 
 
 def main():
-    ifn, generate_vtp, ofn, sp, ecef, utm, geo = get_program_parameters()
+    ifn, csv, vtp, sp, ecef, utm, geo = get_program_parameters()
     file_name = Path(ifn)
     if not file_name.is_file():
         print('Unable to read:', file_name)
@@ -79,16 +79,8 @@ def main():
         vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_ecef')
     if utm:
         vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_utm')
-    if ofn:
-        csv_fn = Path(pth / Path(ofn).name)
-        if not csv_fn.suffix.lower() == '.csv':
-            csv_fn = csv_fn.with_suffix('.csv')
-        if ecef:
-            csv_fn = csv_fn.with_stem(csv_fn.stem + '_ecef')
-        if utm:
-            csv_fn = csv_fn.with_stem(csv_fn.stem + '_utm')
-        if geo:
-            csv_fn = csv_fn.with_stem(csv_fn.stem + '_geo')
+    if geo or csv:
+        csv_fn = Path(pth / Path(ifn).stem).with_suffix('.csv')
     else:
         csv_fn = None
 
@@ -101,15 +93,24 @@ def main():
     # Greate a row number column.
     df['row_number'] = df.reset_index().index
     if csv_fn:
-        dfv = None
         # Note: The dataframe dfv is actually just a view of the original dataframe df.
         if ecef:
             dfv = df[['X(m)', 'Y(m)', 'Z(m)', 'Elevation(m)']]
-        elif utm:
-            dfv = df[['Easting(m)', 'Northing(m)', 'Elevation(m)']]
-        elif geo:
-            dfv = df[['Longitude', 'Latitude', 'Elevation(m)']]
-        dfv.to_csv(csv_fn, index=True, index_label='Index', header=True)
+            if csv:
+                ecef_csv_fn = csv_fn.with_stem(csv_fn.stem + '_ecef')
+                dfv.to_csv(ecef_csv_fn, index=True, index_label='Index', header=True)
+        if utm:
+            # Duplicate the elevation column, this will become the z-coordinate when UTM is selected.
+            df['Elev'] = df.loc[:, 'Elevation(m)']
+            dfv = df[['Easting(m)', 'Northing(m)', 'Elev', 'Elevation(m)']]
+            if csv:
+                utm_csv_fn = csv_fn.with_stem(csv_fn.stem + '_utm')
+                dfv.to_csv(utm_csv_fn, index=True, index_label='Index', header=True)
+
+        if geo or csv:
+            df_geo = df[['Longitude', 'Latitude', 'Elevation(m)']]
+            geo_csv_fn = csv_fn.with_stem(csv_fn.stem + '_geo')
+            df_geo.to_csv(geo_csv_fn, index=True, index_label='Index', header=True)
 
     xyz = None
     if ecef:
@@ -175,7 +176,7 @@ def main():
     transform_filter.SetTransform(transform)
     transform_filter.Update()
 
-    if generate_vtp:
+    if vtp:
         writer = vtkXMLPolyDataWriter()
         writer.SetFileName(vtp_fn)
         writer.SetInputConnection(transform_filter.GetOutputPort())

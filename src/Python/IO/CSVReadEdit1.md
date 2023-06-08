@@ -6,7 +6,15 @@ It demonstrates the use of [pandas](https://pandas.pydata.org/) to read and edit
 
 The key thing about `pandas` is it can read/write data in various formats: CSV and text files, Microsoft Excel, SQL databases, and the fast HDF5 format. It is highly optimized for performance and the DataFrame object allows for extensive row/column manipulation. So we can edit the data, creating new columns, and, finally, select only relevant columns for further analysis by VTK.
 
-In this case we create a CSV file of selected columns and read this with vtkDelimitedTextReader.
+In this case we create a temporary CSV file of selected columns and read this with vtkDelimitedTextReader.
+
+The process is this:
+
+``` text
+CSV->pandas(read/edit/select)->CSV->vtkDelimitedTextReader->vtkPolyData
+```
+
+By going down this route we don't overload the delimited text reader with the effort of processing any unneeded columns of data.
 
 The files used to generate the example are:
 
@@ -24,7 +32,7 @@ Where:
 The parameters for typical usage are something like this:
 
 ``` text
-<DATA>/LakeGininderra.csv -u -oLakeGininderraTrack -pResults
+<DATA>/LakeGininderra.csv -e -oLakeGininderraTrack -pResults
 ```
 
 <figure>
@@ -34,5 +42,6 @@ The parameters for typical usage are something like this:
 
 Further information:
 
-- This example was inspired by [Easy Data Conversion to VTK with Python](https://www.kitware.com/easy-data-conversion-to-vtk-with-python/).
-- See [Installing pandas](https://pandas.pydata.org/docs/getting_started/install.html).
+- [Easy Data Conversion to VTK with Python](https://www.kitware.com/easy-data-conversion-to-vtk-with-python/).
+- [Installing pandas](https://pandas.pydata.org/docs/getting_started/install.html).
+- [VTK Examples - New CVS Examples](https://discourse.vtk.org/t/vtk-examples-new-cvs-examples/11632)
