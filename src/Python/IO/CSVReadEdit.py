@@ -37,9 +37,9 @@ def get_program_parameters():
     import argparse
     description = 'Edit data from a CSV file and visualise it.'
     epilogue = '''
-    This program selects ECEF or UTM coordinates from the input file and:
-       1) Visualises the resultant points and lines.
-       2) Optionally creates and saves a VTP file for further analysis.
+    This program selects ECEF, Geographic or UTM coordinates from the input file and:
+       1) Visualises the resultant ECEF or UTM points and lines.
+       2) If ECEF or UTM is selected, optionally creates and saves a VTP file for further analysis.
        3) Optionally saves the CSV file.
     If Geographic coordinates are selected, only the resultant CSV file can be saved.
     '''
@@ -74,50 +74,52 @@ def main():
     pth.mkdir(parents=True, exist_ok=True)
 
     # Build the output paths.
+    csv_fn = Path(pth / Path(ifn).stem).with_suffix('.csv')
     vtp_fn = Path(pth / Path(ifn).stem).with_suffix('.vtp')
     if ecef:
         vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_ecef')
     if utm:
         vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_utm')
-    if geo or csv:
-        csv_fn = Path(pth / Path(ifn).stem).with_suffix('.csv')
-    else:
-        csv_fn = None
 
-    # Create a dataframe from the csv file.
+    # Create a DataFrame from the csv file.
     df = pd.read_csv(file_name)
+
+    # Use the column called 'Index' as the index.
+    # This ensures that we can trace back each row to the original data.
+    df.set_index('Index', inplace=True)
+
     # For ECEF coordinates, we want to look down from the zenith.
     # So calculate the mid-point of the latitude.
     lat_details = df['Latitude'].describe()
     lat_mid_pt = (lat_details['max'] + lat_details['min']) / 2
-    # Greate a row number column.
-    df['row_number'] = df.reset_index().index
-    if csv_fn:
-        # Note: The dataframe dfv is actually just a view of the original dataframe df.
-        if ecef:
-            dfv = df[['X(m)', 'Y(m)', 'Z(m)', 'Elevation(m)']]
-            if csv:
-                ecef_csv_fn = csv_fn.with_stem(csv_fn.stem + '_ecef')
-                dfv.to_csv(ecef_csv_fn, index=True, index_label='Index', header=True)
-        if utm:
-            # Duplicate the elevation column, this will become the z-coordinate when UTM is selected.
-            df['Elev'] = df.loc[:, 'Elevation(m)']
-            dfv = df[['Easting(m)', 'Northing(m)', 'Elev', 'Elevation(m)']]
-            if csv:
-                utm_csv_fn = csv_fn.with_stem(csv_fn.stem + '_utm')
-                dfv.to_csv(utm_csv_fn, index=True, index_label='Index', header=True)
 
-        if geo or csv:
-            df_geo = df[['Longitude', 'Latitude', 'Elevation(m)']]
-            geo_csv_fn = csv_fn.with_stem(csv_fn.stem + '_geo')
-            df_geo.to_csv(geo_csv_fn, index=True, index_label='Index', header=True)
-
-    xyz = None
+    dfv = None
+    # Copy what we want to a new DataFrame and drop any rows with missing values.
     if ecef:
-        xyz = df[['X(m)', 'Y(m)', 'Z(m)']].to_numpy()
+        dfv = df[['X(m)', 'Y(m)', 'Z(m)', 'Elevation(m)']].dropna(
+            subset=['X(m)', 'Y(m)', 'Z(m)'])
+        if csv:
+            ecef_csv_fn = csv_fn.with_stem(csv_fn.stem + '_ecef')
+            dfv.to_csv(ecef_csv_fn, index=True, index_label='Index', header=True)
     elif utm:
-        xyz = df[['Easting(m)', 'Northing(m)', 'Elevation(m)']].to_numpy()
-    elif geo:
+        dfv = df[['Easting(m)', 'Northing(m)', 'Elevation(m)']].dropna(
+            subset=['Easting(m)', 'Northing(m)', 'Elevation(m)'])
+        # Duplicate the elevation column, this will become the z-coordinate when UTM is selected.
+        dfv['Elev'] = dfv.loc[:, 'Elevation(m)']
+        if csv:
+            utm_csv_fn = csv_fn.with_stem(csv_fn.stem + '_utm')
+            dfv.to_csv(utm_csv_fn, index=True, index_label='Index', header=True)
+    else:
+        df_geo = df[['Longitude', 'Latitude', 'Elevation(m)']].dropna(
+            subset=['Longitude', 'Latitude', 'Elevation(m)'])
+        geo_csv_fn = csv_fn.with_stem(csv_fn.stem + '_geo')
+        df_geo.to_csv(geo_csv_fn, index=True, index_label='Index', header=True)
+
+    if ecef:
+        xyz = dfv[['X(m)', 'Y(m)', 'Z(m)']].to_numpy()
+    elif utm:
+        xyz = dfv[['Easting(m)', 'Northing(m)', 'Elevation(m)']].to_numpy()
+    else:
         print('Only ECEF or UTM coordinates can be visualised.')
         return
 
@@ -232,7 +234,7 @@ def main():
 
     cam_orient_manipulator = vtkCameraOrientationWidget()
     cam_orient_manipulator.SetParentRenderer(renderer)
-    cam_orient_manipulator.Off()
+    cam_orient_manipulator.On()
 
     axes = vtkAxesActor()
     axes.SetXAxisLabelText('East')
@@ -337,6 +339,74 @@ def get_diverging_lut1(start: str, mid: str, end: str, table_size: int = 256):
 
     return lut
 
+from vtkmodules.vtkIOImage import (
+    vtkBMPWriter,
+    vtkJPEGWriter,
+    vtkPNGWriter,
+    vtkPNMWriter,
+    vtkPostScriptWriter,
+    vtkTIFFWriter
+)
+from vtkmodules.vtkRenderingCore import vtkWindowToImageFilter
 
+
+def write_image(file_name, ren_win, rgba=True):
+    """
+    Write the render window view to an image file.
+
+    Image types supported are:
+     BMP, JPEG, PNM, PNG, PostScript, TIFF.
+    The default parameters are used for all writers, change as needed.
+
+    :param file_name: The file name, if no extension then PNG is assumed.
+    :param ren_win: The render window.
+    :param rgba: Used to set the buffer type.
+    :return:
+    """
+
+    if file_name:
+        valid_suffixes = ['.bmp', '.jpg', '.png', '.pnm', '.ps', '.tiff']
+        # Select the writer to use.
+        parent = Path(file_name).resolve().parent
+        path = Path(parent) / file_name
+        if path.suffix:
+            ext = path.suffix.lower()
+        else:
+            ext = '.png'
+            path = Path(str(path)).with_suffix(ext)
+        if path.suffix not in valid_suffixes:
+            print(f'No writer for this file suffix: {ext}')
+            return
+        if ext == '.bmp':
+            writer = vtkBMPWriter()
+        elif ext == '.jpg':
+            writer = vtkJPEGWriter()
+        elif ext == '.pnm':
+            writer = vtkPNMWriter()
+        elif ext == '.ps':
+            if rgba:
+                rgba = False
+            writer = vtkPostScriptWriter()
+        elif ext == '.tiff':
+            writer = vtkTIFFWriter()
+        else:
+            writer = vtkPNGWriter()
+
+        windowto_image_filter = vtkWindowToImageFilter()
+        windowto_image_filter.SetInput(ren_win)
+        windowto_image_filter.SetScale(1)  # image quality
+        if rgba:
+            windowto_image_filter.SetInputBufferTypeToRGBA()
+        else:
+            windowto_image_filter.SetInputBufferTypeToRGB()
+            # Read from the front buffer.
+            windowto_image_filter.ReadFrontBufferOff()
+            windowto_image_filter.Update()
+
+        writer.SetFileName(path)
+        writer.SetInputConnection(windowto_image_filter.GetOutputPort())
+        writer.Write()
+    else:
+        raise RuntimeError('Need a filename.')
 if __name__ == '__main__':
     main()

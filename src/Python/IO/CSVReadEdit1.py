@@ -37,9 +37,9 @@ def get_program_parameters():
     import argparse
     description = 'Edit data from a CSV file and visualise it.'
     epilogue = '''
-    This program selects ECEF or UTM coordinates from the input file and:
-       1) Visualises the resultant points and lines.
-       2) Optionally creates and saves a VTP file for further analysis.
+    This program selects ECEF, Geographic or UTM coordinates from the input file and:
+       1) Visualises the resultant ECEF or UTM points and lines.
+       2) If ECEF or UTM is selected, optionally creates and saves a VTP file for further analysis.
        3) Optionally saves the CSV file.
     If Geographic coordinates are selected, only the resultant CSV file can be saved.
     '''
@@ -74,18 +74,20 @@ def main():
     pth.mkdir(parents=True, exist_ok=True)
 
     # Build the output paths.
+    csv_fn = Path(pth / Path(ifn).stem).with_suffix('.csv')
     vtp_fn = Path(pth / Path(ifn).stem).with_suffix('.vtp')
     if ecef:
         vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_ecef')
     if utm:
         vtp_fn = vtp_fn.with_stem(vtp_fn.stem + '_utm')
-    if geo or csv:
-        csv_fn = Path(pth / Path(ifn).stem).with_suffix('.csv')
-    else:
-        csv_fn = None
 
-    # Create a dataframe from the csv file.
+    # Create a DataFrame from the csv file.
     df = pd.read_csv(file_name)
+
+    # Use the column called 'Index' as the index.
+    # This ensures that we can trace back each row to the original data.
+    df.set_index('Index', inplace=True)
+
     # For ECEF coordinates, we want to look down from the zenith.
     # So calculate the mid-point of the latitude.
     lat_details = df['Latitude'].describe()
@@ -97,27 +99,32 @@ def main():
         print('Unable to find', tmp_dir)
         return
     tmp_path = Path(tmp_dir, f'tmp_{file_name.name}')
-    # Note: The dataframe dfv is actually just a view of the original dataframe df.
+
     dfv = None
+    # Copy what we want to a new DataFrame and drop any rows with missing values.
     if ecef:
-        dfv = df[['X(m)', 'Y(m)', 'Z(m)', 'Elevation(m)']]
+        dfv = df[['X(m)', 'Y(m)', 'Z(m)', 'Elevation(m)']].dropna(
+            subset=['X(m)', 'Y(m)', 'Z(m)'])
         if csv:
             ecef_csv_fn = csv_fn.with_stem(csv_fn.stem + '_ecef')
             dfv.to_csv(ecef_csv_fn, index=True, index_label='Index', header=True)
-    if utm:
+    elif utm:
+        dfv = df[['Easting(m)', 'Northing(m)', 'Elevation(m)']].dropna(
+            subset=['Easting(m)', 'Northing(m)', 'Elevation(m)'])
         # Duplicate the elevation column, this will become the z-coordinate when UTM is selected.
-        df['Elev'] = df.loc[:, 'Elevation(m)']
-        dfv = df[['Easting(m)', 'Northing(m)', 'Elev', 'Elevation(m)']]
+        dfv['Elev'] = dfv.loc[:, 'Elevation(m)']
         if csv:
             utm_csv_fn = csv_fn.with_stem(csv_fn.stem + '_utm')
             dfv.to_csv(utm_csv_fn, index=True, index_label='Index', header=True)
-    if ecef or utm:
-        dfv.to_csv(tmp_path, index=True, index_label='Index', header=True)
-
-    if geo or csv:
-        df_geo = df[['Longitude', 'Latitude', 'Elevation(m)']]
+    else:
+        df_geo = df[['Longitude', 'Latitude', 'Elevation(m)']].dropna(
+            subset=['Longitude', 'Latitude', 'Elevation(m)'])
         geo_csv_fn = csv_fn.with_stem(csv_fn.stem + '_geo')
         df_geo.to_csv(geo_csv_fn, index=True, index_label='Index', header=True)
+
+    if ecef or utm:
+        # Write out the DataFrame.
+        dfv.to_csv(tmp_path, index=True, index_label='Index', header=True)
 
     points_reader = vtkDelimitedTextReader()
     points_reader.SetFileName(tmp_path)
@@ -239,7 +246,7 @@ def main():
 
     cam_orient_manipulator = vtkCameraOrientationWidget()
     cam_orient_manipulator.SetParentRenderer(renderer)
-    cam_orient_manipulator.Off()
+    cam_orient_manipulator.On()
 
     axes = vtkAxesActor()
     axes.SetXAxisLabelText('East')
