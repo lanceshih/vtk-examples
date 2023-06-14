@@ -32,7 +32,7 @@ Where:
 The parameters for typical usage are something like this:
 
 ``` text
-<DATA>/LakeGininderra.csv -e -oLakeGininderraTrack -pResults
+<DATA>/LakeGininderra.csv -e -c -pResults
 ```
 
 <figure>
