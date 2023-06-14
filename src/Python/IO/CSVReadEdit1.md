@@ -44,4 +44,4 @@ Further information:
 
 - [Easy Data Conversion to VTK with Python](https://www.kitware.com/easy-data-conversion-to-vtk-with-python/).
 - [Installing pandas](https://pandas.pydata.org/docs/getting_started/install.html).
-- [VTK Examples - New CVS Examples](https://discourse.vtk.org/t/vtk-examples-new-cvs-examples/11632)
+- [VTK Examples - New CSV Examples](https://discourse.vtk.org/t/vtk-examples-new-csv-examples/11632)
