@@ -48,8 +48,10 @@ if(NOT VTK_BINARY_DIR)
   RenderingLOD
   RenderingLabel
   RenderingOpenGL2
+  OPTIONAL_COMPONENTS
+  cli11
+  jsoncpp
   TestingRendering
-  ${optional}
   QUIET
 )
 endif()
@@ -60,6 +62,18 @@ set(KIT_LIBS ${VTK_LIBRARIES})
 # Build all .cxx files in the directory
 
 file(GLOB ALL_FILES *.cxx)
+
+include(${WikiExamples_SOURCE_DIR}/CMake/RequiresCxxVersion.cmake)
+set(CXX_VERSION_MIN "17")
+Requires_Cxx_Version(FroggieSurface ${CXX_VERSION_MIN} ALL_FILES)
+Requires_Cxx_Version(FroggieView ${CXX_VERSION_MIN} ALL_FILES)
+
+include(${WikiExamples_SOURCE_DIR}/CMake/RequiresModule.cmake)
+Requires_Module(FroggieSurface cli11)
+Requires_Module(FroggieView cli11)
+Requires_Module(FroggieSurface jsoncpp)
+Requires_Module(FroggieView jsoncpp)
+
 
 Requires_Module(ExtrudePolyDataAlongLine SplineDrivenImageSlicer)
 #Requires_Module(ShadowsOpenGL RenderingOpenGL)
@@ -102,6 +116,8 @@ if (BUILD_TESTING)
     ExtrudePolyDataAlongLine
     FontFile
     FrogBrain
+    FroggieSurface
+    FroggieView
     FrogSlice
     Glyph3DImage
     Glyph3DMapper
@@ -181,6 +197,15 @@ if (BUILD_TESTING)
 
   add_test(${KIT}-FontFile ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestFontFile ${DATA}/CopyPaste.ttf)
+
+    if(TARGET FroggieSurface)
+    add_test(${KIT}-FroggieSurface ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
+    TestFroggieSurface ${DATA}/Frog_mhd.json)
+  endif()
+  if(TARGET FroggieView)
+    add_test(${KIT}-FroggieView ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
+      TestFroggieView ${DATA}/Frog_vtk.json)
+  endif()
 
   add_test(${KIT}-Glyph3DImage ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestGlyph3DImage ${DATA}/emote.jpg)
