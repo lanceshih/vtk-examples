@@ -304,11 +304,11 @@ int main(int argc, char* argv[])
   auto noSliders = false;
   app.add_flag("-n", noSliders, "No sliders");
 
-  std::array<bool, 4> view{false, false, false, false};
+  std::array<bool, 6> view{false, false, false, false};
   auto* ogroup = app.add_option_group(
       "view",
-      "Select a view corresponding to Fig 12-9 in the VTK Textbook. Only none "
-      "or one of these can be selected.");
+      "Select a view corresponding to Fig 12-9 in the VTK Textbook. Only one "
+      "or none of these can be selected.");
   ogroup->add_flag("-a", view[0],
                    "The view corresponds to Fig 12-9a in the VTK Textbook");
   ogroup->add_flag("-b", view[1],
@@ -317,6 +317,12 @@ int main(int argc, char* argv[])
                    "The view corresponds to Fig 12-9c in the VTK Textbook");
   ogroup->add_flag("-d", view[3],
                    "The view corresponds to Fig 12-9d in the VTK Textbook");
+  ogroup->add_flag(
+      "-l", view[4],
+      "The view corresponds to looking down on the anterior surface");
+  ogroup->add_flag("-p", view[5],
+                   "The view corresponds to looking down on the posterior "
+                   "surface (the default)");
 
   CLI11_PARSE(app, argc, argv);
 
@@ -324,9 +330,9 @@ int main(int argc, char* argv[])
                                    [=](const bool& e) { return e == true; });
   if (selectCount > 1)
   {
-    std::cerr
-        << "Only one or none of the options -a, -b, -c, -d can be selected;"
-        << std::endl;
+    std::cerr << "Only one or none of the options -a, -b, -c, -d, -l, -p can "
+                 "be selected;"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -372,11 +378,21 @@ int main(int argc, char* argv[])
       tissues = parameters.fig_129cd;
       selectFigure = 'c';
     }
-    else
+    else if (view[3])
     {
       // No skin, blood and skeleton.
       tissues = parameters.fig_129cd;
       selectFigure = 'd';
+    }
+    else if (view[4])
+    {
+      // Looking down on the anterior surface.
+      selectFigure = 'l';
+    }
+    else // The default
+    {
+      // Looking down on the posterior surface.
+      selectFigure = 'p';
     }
   }
 
@@ -557,67 +573,69 @@ int main(int argc, char* argv[])
   ren->SetBackground(colors->GetColor3d("ParaViewBkg").GetData());
 
   auto camera = ren->GetActiveCamera();
-  if (selectFigure == '\0')
+  // Superior Anterior Left
+  auto labels{"sal"};
+  if (selectFigure == 'a')
   {
-    // Orient so that we look down on the dorsal surface and
+    // Fig 12-9a in the VTK Textbook
+    camera->SetPosition(495.722368, -447.474954, -646.308030);
+    camera->SetFocalPoint(137.612066, -40.962376, -195.171023);
+    camera->SetViewUp(-0.323882, -0.816232, 0.478398);
+    camera->SetDistance(704.996499);
+    camera->SetClippingRange(319.797039, 1809.449285);
+  }
+  else if (selectFigure == 'b')
+  {
+    // Fig 12-9b in the VTK Textbook
+    camera->SetPosition(478.683494, -420.477744, -643.112038);
+    camera->SetFocalPoint(135.624874, -36.478435, -210.614440);
+    camera->SetViewUp(-0.320495, -0.820148, 0.473962);
+    camera->SetDistance(672.457328);
+    camera->SetClippingRange(307.326771, 1765.990822);
+  }
+  else if (selectFigure == 'c')
+  {
+    // Fig 12-9c in the VTK Textbook
+    camera->SetPosition(201.363313, -147.260834, -229.885066);
+    camera->SetFocalPoint(140.626206, -75.857216, -162.352531);
+    camera->SetViewUp(-0.425438, -0.786048, 0.448477);
+    camera->SetDistance(115.534047);
+    camera->SetClippingRange(7.109870, 854.091718);
+  }
+  else if (selectFigure == 'd')
+  {
+    // Fig 12-9d in the VTK Textbook
+    camera->SetPosition(115.361727, -484.656410, -6.193827);
+    camera->SetFocalPoint(49.126343, 98.501094, 1.323317);
+    camera->SetViewUp(-0.649127, -0.083475, 0.756086);
+    camera->SetDistance(586.955116);
+    camera->SetClippingRange(360.549218, 866.876230);
+  }
+  else if (selectFigure == 'l')
+  {
+    // Orient so that we look down on the anterior surface and
     //  the superior surface faces the top of the screen.
+    // Left Superior Anterior
+    labels = "lsa";
     vtkNew<vtkTransform> transform;
     transform->SetMatrix(camera->GetModelTransformMatrix());
-    transform->RotateY(-90);
+    transform->RotateY(90);
     transform->RotateZ(90);
     camera->SetModelTransformMatrix(transform->GetMatrix());
     ren->ResetCamera();
   }
   else
   {
-    if (selectFigure == 'a')
-    {
-      // Fig 12-9a in the VTK Textbook
-      camera->SetPosition(495.722368, -447.474954, -646.308030);
-      camera->SetFocalPoint(137.612066, -40.962376, -195.171023);
-      camera->SetViewUp(-0.323882, -0.816232, 0.478398);
-      camera->SetDistance(704.996499);
-      camera->SetClippingRange(319.797039, 1809.449285);
-    }
-    else if (selectFigure == 'b')
-    {
-      // Fig 12-9b in the VTK Textbook
-      camera->SetPosition(478.683494, -420.477744, -643.112038);
-      camera->SetFocalPoint(135.624874, -36.478435, -210.614440);
-      camera->SetViewUp(-0.320495, -0.820148, 0.473962);
-      camera->SetDistance(672.457328);
-      camera->SetClippingRange(307.326771, 1765.990822);
-    }
-    else if (selectFigure == 'c')
-    {
-      // Fig 12-9c in the VTK Textbook
-      camera->SetPosition(201.363313, -147.260834, -229.885066);
-      camera->SetFocalPoint(140.626206, -75.857216, -162.352531);
-      camera->SetViewUp(-0.425438, -0.786048, 0.448477);
-      camera->SetDistance(115.534047);
-      camera->SetClippingRange(7.109870, 854.091718);
-    }
-    else if (selectFigure == 'd')
-    {
-      // Fig 12-9d in the VTK Textbook
-      camera->SetPosition(115.361727, -484.656410, -6.193827);
-      camera->SetFocalPoint(49.126343, 98.501094, 1.323317);
-      camera->SetViewUp(-0.649127, -0.083475, 0.756086);
-      camera->SetDistance(586.955116);
-      camera->SetClippingRange(360.549218, 866.876230);
-    }
-  }
-
-  std::string labels;
-  if (selectFigure != '\0')
-  {
-    // Superior Anterior Left
-    labels = "sal";
-  }
-  else
-  {
+    // Orient so that we look down on the posterior surface and
+    //  the superior surface faces the top of the screen.
     // Right Superior Posterior
     labels = "rsp";
+    vtkNew<vtkTransform> transform;
+    transform->SetMatrix(camera->GetModelTransformMatrix());
+    transform->RotateY(-90);
+    transform->RotateZ(90);
+    camera->SetModelTransformMatrix(transform->GetMatrix());
+    ren->ResetCamera();
   }
 
   vtkNew<vtkCameraOrientationWidget> cow;
@@ -964,7 +982,7 @@ void SliceOrder::PrintTransform(std::string const& order)
 
 void SliceOrder::PrintAlltransforms()
 {
-  for (auto const &p : this->transform)
+  for (auto const& p : this->transform)
   {
     PrintTransform(p.first);
   }
@@ -1049,6 +1067,13 @@ vtkNew<vtkPropAssembly> MakeCubeActor(std::string const& labelSelector,
     // xyzLabels = std::array<std::string, 3>{"R", "S", "P"};
     xyzLabels = std::array<std::string, 3>{"+X", "+Y", "+Z"};
     cubeLabels = std::array<std::string, 6>{"R", "L", "S", "I", "P", "A"};
+    scale = std::array<double, 3>{1.5, 1.5, 1.5};
+  }
+  else if (labelSelector == "lsa")
+  {
+    // xyzLabels = std::array<std::string, 3>{"L", "S", "A"};
+    xyzLabels = std::array<std::string, 3>{"+X", "+Y", "+Z"};
+    cubeLabels = std::array<std::string, 6>{"L", "R", "S", "I", "A", "P"};
     scale = std::array<double, 3>{1.5, 1.5, 1.5};
   }
   else

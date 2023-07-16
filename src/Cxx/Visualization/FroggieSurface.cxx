@@ -209,20 +209,22 @@ int main(int argc, char* argv[])
                  "The path to the JSON file e.g. Frog_mhd.json.")
       ->required()
       ->check(CLI::ExistingFile);
-  bool flyingEdges{true};
+
+  bool flyingEdges = true;
   app.add_flag("-m{false},!-n", flyingEdges,
                "Use flying edges by default, marching cubes if set.");
   bool decimation{false};
   // -o: obliterate a synonym for decimation.
   app.add_flag("-o", decimation, "Decimate if set.");
+
   std::vector<std::string> chosenTissues;
   app.add_option("-t", chosenTissues, "Select one or more tissues.");
 
-  std::array<bool, 4> view{false, false, false, false};
-  auto* ogroup = app.add_option_group(
-      "view",
-      "Select a view corresponding to Fig 12-9 in the VTK Textbook. Only none "
-      "or one of these can be selected.");
+  std::array<bool, 6> view{false, false, false, false, false, false};
+  auto* ogroup =
+      app.add_option_group("view",
+                           "Select the orientation of the frog. Only none or "
+                           "one of these can be selected.");
   ogroup->add_flag("-a", view[0],
                    "The view corresponds to Fig 12-9a in the VTK Textbook");
   ogroup->add_flag("-b", view[1],
@@ -231,6 +233,12 @@ int main(int argc, char* argv[])
                    "The view corresponds to Fig 12-9c in the VTK Textbook");
   ogroup->add_flag("-d", view[3],
                    "The view corresponds to Fig 12-9d in the VTK Textbook");
+  ogroup->add_flag(
+      "-l", view[4],
+      "The view corresponds to looking down on the anterior surface");
+  ogroup->add_flag("-p", view[5],
+                   "The view corresponds to looking down on the posterior "
+                   "surface (the default)");
 
   CLI11_PARSE(app, argc, argv);
 
@@ -238,9 +246,9 @@ int main(int argc, char* argv[])
                                    [=](const bool& e) { return e == true; });
   if (selectCount > 1)
   {
-    std::cerr
-        << "Only one or none of the options -a, -b, -c, -d can be selected;"
-        << std::endl;
+    std::cerr << "Only one or none of the options -a, -b, -c, -d, -l, -p can "
+                 "be selected;"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -294,11 +302,21 @@ int main(int argc, char* argv[])
       tissues = parameters.fig_129cd;
       selectFigure = 'c';
     }
-    else
+    else if (view[3])
     {
       // No skin, blood and skeleton.
       tissues = parameters.fig_129cd;
       selectFigure = 'd';
+    }
+    else if (view[4])
+    {
+      // Looking down on the anterior surface.
+      selectFigure = 'l';
+    }
+    else // The default
+    {
+      // Looking down on the posterior surface.
+      selectFigure = 'p';
     }
   }
 
@@ -399,55 +417,69 @@ int main(int argc, char* argv[])
   ren->SetBackground(colors->GetColor3d("ParaViewBkg").GetData());
 
   auto camera = ren->GetActiveCamera();
-  if (selectFigure == '\0')
+  // Superior Anterior Left
+  auto labels{"sal"};
+  if (selectFigure == 'a')
   {
-    // Orient so that we look down on the dorsal surface and
+    // Fig 12-9a in the VTK Textbook
+    camera->SetPosition(742.731237, -441.329635, -877.192015);
+    camera->SetFocalPoint(247.637687, 120.680880, -253.487473);
+    camera->SetViewUp(-0.323882, -0.816232, 0.478398);
+    camera->SetDistance(974.669585);
+    camera->SetClippingRange(311.646383, 1803.630763);
+  }
+  else if (selectFigure == 'b')
+  {
+    // Fig 12-9b in the VTK Textbook
+    camera->SetPosition(717.356065, -429.889054, -845.381584);
+    camera->SetFocalPoint(243.071719, 100.996487, -247.446340);
+    camera->SetViewUp(-0.320495, -0.820148, 0.473962);
+    camera->SetDistance(929.683631);
+    camera->SetClippingRange(293.464446, 1732.794957);
+  }
+  else if (selectFigure == 'c')
+  {
+    // Fig 12-9c in the VTK Textbook
+    camera->SetPosition(447.560023, -136.611491, -454.753689);
+    camera->SetFocalPoint(253.142277, 91.949451, -238.583973);
+    camera->SetViewUp(-0.425438, -0.786048, 0.448477);
+    camera->SetDistance(369.821187);
+    camera->SetClippingRange(0.829116, 829.115939);
+  }
+  else if (selectFigure == 'd')
+  {
+    // Fig 12-9d in the VTK Textbook
+    camera->SetPosition(347.826249, -469.633647, -236.234262);
+    camera->SetFocalPoint(296.893207, 89.307704, -225.156581);
+    camera->SetViewUp(-0.687345, -0.076948, 0.722244);
+    camera->SetDistance(561.366478);
+    camera->SetClippingRange(347.962064, 839.649856);
+  }
+  else if (selectFigure == 'l')
+  {
+    // Orient so that we look down on the anterior surface and
     //  the superior surface faces the top of the screen.
+    // Left Superior Anterior
+    labels = "lsa";
     vtkNew<vtkTransform> transform;
     transform->SetMatrix(camera->GetModelTransformMatrix());
-    transform->RotateY(-90);
+    transform->RotateY(90);
     transform->RotateZ(90);
     camera->SetModelTransformMatrix(transform->GetMatrix());
     ren->ResetCamera();
   }
   else
   {
-    if (selectFigure == 'a')
-    {
-      // Fig 12-9a in the VTK Textbook
-      camera->SetPosition(742.731237, -441.329635, -877.192015);
-      camera->SetFocalPoint(247.637687, 120.680880, -253.487473);
-      camera->SetViewUp(-0.323882, -0.816232, 0.478398);
-      camera->SetDistance(974.669585);
-      camera->SetClippingRange(311.646383, 1803.630763);
-    }
-    else if (selectFigure == 'b')
-    {
-      // Fig 12-9b in the VTK Textbook
-      camera->SetPosition(717.356065, -429.889054, -845.381584);
-      camera->SetFocalPoint(243.071719, 100.996487, -247.446340);
-      camera->SetViewUp(-0.320495, -0.820148, 0.473962);
-      camera->SetDistance(929.683631);
-      camera->SetClippingRange(293.464446, 1732.794957);
-    }
-    else if (selectFigure == 'c')
-    {
-      // Fig 12-9c in the VTK Textbook
-      camera->SetPosition(447.560023, -136.611491, -454.753689);
-      camera->SetFocalPoint(253.142277, 91.949451, -238.583973);
-      camera->SetViewUp(-0.425438, -0.786048, 0.448477);
-      camera->SetDistance(369.821187);
-      camera->SetClippingRange(0.829116, 829.115939);
-    }
-    else if (selectFigure == 'd')
-    {
-      // Fig 12-9d in the VTK Textbook
-      camera->SetPosition(347.826249, -469.633647, -236.234262);
-      camera->SetFocalPoint(296.893207, 89.307704, -225.156581);
-      camera->SetViewUp(-0.687345, -0.076948, 0.722244);
-      camera->SetDistance(561.366478);
-      camera->SetClippingRange(347.962064, 839.649856);
-    }
+    // Orient so that we look down on the posterior surface and
+    //  the superior surface faces the top of the screen.
+    // Right Superior Posterior
+    labels = "rsp";
+    vtkNew<vtkTransform> transform;
+    transform->SetMatrix(camera->GetModelTransformMatrix());
+    transform->RotateY(-90);
+    transform->RotateZ(90);
+    camera->SetModelTransformMatrix(transform->GetMatrix());
+    ren->ResetCamera();
   }
 
   vtkNew<vtkCameraOrientationWidget> cow;
@@ -456,20 +488,8 @@ int main(int argc, char* argv[])
   cow->On();
   cow->EnabledOn();
 
-  vtkNew<vtkOrientationMarkerWidget> om;
-  std::string labels;
-  if (selectFigure != '\0')
-  {
-    // Superior Anterior Left
-    labels = "sal";
-  }
-  else
-  {
-    // Right Superior Posterior
-    labels = "rsp";
-  }
-
   auto axes = MakeCubeActor(labels, colors);
+  vtkNew<vtkOrientationMarkerWidget> om;
   om->SetOrientationMarker(axes);
   // Position upper left in the viewport.
   // om->SetViewport(0.0, 0.8, 0.2, 1.0);
@@ -865,12 +885,12 @@ void CreateTissueActor(
   auto spacing = *std::get_if<double>(&tissue["spacing"]);
   auto startSlice = *std::get_if<int>(&tissue["start_slice"]);
   std::array<double, 3> dataSpacing{static_cast<double>(pixelSize),
-                                     static_cast<double>(pixelSize), spacing};
+                                    static_cast<double>(pixelSize), spacing};
   auto columns = *std::get_if<int>(&tissue["columns"]);
   auto rows = *std::get_if<int>(&tissue["rows"]);
   std::array<double, 3> dataOrigin = {-(columns / 2.0) * pixelSize,
-                                       -(rows / 2.0) * pixelSize,
-                                       startSlice * spacing};
+                                      -(rows / 2.0) * pixelSize,
+                                      startSlice * spacing};
   std::array<int, 6> voi;
   voi[0] = *std::get_if<int>(&tissue["start_column"]);
   voi[1] = *std::get_if<int>(&tissue["end_column"]);
@@ -1042,30 +1062,47 @@ void CreateTissueActor(
     decimator->SetTargetReduction(decimateReduction);
   }
 
-  auto smoothIterations = *std::get_if<int>(&tissue["smooth_iterations"]);
-  auto smoothAngle = *std::get_if<double>(&tissue["smooth_angle"]);
-  auto smoothFactor = *std::get_if<double>(&tissue["smooth_factor"]);
   vtkNew<vtkWindowedSincPolyDataFilter> smoother;
-  if (decimate)
+  auto smoothIterations = *std::get_if<int>(&tissue["smooth_iterations"]);
+  if (smoothIterations != 0)
   {
-    smoother->SetInputConnection(decimator->GetOutputPort());
+    auto smoothAngle = *std::get_if<double>(&tissue["smooth_angle"]);
+    auto smoothFactor = *std::get_if<double>(&tissue["smooth_factor"]);
+    if (decimate)
+    {
+      smoother->SetInputConnection(decimator->GetOutputPort());
+    }
+    else
+    {
+      smoother->SetInputConnection(tf->GetOutputPort());
+    }
+    smoother->SetNumberOfIterations(smoothIterations);
+    smoother->BoundarySmoothingOff();
+    smoother->FeatureEdgeSmoothingOff();
+    smoother->SetFeatureAngle(smoothAngle);
+    smoother->SetPassBand(smoothFactor);
+    smoother->NonManifoldSmoothingOn();
+    smoother->NormalizeCoordinatesOff();
+    smoother->Update();
   }
-  else
-  {
-    smoother->SetInputConnection(tf->GetOutputPort());
-  }
-  smoother->SetNumberOfIterations(smoothIterations);
-  smoother->BoundarySmoothingOff();
-  smoother->FeatureEdgeSmoothingOff();
-  smoother->SetFeatureAngle(smoothAngle);
-  smoother->SetPassBand(smoothFactor);
-  smoother->NonManifoldSmoothingOn();
-  smoother->NormalizeCoordinatesOff();
-  smoother->Update();
 
   auto featureAngle = *std::get_if<double>(&tissue["feature_angle"]);
   vtkNew<vtkPolyDataNormals> normals;
-  normals->SetInputConnection(smoother->GetOutputPort());
+  if (smoothIterations != 0)
+  {
+    normals->SetInputConnection(smoother->GetOutputPort());
+  }
+  else
+  {
+    if (decimate)
+    {
+      normals->SetInputConnection(decimator->GetOutputPort());
+    }
+    else
+    {
+      normals->SetInputConnection(tf->GetOutputPort());
+    }
+  }
   normals->SetFeatureAngle(featureAngle);
 
   vtkNew<vtkStripper> stripper;
@@ -1158,6 +1195,13 @@ vtkNew<vtkPropAssembly> MakeCubeActor(std::string const& labelSelector,
     // xyzLabels = std::array<std::string, 3>{"R", "S", "P"};
     xyzLabels = std::array<std::string, 3>{"+X", "+Y", "+Z"};
     cubeLabels = std::array<std::string, 6>{"R", "L", "S", "I", "P", "A"};
+    scale = std::array<double, 3>{1.5, 1.5, 1.5};
+  }
+  else if (labelSelector == "lsa")
+  {
+    // xyzLabels = std::array<std::string, 3>{"L", "S", "A"};
+    xyzLabels = std::array<std::string, 3>{"+X", "+Y", "+Z"};
+    cubeLabels = std::array<std::string, 6>{"L", "R", "S", "I", "A", "P"};
     scale = std::array<double, 3>{1.5, 1.5, 1.5};
   }
   else
