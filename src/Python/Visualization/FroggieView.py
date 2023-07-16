@@ -68,6 +68,10 @@ Note:
                        help='The view corresponds to Fig 12-9c in the VTK Textbook')
     group.add_argument('-d', action='store_const', dest='view', const='d',
                        help='The view corresponds to Fig 12-9d in the VTK Textbook')
+    group.add_argument('-l', action='store_const', dest='view', const='l',
+                       help='The view corresponds to looking down on the anterior surface')
+    group.add_argument('-p', action='store_const', dest='view', const='p',
+                       help='The view corresponds to looking down on the posterior surface (the default)')
     parser.set_defaults(type=None)
 
     parser.add_argument('file_name', help='The path to the JSON file e.g. Frog_vtk.json.')
@@ -78,6 +82,9 @@ Note:
 
 
 def main(fn, select_figure, no_sliders, chosen_tissues):
+    if not select_figure:
+        select_figure = 'p'
+
     fn_path = Path(fn)
     if not fn_path.suffix:
         fn_path = fn_path.with_suffix(".json")
@@ -226,52 +233,61 @@ def main(fn, select_figure, no_sliders, chosen_tissues):
 
     ren.SetBackground(colors.GetColor3d('ParaViewBkg'))
 
+    #  Final view.
     camera = ren.GetActiveCamera()
-    if select_figure:
-        if select_figure == 'a':
-            # Fig 12-9a in the VTK Textbook
-            camera.SetPosition(495.722368, -447.474954, -646.308030)
-            camera.SetFocalPoint(137.612066, -40.962376, -195.171023)
-            camera.SetViewUp(-0.323882, -0.816232, 0.478398)
-            camera.SetDistance(704.996499)
-            camera.SetClippingRange(319.797039, 1809.449285)
-        elif select_figure == 'b':
-            # Fig 12-9b in the VTK Textbook
-            camera.SetPosition(478.683494, -420.477744, -643.112038)
-            camera.SetFocalPoint(135.624874, -36.478435, -210.614440)
-            camera.SetViewUp(-0.320495, -0.820148, 0.473962)
-            camera.SetDistance(672.457328)
-            camera.SetClippingRange(307.326771, 1765.990822)
-        elif select_figure == 'c':
-            # Fig 12-9c in the VTK Textbook
-            camera.SetPosition(201.363313, -147.260834, -229.885066)
-            camera.SetFocalPoint(140.626206, -75.857216, -162.352531)
-            camera.SetViewUp(-0.425438, -0.786048, 0.448477)
-            camera.SetDistance(115.534047)
-            camera.SetClippingRange(7.109870, 854.091718)
-        elif select_figure == 'd':
-            # Fig 12-9d in the VTK Textbook
-            camera.SetPosition(115.361727, -484.656410, -6.193827)
-            camera.SetFocalPoint(49.126343, 98.501094, 1.323317)
-            camera.SetViewUp(-0.649127, -0.083475, 0.756086)
-            camera.SetDistance(586.955116)
-            camera.SetClippingRange(360.549218, 866.876230)
-    else:
-        # Orient so that we look down on the dorsal surface and
+    # Superior Anterior Left
+    labels = 'sal'
+    if select_figure == 'a':
+        # Fig 12-9a in the VTK Textbook
+        camera.SetPosition(495.722368, -447.474954, -646.308030)
+        camera.SetFocalPoint(137.612066, -40.962376, -195.171023)
+        camera.SetViewUp(-0.323882, -0.816232, 0.478398)
+        camera.SetDistance(704.996499)
+        camera.SetClippingRange(319.797039, 1809.449285)
+    elif select_figure == 'b':
+        # Fig 12-9b in the VTK Textbook
+        camera.SetPosition(478.683494, -420.477744, -643.112038)
+        camera.SetFocalPoint(135.624874, -36.478435, -210.614440)
+        camera.SetViewUp(-0.320495, -0.820148, 0.473962)
+        camera.SetDistance(672.457328)
+        camera.SetClippingRange(307.326771, 1765.990822)
+    elif select_figure == 'c':
+        # Fig 12-9c in the VTK Textbook
+        camera.SetPosition(201.363313, -147.260834, -229.885066)
+        camera.SetFocalPoint(140.626206, -75.857216, -162.352531)
+        camera.SetViewUp(-0.425438, -0.786048, 0.448477)
+        camera.SetDistance(115.534047)
+        camera.SetClippingRange(7.109870, 854.091718)
+    elif select_figure == 'd':
+        # Fig 12-9d in the VTK Textbook
+        camera.SetPosition(115.361727, -484.656410, -6.193827)
+        camera.SetFocalPoint(49.126343, 98.501094, 1.323317)
+        camera.SetViewUp(-0.649127, -0.083475, 0.756086)
+        camera.SetDistance(586.955116)
+        camera.SetClippingRange(360.549218, 866.876230)
+    elif select_figure == 'l':
+        # Orient so that we look down on the anterior surface and
         #   the superior surface faces the top of the screen.
+        #  Left Superior Anterior
+        labels = 'lsa'
+        transform = vtkTransform()
+        transform.SetMatrix(camera.GetModelTransformMatrix())
+        transform.RotateY(90)
+        transform.RotateZ(90)
+        camera.SetModelTransformMatrix(transform.GetMatrix())
+        ren.ResetCamera()
+    else:
+        # The default.
+        # Orient so that we look down on the posterior surface and
+        #   the superior surface faces the top of the screen.
+        # Right Superior Posterior
+        labels = 'rsp'
         transform = vtkTransform()
         transform.SetMatrix(camera.GetModelTransformMatrix())
         transform.RotateY(-90)
         transform.RotateZ(90)
         camera.SetModelTransformMatrix(transform.GetMatrix())
         ren.ResetCamera()
-
-    if select_figure:
-        # Superior Anterior Left
-        labels = 'sal'
-    else:
-        # Right Superior Posterior
-        labels = 'rsp'
 
     cow = vtkCameraOrientationWidget()
     cow.SetParentRenderer(ren)
@@ -609,6 +625,11 @@ def make_cube_actor(label_selector, colors):
         # xyz_labels = ['R', 'S', 'P']
         xyz_labels = ['+X', '+Y', '+Z']
         cube_labels = ['R', 'L', 'S', 'I', 'P', 'A']
+        scale = [1.5, 1.5, 1.5]
+    elif label_selector == 'lsa':
+        # xyz_labels = ['R', 'S', 'P']
+        xyz_labels = ['+X', '+Y', '+Z']
+        cube_labels = ['L', 'R', 'S', 'I', 'A', 'P']
         scale = [1.5, 1.5, 1.5]
     else:
         xyz_labels = ['+X', '+Y', '+Z']

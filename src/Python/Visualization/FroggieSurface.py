@@ -70,6 +70,10 @@ Note:
                        help='The view corresponds to Fig 12-9c in the VTK Textbook')
     group.add_argument('-d', action='store_const', dest='view', const='d',
                        help='The view corresponds to Fig 12-9d in the VTK Textbook')
+    group.add_argument('-l', action='store_const', dest='view', const='l',
+                       help='The view corresponds to looking down on the anterior surface')
+    group.add_argument('-p', action='store_const', dest='view', const='p',
+                       help='The view corresponds to looking down on the posterior surface (the default)')
     parser.set_defaults(type=None)
 
     parser.add_argument('file_name', help='The path to the JSON file e.g. Frog_mhd.json.')
@@ -83,6 +87,9 @@ Note:
 
 
 def main(fn, select_figure, chosen_tissues, flying_edges, decimate):
+    if not select_figure:
+        select_figure = 'p'
+
     fn_path = Path(fn)
     if not fn_path.suffix:
         fn_path = fn_path.with_suffix(".json")
@@ -170,53 +177,61 @@ def main(fn, select_figure, chosen_tissues, flying_edges, decimate):
 
     ren.SetBackground(colors.GetColor3d('ParaViewBkg'))
 
-    #  Final view
+    #  Final view.
     camera = ren.GetActiveCamera()
-    if select_figure:
-        if select_figure == 'a':
-            # Fig 12-9a in the VTK Textbook
-            camera.SetPosition(742.731237, -441.329635, -877.192015)
-            camera.SetFocalPoint(247.637687, 120.680880, -253.487473)
-            camera.SetViewUp(-0.323882, -0.816232, 0.478398)
-            camera.SetDistance(974.669585)
-            camera.SetClippingRange(311.646383, 1803.630763)
-        elif select_figure == 'b':
-            # Fig 12-9b in the VTK Textbook
-            camera.SetPosition(717.356065, -429.889054, -845.381584)
-            camera.SetFocalPoint(243.071719, 100.996487, -247.446340)
-            camera.SetViewUp(-0.320495, -0.820148, 0.473962)
-            camera.SetDistance(929.683631)
-            camera.SetClippingRange(293.464446, 1732.794957)
-        elif select_figure == 'c':
-            # Fig 12-9c in the VTK Textbook
-            camera.SetPosition(447.560023, -136.611491, -454.753689)
-            camera.SetFocalPoint(253.142277, 91.949451, -238.583973)
-            camera.SetViewUp(-0.425438, -0.786048, 0.448477)
-            camera.SetDistance(369.821187)
-            camera.SetClippingRange(0.829116, 829.115939)
-        elif select_figure == 'd':
-            # Fig 12-9d in the VTK Textbook
-            camera.SetPosition(347.826249, -469.633647, -236.234262)
-            camera.SetFocalPoint(296.893207, 89.307704, -225.156581)
-            camera.SetViewUp(-0.687345, -0.076948, 0.722244)
-            camera.SetDistance(561.366478)
-            camera.SetClippingRange(347.962064, 839.649856)
-    else:
-        # Orient so that we look down on the dorsal surface and
+    # Superior Anterior Left
+    labels = 'sal'
+    if select_figure == 'a':
+        # Fig 12-9a in the VTK Textbook
+        camera.SetPosition(742.731237, -441.329635, -877.192015)
+        camera.SetFocalPoint(247.637687, 120.680880, -253.487473)
+        camera.SetViewUp(-0.323882, -0.816232, 0.478398)
+        camera.SetDistance(974.669585)
+        camera.SetClippingRange(311.646383, 1803.630763)
+    elif select_figure == 'b':
+        # Fig 12-9b in the VTK Textbook
+        camera.SetPosition(717.356065, -429.889054, -845.381584)
+        camera.SetFocalPoint(243.071719, 100.996487, -247.446340)
+        camera.SetViewUp(-0.320495, -0.820148, 0.473962)
+        camera.SetDistance(929.683631)
+        camera.SetClippingRange(293.464446, 1732.794957)
+    elif select_figure == 'c':
+        # Fig 12-9c in the VTK Textbook
+        camera.SetPosition(447.560023, -136.611491, -454.753689)
+        camera.SetFocalPoint(253.142277, 91.949451, -238.583973)
+        camera.SetViewUp(-0.425438, -0.786048, 0.448477)
+        camera.SetDistance(369.821187)
+        camera.SetClippingRange(0.829116, 829.115939)
+    elif select_figure == 'd':
+        # Fig 12-9d in the VTK Textbook
+        camera.SetPosition(347.826249, -469.633647, -236.234262)
+        camera.SetFocalPoint(296.893207, 89.307704, -225.156581)
+        camera.SetViewUp(-0.687345, -0.076948, 0.722244)
+        camera.SetDistance(561.366478)
+        camera.SetClippingRange(347.962064, 839.649856)
+    elif select_figure == 'l':
+        # Orient so that we look down on the anterior surface and
         #   the superior surface faces the top of the screen.
+        #  Left Superior Anterior
+        labels = 'lsa'
+        transform = vtkTransform()
+        transform.SetMatrix(camera.GetModelTransformMatrix())
+        transform.RotateY(90)
+        transform.RotateZ(90)
+        camera.SetModelTransformMatrix(transform.GetMatrix())
+        ren.ResetCamera()
+    else:
+        # The default.
+        # Orient so that we look down on the posterior surface and
+        #   the superior surface faces the top of the screen.
+        # Right Superior Posterior
+        labels = 'rsp'
         transform = vtkTransform()
         transform.SetMatrix(camera.GetModelTransformMatrix())
         transform.RotateY(-90)
         transform.RotateZ(90)
         camera.SetModelTransformMatrix(transform.GetMatrix())
         ren.ResetCamera()
-
-    if select_figure:
-        # Superior Anterior Left
-        labels = 'sal'
-    else:
-        # Right Superior Posterior
-        labels = 'rsp'
 
     cow = vtkCameraOrientationWidget()
     cow.SetParentRenderer(ren)
@@ -441,19 +456,20 @@ def create_tissue_actor(name, tissue, files, flying_edges, decimate, lut, so):
         decimator.SetTargetReduction(tissue['decimate_reduction'])
         last_connection = decimator
 
-    smoother = vtkWindowedSincPolyDataFilter()
-    smoother.SetInputConnection(last_connection.GetOutputPort())
-    smoother.SetNumberOfIterations(tissue['smooth_iterations'])
-    smoother.BoundarySmoothingOff()
-    smoother.FeatureEdgeSmoothingOff()
-    smoother.SetFeatureAngle(tissue['smooth_angle'])
-    smoother.SetPassBand(tissue['smooth_factor'])
-    smoother.NonManifoldSmoothingOn()
-    smoother.NormalizeCoordinatesOff()
-    smoother.Update()
+    smooth_iterations = tissue['smooth_iterations']
+    if smooth_iterations != 0:
+        smoother = vtkWindowedSincPolyDataFilter()
+        smoother.SetInputConnection(last_connection.GetOutputPort())
+        smoother.BoundarySmoothingOff()
+        smoother.FeatureEdgeSmoothingOff()
+        smoother.SetFeatureAngle(tissue['smooth_angle'])
+        smoother.SetPassBand(tissue['smooth_factor'])
+        smoother.NonManifoldSmoothingOn()
+        smoother.NormalizeCoordinatesOff()
+        last_connection = smoother
 
     normals = vtkPolyDataNormals()
-    normals.SetInputConnection(smoother.GetOutputPort())
+    normals.SetInputConnection(last_connection.GetOutputPort())
     normals.SetFeatureAngle(tissue['feature_angle'])
 
     stripper = vtkStripper()
@@ -722,6 +738,11 @@ def make_cube_actor(label_selector, colors):
         # xyz_labels = ['R', 'S', 'P']
         xyz_labels = ['+X', '+Y', '+Z']
         cube_labels = ['R', 'L', 'S', 'I', 'P', 'A']
+        scale = [1.5, 1.5, 1.5]
+    elif label_selector == 'lsa':
+        # xyz_labels = ['L', 'S', 'A']
+        xyz_labels = ['+X', '+Y', '+Z']
+        cube_labels = ['L', 'R', 'S', 'I', 'A', 'P']
         scale = [1.5, 1.5, 1.5]
     else:
         xyz_labels = ['+X', '+Y', '+Z']
