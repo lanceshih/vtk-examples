@@ -1034,8 +1034,8 @@ See [this tutorial](http://www.vtk.org/Wiki/VTK/Tutorials/3DDataTypes) for a bri
 [Follower](/Cxx/Visualization/Follower) | Draw text that stays right side up.
 [FontFile](/Cxx/Visualization/FontFile) | Use an external font.
 [FrogBrain](/Cxx/Visualization/FrogBrain) | The frog’s brain. Model extracted without smoothing (left) and with smoothing (right).
-[FroggieSurface](/Cxx/Visualization/FroggieSurface) | All or some frog tissues are reconstructed from the original segmented data.
-[FroggieView](/Cxx/Visualization/FroggieView) | View all or some frog tissues and adjust the translucency of the tissues.
+[FroggieSurface](/Cxx/Visualization/FroggieSurface) | Construct surfaces from a segmented frog dataset. Up to fifteen different surfaces may be extracted. You can turn on and off surfaces and control the camera position.
+[FroggieView](/Cxx/Visualization/FroggieView) | View surfaces of a segmented frog dataset using preprocessed `*.vtk` tissue files. You can turn on and off surfaces, control their opacity through the use of sliders and control the camera position.
 [FrogSlice](/Cxx/Visualization/FrogSlice) | Photographic slice of frog (upper left), segmented frog (upper right) and composite of photo and segmentation (bottom). The purple color represents the stomach and the kidneys are yellow.
 [Glyph2D](/Cxx/Filtering/Glyph2D) |
 [Glyph3D](/Cxx/Filtering/Glyph3D) |

@@ -201,7 +201,7 @@ vtkNew<vtkPropAssembly> MakeCubeActor(std::string const& labelSelector,
 
 int main(int argc, char* argv[])
 {
-  CLI::App app{"Display all frog parts and translucent skin."};
+  CLI::App app{"Construct surfaces from a segmented frog dataset."};
 
   // Define options
   std::string fileName;

@@ -40,21 +40,14 @@ from vtkmodules.vtkRenderingCore import (
 
 def get_program_parameters(argv):
     import argparse
-    description = 'Use sliders to control the display of the frog tissues.'
+    description = 'View surfaces of a segmented frog dataset using preprocessed VTK tissue files.'
     epilogue = '''
-
-The available tissues are:
-    blood brain duodenum eye_retna eye_white heart ileum kidney
-    l_intestine liver lung nerve skeleton spleen stomach skin
-
-All these tissues are used by default.
-
--t allows you to specify selected tissues
+Sliders are provided to control the opacity of the displayed tissues.
+Up to fifteen different surfaces may be viewed.
 
 Note:
-   There is an additional tissue called brainbin.
-   This is the brain with no gaussian smoothing.
-   You can use it instead of brain, just request it with -t brainbin
+   If you want to use brainbin (the brain with no gaussian smoothing),
+    instead of brain, then request it with -t brainbin
     '''
     parser = argparse.ArgumentParser(description=description, epilog=epilogue,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)

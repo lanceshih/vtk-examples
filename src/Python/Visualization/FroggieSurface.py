@@ -49,11 +49,10 @@ from vtkmodules.vtkRenderingCore import (
 
 def get_program_parameters(argv):
     import argparse
-    description = 'Display all frog parts and translucent skin.'
+    description = 'Construct surfaces from a segmented frog dataset.'
     epilogue = '''
-All the tissues (except brainbin) are used by default.
+Up to fifteen different surfaces may be extracted.
 
--t allows you to specify selected tissues
 Note:
    If you want to use brainbin (the brain with no gaussian smoothing),
     instead of brain, then request it with -t brainbin

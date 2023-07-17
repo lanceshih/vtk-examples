@@ -290,7 +290,7 @@ private:
 
 int main(int argc, char* argv[])
 {
-  CLI::App app{"Display all frog parts and translucent skin."};
+  CLI::App app{"View surfaces of a segmented frog dataset using preprocessed VTK tissue files."};
 
   // Define options
   std::string fileName;
