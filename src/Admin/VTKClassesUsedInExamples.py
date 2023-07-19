@@ -46,7 +46,7 @@ class Links:
     The URL's to the VTK documentation and to the vtk-examples site.
     """
     vtk_docs: str = 'https://www.vtk.org/doc/nightly/html/'
-    vtk_examples: str = 'https://kitware.github.io/vtk-examples/site/'
+    vtk_examples: str = 'https://examples.vtk.org/site/'
 
 
 class ElapsedTime:

@@ -8,7 +8,7 @@
 # If needed.
 #
 # A typical command would look something like this:
-# ./src/SyncSiteWithRepo.sh https://gitlab.kitware.com/vtk/vtk-examples https://kitware.github.io/vtk-examples/site/ https://github.com/Kitware/vtk-examples <local-path>/vtk-examples-web/ <local-path>/vtk/
+# ./src/SyncSiteWithRepo.sh https://gitlab.kitware.com/vtk/vtk-examples https://examples.vtk.org/site/ https://github.com/Kitware/vtk-examples <local-path>/vtk-examples-web/ <local-path>/vtk/
 #
 # We are using a virtual environment called vtk-examples-web
 #
