@@ -1,14 +1,21 @@
 #ifndef __AnimateActors_h
+#define __AnimateActors_h
+
 #include <vtkActor.h>
 #include <vtkAnimationCue.h>
 #include <vtkCommand.h>
-#include <vtkSmartPointer.h>
 #include <vtkVector.h>
 #include <vtkVectorOperators.h>
 
 class ActorAnimator
 {
 public:
+  ActorAnimator(vtkActor* Actor, const vtkVector3d& StartPosition,
+                const vtkVector3d& EndPosition)
+    : Actor(Actor), StartPosition(StartPosition), EndPosition(EndPosition)
+  {
+  }
+
   ActorAnimator()
     : Actor(nullptr), StartPosition(0, 0, 0), EndPosition(0.5, 0.5, 0.5)
   {
@@ -69,9 +76,9 @@ private:
   }
   //@}
 
-  vtkSmartPointer<vtkActor> Actor;
+  vtkActor* Actor;
   vtkVector3d StartPosition;
   vtkVector3d EndPosition;
 };
 
-#endif
+#endif // __AnimateActors_h

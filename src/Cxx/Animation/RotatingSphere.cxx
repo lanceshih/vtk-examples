@@ -6,8 +6,9 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
+
+namespace {
 
 class vtkTimerCallback2 : public vtkCommand
 {
@@ -48,6 +49,7 @@ private:
 public:
   vtkActor* actor;
 };
+} // namespace
 
 int main(int, char*[])
 {
