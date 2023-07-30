@@ -28,14 +28,14 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create and populate the AMR dataset
+  // Create and populate the AMR dataset.
   // The dataset should look like
   // Level 0
   //   uniform grid, dimensions 11, 11, 11, AMR box (0, 0, 0) - (9, 9, 9)
   // Level 1 - refinement ratio : 2
   //   uniform grid, dimensions 11, 11, 11, AMR box (0, 0, 0) - (9, 9, 9)
   //   uniform grid, dimensions 11, 11, 11, AMR box (10, 10, 10) - (19, 19, 19)
-  // Use MakeScalars() above to fill the scalar arrays
+  // Use MakeScalars() above to fill the scalar arrays.
 
   vtkNew<vtkOverlappingAMR> amr;
   int blocksPerLevel[] = {1, 2};
@@ -110,7 +110,7 @@ int main(int, char*[])
   vtkNew<vtkCompositeDataGeometryFilter> geomFilter;
   geomFilter->SetInputConnection(of->GetOutputPort());
 
-  // Create an iso-surface - at 10
+  // Create an iso-surface - at 10.
   vtkNew<vtkContourFilter> cf;
   cf->SetInputData(amr);
   cf->SetNumberOfContours(1);
@@ -119,7 +119,7 @@ int main(int, char*[])
   vtkNew<vtkCompositeDataGeometryFilter> geomFilter2;
   geomFilter2->SetInputConnection(cf->GetOutputPort());
 
-  // create the render window, renderer, and interactor
+  // Create the render window, renderer, and interactor.
   vtkNew<vtkRenderer> aren;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(aren);
@@ -127,7 +127,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // associate the geometry with a mapper and the mapper to an actor
+  // Associate the geometry with a mapper and the mapper to an actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(of->GetOutputPort());
 
@@ -135,14 +135,14 @@ int main(int, char*[])
   actor1->GetProperty()->SetColor(colors->GetColor3d("Yellow").GetData());
   actor1->SetMapper(mapper);
 
-  // associate the geometry with a mapper and the mapper to an actor
+  // Vssociate the geometry with a mapper and the mapper to an actor.
   vtkNew<vtkPolyDataMapper> mapper2;
   mapper2->SetInputConnection(geomFilter2->GetOutputPort());
 
   vtkNew<vtkActor> actor2;
   actor2->SetMapper(mapper2);
 
-  // add the actor to the renderer and start handling events
+  // Add the actor to the renderer and start handling events.
   aren->AddActor(actor1);
   aren->AddActor(actor2);
 
@@ -160,7 +160,7 @@ namespace {
 void MakeScalars(int dims[3], double origin[3], double spacing[3],
                  vtkFloatArray* scalars)
 {
-  // Implicit function used to compute scalars
+  // Implicit function used to compute scalars.
   vtkNew<vtkSphere> sphere;
   sphere->SetRadius(3);
   sphere->SetCenter(5, 5, 5);
