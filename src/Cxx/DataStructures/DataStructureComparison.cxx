@@ -2,7 +2,6 @@
 #include <vtkCamera.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPointSource.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
@@ -10,9 +9,7 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkRendererCollection.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
 
 #include <vtkKdTreePointLocator.h>
@@ -22,6 +19,7 @@
 
 #include <vector>
 
+namespace {
 class KeyPressInteractorStyle : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -99,8 +97,8 @@ public:
 
     this->ReDraw();
 
-    // forward events
-    if (ch != 'p') // don't forward the "pick" command
+    // Forward events.
+    if (ch != 'p') // Don't forward the "pick" command.
     {
       vtkInteractorStyleTrackballCamera::OnChar();
     }
@@ -145,6 +143,8 @@ private:
 
 vtkStandardNewMacro(KeyPressInteractorStyle);
 
+} // namespace
+
 int main(int argc, char* argv[])
 {
   vtkNew<vtkPolyData> originalMesh;
@@ -156,7 +156,7 @@ int main(int argc, char* argv[])
     reader->Update();
     originalMesh->ShallowCopy(reader->GetOutput());
   }
-  else // If a file name is not specified, create a sphere
+  else // If a file name is not specified, create a random cloud of points.
   {
     vtkNew<vtkPointSource> sphereSource;
     sphereSource->SetNumberOfPoints(1000);

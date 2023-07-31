@@ -1,9 +1,6 @@
-#include <vtkLine.h>
 #include <vtkNew.h>
 #include <vtkOBBTree.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkSphereSource.h>
 
 int main(int, char*[])
@@ -26,7 +23,7 @@ int main(int, char*[])
   std::cout << "NumPoints: " << intersectPoints->GetNumberOfPoints()
             << std::endl;
 
-  // Display list of intersections
+  // Display list of intersections.
   double intersection[3];
   for (int i = 0; i < intersectPoints->GetNumberOfPoints(); i++)
   {

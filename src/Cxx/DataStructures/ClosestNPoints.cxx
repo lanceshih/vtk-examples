@@ -1,10 +1,7 @@
-#include <vtkCellArray.h>
 #include <vtkIdList.h>
 #include <vtkKdTreePointLocator.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 
 int main(int, char*[])
 {

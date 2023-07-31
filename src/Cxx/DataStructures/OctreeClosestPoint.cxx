@@ -1,4 +1,3 @@
-#include <vtkIdList.h>
 #include <vtkNew.h>
 #include <vtkOctreePointLocator.h>
 #include <vtkPoints.h>
@@ -6,7 +5,7 @@
 
 int main(int, char*[])
 {
-  // Setup point coordinates
+  // Setup point coordinates.
   double x[3] = {1.0, 0.0, 0.0};
   double y[3] = {0.0, 1.0, 0.0};
   double z[3] = {0.0, 0.0, 1.0};
@@ -26,11 +25,11 @@ int main(int, char*[])
 
   double testPoint[3] = {2.0, 0.0, 0.0};
 
-  // Find the closest points to TestPoint
+  // Find the closest points to TestPoint.
   vtkIdType iD = octree->FindClosestPoint(testPoint);
   std::cout << "The closest point is point " << iD << std::endl;
 
-  // Get the coordinates of the closest point
+  // Get the coordinates of the closest point.
   double closestPoint[3];
   octree->GetDataSet()->GetPoint(iD, closestPoint);
   std::cout << "Coordinates: " << closestPoint[0] << " " << closestPoint[1]

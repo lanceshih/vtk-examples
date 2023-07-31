@@ -1,11 +1,7 @@
-#include <vtkCellArray.h>
-#include <vtkDataSetCollection.h>
-#include <vtkIdList.h>
 #include <vtkNew.h>
 #include <vtkOctreePointLocator.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkXMLPolyDataReader.h>
 
 int main(int, char*[])
 {
@@ -34,10 +30,13 @@ int main(int, char*[])
 
   std::cout << "Number of points in tree: "
             << octree->GetDataSet()->GetNumberOfPoints() << std::endl;
-
-  double p[3];
-  octree->GetDataSet()->GetPoint(0, p);
-  std::cout << "p: " << p[0] << " " << p[1] << " " << p[2] << std::endl;
+  for (vtkIdType i = 0; i < points->GetNumberOfPoints(); i++)
+  {
+    double p[3];
+    octree->GetDataSet()->GetPoint(i, p);
+    std::cout << "Point Id: " << i << ": Point: (" << p[0] << ", " << p[1]
+              << ", " << p[2] << ")" << std::endl;
+  }
 
   return EXIT_SUCCESS;
 }

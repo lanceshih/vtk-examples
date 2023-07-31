@@ -1,12 +1,8 @@
 #include <vtkActor.h>
-#include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
-#include <vtkInteractorStyleTrackballCamera.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOctreePointLocator.h>
-#include <vtkPointSource.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
@@ -18,8 +14,6 @@
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
 #include <vtkTextProperty.h>
-#include <vtkWidgetEvent.h>
-#include <vtkWidgetEventTranslator.h>
 
 #include <cmath>
 

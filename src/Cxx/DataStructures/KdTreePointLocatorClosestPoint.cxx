@@ -1,4 +1,3 @@
-#include <vtkIdList.h>
 #include <vtkKdTreePointLocator.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>

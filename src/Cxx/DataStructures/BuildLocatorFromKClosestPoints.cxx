@@ -1,7 +1,6 @@
 #include <vtkIdList.h>
 #include <vtkKdTree.h>
 #include <vtkNew.h>
-#include <vtkPointSource.h>
 #include <vtkPoints.h>
 
 int main(int, char*[])

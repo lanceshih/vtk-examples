@@ -1,17 +1,13 @@
 #include <vtkAxis.h>
 #include <vtkBox.h>
 #include <vtkChartXY.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkFloatArray.h>
-#include <vtkIdList.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOBBTree.h>
 #include <vtkPlot.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -19,7 +15,6 @@
 #include <vtkSphereSource.h>
 #include <vtkTable.h>
 #include <vtkTimerLog.h>
-#include <vtkXMLPolyDataReader.h>
 
 #include <time.h>
 #include <vector>
@@ -59,7 +54,7 @@ int main(int, char*[])
     results.push_back(result);
   }
 
-  // Create a table with some points in it
+  // Create a table with some points in it.
   vtkNew<vtkTable> table;
 
   vtkNew<vtkFloatArray> maxPointsPerRegion;
@@ -70,7 +65,7 @@ int main(int, char*[])
   runtime->SetName("Run time");
   table->AddColumn(runtime);
 
-  // Fill in the table with some example values
+  // Fill in the table with some example values.
   size_t numPoints = results.size();
   table->SetNumberOfRows(static_cast<vtkIdType>(numPoints));
   for (size_t i = 0; i < numPoints; ++i)
@@ -86,7 +81,7 @@ int main(int, char*[])
   view->GetRenderer()->SetBackground(colors->GetColor3d("White").GetData());
   view->GetRenderWindow()->SetWindowName("OBBTreeTimingDemo");
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
   vtkNew<vtkChartXY> chart;
   view->GetScene()->AddItem(chart);
   vtkPlot* line = chart->AddPlot(vtkChart::LINE);

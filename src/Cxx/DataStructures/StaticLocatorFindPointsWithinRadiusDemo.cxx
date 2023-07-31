@@ -8,12 +8,9 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 
-#include <vtkCellArray.h>
 #include <vtkDoubleArray.h>
 #include <vtkIdList.h>
 #include <vtkPointData.h>
-#include <vtkPointSource.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkStaticPointLocator.h>
 

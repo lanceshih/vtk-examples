@@ -20,13 +20,13 @@ int main(int, char*[])
 
   // Outputs
   double t; // Parametric coordinate of intersection (0 (corresponding to p1) to
-            // 1 (corresponding to p2))
-  double x[3]; // The coordinate of the intersection
+            // 1 (corresponding to p2)).
+  double x[3]; // The coordinate of the intersection.
   double pcoords[3];
   int subId;
 
-  // Note: for a typical use case (ray-triangle intersection), pcoords and subId
-  // will not be used
+  // Note: For a typical use case (ray-triangle intersection), pcoords and subId
+  // will not be used.
   vtkIdType iD =
       bspTree->IntersectWithLine(p1, p2, tolerance, t, x, pcoords, subId);
 
