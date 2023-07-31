@@ -1,5 +1,4 @@
 #include <vtkActor.h>
-#include <vtkAppendPolyData.h>
 #include <vtkCamera.h>
 #include <vtkDataSetMapper.h>
 #include <vtkLookupTable.h>
@@ -10,7 +9,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkScalarsToColors.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 
@@ -61,7 +59,7 @@ int main(int argc, char* argv[])
   lut->SetNumberOfTableValues(std::max(numberOfRegions, 10));
   lut->Build();
 
-  // Fill in a few known colors, the rest will be generated if needed
+  // Fill in a few known colors, the rest will be generated if needed.
   vtkNew<vtkNamedColors> colors;
   lut->SetTableValue(0, colors->GetColor4d("Gold").GetData());
   lut->SetTableValue(1, colors->GetColor4d("Banana").GetData());
@@ -78,7 +76,7 @@ int main(int argc, char* argv[])
   // generate some random colors.
   if (numberOfRegions > 9)
   {
-    std::mt19937 mt(4355412); // Standard mersenne_twister_engine
+    std::mt19937 mt(4355412); // Standard mersenne_twister_engine.
     std::uniform_real_distribution<double> distribution(.4, 1.0);
     for (auto i = 10; i < numberOfRegions; ++i)
     {

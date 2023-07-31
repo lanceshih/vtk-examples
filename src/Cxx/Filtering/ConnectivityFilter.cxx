@@ -11,7 +11,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
-#include <vtkUnstructuredGrid.h>
 
 int main(int, char*[])
 {

@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   double distanceMin = sqrt(vtkMath::Distance2BetweenPoints(minBound, center));
   double distanceMax = sqrt(vtkMath::Distance2BetweenPoints(maxBound, center));
 
-  // Create cutter
+  // Create cutter.
   vtkNew<vtkCutter> cutter;
   cutter->SetCutFunction(plane);
   cutter->SetInputData(inputPolyData);
@@ -70,23 +70,23 @@ int main(int argc, char* argv[])
   cutterMapper->SetInputConnection(cutter->GetOutputPort());
   cutterMapper->ScalarVisibilityOff();
 
-  // Create plane actor
+  // Create plane actor.
   vtkNew<vtkActor> planeActor;
   planeActor->GetProperty()->SetColor(
       colors->GetColor3d("Deep_pink").GetData());
   planeActor->GetProperty()->SetLineWidth(5);
   planeActor->SetMapper(cutterMapper);
 
-  // Create input actor
+  // Create input actor.
   vtkNew<vtkActor> inputActor;
   inputActor->GetProperty()->SetColor(colors->GetColor3d("Bisque").GetData());
   inputActor->SetMapper(inputMapper);
 
-  // Create renderers and add actors of plane and cube
+  // Create renderers and add actors of plane and cube.
   vtkNew<vtkRenderer> renderer;
-  renderer->AddActor(planeActor); // display the rectangle resulting from the
-                                  // cut
-  renderer->AddActor(inputActor); // display the cube
+  renderer->AddActor(planeActor); // Display the rectangle resulting from the
+                                  // cut.
+  renderer->AddActor(inputActor); // Display the cube.
 
   // Add renderer to renderwindow and render
   vtkNew<vtkRenderWindow> renderWindow;

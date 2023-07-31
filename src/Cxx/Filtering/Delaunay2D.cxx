@@ -1,11 +1,7 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
-#include <vtkCellLocator.h>
 #include <vtkDelaunay2D.h>
-#include <vtkLine.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
@@ -13,7 +9,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkTriangle.h>
 #include <vtkVertexGlyphFilter.h>
 
 int main(int, char*[])
@@ -33,7 +28,7 @@ int main(int, char*[])
     }
   }
 
-  // Add the grid points to a polydata object
+  // Add the grid points to a polydata object.
   vtkNew<vtkPolyData> polydata;
   polydata->SetPoints(points);
 

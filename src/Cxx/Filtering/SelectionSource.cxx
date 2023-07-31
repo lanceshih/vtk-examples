@@ -1,7 +1,6 @@
 #include <vtkExtractSelection.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkSelectionNode.h> // for POINT and INDICES enum values
 #include <vtkSelectionSource.h>
 

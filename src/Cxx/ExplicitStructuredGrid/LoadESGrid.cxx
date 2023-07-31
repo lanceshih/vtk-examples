@@ -6,12 +6,10 @@
 #include <vtkInteractorStyleRubberBandPick.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridToExplicitStructuredGrid.h>
 #include <vtkXMLUnstructuredGridReader.h>
 

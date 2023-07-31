@@ -5,7 +5,6 @@
 #include <vtkIterativeClosestPointTransform.h>
 #include <vtkLandmarkTransform.h>
 #include <vtkLine.h>
-#include <vtkMath.h>
 #include <vtkMatrix4x4.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -23,9 +22,8 @@
 #include <vtkUnsignedCharArray.h>
 #include <vtkVertexGlyphFilter.h>
 #include <vtkXMLPolyDataReader.h>
-#include <vtkXMLPolyDataWriter.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -39,10 +37,10 @@ void AxesLines(vtkSmartPointer<vtkPolyData> linesPolyData);
 /**
  * Convert points to glyphs.
  *
- * @param points - The points to glyph
+ * @param points - The points to glyph.
  * @param scale - The scale, used to determine the size of the glyph
  * representing the point, expressed as a fraction of the largest side of the
- * bounding box surrounding the points. e.g. 0.05
+ * bounding box surrounding the points. e.g. 0.05.
  *
  * @return The actor.
  */

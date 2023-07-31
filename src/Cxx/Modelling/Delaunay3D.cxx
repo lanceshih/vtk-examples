@@ -1,25 +1,19 @@
 #include <vtkActor.h>
 #include <vtkActor2D.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCellData.h>
 #include <vtkCellIterator.h>
 #include <vtkCleanPolyData.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDelaunay3D.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
-#include <vtkPolygon.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTextMapper.h>
 #include <vtkTextProperty.h>
-#include <vtkUnsignedCharArray.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkXMLPolyDataReader.h>
 

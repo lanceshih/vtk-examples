@@ -1,19 +1,15 @@
 #include <vtkActor.h>
 #include <vtkActor2D.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCellData.h>
 #include <vtkCellIterator.h>
 #include <vtkCleanPolyData.h>
 #include <vtkCommand.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDelaunay3D.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkPolygon.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -23,7 +19,6 @@
 #include <vtkSmartPointer.h>
 #include <vtkTextMapper.h>
 #include <vtkTextProperty.h>
-#include <vtkUnsignedCharArray.h>
 #include <vtkUnstructuredGrid.h>
 
 #include <sstream>
@@ -48,7 +43,8 @@ int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " filename.vtp" << std::endl;
+    std::cout << "Usage: " << argv[0] << " filename.vtp [alpha] e.g. Bunny.vtp"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
