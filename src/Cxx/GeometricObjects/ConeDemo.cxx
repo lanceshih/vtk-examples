@@ -5,7 +5,6 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -16,7 +15,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Define all of the colors used in the example
+  // Define all of the colors used in the example.
   vtkColor3d backgroundColor = colors->GetColor3d("tan");
   vtkColor3d actorColor = colors->GetColor3d("orchid");
   vtkColor3d actorBackfaceColor = colors->GetColor3d("PowderBlue");
@@ -29,16 +28,16 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Shared camera
+  // Shared camera.
   vtkNew<vtkCamera> camera;
 
-  // Define viewport ranges
+  // Define viewport ranges.
   double xmins[4] = {0, .5, 0, .5};
   double xmaxs[4] = {0.5, 1, 0.5, 1};
   double ymins[4] = {0, 0, .5, .5};
   double ymaxs[4] = {0.5, 0.5, 1, 1};
 
-  // Each viewport will contain a cone with an increasing resolution
+  // Each viewport will contain a cone with an increasing resolution.
   for (unsigned i = 0; i < 4; i++)
   {
     vtkNew<vtkRenderer> renderer;
@@ -47,7 +46,7 @@ int main(int, char*[])
     renderWindow->AddRenderer(renderer);
     renderer->SetViewport(xmins[i], ymins[i], xmaxs[i], ymaxs[i]);
 
-    // Create a cone with different resolutions
+    // Create a cone with different resolutions.
     vtkNew<vtkConeSource> coneSource;
     coneSource->SetResolution(i);
     coneSource->SetDirection(0, 1, 0);

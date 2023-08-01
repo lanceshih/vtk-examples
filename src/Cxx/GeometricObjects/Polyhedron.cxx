@@ -1,15 +1,10 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkDataArray.h>
 #include <vtkDataSetMapper.h>
 #include <vtkIdList.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
-#include <vtkPolyhedron.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -21,7 +16,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // create polyhedron (cube)
+  // Create the polyhedron, a cube.
   vtkIdType pointIds[8] = {0, 1, 2, 3, 4, 5, 6, 7};
 
   vtkNew<vtkPoints> points;
@@ -76,7 +71,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Silver").GetData());
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetWindowName("Polyhedron");

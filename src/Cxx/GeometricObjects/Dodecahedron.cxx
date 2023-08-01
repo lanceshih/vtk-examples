@@ -3,7 +3,7 @@
 #include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
+#include <vtkPoints.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPolyhedron.h>
 #include <vtkProperty.h>

@@ -19,7 +19,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindow> renWin;
   renWin->SetWindowName("Cube");
   renWin->AddRenderer(ren);
-  // Create a renderwindowinteractor
+  // Create a renderwindow interactor.
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
@@ -27,7 +27,7 @@ int main(int, char*[])
   vtkNew<vtkCubeSource> cube;
   cube->Update();
 
-  // mapper
+  // Mapper.
   vtkNew<vtkPolyDataMapper> cubeMapper;
   cubeMapper->SetInputData(cube->GetOutput());
 
@@ -48,7 +48,7 @@ int main(int, char*[])
   renWin->SetSize(300, 300);
   renWin->SetWindowName("Cube1");
 
-  // Enable user interface interactor.
+  // Enable user interface interaction.
   iren->Initialize();
   renWin->Render();
   iren->Start();

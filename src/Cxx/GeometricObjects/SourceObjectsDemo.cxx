@@ -6,7 +6,6 @@
 #include <vtkCylinderSource.h>
 #include <vtkDiskSource.h>
 #include <vtkLineSource.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>

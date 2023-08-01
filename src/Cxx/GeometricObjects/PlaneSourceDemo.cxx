@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkArrowSource.h>
 #include <vtkCamera.h>
-#include <vtkColor.h>
 #include <vtkLegendBoxActor.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>

@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkFrustumSource.h>
-#include <vtkMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlanes.h>

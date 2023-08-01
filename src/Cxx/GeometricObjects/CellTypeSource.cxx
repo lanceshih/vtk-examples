@@ -2,14 +2,12 @@
 #include <vtkActor2D.h>
 #include <vtkCamera.h>
 #include <vtkCellData.h>
-#include <vtkCellType.h>
 #include <vtkCellTypeSource.h>
 #include <vtkCellTypes.h>
 #include <vtkColorSeries.h>
 #include <vtkDataSetMapper.h>
 #include <vtkIntArray.h>
 #include <vtkLookupTable.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>

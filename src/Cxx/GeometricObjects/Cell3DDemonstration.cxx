@@ -9,7 +9,6 @@
 #include <vtkNew.h>
 #include <vtkPentagonalPrism.h>
 #include <vtkPoints.h>
-#include <vtkPolyhedron.h>
 #include <vtkProperty.h>
 #include <vtkPyramid.h>
 #include <vtkRenderWindow.h>
