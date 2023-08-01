@@ -20,7 +20,7 @@
 
 int main(int argc, char* argv[])
 {
-  // Verify input arguments
+  // Verify input arguments.
   if (argc < 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. fullhead15.png"
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
       butterworthColor->GetOutputPort());
   butterworthActor->GetProperty()->SetInterpolationTypeToNearest();
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> idealRenderer;
   idealRenderer->SetViewport(0.0, 0.0, 0.5, 1.0);
   idealRenderer->AddActor(idealActor);

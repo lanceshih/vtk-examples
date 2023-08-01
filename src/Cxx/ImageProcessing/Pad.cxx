@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc < 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. FullHead.mhd"
@@ -27,14 +27,14 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader;
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
   reader->SetFileName(argv[1]);
   reader->Update();
 
-  // Pipelines
+  // Pipelines.
   vtkNew<vtkImageConstantPad> constantPad;
   constantPad->SetInputConnection(reader->GetOutputPort());
   constantPad->SetConstant(800);
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
   mirrorPad->SetInputConnection(reader->GetOutputPort());
   mirrorPad->SetOutputWholeExtent(constantPad->GetOutputWholeExtent());
 
-  // Create actors
+  // Create actors.
 
   vtkNew<vtkImageMapToWindowLevelColors> constantPadColor;
   constantPadColor->SetWindow(2000);
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
       mirrorPadColor->GetOutputPort());
   mirrorPadActor->GetProperty()->SetInterpolationTypeToNearest();
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> constantPadRenderer;
   constantPadRenderer->SetViewport(0.0, 0.0, 0.5, 1.0);
   constantPadRenderer->AddActor(constantPadActor);

@@ -3,7 +3,6 @@
 #include <vtkImageData.h>
 #include <vtkImageGaussianSmooth.h>
 #include <vtkImageMapper3D.h>
-#include <vtkImageNoiseSource.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkInteractorStyleImage.h>
@@ -16,7 +15,7 @@
 
 int main(int argc, char* argv[])
 {
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. Gourds.png"
@@ -51,7 +50,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageActor> filteredActor;
   filteredActor->GetMapper()->SetInputConnection(filter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double filteredViewport[4] = {0.5, 0.0, 1.0, 1.0};

@@ -1,4 +1,3 @@
-#include <vector>
 #include <vtkCamera.h>
 #include <vtkDataArray.h>
 #include <vtkImageActor.h>
@@ -11,7 +10,6 @@
 #include <vtkImageProperty.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
-#include <vtkImageThreshold.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
@@ -20,9 +18,11 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 
+#include <vector>
+
 int main(int argc, char* argv[])
 {
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. FullHead.mhd"
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
   int colorWindow = (scalarRange[1] - scalarRange[0]);
   int colorLevel = colorWindow / 2;
 
-  // Map the image through the lookup table
+  // Map the image through the lookup table.
   vtkNew<vtkImageMapToWindowLevelColors> originalColor;
   originalColor->SetWindow(colorWindow);
   originalColor->SetLevel(colorLevel);
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
   enhancedActor->GetProperty()->SetInterpolationTypeToNearest();
   enhancedActor->SetDisplayExtent(originalActor->GetDisplayExtent());
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->AddActor(originalActor);
   vtkNew<vtkRenderer> laplacianRenderer;
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
   renderers.push_back(laplacianRenderer);
   renderers.push_back(enhancedRenderer);
 
-  // Setup viewports for the renderers
+  // Setup viewports for the renderers.
   int rendererSize = 400;
   unsigned int xGridDimensions = 3;
   unsigned int yGridDimensions = 1;
@@ -150,7 +150,7 @@ int main(int argc, char* argv[])
   renderWindowInteractor->SetInteractorStyle(style);
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Renderers share one camera
+  // Renderers share one camera.
   renderWindow->Render();
   renderers[0]->GetActiveCamera()->Dolly(1.5);
   renderers[0]->ResetCameraClippingRange();
