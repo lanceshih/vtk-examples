@@ -1,9 +1,6 @@
-#include <vtkGraphAlgorithm.h>
 #include <vtkMutableUndirectedGraph.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
 #include <vtkRemoveIsolatedVertices.h>
-#include <vtkUndirectedGraph.h>
 
 int main(int, char*[])
 {

@@ -1,21 +1,16 @@
 #include <vtkAnnotationLink.h>
 #include <vtkCallbackCommand.h>
-#include <vtkDoubleArray.h>
-#include <vtkGraphLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
-#include <vtkGraphWriter.h>
 #include <vtkIdTypeArray.h>
 #include <vtkMutableUndirectedGraph.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderedGraphRepresentation.h>
 #include <vtkRenderer.h>
 #include <vtkSelection.h>
 #include <vtkSelectionNode.h>
-#include <vtkUnsignedCharArray.h>
 
 namespace {
 

@@ -1,12 +1,9 @@
 #include <vtkDataSetAttributes.h>
-#include <vtkFloatArray.h>
 #include <vtkGraphLayoutView.h>
 #include <vtkGraphToGlyphs.h>
-#include <vtkGraphWriter.h>
 #include <vtkMutableUndirectedGraph.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderedGraphRepresentation.h>

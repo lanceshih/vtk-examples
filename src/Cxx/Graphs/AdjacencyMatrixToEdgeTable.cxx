@@ -34,7 +34,6 @@ column 2.
 #include <vtkAdjacencyMatrixToEdgeTable.h>
 #include <vtkArrayData.h>
 #include <vtkArrayPrint.h>
-#include <vtkArrayToTable.h>
 #include <vtkDenseArray.h>
 #include <vtkNew.h>
 #include <vtkTable.h>

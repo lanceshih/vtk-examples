@@ -7,8 +7,6 @@
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
-#include <vtkRendererCollection.h>
-#include <vtkSmartPointer.h>
 #include <vtkTree.h>
 #include <vtkTreeDFSIterator.h>
 #include <vtkUnsignedCharArray.h>
