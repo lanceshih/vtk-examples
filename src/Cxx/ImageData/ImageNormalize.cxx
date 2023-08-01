@@ -1,6 +1,5 @@
 #include <vtkImageActor.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageNormalize.h>
 #include <vtkImageSinusoidSource.h>

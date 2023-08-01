@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkImageData.h>
-#include <vtkImageMapper.h>
 #include <vtkImageSlice.h>
 #include <vtkImageSliceMapper.h>
 #include <vtkImageTranslateExtent.h>

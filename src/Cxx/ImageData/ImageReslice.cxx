@@ -1,9 +1,6 @@
-#include <vtkActor.h>
 #include <vtkImageData.h>
 #include <vtkImageReslice.h>
-#include <vtkIntArray.h>
 #include <vtkNew.h>
-#include <vtkProperty2D.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
