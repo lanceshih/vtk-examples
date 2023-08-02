@@ -1,6 +1,4 @@
-#include <vtkImageCanvasSource2D.h>
 #include <vtkImageData.h>
-#include <vtkImageEllipsoidSource.h>
 #include <vtkImageProperty.h>
 #include <vtkImageShiftScale.h>
 #include <vtkImageSlice.h>
@@ -8,7 +6,6 @@
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPNGWriter.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
@@ -23,7 +20,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageData> image;
   CreateImage(image);
 
@@ -34,7 +31,7 @@ int main(int, char*[])
   shiftScaleFilter->SetScale(1);
   shiftScaleFilter->Update();
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkImageSliceMapper> originalSliceMapper;
   originalSliceMapper->SetInputData(image);
 
@@ -49,7 +46,7 @@ int main(int, char*[])
   shiftScaleSlice->SetMapper(shiftScaleMapper);
   shiftScaleSlice->GetProperty()->SetInterpolationTypeToNearest();
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double shiftScaleViewport[4] = {0.5, 0.0, 1.0, 1.0};

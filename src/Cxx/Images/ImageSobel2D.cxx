@@ -2,11 +2,8 @@
 #include <vtkGlyph3DMapper.h>
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
-#include <vtkImageCast.h>
 #include <vtkImageData.h>
-#include <vtkImageEllipsoidSource.h>
 #include <vtkImageExtractComponents.h>
-#include <vtkImageMagnitude.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageMathematics.h>
 #include <vtkImageShiftScale.h>

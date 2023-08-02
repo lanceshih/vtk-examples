@@ -1,5 +1,4 @@
 #include <vtkActor2D.h>
-#include <vtkCubeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
@@ -36,7 +35,7 @@ int main(int, char*[])
   actor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
   actor->GetProperty()->SetPointSize(8);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

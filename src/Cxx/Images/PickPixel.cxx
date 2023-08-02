@@ -16,12 +16,11 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkTextProperty.h>
 
 namespace {
 
-// The mouse motion callback, to pick the image and recover pixel values
+// The mouse motion callback, to pick the image and recover pixel values.
 class vtkImageInteractionCallback1 : public vtkCommand
 {
 public:
@@ -72,12 +71,12 @@ public:
     vtkInteractorStyle* style =
         dynamic_cast<vtkInteractorStyle*>(interactor->GetInteractorStyle());
 
-    // Pick at the mouse location provided by the interactor
+    // Pick at the mouse location provided by the interactor.
     this->Picker->Pick(interactor->GetEventPosition()[0],
                        interactor->GetEventPosition()[1], 0.0, renderer);
 
     // There could be other props assigned to this picker, so
-    // make sure we picked the image actor
+    // make sure we picked the image actor.
     vtkAssemblyPath* path = this->Picker->GetPath();
     bool validPick = false;
 
@@ -100,15 +99,15 @@ public:
     {
       this->Annotation->SetText(0, "Off Image");
       interactor->Render();
-      // Pass the event further on
+      // Pass the event further on.
       style->OnMouseMove();
       return;
     }
 
-    // Get the world coordinates of the pick
+    // Get the world coordinates of the pick.
     double pos[3];
     this->Picker->GetPickPosition(pos);
-    // Fixes some numerical problems with the picking
+    // Fixes some numerical problems with the picking.
     double* bounds = actor->GetDisplayBounds();
     int axis = this->Viewer->GetSliceOrientation();
     pos[axis] = bounds[2 * axis];
@@ -121,18 +120,18 @@ public:
 
     this->PointData->InterpolateAllocate(pd, 1, 1);
 
-    // Use tolerance as a function of size of source data
+    // Use tolerance as a function of size of source data.
     double tol2 = image->GetLength();
     tol2 = tol2 ? tol2 * tol2 / 1000.0 : 0.001;
 
-    // Find the cell that contains pos
+    // Find the cell that contains pos.
     int subId;
     double pcoords[3], weights[8];
     vtkCell* cell =
         image->FindAndGetCell(pos, NULL, -1, tol2, subId, pcoords, weights);
     if (cell)
     {
-      // Interpolate the point data
+      // Interpolate the point data.
       this->PointData->InterpolatePoint(pd, 0, cell->PointIds, weights);
       int components = this->PointData->GetScalars()->GetNumberOfComponents();
       double* tuple = this->PointData->GetScalars()->GetTuple(0);
@@ -161,16 +160,16 @@ public:
   }
 
 private:
-  // Pointer to the viewer
+  // Pointer to the viewer.
   vtkImageViewer2* Viewer;
 
-  // Pointer to the picker
+  // Pointer to the picke.r
   vtkPropPicker* Picker;
 
-  // Pointer to the annotation
+  // Pointer to the annotation.
   vtkCornerAnnotation* Annotation;
 
-  // Interpolator
+  // Interpolator.
   vtkPointData* PointData;
 };
 
@@ -180,7 +179,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. Gourds2.jpg"
@@ -194,15 +193,15 @@ int main(int argc, char* argv[])
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
   reader->SetFileName(argv[1]);
 
-  // Picker to pick pixels
+  // Picker to pick pixels.
   vtkNew<vtkPropPicker> propPicker;
   propPicker->PickFromListOn();
 
-  // Give the picker a prop to pick
+  // Give the picker a prop to pick.
   vtkNew<vtkImageViewer2> imageViewer;
   propPicker->AddPickList(imageViewer->GetImageActor());
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   imageViewer->SetInputConnection(reader->GetOutputPort());
   imageViewer->SetupInteractor(renderWindowInteractor);
@@ -215,7 +214,7 @@ int main(int argc, char* argv[])
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
   renderer->SetBackground2(colors->GetColor3d("LightSlateGray").GetData());
 
-  // Annotate the image with window/level and mouse over pixel information
+  // Annotate the image with window/level and mouse over pixel information.
   vtkNew<vtkCornerAnnotation> cornerAnnotation;
   cornerAnnotation->SetLinearFontScaleFactor(2);
   cornerAnnotation->SetNonlinearFontScaleFactor(1);
@@ -227,7 +226,7 @@ int main(int argc, char* argv[])
 
   imageViewer->GetRenderer()->AddViewProp(cornerAnnotation);
 
-  // Callback listens to MouseMoveEvents invoked by the interactor's style
+  // Callback listens to MouseMoveEvents invoked by the interactor's style.
   vtkNew<vtkImageInteractionCallback1> callback;
   callback->SetViewer(imageViewer);
   callback->SetAnnotation(cornerAnnotation);

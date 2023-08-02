@@ -1,16 +1,13 @@
-#include <vtkActor.h>
 #include <vtkBorderRepresentation.h>
 #include <vtkBorderWidget.h>
 #include <vtkCommand.h>
 #include <vtkImageActor.h>
 #include <vtkImageChangeInformation.h>
-#include <vtkImageClip.h>
 #include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkInteractorStyleImage.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty2D.h>
@@ -18,7 +15,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkXMLPolyDataReader.h>
 
 #include <iomanip>
 #include <iostream>
@@ -67,14 +63,14 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> imageReader;
   imageReader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
   imageReader->SetFileName(argv[1]);
   imageReader->Update();
 
-  // Shift the image center to (0,0)
+  // Shift the image center to (0,0).
   int dims[3];
   imageReader->GetOutput()->GetDimensions(dims);
 
@@ -104,7 +100,7 @@ int main(int argc, char* argv[])
 
   interactor->SetRenderWindow(renderWindow);
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("Peru").GetData());
   renderWindow->AddRenderer(renderer);
@@ -130,7 +126,7 @@ namespace {
 
 void vtkBorderCallback::Execute(vtkObject* caller, unsigned long, void*)
 {
-  // Use this to format the output
+  // Use this to format the output.
   auto fmt = [](const double& x) {
     std::ostringstream os;
     os << std::fixed << std::setprecision(2) << std::setw(8) << x;
@@ -139,7 +135,7 @@ void vtkBorderCallback::Execute(vtkObject* caller, unsigned long, void*)
 
   vtkBorderWidget* borderWidget = reinterpret_cast<vtkBorderWidget*>(caller);
 
-  // Get the world coordinates of the two corners of the box
+  // Get the world coordinates of the two corners of the box.
   vtkCoordinate* lowerLeftCoordinate =
       static_cast<vtkBorderRepresentation*>(borderWidget->GetRepresentation())
           ->GetPositionCoordinate();

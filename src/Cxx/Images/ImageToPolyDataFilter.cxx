@@ -1,5 +1,4 @@
 #include <vtkActor.h>
-#include <vtkCamera.h>
 #include <vtkImageQuantizeRGBToIndex.h>
 #include <vtkImageToPolyDataFilter.h>
 #include <vtkLookupTable.h>

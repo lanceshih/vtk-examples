@@ -1,9 +1,7 @@
-#include <vtkActor.h>
 #include <vtkBarChartActor.h>
 #include <vtkFieldData.h>
 #include <vtkImageAccumulate.h>
 #include <vtkImageData.h>
-#include <vtkImageExtractComponents.h>
 #include <vtkImageMagnitude.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
@@ -61,7 +59,7 @@ int main(int argc, char* argv[])
 
   dataObject->GetFieldData()->AddArray(frequencies);
 
-  // Create a vtkBarChartActor
+  // Create a vtkBarChartActor.
   vtkNew<vtkBarChartActor> barChart;
 
   barChart->SetInput(dataObject);
@@ -80,7 +78,7 @@ int main(int argc, char* argv[])
     barChart->SetBarColor(count++, colors->GetColor3d("Tomato").GetData());
   }
 
-  // Visualize the histogram
+  // Visualize the histogram.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(barChart);
   renderer->SetBackground(colors->GetColor3d("Peacock").GetData());

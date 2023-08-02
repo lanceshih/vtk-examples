@@ -1,7 +1,6 @@
 #include <vtkImageBlend.h>
 #include <vtkImageCanvasSource2D.h>
 #include <vtkImageData.h>
-#include <vtkImageMapper3D.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkImageViewer2.h>
@@ -18,7 +17,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " InputImageFilename e.g. Gourds2.jpg"
@@ -26,7 +25,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> imgReader;
   imgReader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -35,12 +34,12 @@ int main(int argc, char* argv[])
 
   vtkImageData* image = imgReader->GetOutput();
 
-  // Find center of image
+  // Find center of image.
   int center[2];
   center[0] = (image->GetExtent()[1] + image->GetExtent()[0]) / 2;
   center[1] = (image->GetExtent()[3] + image->GetExtent()[2]) / 2;
 
-  // Pick a radius for the circle
+  // Pick a radius for the circle.
   int radius;
   radius = (image->GetExtent()[1] < image->GetExtent()[3])
       ? image->GetExtent()[1] * 2 / 5
@@ -56,7 +55,7 @@ int main(int argc, char* argv[])
     drawColor2[i] = color2[i];
   }
 
-  // Draw a circle in the center of the image
+  // Draw a circle in the center of the image.
   vtkNew<vtkImageCanvasSource2D> drawing;
   drawing->SetNumberOfScalarComponents(3);
   drawing->SetScalarTypeToUnsignedChar();
@@ -68,14 +67,14 @@ int main(int argc, char* argv[])
   drawing->DrawCircle(center[0], center[1], radius);
 
   // Combine the images (blend takes multiple connections on the 0th
-  // input port)
+  // input port).
   vtkNew<vtkImageBlend> blend;
   blend->AddInputConnection(imgReader->GetOutputPort());
   blend->AddInputConnection(drawing->GetOutputPort());
   blend->SetOpacity(0, .6);
   blend->SetOpacity(1, .4);
 
-  // Display the result
+  // Display the result.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<vtkImageViewer2> imageViewer;

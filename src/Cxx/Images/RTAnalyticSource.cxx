@@ -1,6 +1,4 @@
-#include <vtkActor.h>
 #include <vtkImageActor.h>
-#include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>

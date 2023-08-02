@@ -5,10 +5,10 @@
 
 int main(int, char*[])
 {
-  // Create an image data
+  // Create the image data.
   vtkNew<vtkImageData> imageData;
 
-  // Specify the size of the image data
+  // Specify the size of the image data.
   imageData->SetDimensions(5, 1, 1);
   imageData->AllocateScalars(VTK_DOUBLE, 1);
 
@@ -27,10 +27,10 @@ int main(int, char*[])
   std::cout << "valuesRange = " << valuesRange[0] << " " << valuesRange[1]
             << std::endl;
 
-  // Alternatively
+  // Alternatively.
   auto min = imageData->GetScalarRange()[0];
   auto max = imageData->GetScalarRange()[1];
-  std::cout << "valuesRange = " << min << " " << max << std::endl;
+  std::cout << "alternatively:\nvaluesRange = " << min << " " << max << std::endl;
 
   return EXIT_SUCCESS;
 }

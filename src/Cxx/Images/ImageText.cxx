@@ -7,7 +7,6 @@
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPNGWriter.h>
 #include <vtkPointData.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -30,10 +29,10 @@ int main(int argc, char* argv[])
     drawColor1[i] = color1[i];
     drawColor2[i] = color2[i];
   }
-  // Create a blue image with a red circle of radius 50 centered at (60, 60)
+  // Create a blue image with a red circle of radius 50 centered at (60, 60).
   vtkNew<vtkImageCanvasSource2D> drawing;
   drawing->SetScalarTypeToUnsignedChar(); // PNGWriter requires unsigned char
-                                          // (or unsigned short)
+                                          // (or unsigned short).
   drawing->SetNumberOfScalarComponents(3);
   drawing->SetExtent(0, 150, 0, 120, 0,
                      0); // xmin, xmax, ymin, ymax, zmin, zmax
@@ -41,7 +40,7 @@ int main(int argc, char* argv[])
   drawing->FillBox(0, 150, 0, 120);
   drawing->SetDrawColor(drawColor2.data());
   drawing->DrawCircle(60, 60, 50); // parameters: x, y, radius
-  // Create an image of text
+  // Create an image of text.
   vtkFreeTypeTools* freeType = vtkFreeTypeTools::GetInstance();
   vtkNew<vtkTextProperty> textProperty;
   textProperty->SetColor(colors->GetColor3d("Yellow").GetData());
@@ -52,7 +51,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageData> textImage;
   freeType->RenderString(textProperty, text, 70, textImage.GetPointer());
 
-  // Combine the images
+  // Combine the images.
   vtkNew<vtkImageBlend> blend;
   blend->AddInputConnection(drawing->GetOutputPort());
   blend->AddInputData(textImage);
@@ -68,11 +67,7 @@ int main(int argc, char* argv[])
   blendRenderer->ResetCamera();
   blendRenderer->SetBackground(colors->GetColor3d("DodgerBlue").GetData());
 
-  // vtkNew<vtkPNGWriter> writer;
-  // writer->SetFileName("output.png");
-  // writer->SetInputConnection(blend->GetOutputPort());
-  // writer->Write();
-  vtkNew<vtkRenderWindow> renderWindow;
+ vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(300, 300);
   renderWindow->AddRenderer(blendRenderer);
   renderWindow->SetWindowName("ImageText");

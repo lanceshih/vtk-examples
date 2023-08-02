@@ -19,7 +19,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkStripper.h>
-#include <vtkStructuredPoints.h>
 #include <vtkSubPixelPositionEdgels.h>
 #include <vtkThreshold.h>
 
@@ -73,13 +72,13 @@ int main(int argc, char* argv[])
   ic->SetOutputScalarTypeToFloat();
   ic->SetInputConnection(il->GetOutputPort());
 
-  // Smooth the image
+  // Smooth the image.
   vtkNew<vtkImageGaussianSmooth> gs;
   gs->SetInputConnection(ic->GetOutputPort());
   gs->SetDimensionality(2);
   gs->SetRadiusFactors(1, 1, 0);
 
-  // Gradient the image
+  // Gradient the image.
   vtkNew<vtkImageGradient> imgGradient;
   imgGradient->SetInputConnection(gs->GetOutputPort());
   imgGradient->SetDimensionality(2);
@@ -87,7 +86,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageMagnitude> imgMagnitude;
   imgMagnitude->SetInputConnection(imgGradient->GetOutputPort());
 
-  // Non maximum suppression
+  // Non maximum suppression.
   vtkNew<vtkImageNonMaximumSuppression> nonMax;
   imgMagnitude->Update();
   nonMax->SetMagnitudeInputData(imgMagnitude->GetOutput());
@@ -105,12 +104,12 @@ int main(int argc, char* argv[])
   pad->Update();
   i2sp1->SetVectorInputData(pad->GetOutput());
 
-  // Link edgles
+  // Link edgles.
   vtkNew<vtkLinkEdgels> imgLink;
   imgLink->SetInputConnection(i2sp1->GetOutputPort());
   imgLink->SetGradientThreshold(2);
 
-  // Threshold links
+  // Threshold links.
   vtkNew<vtkThreshold> thresholdEdges;
   thresholdEdges->SetInputConnection(imgLink->GetOutputPort());
   thresholdEdges->SetUpperThreshold(10);
@@ -125,7 +124,7 @@ int main(int argc, char* argv[])
   pad->Update();
   i2sp->SetVectorInputData(pad->GetOutput());
 
-  // Subpixel them
+  // Subpixel them.
   vtkNew<vtkSubPixelPositionEdgels> spe;
   spe->SetInputConnection(gf->GetOutputPort());
   i2sp->Update();
@@ -145,10 +144,10 @@ int main(int argc, char* argv[])
   planeActor->GetProperty()->SetColor(
       colors->GetColor3d("GhostWhite").GetData());
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   edgeRenderer->AddActor(planeActor);
 
-  // Render the image
+  // Render the image.
   interactor->Initialize();
   renderWindow->Render();
   renderWindow->Render();

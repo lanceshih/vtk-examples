@@ -1,13 +1,9 @@
 #include <vtkImageActor.h>
 #include <vtkImageData.h>
-#include <vtkImageMapToColors.h>
 #include <vtkImageMapper3D.h>
 #include <vtkInteractorStyleImage.h>
-#include <vtkJPEGReader.h>
-#include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -29,11 +25,11 @@ int main(int, char*[])
   unsigned char alpha = 50;
   CreateColorImage(image, "Gold", alpha);
 
-  // Create actor
+  // Create actor.
   vtkNew<vtkImageActor> imageActor;
   imageActor->GetMapper()->SetInputData(image);
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(imageActor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
@@ -71,7 +67,7 @@ void CreateColorImage(vtkImageData* image, std::string const& colorName,
 
   unsigned int dim = 10;
 
-  // Specify the size of the image data
+  // Specify the size of the image data.
   image->SetDimensions(dim, dim, 1);
   image->AllocateScalars(VTK_UNSIGNED_CHAR, 4);
 

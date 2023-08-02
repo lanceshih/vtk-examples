@@ -1,5 +1,4 @@
 #include <vtkImageData.h>
-#include <vtkImageMapper.h>
 #include <vtkImageProperty.h>
 #include <vtkImageSlice.h>
 #include <vtkImageSliceMapper.h>
@@ -21,7 +20,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Big image
+  // Big image.
   vtkNew<vtkImageData> image;
   CreateRandomImage(image, 50);
 

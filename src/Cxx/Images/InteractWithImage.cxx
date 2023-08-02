@@ -21,37 +21,37 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader;
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
   reader->SetFileName(argv[1]);
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(reader->GetOutputPort());
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("Peru").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> window;
   window->AddRenderer(renderer);
   window->SetWindowName("InteractWithImage");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(window);
 
   // Setup interactor style (this is what implements the zooming, panning and
-  // brightness adjustment functionality)
+  // brightness adjustment functionality).
   vtkNew<vtkInteractorStyleImage> style;
   interactor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   window->Render();
   interactor->Start();
 

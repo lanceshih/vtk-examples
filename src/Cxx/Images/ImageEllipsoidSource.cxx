@@ -1,6 +1,5 @@
 #include <vtkImageActor.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageEllipsoidSource.h>
 #include <vtkImageMapper3D.h>
 #include <vtkInteractorStyleImage.h>
@@ -15,7 +14,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageEllipsoidSource> source;
   source->SetWholeExtent(0, 20, 0, 20, 0, 0);
   source->SetCenter(10, 10, 0);
@@ -27,28 +26,28 @@ int main(int, char*[])
   castFilter->SetOutputScalarTypeToUnsignedChar();
   castFilter->Update();
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(castFilter->GetOutputPort());
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("Sienna").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ImageEllipsoidSource");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   renderWindow->Render();

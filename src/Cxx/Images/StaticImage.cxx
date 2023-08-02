@@ -12,21 +12,21 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. Ox.jpg" << std::endl;
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader;
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
   reader->SetFileName(argv[1]);
   reader->Update();
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkImageViewer2> imageViewer;
   imageViewer->SetInputConnection(reader->GetOutputPort());
   imageViewer->GetRenderWindow()->SetSize(500, 500);
@@ -35,13 +35,13 @@ int main(int argc, char* argv[])
       colors->GetColor3d("Peru").GetData());
   imageViewer->GetRenderer()->ResetCamera();
 
-  // Set up an interactor that does not respond to mouse events
+  // Set up an interactor that does not respond to mouse events.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   imageViewer->GetRenderWindow()->SetInteractor(renderWindowInteractor);
   renderWindowInteractor->SetInteractorStyle(0);
   imageViewer->Render();
 
-  // Start the event loop
+  // Start the event loop.
   renderWindowInteractor->Initialize();
   renderWindowInteractor->Start();
 
