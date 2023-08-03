@@ -1,6 +1,4 @@
-#include <vtkDataRepresentation.h>
 #include <vtkNew.h>
-#include <vtkRegressionTestImage.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>

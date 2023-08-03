@@ -24,7 +24,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create 2 clusters, one near (0,0,0) and the other near (3,3,3)
+  // Create 2 clusters, one near (0,0,0) and the other near (3,3,3).
   vtkNew<vtkPoints> points;
 
   points->InsertNextPoint(0.0, 0.0, 0.0);
@@ -34,7 +34,7 @@ int main(int, char*[])
   points->InsertNextPoint(0.2, 0.2, 0.2);
   points->InsertNextPoint(3.2, 3.2, 3.2);
 
-  // Get the points into the format needed for KMeans
+  // Get the points into the format needed for KMeans.
   vtkNew<vtkTable> inputData;
 
   for (int c = 0; c < 3; ++c)
@@ -68,7 +68,7 @@ int main(int, char*[])
   kMeansStatistics->SetDefaultNumberOfClusters(2);
   kMeansStatistics->Update();
 
-  // Display the results
+  // Display the results.
   kMeansStatistics->GetOutput()->Dump();
 
   vtkNew<vtkIntArray> clusterArray;
@@ -83,7 +83,7 @@ int main(int, char*[])
     clusterArray->InsertNextValue(v.ToInt());
   }
 
-  // Output the cluster centers
+  // Output the cluster centers.
   auto outputMetaDS =
       dynamic_cast<vtkMultiBlockDataSet*>(kMeansStatistics->GetOutputDataObject(
           vtkStatisticsAlgorithm::OUTPUT_MODEL));
@@ -116,7 +116,7 @@ int main(int, char*[])
   glyphFilter->SetInputData(polydata);
   glyphFilter->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(glyphFilter->GetOutputPort());
 
@@ -124,7 +124,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetPointSize(4);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

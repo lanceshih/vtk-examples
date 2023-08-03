@@ -10,7 +10,6 @@
 #include <vtkColorSeries.h>
 #include <vtkImageCanvasSource2D.h>
 #include <vtkImageViewer2.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -162,7 +161,7 @@ void ShowColorSeriesNames(ostream& os);
 
 int main(int argc, char* argv[])
 {
-  // Process command line argumemts
+  // Process command line argumemts.
   CloudParameters cloudParameters;
   vtksys::CommandLineArguments arg;
   arg.Initialize(argc, argv);
@@ -171,7 +170,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Get the file that contains the text to be converted to a word cloud
+  // Get the file that contains the text to be converted to a word cloud.
   char** newArgv = nullptr;
   int newArgc = 0;
   arg.GetUnusedArguments(&newArgc, &newArgv);
@@ -189,20 +188,20 @@ int main(int argc, char* argv[])
   std::string s = buffer.str();
   t.close();
 
-  // Generate a path for placement of words
+  // Generate a path for placement of words.
   std::vector<ExtentOffset> offset;
   ArchimedesSpiral(offset, cloudParameters.Sizes);
 
-  // Sort the word by frequency
+  // Sort the word by frequency.
   std::multiset<std::pair<std::string, int>, Comparator> sortedWords =
       FindWordsSortedByFrequency(s, cloudParameters);
 
-  // Create a mask image
+  // Create a mask image.
   vtkNew<vtkNamedColors> colors;
   vtkColor3ub maskColor =
       colors->GetColor3ub(cloudParameters.MaskColorName.c_str());
   vtkSmartPointer<vtkImageData> maskImage;
-  // If a mask file is not defined, create a square mask
+  // If a mask file is not defined, create a square mask.
   if (cloudParameters.MaskFile == "")
   {
     vtkNew<vtkImageCanvasSource2D> defaultMask;
@@ -221,7 +220,7 @@ int main(int argc, char* argv[])
   }
   else
   {
-    // Read the mask file
+    // Read the mask file.
     vtkNew<vtkImageReader2Factory> readerFactory;
     vtkSmartPointer<vtkImageReader2> reader;
     reader.TakeReference(
@@ -260,19 +259,19 @@ int main(int argc, char* argv[])
     }
   }
 
-  // Create an image that will hold the final image
+  // Create an image that will hold the final image.
   vtkNew<vtkImageBlend> final;
   final->AddInputData(maskImage);
   final->SetOpacity(0, .5);
   final->Update();
 
-  // Try to add each word
+  // Try to add each word.
   int numberSkipped = 0;
   int keep = 0;
   std::array<int, 6> extent;
   bool added;
-  // Create a vector of orientations to try.
-  std::mt19937 mt(4355412); // Standard mersenne twister engine
+  // Create a vector of orientations to try..
+  std::mt19937 mt(4355412); // Standard mersenne twister engine.
   for (auto const& element : sortedWords)
   {
     std::vector<double> orientations;
@@ -310,10 +309,10 @@ int main(int argc, char* argv[])
   std::cout << "Kept " << keep << " words" << std::endl;
   std::cout << "Skipped " << numberSkipped << " words" << std::endl;
 
-  // If a maskFile is specified, replace the maskColor with the background color
+  // If a maskFile is specified, replace the maskColor with the background color.
   ReplaceMaskColorWithBackgroundColor(final->GetOutput(), cloudParameters);
 
-  // Display the final image
+  // Display the final image.
   vtkNew<vtkRenderWindowInteractor> interactor;
 
   vtkNew<vtkImageViewer2> imageViewer;
@@ -324,7 +323,7 @@ int main(int argc, char* argv[])
   imageViewer->SetSize(cloudParameters.Sizes[0], cloudParameters.Sizes[1]);
   imageViewer->GetRenderer()->ResetCamera();
 
-  // Zoom in a bit
+  // Zoom in a bit.
   vtkCamera* camera = imageViewer->GetRenderer()->GetActiveCamera();
   camera->ParallelProjectionOn();
   camera->SetParallelScale(cloudParameters.AdjustedSizes[0] * .4);
@@ -340,18 +339,18 @@ namespace {
 std::multiset<std::pair<std::string, int>, Comparator>
 FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
 {
-  // Make replacements
-  // Create a stop list
+  // Make replacements.
+  // Create a stop list.
   std::vector<std::string> stopList;
   CreateStopList(stopList);
 
-  // Add user stop words
+  // Add user stop words.
   for (auto const& stop : cloudParameters.StopWords)
   {
     stopList.push_back(stop);
   }
 
-  // Drop the case of all words
+  // Drop the case of all words.
   std::transform(s.begin(), s.end(), s.begin(), ::tolower);
 
   // Extract words
@@ -359,10 +358,10 @@ FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
   auto wordsBegin = std::sregex_iterator(s.begin(), s.end(), wordRegex);
   auto wordsEnd = std::sregex_iterator();
 
-  // Store the words in a map that will contain frequencies
+  // Store the words in a map that will contain frequencies.
   std::map<std::string, int> wordContainer;
 
-  // If a title is present add it with a high frequency
+  // If a title is present add it with a high frequency.
   if (cloudParameters.Title.length() > 0)
   {
     wordContainer[cloudParameters.Title] = 1000;
@@ -373,7 +372,7 @@ FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
   {
     std::string matchStr = (*i).str();
 
-    // Replace words with another
+    // Replace words with another.
     for (auto p = 0; p < cloudParameters.ReplacementPairs.size(); p += 2)
     {
       std::string from = cloudParameters.ReplacementPairs[p];
@@ -387,7 +386,7 @@ FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
       }
     }
 
-    // Skip the word if it is in the stop list or contains a digit
+    // Skip the word if it is in the stop list or contains a digit.
     auto it = std::find(stopList.begin(), stopList.end() - 1, matchStr);
     const auto digit = (*i).str().find_first_of("0123456789");
     if (*it != *(stopList.end() - 1) || digit != std::string::npos)
@@ -396,7 +395,7 @@ FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
       continue;
     }
 
-    // Only include words that have more than N characters
+    // Only include words that have more than N characters.
     if (matchStr.size() > N)
     {
       // Raise the case of he first letter in the word
@@ -408,7 +407,7 @@ FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
   std::cout << "Stopped " << stop << " words" << std::endl;
 
   // Defining a lambda function to compare two pairs. It will compare
-  // two pairs using second field
+  // two pairs using second field.
   Comparator compFunctor = [](std::pair<std::string, int> elem1,
                               std::pair<std::string, int> elem2) {
     if (elem1.second == elem2.second)
@@ -419,7 +418,7 @@ FindWordsSortedByFrequency(std::string& s, CloudParameters& cloudParameters)
   };
 
   // Declaring a multiset that will store the pairs using above comparision
-  // logic
+  // logic.
   std::multiset<std::pair<std::string, int>, Comparator> setOfWords(
       wordContainer.begin(), wordContainer.end(), compFunctor);
 
@@ -430,23 +429,23 @@ bool AddWordToFinal(const std::string word, const int frequency,
                     double orientation, std::vector<ExtentOffset>& offset,
                     vtkImageBlend* final, std::array<int, 6>& extent)
 {
-  // Skip single character words
+  // Skip single character words.
   if (frequency < cloudParameters.MinFrequency)
   {
     return false;
   }
 
-  // Create an image of the string
+  // Create an image of the string.
   vtkFreeTypeTools* freeType = vtkFreeTypeTools::GetInstance();
   freeType->ScaleToPowerTwoOff();
 
-  // Create random distributions
+  // Create random distributions.
   std::uniform_real_distribution<> colorDist(
       cloudParameters.ColorDistribution[0],
       cloudParameters.ColorDistribution[1]);
   // bool discreteOrientations = cloudParameters.Orientations.size() != 0;
 
-  // Setup a property for the strings containing fixed parameters
+  // Setup a property for the strings containing fixed parameters.
   vtkNew<vtkNamedColors> colors;
   vtkNew<vtkTextProperty> textProperty;
   if (cloudParameters.WordColorName.length() > 0)
@@ -479,7 +478,7 @@ bool AddWordToFinal(const std::string word, const int frequency,
   textProperty->SetJustificationToCentered();
   textProperty->SetLineOffset(4);
 
-  // Check if a font file is present
+  // Check if a font file is present.
   if (cloudParameters.FontFile.length() > 0)
   {
     textProperty->SetFontFile(cloudParameters.FontFile.c_str());
@@ -516,7 +515,7 @@ bool AddWordToFinal(const std::string word, const int frequency,
   }
 
   // For each string, create an image and see if it overlaps with other images,
-  // if so, skip it
+  // if so, skip it.
   int accepted = 0;
   vtkNew<vtkImageData> textImage;
   freeType->RenderString(textProperty, spaces + word + spaces,
@@ -538,7 +537,7 @@ bool AddWordToFinal(const std::string word, const int frequency,
 
   for (auto it = offset.begin(); it < offset.end(); ++it)
   {
-    int offsetX = (*it).x + offsetDist(mt); // add some noise to the offset
+    int offsetX = (*it).x + offsetDist(mt); // Add some noise to the offset.
     int offsetY = (*it).y + offsetDist(mt);
     // Make sure the text image will fit on the final image
     if (offsetX + bb[1] - bb[0] < cloudParameters.AdjustedSizes[0] - 1 &&
@@ -550,7 +549,7 @@ bool AddWordToFinal(const std::string word, const int frequency,
       vtkNew<vtkImageData> image;
       final->Update();
 
-      // Does the text image overlap with images on the final image
+      // Does the text image overlap with images on the final image.
       vtkImageIterator<unsigned char> finalIt(final->GetOutput(),
                                               textImage->GetExtent());
       textImage->GetExtent(extent.data());
@@ -565,7 +564,7 @@ bool AddWordToFinal(const std::string word, const int frequency,
           G = *finalSpan++;
           B = *finalSpan++;
           // If the pixel does not contain the background color, the word will
-          // not fit
+          // not fit.
           if (R != maskR && G != maskG && B != maskB)
           {
             good = false;
