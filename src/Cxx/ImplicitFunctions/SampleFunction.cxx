@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkContourFilter.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>
@@ -20,7 +19,7 @@ int main(int, char*[])
   implicitFunction->SetPhiRoundness(2.5);
   implicitFunction->SetThetaRoundness(0.5);
 
-  // Sample the function
+  // Sample the function.
   vtkNew<vtkSampleFunction> sample;
   sample->SetSampleDimensions(50, 50, 50);
   sample->SetImplicitFunction(implicitFunction);
@@ -29,31 +28,31 @@ int main(int, char*[])
          zmin = -value, zmax = value;
   sample->SetModelBounds(xmin, xmax, ymin, ymax, zmin, zmax);
 
-  // Create the 0 isosurface
+  // Create the 0 isosurface.
   vtkNew<vtkContourFilter> contours;
   contours->SetInputConnection(sample->GetOutputPort());
   contours->GenerateValues(1, 2.0, 2.0);
 
-  // Map the contours to graphical primitives
+  // Map the contours to graphical primitives.
   vtkNew<vtkPolyDataMapper> contourMapper;
   contourMapper->SetInputConnection(contours->GetOutputPort());
   contourMapper->SetScalarRange(0.0, 1.2);
 
-  // Create an actor for the contours
+  // Create an actor for the contours.
   vtkNew<vtkActor> contourActor;
   contourActor->SetMapper(contourMapper);
 
   // -- create a box around the function to indicate the sampling volume --
 
-  // Create outline
+  // Create outline.
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputConnection(sample->GetOutputPort());
 
-  // Map it to graphics primitives
+  // Map it to graphics primitives.
   vtkNew<vtkPolyDataMapper> outlineMapper;
   outlineMapper->SetInputConnection(outline->GetOutputPort());
 
-  // Create an actor for it
+  // Create an actor for it.
   vtkNew<vtkActor> outlineActor;
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
