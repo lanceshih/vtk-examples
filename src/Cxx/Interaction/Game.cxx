@@ -1,13 +1,10 @@
-// Demonstrate moving pieces and "snapping"
+// Demonstrate moving pieces and "snapping".
 
 #include <vtkActor.h>
 #include <vtkCubeSource.h>
-#include <vtkInteractorStyleSwitch.h>
 #include <vtkInteractorStyleTrackballActor.h>
-#include <vtkLinearTransform.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
@@ -23,7 +20,7 @@
 
 namespace {
 
-// Define interaction style
+// Define interaction style.
 class MouseInteractorStyle6 : public vtkInteractorStyleTrackballActor
 {
 public:
@@ -33,7 +30,7 @@ public:
   virtual void OnLeftButtonDown() override
   {
     std::cout << "Pressed left mouse button." << std::endl;
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballActor::OnLeftButtonDown();
   }
 
@@ -92,7 +89,7 @@ public:
     if (inside)
     {
       std::cout << "A point of the cube is inside the sphere!" << std::endl;
-      // Reset the cube to its original position
+      // Reset the cube to its original position.
       // this->CubeActor->GetMatrix()->Identity();
       // this->CubeActor->SetOrigin(0,0,0);
       this->CubeActor->SetPosition(0, 0, 0);
@@ -112,7 +109,7 @@ public:
   virtual void OnRightButtonDown() override
   {
     std::cout << "Pressed right mouse button." << std::endl;
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballActor::OnRightButtonDown();
   }
 

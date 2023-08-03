@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkButtonWidget.h>
 #include <vtkCommand.h>
-#include <vtkCoordinate.h>
 #include <vtkEllipticalButtonSource.h>
 #include <vtkImageData.h>
 #include <vtkImageReader2.h>
@@ -18,7 +17,7 @@
 #include <vtkSuperquadricSource.h>
 #include <vtkTexture.h>
 
-// Callback for the interaction
+// Callback for the interaction.
 namespace {
 
 class vtkButtonCallback : public vtkCommand

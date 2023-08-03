@@ -1,13 +1,9 @@
 #include <vtkActor.h>
 #include <vtkAssembly.h>
-#include <vtkAxesActor.h>
 #include <vtkCubeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkOrientationMarkerWidget.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkPropAssembly.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -19,7 +15,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> namedColors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
@@ -30,7 +26,7 @@ int main(int, char*[])
   sphereActor->GetProperty()->SetColor(
       namedColors->GetColor3d("Banana").GetData());
 
-  // Create a cube
+  // Create a cube.
   vtkNew<vtkCubeSource> cubeSource;
   cubeSource->SetCenter(5.0, 0.0, 0.0);
   cubeSource->Update();
@@ -41,19 +37,19 @@ int main(int, char*[])
   cubeActor->SetMapper(cubeMapper);
   cubeActor->GetProperty()->SetColor(
       namedColors->GetColor3d("Tomato").GetData());
-  // Combine the sphere and cube into an assembly
+  // Combine the sphere and cube into an assembly.
   vtkNew<vtkAssembly> assembly;
   assembly->AddPart(sphereActor);
   assembly->AddPart(cubeActor);
 
-  // Apply a transform to the whole assembly
+  // Apply a transform to the whole assembly.
   vtkNew<vtkTransform> transform;
-  transform->PostMultiply(); // this is the key line
+  transform->PostMultiply(); // This is the key line.
   transform->Translate(5.0, 0, 0);
 
   assembly->SetUserTransform(transform);
 
-  // Extract each actor from the assembly and change its opacity
+  // Extract each actor from the assembly and change its opacity.
   vtkNew<vtkPropCollection> collection;
 
   assembly->GetActors(collection);

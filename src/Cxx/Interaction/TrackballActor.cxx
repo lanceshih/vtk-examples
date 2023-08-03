@@ -3,7 +3,6 @@
 #include <vtkInteractorStyleTrackballActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -15,12 +14,12 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(1.0, 0.0, 0.0);
   sphereSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> sphereMapper;
   sphereMapper->SetInputConnection(sphereSource->GetOutputPort());
 
@@ -32,7 +31,7 @@ int main(int, char*[])
   // Create a cone
   vtkNew<vtkConeSource> coneSource;
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> coneMapper;
   coneMapper->SetInputConnection(coneSource->GetOutputPort());
 
@@ -41,17 +40,17 @@ int main(int, char*[])
   coneActor->GetProperty()->SetColor(
       colors->GetColor3d("LightGoldenrodYellow").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("TrackballActor");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(sphereActor);
   renderer->AddActor(coneActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
@@ -63,7 +62,7 @@ int main(int, char*[])
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

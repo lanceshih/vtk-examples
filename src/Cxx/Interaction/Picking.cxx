@@ -1,12 +1,8 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPlaneSource.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPropPicker.h>
 #include <vtkProperty.h>
@@ -18,7 +14,7 @@
 
 namespace {
 
-// Handle mouse events
+// Handle mouse events.
 class MouseInteractorStyle2 : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -46,13 +42,12 @@ public:
     else
     {
       std::cout << "Picked actor: " << picker->GetActor() << std::endl;
-      // Create a sphere
-      // Create a sphere
+      // Create a sphere.
       vtkNew<vtkSphereSource> sphereSource;
       sphereSource->SetCenter(pos[0], pos[1], pos[2]);
       sphereSource->SetRadius(0.1);
 
-      // Create a mapper and actor
+      // Create a mapper and actor.
       vtkNew<vtkPolyDataMapper> mapper;
       mapper->SetInputConnection(sphereSource->GetOutputPort());
 
@@ -61,7 +56,7 @@ public:
       actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
       this->GetDefaultRenderer()->AddActor(actor);
-      // Forward events
+      // Forward events.
       vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
     }
   }
@@ -81,14 +76,14 @@ int main(int, char*[])
   vtkNew<vtkPlaneSource> planeSource;
   planeSource->Update();
 
-  // Create a polydata object
+  // Create a polydata object.
   vtkPolyData* polydata = planeSource->GetOutput();
 
   // Create a mapper
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputData(polydata);
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(
@@ -96,7 +91,7 @@ int main(int, char*[])
 
   std::cout << "Actor address: " << actor << std::endl;
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -112,11 +107,11 @@ int main(int, char*[])
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("DodgerBlue").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Initialize();
   renderWindowInteractor->Start();

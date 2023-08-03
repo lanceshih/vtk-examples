@@ -1,9 +1,7 @@
 #include <vtkActor.h>
 #include <vtkCallbackCommand.h>
-#include <vtkCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -36,7 +34,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
   renderer->AddActor(actor);

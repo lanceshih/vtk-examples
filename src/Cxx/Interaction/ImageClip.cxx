@@ -1,4 +1,3 @@
-#include <vtkActor.h>
 #include <vtkBorderRepresentation.h>
 #include <vtkBorderWidget.h>
 #include <vtkCommand.h>
@@ -18,7 +17,6 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkStreamingDemandDrivenPipeline.h>
-#include <vtkXMLPolyDataReader.h>
 
 #include <string>
 
@@ -41,7 +39,7 @@ public:
 
     vtkBorderWidget* borderWidget = reinterpret_cast<vtkBorderWidget*>(caller);
 
-    // Get the world coordinates of the two corners of the box
+    // Get the world coordinates of the two corners of the box.
     auto lowerLeftCoordinate =
         static_cast<vtkBorderRepresentation*>(borderWidget->GetRepresentation())
             ->GetPositionCoordinate();
@@ -102,7 +100,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> color;
 
-  // Parse input arguments
+  // Parse input arguments.
   if (argc != 2)
   {
     std::cerr << "Usage: " << argv[0] << " Filename(.jpg) e.g. Gourds2.jpg"
@@ -112,7 +110,7 @@ int main(int argc, char* argv[])
 
   std::string inputFilename = argv[1];
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkJPEGReader> jPEGReader;
 
   if (!jPEGReader->CanReadFile(inputFilename.c_str()))
@@ -150,12 +148,12 @@ int main(int argc, char* argv[])
 
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges in normalized coordinates
+  // Define viewport ranges in normalized coordinates.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);

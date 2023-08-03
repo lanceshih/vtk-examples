@@ -1,21 +1,15 @@
 #include <vtkActor.h>
-#include <vtkAppendPolyData.h>
 #include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
-#include <vtkDataObject.h>
-#include <vtkInformation.h>
 #include <vtkInformationVector.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
-#include <vtkPolyDataAlgorithm.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
-#include <vtkStreamingDemandDrivenPipeline.h>
 
 namespace {
 class vtkMyTestFilter : public vtkPolyDataAlgorithm
@@ -102,7 +96,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Goldenrod").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -123,7 +117,7 @@ int main(int, char*[])
   renderWindow->Render();
   renderWindowInteractor->Initialize();
 
-  // Sign up to receive TimerEvent
+  // Sign up to receive TimerEvent.
   vtkNew<vtkTimerCallback> timerCallback;
   timerCallback->TestFilter = testFilter;
 

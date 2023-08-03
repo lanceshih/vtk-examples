@@ -1,4 +1,3 @@
-#include <vtkActor.h>
 #include <vtkAssemblyNode.h>
 #include <vtkAssemblyPath.h>
 #include <vtkBorderRepresentation.h>
@@ -11,7 +10,6 @@
 #include <vtkJPEGReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPropPicker.h>
 #include <vtkProperty2D.h>
 #include <vtkRenderWindow.h>
@@ -54,7 +52,7 @@ public:
               << upperRight[1] << std::endl;
     upperRight[2] = 0;
 
-    // Pick at the two corners of the box
+    // Pick at the two corners of the box.
     vtkSmartPointer<vtkPropPicker> picker =
         vtkSmartPointer<vtkPropPicker>::New();
 
@@ -149,7 +147,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> color;
 
-  // Parse input arguments
+  // Parse input arguments.
   if (argc != 2)
   {
     std::cerr << "Usage: " << argv[0] << " Filename(.jpg) e.g. Gourds2.jpg"

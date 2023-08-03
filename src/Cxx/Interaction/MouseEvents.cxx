@@ -3,7 +3,6 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointPicker.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,7 +12,7 @@
 
 namespace {
 
-// Define interaction style
+// Define interaction style.
 class customMouseInteractorStyle : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -23,21 +22,21 @@ public:
   virtual void OnLeftButtonDown() override
   {
     std::cout << "Pressed left mouse button." << std::endl;
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
   }
 
   virtual void OnMiddleButtonDown() override
   {
     std::cout << "Pressed middle mouse button." << std::endl;
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnMiddleButtonDown();
   }
 
   virtual void OnRightButtonDown() override
   {
     std::cout << "Pressed right mouse button." << std::endl;
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnRightButtonDown();
   }
 };
