@@ -13,10 +13,8 @@
 #include <vtkCamera.h>
 #include <vtkCellData.h>
 #include <vtkGeometryFilter.h>
-#include <vtkImageAccumulate.h>
 #include <vtkImageData.h>
 #include <vtkImageWrapPad.h>
-#include <vtkMaskFields.h>
 #include <vtkMetaImageReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -28,7 +26,6 @@
 #include <vtkThreshold.h>
 #include <vtkTransform.h>
 #include <vtkTransformFilter.h>
-#include <vtkUnstructuredGrid.h>
 
 #include <iostream>
 
@@ -49,7 +46,7 @@ int main(int argc, char* argv[])
   unsigned int startLabel = atoi(argv[2]);
   unsigned int endLabel = atoi(argv[3]);
 
-  // Generate cubes from labels
+  // Generate cubes from labels.
   // 1) Read the meta file
   // 2) Convert point data to cell data
   // 3) Convert to geometry and display
@@ -58,7 +55,7 @@ int main(int argc, char* argv[])
   reader->SetFileName(argv[1]);
   reader->Update();
 
-  // Pad the volume so that we can change the point data into cell
+  // Pad the volume so that we can change the point data into cell.
   // data.
   int* extent = reader->GetOutput()->GetExtent();
   vtkNew<vtkImageWrapPad> pad;
@@ -67,7 +64,7 @@ int main(int argc, char* argv[])
                             extent[4], extent[5] + 1);
   pad->Update();
 
-  // Copy the scalar point data of the volume into the scalar cell data
+  // Copy the scalar point data of the volume into the scalar cell data.
   pad->GetOutput()->GetCellData()->SetScalars(
       reader->GetOutput()->GetPointData()->GetScalars());
 
@@ -80,7 +77,7 @@ int main(int argc, char* argv[])
   selector->SetUpperThreshold(endLabel);
   selector->Update();
 
-  // Shift the geometry by 1/2
+  // Shift the geometry by 1/2.
   vtkNew<vtkTransform> transform;
   transform->Translate(-0.5, -0.5, -0.5);
 

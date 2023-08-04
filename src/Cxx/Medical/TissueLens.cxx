@@ -2,13 +2,10 @@
 #include <vtkCamera.h>
 #include <vtkClipDataSet.h>
 #include <vtkDataSetMapper.h>
-#include <vtkFlyingEdges3D.h>
-#include <vtkImplicitVolume.h>
 #include <vtkLookupTable.h>
 #include <vtkMetaImageReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProbeFilter.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -51,7 +48,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the volume data
+  // Read the volume data.
   vtkNew<vtkMetaImageReader> reader;
   reader->SetFileName(argv[1]);
   reader->Update();
@@ -66,12 +63,12 @@ int main(int argc, char* argv[])
   skinExtractor->SetInputConnection(reader->GetOutputPort());
   skinExtractor->SetValue(0, 500);
 
-  // Define a spherical clip function to clip the isosurface
+  // Define a spherical clip function to clip the isosurface.
   vtkNew<vtkSphere> clipFunction;
   clipFunction->SetRadius(50);
   clipFunction->SetCenter(73, 52, 15);
 
-  // Clip the isosurface with a sphere
+  // Clip the isosurface with a sphere.
   vtkNew<vtkClipDataSet> skinClip;
   skinClip->SetInputConnection(skinExtractor->GetOutputPort());
   skinClip->SetClipFunction(clipFunction);
@@ -93,26 +90,26 @@ int main(int argc, char* argv[])
   skin->SetBackfaceProperty(backProp);
 
   // Define a model for the "lens". Its geometry matches the implicit
-  // sphere used to clip the isosurface
+  // sphere used to clip the isosurface.
   vtkNew<vtkSphereSource> lensModel;
   lensModel->SetRadius(50);
   lensModel->SetCenter(73, 52, 15);
   lensModel->SetPhiResolution(201);
   lensModel->SetThetaResolution(101);
 
-  // Sample the input volume with the lens model geometry
+  // Sample the input volume with the lens model geometry.
   vtkNew<vtkProbeFilter> lensProbe;
   lensProbe->SetInputConnection(lensModel->GetOutputPort());
   lensProbe->SetSourceConnection(reader->GetOutputPort());
 
-  // Clip the lens data with the isosurface value
+  // Clip the lens data with the isosurface value.
   vtkNew<vtkClipDataSet> lensClip;
   lensClip->SetInputConnection(lensProbe->GetOutputPort());
   lensClip->SetValue(500);
   lensClip->GenerateClipScalarsOff();
   lensClip->Update();
 
-  // Define a suitable grayscale lut
+  // Define a suitable grayscale lut.
   vtkNew<vtkLookupTable> bwLut;
   bwLut->SetTableRange(0, 2048);
   bwLut->SetSaturationRange(0, 0);

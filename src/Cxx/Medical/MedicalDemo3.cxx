@@ -6,8 +6,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkImageActor.h>
-#include <vtkImageData.h>
-#include <vtkImageDataGeometryFilter.h>
 #include <vtkImageMapToColors.h>
 #include <vtkImageMapper3D.h>
 #include <vtkLookupTable.h>
