@@ -5,7 +5,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -43,7 +42,7 @@ int main(int, char*[])
   std::cout << "There are " << points->GetNumberOfPoints() << " points."
             << std::endl;
 
-  // Traverse all of the edges
+  // Traverse all of the edges.
   for (vtkIdType i = 0; i < extractEdges->GetOutput()->GetNumberOfCells(); i++)
   {
     // std::cout << "Type: " <<
@@ -52,16 +51,16 @@ int main(int, char*[])
     std::cout << "Line " << i << " : " << *line << std::endl;
   }
 
-  // Visualize the edges
+  // Visualize the edges.
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(extractEdges->GetOutputPort());
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -70,10 +69,10 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(
-      colors->GetColor3d("RoyalBlue").GetData()); // Background color white
+      colors->GetColor3d("RoyalBlue").GetData());
 
   // Render and interact
   renderWindow->Render();

@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkDelaunay2D.h>
 #include <vtkLookupTable.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -13,13 +12,11 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkVertexGlyphFilter.h>
-#include <vtkXMLPolyDataWriter.h>
 
 #include <iomanip>
 #include <iostream>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -28,7 +25,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> namedColors;
 
-  // Create a grid of points (height/terrian map)
+  // Create a grid of points (height/terrian map).
   vtkNew<vtkPoints> points;
 
   unsigned int GridSize = 20;
@@ -49,11 +46,11 @@ int main(int, char*[])
     }
   }
 
-  // Add the grid points to a polydata object
+  // Add the grid points to a polydata object.
   vtkNew<vtkPolyData> inputPolyData;
   inputPolyData->SetPoints(points);
 
-  // Triangulate the grid points
+  // Triangulate the grid points.
   vtkNew<vtkDelaunay2D> delaunay;
   delaunay->SetInputData(inputPolyData);
   delaunay->Update();
@@ -62,7 +59,7 @@ int main(int, char*[])
   double bounds[6];
   outputPolyData->GetBounds(bounds);
 
-  // Find min and max z
+  // Find min and max z.
   double minz = bounds[4];
   double maxz = bounds[5];
 
@@ -71,12 +68,12 @@ int main(int, char*[])
   std::cout << "maxz: " << std::right << std::setw(6) << maxz << std::endl;
   std::cout.precision(0);
 
-  // Create the color map
+  // Create the color map.
   vtkNew<vtkLookupTable> colorLookupTable;
   colorLookupTable->SetTableRange(minz, maxz);
   colorLookupTable->Build();
 
-  // Generate the colors for each point based on the color map
+  // Generate the colors for each point based on the color map.
   vtkNew<vtkUnsignedCharArray> colors;
   colors->SetNumberOfComponents(3);
   colors->SetName("Colors");
@@ -112,14 +109,14 @@ int main(int, char*[])
 
   outputPolyData->GetPointData()->SetScalars(colors);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputData(outputPolyData);
 
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -127,11 +124,11 @@ int main(int, char*[])
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->SetWindowName("ColoredElevationMap");
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(namedColors->GetColor3d("DarkSlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

@@ -4,7 +4,6 @@
 #include <vtkActor.h>
 #include <vtkAnimationCue.h>
 #include <vtkCommand.h>
-#include <vtkVector.h>
 #include <vtkVectorOperators.h>
 
 class ActorAnimator

@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
   vtkPolyData* surface = stlReader->GetOutput();
   // double* bounds = surface->GetBounds();
 
-  // Gaussian kernel
+  // Gaussian kernel.
   vtkNew<vtkGaussianKernel> gaussianKernel;
   gaussianKernel->SetSharpness(2.0);
   gaussianKernel->SetRadius(12.0);
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
   interpolator->SetSourceData(points);
   interpolator->SetKernel(gaussianKernel);
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkPolyDataMapper> mapper;

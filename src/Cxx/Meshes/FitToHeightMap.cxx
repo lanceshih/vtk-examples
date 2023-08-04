@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkDEMReader.h>
 #include <vtkFitToHeightMapFilter.h>
 #include <vtkImageData.h>
@@ -9,22 +8,20 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProbeFilter.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkTriangleFilter.h>
 #include <vtkWarpScalar.h>
 
 int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Uagse: " << argv[0] << " file.dem" << std::endl;
+    std::cout << "Usage: " << argv[0] << " file.dem e.g. SainteHelens.dem"
+              << std::endl;
     return EXIT_FAILURE;
   }
   // Create the RenderWindow, Renderer

@@ -13,9 +13,8 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSimpleElevationFilter.h>
-#include <vtkXMLPolyDataWriter.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -24,7 +23,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> namedColors;
 
-  // Created a grid of points (heigh/terrian map)
+  // Created a grid of points (heigh/terrian map).
   vtkNew<vtkPoints> points;
 
   unsigned int GridSize = 10;
@@ -40,11 +39,11 @@ int main(int, char*[])
   double bounds[6];
   points->GetBounds(bounds);
 
-  // Add the grid points to a polydata object
+  // Add the grid points to a polydata object.
   vtkNew<vtkPolyData> inputPolyData;
   inputPolyData->SetPoints(points);
 
-  // Triangulate the grid points
+  // Triangulate the grid points.
   vtkNew<vtkDelaunay2D> delaunay;
   delaunay->SetInputData(inputPolyData);
   delaunay->Update();
@@ -60,12 +59,12 @@ int main(int, char*[])
   vtkFloatArray* elevation = dynamic_cast<vtkFloatArray*>(
       output->GetPointData()->GetArray("Elevation"));
 
-  // Create the color map
+  // Create the color map.
   vtkNew<vtkLookupTable> colorLookupTable;
   colorLookupTable->SetTableRange(bounds[4], bounds[5]);
   colorLookupTable->Build();
 
-  // Generate the colors for each point based on the color map
+  // Generate the colors for each point based on the color map.
   vtkNew<vtkUnsignedCharArray> colors;
   colors->SetNumberOfComponents(3);
   colors->SetName("Colors");
@@ -111,7 +110,7 @@ int main(int, char*[])
   renderer->AddActor(actor);
   renderer->SetBackground(namedColors->GetColor3d("ForestGreen").GetData());
 
-  // z-axis points upwards and y-axis is lower right edge
+  // z-axis points upwards and y-axis is lower right edge.
   auto camera = renderer->GetActiveCamera();
   camera->SetPosition(-13.3586, 20.7305, 22.5147);
   camera->SetFocalPoint(4.5, 4.5, 4.5);
