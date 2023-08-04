@@ -5,7 +5,7 @@
 #include <vtkPolyData.h>
 #include <vtkVectorDot.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -35,7 +35,7 @@ int main(int, char*[])
 
   polydata->GetPointData()->SetNormals(normals);
 
-  // Add vectors
+  // Add vectors.
   vtkNew<vtkFloatArray> vectors;
   vectors->SetNumberOfComponents(3);
   vectors->SetName("Vectors");
@@ -49,16 +49,16 @@ int main(int, char*[])
 
   polydata->GetPointData()->SetVectors(vectors);
 
-  // Compute the dot products between normals and vectors
+  // Compute the dot products between normals and vectors.
   vtkNew<vtkVectorDot> vectorDot;
   vectorDot->SetInputData(polydata);
   vectorDot->Update();
 
-  // Get the results
+  // Get the results.
   auto scalars = dynamic_cast<vtkFloatArray*>(
       vectorDot->GetOutput()->GetPointData()->GetScalars());
 
-  // Output the results
+  // Output the results.
   for (vtkIdType i = 0; i < scalars->GetNumberOfTuples(); i++)
   {
     std::cout << "Value " << i << " : " << scalars->GetValue(i) << std::endl;
