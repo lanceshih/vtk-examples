@@ -2,7 +2,6 @@
 #include <vtkJPEGWriter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkSmartPointer.h>
 
 #include <array>
 

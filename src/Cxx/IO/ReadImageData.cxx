@@ -1,6 +1,4 @@
 #include <vtkDataSetMapper.h>
-#include <vtkImageActor.h>
-#include <vtkImageViewer2.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
@@ -11,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename.vti e.g. vase.vti"
@@ -23,7 +21,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // Read the file
+  // Read the file.
   vtkNew<vtkXMLImageDataReader> reader;
   reader->SetFileName(inputFilename.c_str());
   reader->Update();

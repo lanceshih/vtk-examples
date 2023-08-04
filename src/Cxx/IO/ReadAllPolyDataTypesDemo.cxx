@@ -24,7 +24,6 @@
 #include <vtkSphereSource.h>
 #include <vtkTextMapper.h>
 #include <vtkTextProperty.h>
-#include <vtkTimerLog.h>
 #include <vtkXMLPolyDataReader.h>
 
 #include <vtksys/SystemTools.hxx>

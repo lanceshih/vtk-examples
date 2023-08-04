@@ -1,5 +1,4 @@
 #include <vtkCellData.h>
-#include <vtkCubeSource.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
@@ -57,7 +56,7 @@ void FindAllData(vtkPolyData* polydata)
 
   std::cout << "Type table/key: " << std::endl;
   ;
-  // more values can be found in <VTK_DIR>/Common/vtkSetGet.h
+  // More values can be found in <VTK_DIR>/Common/Core/vtkSetGet.h
   std::cout << VTK_UNSIGNED_CHAR << " unsigned char" << std::endl;
   std::cout << VTK_UNSIGNED_INT << " unsigned int" << std::endl;
   std::cout << VTK_FLOAT << " float" << std::endl;
@@ -65,7 +64,7 @@ void FindAllData(vtkPolyData* polydata)
 
   for (vtkIdType i = 0; i < numberOfPointArrays; i++)
   {
-    // The following two lines are equivalent
+    // The following two lines are equivalent.
     // arrayNames.push_back(polydata->GetPointData()->GetArray(i)->GetName());
     // arrayNames.push_back(polydata->GetPointData()->GetArrayName(i));
     int dataTypeID = polydata->GetPointData()->GetArray(i)->GetDataType();
@@ -76,7 +75,7 @@ void FindAllData(vtkPolyData* polydata)
 
   for (vtkIdType i = 0; i < numberOfCellArrays; i++)
   {
-    // The following two lines are equivalent
+    // The following two lines are equivalent.
     // polydata->GetPointData()->GetArray(i)->GetName();
     // polydata->GetPointData()->GetArrayName(i);
     int dataTypeID = polydata->GetCellData()->GetArray(i)->GetDataType();

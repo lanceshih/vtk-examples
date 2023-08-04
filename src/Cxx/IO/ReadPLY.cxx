@@ -2,7 +2,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPLYReader.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>

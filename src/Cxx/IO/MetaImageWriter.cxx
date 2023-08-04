@@ -1,6 +1,5 @@
 #include <vtkImageActor.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageMandelbrotSource.h>
 #include <vtkImageMapper3D.h>
 #include <vtkMetaImageReader.h>

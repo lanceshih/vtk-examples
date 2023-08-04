@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCMLMoleculeReader.h>
 #include <vtkCamera.h>
-#include <vtkMolecule.h>
 #include <vtkMoleculeMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>

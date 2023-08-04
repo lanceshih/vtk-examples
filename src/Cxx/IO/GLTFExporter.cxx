@@ -7,7 +7,6 @@
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -27,6 +26,7 @@ int main(int argc, char* argv[])
               << std::endl;
     return EXIT_FAILURE;
   }
+
   vtkNew<vtkNamedColors> colors;
 
   // Set the background color.
@@ -81,18 +81,18 @@ int main(int argc, char* argv[])
     matrix->SetElement(i, 2, normalizedZ[i]);
   }
 
-  // Apply the transforms
+  // Apply the transforms.
   vtkNew<vtkTransform> transform;
   transform->Translate(startPoint);
   transform->Concatenate(matrix);
   transform->Scale(length, length, length);
 
-  // Transform the polydata
+  // Transform the polydata.
   vtkNew<vtkTransformPolyDataFilter> transformPD;
   transformPD->SetTransform(transform);
   transformPD->SetInputConnection(arrowSource->GetOutputPort());
 
-  // Create a mapper and actor for the arrow
+  // Create a mapper and actor for the arrow.
   vtkNew<vtkPolyDataMapper> mapper;
   vtkNew<vtkActor> actor;
 #ifdef USER_MATRIX
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
 
-  // Create spheres for start and end point
+  // Create spheres for start and end point.
   vtkNew<vtkSphereSource> sphereStartSource;
   sphereStartSource->SetCenter(startPoint);
   sphereStartSource->SetRadius(0.8);
@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
   sphereEnd->SetMapper(sphereEndMapper);
   sphereEnd->GetProperty()->SetColor(colors->GetColor3d("Magenta").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -135,13 +135,13 @@ int main(int argc, char* argv[])
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->AddActor(sphereStart);
   renderer->AddActor(sphereEnd);
   renderer->SetBackground(backgroundColor.GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);

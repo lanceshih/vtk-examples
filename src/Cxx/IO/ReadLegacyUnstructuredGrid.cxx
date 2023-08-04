@@ -1,24 +1,22 @@
 #include <vtkBrush.h>
 #include <vtkCategoryLegend.h>
 #include <vtkCellData.h>
-#include <vtkColor.h>
+#include <vtkCellIterator.h>
+#include <vtkCellTypes.h>
 #include <vtkContextScene.h>
 #include <vtkContextTransform.h>
 #include <vtkContextView.h>
 #include <vtkExtractEdges.h>
 #include <vtkGenericCell.h>
 #include <vtkGlyph3DMapper.h>
+#include <vtkLabeledDataMapper.h>
 #include <vtkLookupTable.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkScalarsToColors.h>
 #include <vtkShrinkFilter.h>
 #include <vtkSphereSource.h>
-#include <vtkTextMapper.h>
 #include <vtkTubeFilter.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridReader.h>
-#include <vtkVariant.h>
 #include <vtkVariantArray.h>
 
 #include <vtkActor.h>
@@ -32,10 +30,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-
-#include <vtkCellIterator.h>
-#include <vtkCellTypes.h>
-#include <vtkLabeledDataMapper.h>
 
 // Note that:
 // vtkExtractEdges moved from vtkFiltersExtraction to vtkFiltersCore in
@@ -94,7 +88,7 @@ int main(int argc, char* argv[])
   edgeActor->GetProperty()->SetSpecularPower(30);
   ;
 
-  // Glyph the points
+  // Glyph the points.
   vtkNew<vtkSphereSource> sphere;
   sphere->SetPhiResolution(21);
   sphere->SetThetaResolution(21);
@@ -115,20 +109,20 @@ int main(int argc, char* argv[])
   pointActor->GetProperty()->SetSpecularPower(100);
   ;
 
-  // Label the points
+  // Label the points.
   vtkNew<vtkLabeledDataMapper> labelMapper;
   labelMapper->SetInputConnection(reader->GetOutputPort());
   vtkNew<vtkActor2D> labelActor;
   labelActor->SetMapper(labelMapper);
 
-  // The geometry
+  // The geometry.
   vtkNew<vtkShrinkFilter> geometryShrink;
   geometryShrink->SetInputConnection(reader->GetOutputPort());
   geometryShrink->SetShrinkFactor(.8);
 
   // NOTE: We must copy the originalLut because the CategorialLegend
   // needs an indexed lookup table, but the geometryMapper uses a
-  // non-index lookup table
+  // non-index lookup table.
   vtkNew<vtkLookupTable> categoricalLut;
   vtkSmartPointer<vtkLookupTable> originalLut =
       reader->GetOutput()->GetCellData()->GetScalars()->GetLookupTable();

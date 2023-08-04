@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -30,7 +29,7 @@ int main(int argc, char* argv[])
   stlWriter->SetInputConnection(sphereSource->GetOutputPort());
   stlWriter->Write();
 
-  // Read and display for verification
+  // Read and display for verification.
   vtkNew<vtkSTLReader> reader;
   reader->SetFileName(filename.c_str());
   reader->Update();
