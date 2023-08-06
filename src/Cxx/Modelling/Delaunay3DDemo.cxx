@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
   ss << "numTris: " << numTris << std::endl;
   ss << "numVerts: " << numVerts;
 
-  // Set the cell color depending on cell type
+  // Set the cell color depending on cell type.
   delaunay3DAlpha->GetOutput()->GetCellData()->SetScalars(cellData);
 
   vtkNew<vtkDataSetMapper> delaunayAlphaMapper;
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
   textActor->SetMapper(textMapper);
   textActor->SetPosition(10, 10);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.33, 1.0};
   double centerViewport[4] = {0.33, 0.0, 0.66, 1.0};
@@ -164,7 +164,7 @@ int main(int argc, char* argv[])
   // Shared camera
   vtkNew<vtkCamera> sharedCamera;
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetActiveCamera(sharedCamera);
   originalRenderer->UseHiddenLineRemovalOn();
@@ -209,7 +209,7 @@ int main(int argc, char* argv[])
   originalRenderer->ResetCamera();
   renderWindow->Render();
 
-  // Render and interact
+  // Render and interact.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
@@ -237,7 +237,7 @@ public:
     vtkNew<vtkUnsignedCharArray> cellData;
     cellData->SetNumberOfComponents(3);
 
-    // Set the cell color depending on cell type
+    // Set the cell color depending on cell type.
     vtkNew<vtkNamedColors> color;
     int numTetras = 0;
     int numLines = 0;

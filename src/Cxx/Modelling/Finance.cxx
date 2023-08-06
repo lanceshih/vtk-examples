@@ -9,7 +9,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -49,10 +48,10 @@ int main(int argc, char* argv[])
   std::array<unsigned char, 4> popColor{{230, 230, 230, 255}};
   colors->SetColor("PopColor", popColor.data());
 
-  // read data
+  // Read the data.
   auto dataSet = ReadFinancialData(fname, "MONTHLY_PAYMENT", "INTEREST_RATE",
                                    "LOAN_AMOUNT", "TIME_LATE");
-  // construct pipeline for original population
+  // Construct the pipeline for the original population.
   vtkNew<vtkGaussianSplatter> popSplatter;
   popSplatter->SetInputData(dataSet);
   popSplatter->SetSampleDimensions(100, 100, 100);
@@ -72,7 +71,7 @@ int main(int argc, char* argv[])
   popActor->GetProperty()->SetOpacity(0.3);
   popActor->GetProperty()->SetColor(colors->GetColor3d("popColor").GetData());
 
-  // construct pipeline for delinquent population
+  // Construct the pipeline for the delinquent population.
   vtkNew<vtkGaussianSplatter> lateSplatter;
   lateSplatter->SetInputData(dataSet);
   lateSplatter->SetSampleDimensions(50, 50, 50);
@@ -91,7 +90,7 @@ int main(int argc, char* argv[])
   lateActor->SetMapper(lateMapper);
   lateActor->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
 
-  // create axes
+  // Create axes.
   popSplatter->Update();
   popSplatter->GetOutput()->GetBounds(bounds);
 
@@ -110,7 +109,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> axesActor;
   axesActor->SetMapper(axesMapper);
 
-  // graphics stuff
+  // Graphics stuff.
   vtkNew<vtkRenderer> renderer;
 
   vtkNew<vtkRenderWindow> renWin;
@@ -120,7 +119,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renWin);
 
-  // set up renderer
+  // Set up the renderer.
   renderer->AddActor(lateActor);
   renderer->AddActor(axesActor);
   renderer->AddActor(popActor);
@@ -131,7 +130,7 @@ int main(int argc, char* argv[])
   renderer->GetActiveCamera()->Dolly(1.3);
   renderer->ResetCameraClippingRange();
 
-  // interact with data
+  // Interact with the data.
   renWin->Render();
   interactor->Start();
 
@@ -161,14 +160,14 @@ vtkSmartPointer<vtkDataSet> ReadFinancialData(const char* filename,
     fclose(file);
     return NULL;
   }
-  // Check for a reasonable npts
+  // Check for a reasonable npts.
   if (npts <= 0)
   {
     std::cerr << "ERROR: Number of points must be greater that 0" << std::endl;
     fclose(file);
     return NULL;
   }
-  // We arbitrarily pick a large upper limit on npts
+  // We arbitrarily pick a large upper limit on npts.
   if (npts > VTK_INT_MAX / 10)
   {
     std::cerr << "ERROR: npts (" << npts << ") is unreasonably large"
