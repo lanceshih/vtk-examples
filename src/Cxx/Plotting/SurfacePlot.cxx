@@ -7,13 +7,10 @@
 #include <vtkNew.h>
 #include <vtkPen.h>
 #include <vtkPlotSurface.h>
-#include <vtkRegressionTestImage.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTable.h>
-#include <vtkUnsignedCharArray.h>
-#include <vtkVector.h>
 #include <vtkVersion.h>
 
 #if VTK_VERSION_NUMBER >= 90220220630ULL
@@ -34,7 +31,7 @@ int main(int, char*[])
   view->GetRenderWindow()->SetSize(640, 480);
   view->GetScene()->AddItem(chart);
 
-  // Create a surface
+  // Create a surface.
   vtkNew<vtkTable> table;
   vtkIdType numPoints = 70;
   float inc = 9.424778 / (numPoints - 1);

@@ -1,14 +1,11 @@
 #include <vtkAxis.h>
 #include <vtkChartXY.h>
-#include <vtkColor.h>
 #include <vtkColorSeries.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkDoubleArray.h>
 #include <vtkIntArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPlot.h>
 #include <vtkPlotStacked.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -17,7 +14,7 @@
 #include <vtkTable.h>
 
 namespace {
-// Monthly checkout data
+// Monthly checkout data.
 std::string month_labels[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
                               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 constexpr int book[] = {5675, 5902, 6388, 5990, 5575, 7393,
@@ -37,7 +34,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderer()->SetBackground(1.0, 1.0, 1.0);
   view->GetRenderWindow()->SetSize(400, 300);
@@ -102,7 +99,7 @@ int main(int, char*[])
 
   chart->GetAxis(0)->SetTitle("Checkouts");
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
   vtkPlotStacked* stack = 0;
 
   // Books
@@ -119,7 +116,7 @@ int main(int, char*[])
   colorSeries->SetColorScheme(vtkColorSeries::WILD_FLOWER);
   stack->SetColorSeries(colorSeries);
 
-  // Finally render the scene and compare the image to a reference image
+  // Finally render the scene and compare the image to a reference image.
   view->GetRenderWindow()->SetMultiSamples(0);
   view->GetRenderer()->SetBackground(colors->GetColor3d("Cornsilk").GetData());
   view->GetRenderWindow()->SetSize(600, 400);

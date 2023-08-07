@@ -1,16 +1,12 @@
-#include <vtkColor.h>
 #include <vtkColorSeries.h>
 #include <vtkDataObject.h>
 #include <vtkFieldData.h>
 #include <vtkFloatArray.h>
-#include <vtkIdList.h>
 #include <vtkLegendBoxActor.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPieChartActor.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkProperty2D.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -71,7 +67,7 @@ int main(int /*argc*/, char* /*argv*/[])
     actor->SetPieceLabel(i++, m->first.c_str());
   }
   actor->LegendVisibilityOn();
-  // Set text colors (same as actor for backward compat with test)
+  // Set text colors (same as actor for backward compat with test).
   actor->GetTitleTextProperty()->SetColor(
       colors->GetColor3d("Banana").GetData());
   actor->GetTitleTextProperty()->SetFontSize(40);
@@ -79,7 +75,7 @@ int main(int /*argc*/, char* /*argv*/[])
       colors->GetColor3d("Bisque").GetData());
   actor->GetLabelTextProperty()->SetFontSize(24);
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(ren1);
@@ -91,7 +87,7 @@ int main(int /*argc*/, char* /*argv*/[])
   renWin->SetSize(1024, 512);
   renWin->SetWindowName("PieChartActor");
 
-  // render the image
+  // Render the image.
   renWin->Render();
 
   iren->Start();

@@ -1,11 +1,9 @@
 #include <vtkChartPie.h>
 #include <vtkColorSeries.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkIntArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPlot.h>
 #include <vtkPlotPie.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>

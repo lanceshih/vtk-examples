@@ -1,5 +1,4 @@
 #include <vtkChartParallelCoordinates.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
@@ -14,7 +13,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderer()->SetBackground(colors->GetColor3d("SlateGray").GetData());
   view->GetRenderWindow()->SetSize(800, 600);

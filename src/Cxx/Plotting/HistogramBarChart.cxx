@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkIntArray> blueFrequencies;
 
   // Process the image, extracting and barChartting a histogram for each
-  // component
+  // component.
   for (int i = 0; i < numComponents; ++i)
   {
     vtkNew<vtkImageExtractComponents> extract;
@@ -139,11 +139,11 @@ int main(int argc, char* argv[])
     dataObject->GetFieldData()->AddArray(allFrequencies);
   }
 
-  // Create a vtkBarChartActor
+  // Create a vtkBarChartActor.
   vtkNew<vtkBarChartActor> barChart;
 
-  // BUG 1: if input is not set first, the x-axis of the bar chart will be too
-  // long
+  // BUG 1: If input is not set first, the x-axis of the bar chart will be too
+  // long.
   //
   barChart->SetInput(dataObject);
   barChart->SetTitle("Histogram");
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
   barChart->GetPosition2Coordinate()->SetValue(0.95, 0.85, 0.0);
   barChart->GetProperty()->SetColor(1, 1, 1);
 
-  // BUG 2: if the number of entries is not set to the number of data array
+  // BUG 2: If the number of entries is not set to the number of data array
   // tuples, the bar chart actor will crash. The crash occurs whether the legend
   // and or labels are visible or not.
 
@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
   barChart->LegendVisibilityOff();
   barChart->LabelVisibilityOff();
 
-  // BUG 3: the y-axis labels do not accurately reflect the range of data
+  // BUG 3: the y-axis labels do not accurately reflect the range of data.
 
   int count = 0;
   for (int i = 0; i < 54; ++i)
@@ -187,7 +187,7 @@ int main(int argc, char* argv[])
   interactor->SetRenderWindow(renderWindow);
 
   renderWindow->Render();
-  // Initialize the event loop and then start it
+  // Initialize the event loop and then start it.
   interactor->Initialize();
   interactor->Start();
 

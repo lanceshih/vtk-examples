@@ -1,13 +1,10 @@
 #include <vtkAxis.h>
 #include <vtkChartXY.h>
-#include <vtkColor.h>
 #include <vtkColorSeries.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkIntArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPen.h>
 #include <vtkPlot.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -46,7 +43,7 @@ int main(int, char*[])
   vtkColor3d axisColor = colors->GetColor3d("Black");
   vtkColor3d titleColor = colors->GetColor3d("MidnightBlue");
 
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderer()->SetBackground(backgroundColor.GetData());
   view->GetRenderWindow()->SetSize(640, 480);
@@ -55,7 +52,7 @@ int main(int, char*[])
   vtkNew<vtkChartXY> chart;
   view->GetScene()->AddItem(chart);
 
-  // Set various properties
+  // Set various properties.
   vtkAxis* xAxis = chart->GetAxis(vtkAxis::BOTTOM);
   xAxis->SetTitle("Monthly");
   xAxis->GetTitleProperties()->SetColor(axisColor.GetData());
@@ -105,7 +102,7 @@ int main(int, char*[])
     table->SetValue(i, 3, data_2010[i]);
   }
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
 #if VTK_HAS_SETCOLORF
   vtkPlot* line = 0;
   line = chart->AddPlot(vtkChart::BAR);
@@ -146,7 +143,7 @@ int main(int, char*[])
   line->SetInputData(table, 0, 3);
 #endif
 
-  // Finally render the scene and compare the image to a reference image
+  // Finally render the scene and compare the image to a reference image.
   view->GetRenderWindow()->SetMultiSamples(0);
   view->GetRenderWindow()->Render();
   view->GetInteractor()->Initialize();
