@@ -118,14 +118,13 @@ int main(int argc, char* argv[])
                             dimension - 1);
   coronal->ForceOpaqueOn();
 
-  // Create a scalar bar
+  // Create a scalar bar.
   vtkNew<vtkScalarBarActor> scalarBar;
   scalarBar->SetLookupTable(hueLut);
   scalarBar->SetTitle("Distance");
   scalarBar->SetNumberOfLabels(5);
 
-  // Create graphics stuff
-  //
+  // Create graphics stuff.
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(.3, .4, .6);
 
@@ -137,16 +136,14 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer, set the background and size.
   ren1->AddActor(sagittal);
   ren1->AddActor(axial);
   ren1->AddActor(coronal);
   ren1->AddActor2D(scalarBar);
   ren1->SetBackground(colors->GetColor3d("CornflowerBlue").GetData());
 
-  // Generate an interesting view
-  //
+  // Generate an interesting view.
   ren1->ResetCamera();
   ren1->GetActiveCamera()->Azimuth(120);
   ren1->GetActiveCamera()->Elevation(30);
@@ -171,7 +168,7 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName)
   {
     extension = fileName.substr(fileName.find_last_of("."));
   }
-  // Make the extension lowercase
+  // Make the extension lowercase.
   std::transform(extension.begin(), extension.end(), extension.begin(),
                  ::tolower);
   if (extension == ".ply")

@@ -9,7 +9,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphere.h>
 #include <vtkSphereSource.h>
 
@@ -50,8 +49,7 @@ int main(int, char*[])
   glyph3DActor->SetMapper(glyph3DMapper);
   glyph3DActor->GetProperty()->SetColor(colors->GetColor3d("Banana").GetData());
 
-  // Create graphics stuff
-  //
+  // Create graphics stuff.
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("CornflowerBlue").GetData());
 
@@ -63,12 +61,10 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer, set the background and size.
   ren1->AddActor(glyph3DActor);
 
-  // Generate an interesting view
-  //
+  // Generate an interesting view.
   ren1->ResetCamera();
   ren1->GetActiveCamera()->Azimuth(120);
   ren1->GetActiveCamera()->Elevation(30);
