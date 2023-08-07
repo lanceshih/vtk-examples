@@ -4,7 +4,7 @@
 #include <vtkCellArray.h>
 #include <vtkInteractorStyleRubberBandPick.h>
 #include <vtkInteractorStyleTrackball.h>
-#include <vtkInteractorStyleTrackballCamera.h>
+//#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
@@ -15,7 +15,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkXMLPolyDataWriter.h>
 
 namespace {
 void PickCallbackFunction(vtkObject* caller, long unsigned int eventId,
@@ -24,7 +23,7 @@ void PickCallbackFunction(vtkObject* caller, long unsigned int eventId,
 
 int main(int, char*[])
 {
-  // Create a set of points
+  // Create a set of points.
   vtkNew<vtkPoints> points;
   vtkNew<vtkCellArray> vertices;
   vtkIdType pid[1];
@@ -69,11 +68,11 @@ int main(int, char*[])
   renderWindow->Render();
 
   // For vtkInteractorStyleRubberBandPick - use 'r' and left-mouse to draw a
-  // selection box used to pick
+  // selection box used to pick.
   vtkNew<vtkInteractorStyleRubberBandPick> style;
 
   // For vtkInteractorStyleTrackballCamera - use 'p' to pick at the current
-  // mouse position
+  // mouse position.
   //  vtkNew<vtkInteractorStyleTrackballCamera> style;
   //    paraview
   style->SetCurrentRenderer(renderer);
