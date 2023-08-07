@@ -1,12 +1,10 @@
 #include <vtkActor.h>
-#include <vtkCell.h>
 #include <vtkDataSetMapper.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdList.h>
 #include <vtkIdTypeArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -20,7 +18,7 @@
 
 int main(int, char*[])
 {
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
@@ -39,10 +37,10 @@ int main(int, char*[])
   {
     vtkNew<vtkIdList> idList;
 
-    // add one of the edge points
+    // Add one of the edge points.
     idList->InsertNextId(cellPointIds->GetId(i));
 
-    // add the other edge point
+    // Add the other edge point
     if (i + 1 == cellPointIds->GetNumberOfIds())
     {
       idList->InsertNextId(cellPointIds->GetId(0));
@@ -52,7 +50,7 @@ int main(int, char*[])
       idList->InsertNextId(cellPointIds->GetId(i + 1));
     }
 
-    // get the neighbors of the cell
+    // Get the neighbors of the cell.
     vtkNew<vtkIdList> neighborCellIds;
 
     triangleFilter->GetOutput()->GetCellNeighbors(cellId, idList,
@@ -89,7 +87,7 @@ int main(int, char*[])
 
   vtkNew<vtkDataSetMapper> neighborCellsMapper;
 
-  // Create a dataset with the cell of interest
+  // Create a dataset with the cell of interest.
   {
     vtkNew<vtkIdTypeArray> ids;
     ids->SetNumberOfComponents(1);
@@ -116,7 +114,7 @@ int main(int, char*[])
   mainCellActor->GetProperty()->SetColor(
       colors->GetColor3d("Tomato").GetData());
 
-  // Create a dataset with the neighbor cells
+  // Create a dataset with the neighbor cells.
   {
     vtkNew<vtkIdTypeArray> ids;
     ids->SetNumberOfComponents(1);
@@ -146,20 +144,20 @@ int main(int, char*[])
   neighborCellsActor->GetProperty()->SetColor(
       colors->GetColor3d("Mint").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(sphereActor);
   renderer->AddActor(mainCellActor);
   renderer->AddActor(neighborCellsActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->SetSize(640, 480);
   renderWindow->SetWindowName("CellEdgeNeighbors");
   renderWindow->Render();

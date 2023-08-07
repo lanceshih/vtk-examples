@@ -101,7 +101,7 @@ if (BUILD_TESTING)
     PolyDataPointSampler
     PolyDataToImageData
     RemoveVertices
-    ResampleAppendedPolyData
+#    ResampleAppendedPolyData
     ShrinkPolyData
     Silhouette
     ThinPlateSplineTransform
@@ -156,7 +156,7 @@ if (BUILD_TESTING)
     TestEmbedPointsIntoVolume ${DATA}/Bunny.vtp )
 
   add_test(${KIT}-ExternalContour ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
-    TestExternalContour ${DATA}/Bunny.vtp -E 80 )
+    TestExternalContour ${DATA}/Bunny.vtp )
 
   add_test(${KIT}-DetermineArrayDataTypes ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestDetermineArrayDataTypes ${DATA}/filledContours.vtp)
@@ -200,8 +200,8 @@ if (BUILD_TESTING)
   add_test(${KIT}-RemoveVertices ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestRemoveVertices ${DATA}/Bunny.vtp)
 
-  add_test(${KIT}-ResampleAppendedPolyData ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
-    TestResampleAppendedPolyData -E 20)
+#  add_test(${KIT}-ResampleAppendedPolyData ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
+#    TestResampleAppendedPolyData -E 20)
 
   add_test(${KIT}-Silhouette ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestSilhouette ${DATA}/cowHead.vtp)

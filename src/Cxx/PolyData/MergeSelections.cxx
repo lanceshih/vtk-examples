@@ -4,24 +4,22 @@
 #include <vtkDataSetMapper.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdTypeArray.h>
-#include <vtkInformation.h>
+//#include <vtkInformation.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSelection.h>
 #include <vtkSelectionNode.h>
-#include <vtkUnstructuredGrid.h>
 
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // A nifty way of setting backgrounds in multiple renderers
+  // A nifty way of setting backgrounds in multiple renderers.
   vtkNew<vtkColorSeries> colorSeries;
   colorSeries->SetColorSchemeByName("Brewer Qualitative Pastel2");
   colors->SetColor("ren0", colorSeries->GetColor(0));
@@ -100,13 +98,19 @@ int main(int, char*[])
             << " cells in the selection." << std::endl;
 
   /*
-  // Not in selection
-  selectionNode1->GetProperties()->Set(vtkSelectionNode::INVERSE(), 1); //invert
-  the selection
-  selectionNode2->GetProperties()->Set(vtkSelectionNode::INVERSE(), 1); //invert
-  the selection extractSelection->Update(); std::cout << "There are " <<
-  dynamic_cast<vtkDataSet*> (extractSelection->GetOutput())->GetNumberOfPoints()
+  // Not in selection.
+  // Here we nvert the selections.
+  selectionNode1->GetProperties()->Set(vtkSelectionNode::INVERSE(), 1);
+  selectionNode2->GetProperties()->Set(vtkSelectionNode::INVERSE(), 1);
+  extractSelectionCombined->Update();
+  std::cout << "There are "
+            << dynamic_cast<vtkDataSet*>(extractSelectionCombined->GetOutput())
+                   ->GetNumberOfPoints()
             << " points not in the selection." << std::endl;
+  std::cout << "There are "
+            << dynamic_cast<vtkDataSet*>(extractSelectionCombined->GetOutput())
+                   ->GetNumberOfCells()
+            << " cells not in the selection." << std::endl;
   */
 
   // Visualize

@@ -11,9 +11,8 @@
 #include <vtkRenderer.h>
 #include <vtkTriangle.h>
 #include <vtkUnsignedCharArray.h>
-#include <vtkXMLPolyDataWriter.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -22,28 +21,28 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> nc;
 
-  // Setup points
+  // Setup points.
   vtkNew<vtkPoints> points;
   points->InsertNextPoint(1.0, 0.0, 0.0);
   points->InsertNextPoint(0.0, 0.0, 0.0);
   points->InsertNextPoint(0.0, 1.0, 0.0);
 
-  // Define some colors
+  // Define some colors.
   unsigned char red[3] = {255, 0, 0};
   unsigned char green[3] = {0, 255, 0};
   unsigned char blue[3] = {0, 0, 255};
 
-  // Setup the colors array
+  // Setup the colors array.
   vtkNew<vtkUnsignedCharArray> colors;
   colors->SetNumberOfComponents(3);
   colors->SetName("Colors");
 
-  // Add the three colors we have created to the array
+  // Add the three colors we have created to the array.
   colors->InsertNextTupleValue(red);
   colors->InsertNextTupleValue(green);
   colors->InsertNextTupleValue(blue);
 
-  // Create a triangle
+  // Create a triangle.
   vtkNew<vtkCellArray> triangles;
   vtkNew<vtkTriangle> triangle;
   triangle->GetPointIds()->SetId(0, 0);
@@ -51,7 +50,7 @@ int main(int, char*[])
   triangle->GetPointIds()->SetId(2, 2);
   triangles->InsertNextCell(triangle);
 
-  // Create a polydata object and add everything to it
+  // Create a polydata object and add everything to it.
   vtkNew<vtkPolyData> polydata;
   polydata->SetPoints(points);
   polydata->SetPolys(triangles);

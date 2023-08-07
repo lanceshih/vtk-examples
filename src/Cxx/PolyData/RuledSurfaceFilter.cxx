@@ -1,4 +1,3 @@
-#include <vtkAppendPolyData.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
 #include <vtkLine.h>
@@ -10,8 +9,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkRuledSurfaceFilter.h>
-#include <vtkTransform.h>
-#include <vtkTransformPolyDataFilter.h>
 
 int main(int, char*[])
 {
@@ -61,7 +58,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Banana").GetData());
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 

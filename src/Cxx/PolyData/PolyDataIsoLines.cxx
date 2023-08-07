@@ -2,7 +2,6 @@
 #include <vtkBandedPolyDataContourFilter.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
-#include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
@@ -14,9 +13,13 @@
 #include <vtkXMLPolyDataReader.h>
 #include <vtkXMLPolyDataWriter.h>
 
+// #include <algorithm>
+// #include <iostream>
+// #include <string>
+
 int main(int argc, char* argv[])
 {
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 2)
   {
     std::cout << "Required arguments: Filename e.g. cowHead.vtp" << std::endl;
@@ -41,11 +44,11 @@ int main(int argc, char* argv[])
   bf->GenerateContourEdgesOn();
   bf->Update();
 
-  // Color the contours
+  // Color the contours.
   bf->GetOutput(1)->GetPointData()->SetScalars(
       bf->GetOutput()->GetPointData()->GetScalars());
 
-  // Make sure the mapper uses the new colors
+  // Make sure the mapper uses the new colors.
   bf->GetOutput(0)->GetPointData()->SetActiveScalars("Scalars");
 
   {
@@ -64,16 +67,17 @@ int main(int argc, char* argv[])
 
   /*
   // See which isocontours are being generated
-  double values[10];
-  bf->GetValues(values);
-  for(unsigned int i = 0; i < 10; i++)
-    {
+  auto values = bf->GetValues();
+  auto numOfContours = bf->GetNumberOfContours();
+  vtkIdType someContours = std::min(numContours, 10);
+  for (vtkIdType i = 0; i < someContours; i++)
+  {
     cout << values[i] << " ";
-    }
+  }
   cout << endl;
   */
 
-  // Color actor
+  // Color actor.
   vtkNew<vtkPolyDataMapper> colorMapper;
   colorMapper->SetInputConnection(bf->GetOutputPort(0));
   colorMapper->SetScalarRange(range);
@@ -81,7 +85,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> colorActor;
   colorActor->SetMapper(colorMapper);
 
-  // Edge actor
+  // Edge actor.
   vtkNew<vtkPolyDataMapper> edgeMapper;
   edgeMapper->SetInputConnection(bf->GetOutputPort(1));
   edgeMapper->SetScalarRange(range);
@@ -90,7 +94,7 @@ int main(int argc, char* argv[])
   edgeActor->SetMapper(edgeMapper);
   edgeActor->GetProperty()->SetLineWidth(5);
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
 
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
@@ -100,7 +104,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the renderer
+  // Add the actors to the renderer.
   renderer->AddActor(colorActor);
   renderer->AddActor(edgeActor);
 

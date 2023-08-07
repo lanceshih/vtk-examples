@@ -5,15 +5,15 @@
 #include <vtkPointSource.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkQuantizePolyDataPoints.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -82,12 +82,12 @@ int main(int, char*[])
   interactor->SetRenderWindow(renderWindow);
   renderWindow->SetWindowName("QuantizePolyDataPoints");
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);

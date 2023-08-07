@@ -1,7 +1,9 @@
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkSphereSource.h>
 #include <vtkStripper.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {

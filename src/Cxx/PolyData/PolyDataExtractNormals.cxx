@@ -1,13 +1,15 @@
-#include <vtkCellData.h>
+ #include <vtkCellData.h>
 #include <vtkDoubleArray.h>
 #include <vtkFloatArray.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
-#include <vtkPoints.h>
+ #include <vtkPointData.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 

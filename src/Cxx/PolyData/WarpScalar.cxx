@@ -4,7 +4,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -16,11 +15,11 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
-  // Create Scalars
+  // Create Scalars.
   vtkNew<vtkDoubleArray> scalars;
   int numberOfPoints = sphereSource->GetOutput()->GetNumberOfPoints();
   scalars->SetNumberOfTuples(numberOfPoints);
@@ -37,15 +36,15 @@ int main(int, char*[])
 
   vtkNew<vtkWarpScalar> warpScalar;
   warpScalar->SetInputConnection(sphereSource->GetOutputPort());
-  warpScalar->SetScaleFactor(1); // use the scalars themselves
+  warpScalar->SetScaleFactor(1); // Use the scalars themselves.
 
-  // Required for SetNormal to have an effect
+  // Required for SetNormal to have an effect.
   warpScalar->UseNormalOn();
   warpScalar->SetNormal(0, 0, 1);
 
   warpScalar->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(warpScalar->GetOutputPort());
 

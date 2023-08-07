@@ -5,6 +5,9 @@
 #include <vtkPolyData.h>
 #include <vtkThresholdPoints.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkPoints> points;
@@ -17,7 +20,7 @@ int main(int, char*[])
   std::cout << "There are " << points->GetNumberOfPoints()
             << " points before thresholding." << std::endl;
 
-  // setup position index
+  // Setup position index.
   vtkNew<vtkIntArray> index;
   index->SetNumberOfComponents(1);
   index->SetName("index");

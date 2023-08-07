@@ -1,7 +1,5 @@
 #include <vtkCenterOfMass.h>
-#include <vtkDoubleArray.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 
@@ -10,7 +8,7 @@
 
 int main(int, char*[])
 {
-  // Create a point set of a square
+  // Create a point set of a square.
   vtkNew<vtkPoints> points;
   points->InsertNextPoint(0, 0, 0);
   points->InsertNextPoint(1, 0, 0);
@@ -20,7 +18,7 @@ int main(int, char*[])
   vtkNew<vtkPolyData> polydata;
   polydata->SetPoints(points);
 
-  // Compute the center of mass
+  // Compute the center of mass.
   vtkNew<vtkCenterOfMass> centerOfMassFilter;
   centerOfMassFilter->SetInputData(polydata);
   centerOfMassFilter->SetUseScalarsAsWeights(false);

@@ -6,7 +6,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -22,30 +21,30 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Provide some geometry
+  // Provide some geometry.
   int resolution = 3;
   vtkNew<vtkPlaneSource> aPlane;
   aPlane->SetXResolution(resolution);
   aPlane->SetYResolution(resolution);
 
-  // Create cell data
+  // Create cell data.
   vtkNew<vtkFloatArray> cellData;
   for (int i = 0; i < resolution * resolution; i++)
   {
     cellData->InsertNextValue(i + 1);
   }
 
-  // Create a lookup table to map cell data to colors
+  // Create a lookup table to map cell data to colors.
   vtkNew<vtkLookupTable> lut;
   int tableSize = std::max(resolution * resolution + 1, 10);
   lut->SetNumberOfTableValues(tableSize);
   lut->Build();
   RandomColors(lut, tableSize);
 
-  aPlane->Update(); // Force an update so we can set cell data
+  aPlane->Update(); // Force an update so we can set cell data.
   aPlane->GetOutput()->GetCellData()->SetScalars(cellData);
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(aPlane->GetOutputPort());
   mapper->SetScalarRange(0, tableSize - 1);
@@ -54,7 +53,7 @@ int main(int, char*[])
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

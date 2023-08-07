@@ -3,7 +3,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -14,7 +13,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a cone
+  // Create a cone.
   vtkNew<vtkConeSource> source;
   source->SetCenter(0.0, 0.0, 0.0);
   source->SetResolution(100);
@@ -27,7 +26,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create the outline
+  // Create the outline.
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputConnection(source->GetOutputPort());
 
@@ -37,7 +36,7 @@ int main(int, char*[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
-  // Setup the window
+  // Setup the window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -46,13 +45,13 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->AddActor(outlineActor);
   renderer->SetBackground(
-      colors->GetColor3d("MidnightBlue").GetData()); // Background color white
+      colors->GetColor3d("MidnightBlue").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

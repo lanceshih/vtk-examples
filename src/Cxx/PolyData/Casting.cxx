@@ -7,7 +7,7 @@
 
 int main(int, char*[])
 {
-  // Create points
+  // Create points.
   vtkNew<vtkPoints> points;
 
   unsigned int numberOfPoints = 3;
@@ -30,7 +30,7 @@ int main(int, char*[])
 
   polydata->GetPointData()->AddArray(distances);
 
-  // Get the distances from the polydata
+  // Get the distances from the polydata.
   vtkDoubleArray* array = dynamic_cast<vtkDoubleArray*>(
       polydata->GetPointData()->GetArray("Distances"));
 
@@ -44,7 +44,7 @@ int main(int, char*[])
     }
   }
 
-  // Cast the double distances to ints
+  // Cast the double distances to ints.
   vtkDoubleArray* doubleDistances = dynamic_cast<vtkDoubleArray*>(
       polydata->GetPointData()->GetArray("Distances"));
   vtkIntArray* intDistances = dynamic_cast<vtkIntArray*>(doubleDistances);

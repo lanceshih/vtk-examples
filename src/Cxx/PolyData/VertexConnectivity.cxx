@@ -1,8 +1,5 @@
 #include <vtkActor.h>
-#include <vtkCellData.h>
-#include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
-#include <vtkDoubleArray.h>
 #include <vtkExtractEdges.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdList.h>
@@ -20,6 +17,9 @@
 #include <vtkSphereSource.h>
 #include <vtkTriangleFilter.h>
 #include <vtkVertexGlyphFilter.h>
+
+#include <iostream>
+#include <string>
 
 // Note that:
 // vtkExtractEdges moved from vtkFiltersExtraction to vtkFiltersCore in
@@ -159,7 +159,7 @@ vtkSmartPointer<vtkIdList> GetConnectedVertices(vtkPolyData* mesh, int id)
 {
   vtkNew<vtkIdList> connectedVertices;
 
-  // get all cells that vertex 'id' is a part of
+  // Get all cells that vertex 'id' is a part of.
   vtkNew<vtkIdList> cellIdList;
   mesh->GetPointCells(id, cellIdList);
 

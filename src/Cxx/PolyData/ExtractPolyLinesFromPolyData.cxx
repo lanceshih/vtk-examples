@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
-#include <vtkColor.h>
 #include <vtkCutter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -21,7 +20,7 @@
 
 int main(int, char*[])
 {
-  // Define colors for example
+  // Define colors for example.
   vtkNew<vtkNamedColors> colors;
   vtkColor3d lineColor = colors->GetColor3d("peacock");
   vtkColor3d modelColor = colors->GetColor3d("silver");
@@ -66,7 +65,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the renderer
+  // Add the actors to the renderer.
   renderer->AddActor(model);
   renderer->AddActor(lines);
   renderer->SetBackground(backgroundColor.GetData());
@@ -80,7 +79,7 @@ int main(int, char*[])
 
   interactor->Start();
 
-  // Extract the lines from the polydata
+  // Extract the lines from the polydata.
   vtkIdType numberOfLines = cutter->GetOutput()->GetNumberOfLines();
 
   std::cout << "-----------Lines without using vtkStripper" << std::endl;

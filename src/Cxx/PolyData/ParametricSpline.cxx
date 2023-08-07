@@ -1,8 +1,4 @@
 #include <vtkActor.h>
-#include <vtkCamera.h>
-#include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkDoubleArray.h>
 #include <vtkGlyph3DMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -22,14 +18,14 @@ int main(int, char*[])
   vtkNew<vtkNamedColors> colors;
 
   // Create three points. We will join (Origin and P0) with a red line and
-  // (Origin and P1) with a green line
+  // (Origin and P1) with a green line.
   double origin[3] = {0.0, 0.0, 0.0};
   double p0[3] = {1.0, 0.0, 0.0};
   double p1[3] = {0.0, 1.0, 0.0};
   double p2[3] = {0.0, 1.0, 2.0};
   double p3[3] = {1.0, 2.0, 3.0};
 
-  // Create a vtkPoints object and store the points in it
+  // Create a vtkPoints object and store the points in it.
   vtkNew<vtkPoints> points;
   points->InsertNextPoint(origin);
   points->InsertNextPoint(p0);
@@ -58,7 +54,7 @@ int main(int, char*[])
   actor->GetProperty()->SetColor(colors->GetColor3d("DarkSlateGrey").GetData());
   actor->GetProperty()->SetLineWidth(3.0);
 
-  // Create a polydata to store everything in
+  // Create a polydata to store everything in.
   vtkNew<vtkPolyData> polyData;
   polyData->SetPoints(points);
 
@@ -70,7 +66,7 @@ int main(int, char*[])
   pointActor->SetMapper(pointMapper);
   pointActor->GetProperty()->SetColor(colors->GetColor3d("Peacock").GetData());
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

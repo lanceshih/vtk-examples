@@ -3,7 +3,6 @@
 #include <vtkHull.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -12,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 2)
   {
     std::cout << "Required arguments: Filename e.g. cowHead.vtp" << std::endl;
@@ -33,7 +32,7 @@ int main(int argc, char* argv[])
   originalMapper->SetInputConnection(reader->GetOutputPort());
   originalMapper->ScalarVisibilityOff();
 
-  // Create an actor for the surface
+  // Create an actor for the surface.
   vtkNew<vtkActor> originalActor;
   originalActor->SetMapper(originalMapper);
   originalActor->GetProperty()->SetDiffuseColor(
@@ -43,7 +42,7 @@ int main(int argc, char* argv[])
   mapper->SetInputConnection(hullFilter->GetOutputPort());
   mapper->ScalarVisibilityOff();
 
-  // Create an actor for the surface
+  // Create an actor for the surface.
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetDiffuseColor(

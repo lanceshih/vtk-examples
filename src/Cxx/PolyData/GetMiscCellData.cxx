@@ -1,15 +1,15 @@
-#include <vtkCellArray.h>
 #include <vtkCellData.h>
 #include <vtkFloatArray.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkTriangle.h>
 #include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 3)
   {
     std::cout << "Required arguments: Filename ArrayName e.g. SuperQuadric.vtp "
@@ -18,20 +18,20 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Get filename from command line
-  std::string filename = argv[1]; // first command line argument
+  // Get filename from command line.
+  std::string filename = argv[1]; // First command line argument.
 
   // Get array name
-  std::string arrayName = argv[2]; // second command line argument
+  std::string arrayName = argv[2]; // Second command line argument.
 
-  // read the file
+  // Read the file.
   vtkNew<vtkXMLPolyDataReader> reader;
   reader->SetFileName(filename.c_str());
   reader->Update();
 
   auto polydata = reader->GetOutput();
 
-  // Get the number of cells in the polydata
+  // Get the number of cells in the polydata.
   vtkIdType idNumCellsInFile = polydata->GetNumberOfCells();
 
   auto array = dynamic_cast<vtkFloatArray*>(

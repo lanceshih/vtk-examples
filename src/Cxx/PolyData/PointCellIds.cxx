@@ -10,6 +10,9 @@
 #define VTK890 1
 #endif
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkSphereSource> sphereSource;

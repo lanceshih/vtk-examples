@@ -1,9 +1,7 @@
 #include <vtkCellTreeLocator.h>
 #include <vtkGenericCell.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkSphereSource.h>
-#include <vtkUnstructuredGrid.h>
 
 // Note that:
 // vtkCellTreeLocator moved from vtkFiltersGeneral to vtkCommonDataModel in
@@ -16,7 +14,7 @@ int main(int, char*[])
   sphereSource->SetRadius(1.0);
   sphereSource->Update();
 
-  // Create the tree
+  // Create the tree.
   vtkNew<vtkCellTreeLocator> cellTree;
   cellTree->SetDataSet(sphereSource->GetOutput());
   cellTree->BuildLocator();
@@ -32,7 +30,7 @@ int main(int, char*[])
 
   int returnValue = EXIT_SUCCESS;
 
-  // Should be inside
+  // Should be inside.
   cellId = cellTree->FindCell(testInside, 0, cell, pcoords, weights);
   if (cellId >= 0)
   {
@@ -44,7 +42,7 @@ int main(int, char*[])
     returnValue = EXIT_FAILURE;
   }
 
-  // Should be outside
+  // Should be outside.
   cellId = cellTree->FindCell(testOutside, 0, cell, pcoords, weights);
   if (cellId >= 0)
   {

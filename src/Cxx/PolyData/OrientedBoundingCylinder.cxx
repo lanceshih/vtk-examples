@@ -1,9 +1,7 @@
 #include <vtkActor.h>
-#include <vtkAlgorithmOutput.h>
 #include <vtkCleanPolyData.h>
 #include <vtkExtractEnclosedPoints.h>
 #include <vtkLineSource.h>
-#include <vtkMatrix4x4.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOBBTree.h>
@@ -15,8 +13,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkTransform.h>
-#include <vtkTransformPolyDataFilter.h>
 #include <vtkTubeFilter.h>
 
 // Readers
@@ -32,9 +28,9 @@
 
 #include <array>
 #include <cctype> // For to_lower
-#include <string> // For find_last_of()
-
 #include <cstdlib>
+#include <iostream>
+#include <string> // For find_last_of()
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName);
@@ -47,25 +43,25 @@ int main(int argc, char* argv[])
   auto polyData = ReadPolyData(argc > 1 ? argv[1] : "");
   ;
 
-  // Get bounds of polydata
+  // Get bounds of polydata.
   std::array<double, 6> bounds;
   polyData->GetBounds(bounds.data());
 
-  // Create the tree
+  // Create the tree.
   vtkNew<vtkOBBTree> obbTree;
   obbTree->SetDataSet(polyData);
   obbTree->SetMaxLevel(1);
   obbTree->BuildLocator();
 
-  // Get the PolyData for the OBB
+  // Get the PolyData for the OBB.
   vtkNew<vtkPolyData> obbPolydata;
   obbTree->GenerateRepresentation(0, obbPolydata);
 
-  // Get the points of the OBB
+  // Get the points of the OBB.
   vtkNew<vtkPoints> obbPoints;
   obbPoints->DeepCopy(obbPolydata->GetPoints());
 
-  // Use a quad to find centers of OBB faces
+  // Use a quad to find centers of OBB faces.
   vtkNew<vtkQuad> aQuad;
 
   std::vector<std::array<double, 3>> facePoints(4);
@@ -79,7 +75,7 @@ int main(int argc, char* argv[])
   std::array<double, 3> radii;
   std::array<double, 3> lengths;
 
-  // Transfer the points to std::array's
+  // Transfer the points to std::array's.
   obbPoints->GetPoint(0, point0.data());
   obbPoints->GetPoint(1, point1.data());
   obbPoints->GetPoint(2, point2.data());
@@ -89,7 +85,7 @@ int main(int argc, char* argv[])
   obbPoints->GetPoint(6, point6.data());
   obbPoints->GetPoint(7, point7.data());
 
-  // x face
+  // x face.
   // ids[0] = 2; ids[1] = 3; ids[2] = 7; ids[3] = 6;
   facePoints[0] = point2;
   facePoints[1] = point3;
@@ -107,7 +103,7 @@ int main(int argc, char* argv[])
                                                          endPoints[0].data())) /
       2.0;
 
-  // y face
+  // y face.
   // ids[0] = 0; ids[1] = 1; ids[2] = 2; ids[3] = 3;
   facePoints[0] = point0;
   facePoints[1] = point1;
@@ -124,7 +120,7 @@ int main(int argc, char* argv[])
                                                          endPoints[1].data())) /
       2.0;
 
-  // z face
+  // z face.
   // ids[0] = 0; ids[1] = 2; ids[2] = 6; ids[3] = 4;
   facePoints[0] = point0;
   facePoints[1] = point2;
@@ -148,7 +144,7 @@ int main(int argc, char* argv[])
                                                          endPoints[2].data())) /
       2.0;
 
-  // Find long axis
+  // Find long axis.
   int longAxis = -1;
   double length = VTK_DOUBLE_MIN;
   for (auto i = 0; i < 3; ++i)
@@ -186,7 +182,7 @@ int main(int argc, char* argv[])
   tube->CappingOn();
   tube->Update();
 
-  // See if all points lie inside cylinder
+  // See if all points lie inside cylinder.
   vtkNew<vtkCleanPolyData> clean;
   clean->SetInputData(tube->GetOutput());
   clean->Update();
@@ -211,7 +207,7 @@ int main(int argc, char* argv[])
   repActor->GetProperty()->SetColor(colors->GetColor3d("peacock").GetData());
   repActor->GetProperty()->SetOpacity(.6);
 
-  // Create a mapper and actor for the cylinder
+  // Create a mapper and actor for the cylinder.
   vtkNew<vtkPolyDataMapper> cylinderMapper;
   cylinderMapper->SetInputConnection(tube->GetOutputPort());
 
@@ -229,11 +225,11 @@ int main(int argc, char* argv[])
   originalActor->GetProperty()->SetColor(
       colors->GetColor3d("tomato").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   renderer->UseHiddenLineRemovalOn();
 
-  // Display all centers and endpoints
+  // Display all centers and endpoints.
   std::vector<vtkColor3d> cs;
   cs.push_back(colors->GetColor3d("red"));
   cs.push_back(colors->GetColor3d("green"));
@@ -270,12 +266,12 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
-  renderWindow->SetWindowName("Oriented Cylinder");
+  renderWindow->SetWindowName("OrientedBoundingCylinder");
   renderWindow->SetSize(640, 480);
 
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(originalActor);
   renderer->AddActor(cylinderActor);
   //  renderer->AddActor(repActor);
@@ -313,7 +309,7 @@ int main(int argc, char* argv[])
     }
   }
 
-  // Render and interact
+  // Render and interact.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
@@ -327,7 +323,7 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName)
   {
     extension = fileName.substr(fileName.find_last_of("."));
   }
-  // Make the extension lowercase
+  // Make the extension lowercase.
   std::transform(extension.begin(), extension.end(), extension.begin(),
                  ::tolower);
   if (extension == ".ply")

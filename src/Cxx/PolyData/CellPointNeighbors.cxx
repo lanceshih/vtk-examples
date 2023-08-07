@@ -1,12 +1,10 @@
 #include <vtkActor.h>
-#include <vtkCell.h>
 #include <vtkDataSetMapper.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdList.h>
 #include <vtkIdTypeArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -20,7 +18,7 @@
 
 int main(int, char*[])
 {
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
@@ -28,14 +26,14 @@ int main(int, char*[])
   triangleFilter->SetInputConnection(sphereSource->GetOutputPort());
   triangleFilter->Update();
 
-  // Find all cells connected to point 0
+  // Find all cells connected to point 0.
   vtkIdType cellId = 0;
 
   vtkNew<vtkIdList> cellPointIds;
   triangleFilter->GetOutput()->GetCellPoints(cellId, cellPointIds);
 
-  // neighbor cells may be listed multiple times
-  // use std::set instead of std::list if you want a unique list of neighbors
+  // Neighbor cells may be listed multiple times.
+  // Use std::set instead of std::list if you want a unique list of neighbors.
   std::list<vtkIdType> neighbors;
 
   /* For each vertex of the cell, we calculate which cells use that point.
@@ -50,7 +48,7 @@ int main(int, char*[])
     vtkNew<vtkIdList> idList;
     idList->InsertNextId(cellPointIds->GetId(i));
 
-    // get the neighbors of the cell
+    // Get the neighbors of the cell.
     vtkNew<vtkIdList> neighborCellIds;
 
     triangleFilter->GetOutput()->GetCellNeighbors(cellId, idList,
@@ -87,7 +85,7 @@ int main(int, char*[])
 
   vtkNew<vtkDataSetMapper> neighborCellsMapper;
 
-  // Create a dataset with the cell of interest
+  // Create a dataset with the cell of interest.
   {
     vtkNew<vtkIdTypeArray> ids;
     ids->SetNumberOfComponents(1);
@@ -114,7 +112,7 @@ int main(int, char*[])
   mainCellActor->GetProperty()->SetColor(
       colors->GetColor3d("Tomato").GetData());
 
-  // Create a dataset with the neighbor cells
+  // Create a dataset with the neighbor cells.
   {
     vtkNew<vtkIdTypeArray> ids;
     ids->SetNumberOfComponents(1);
@@ -144,7 +142,7 @@ int main(int, char*[])
   neighborCellsActor->GetProperty()->SetColor(
       colors->GetColor3d("Mint").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -153,13 +151,13 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(sphereActor);
   renderer->AddActor(mainCellActor);
   renderer->AddActor(neighborCellsActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->SetSize(640, 480);
   renderWindow->Render();
   renderWindowInteractor->Start();

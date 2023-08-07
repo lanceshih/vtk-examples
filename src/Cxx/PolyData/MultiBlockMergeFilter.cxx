@@ -1,8 +1,6 @@
 #include <vtkMultiBlockDataSet.h>
 #include <vtkMultiBlockMergeFilter.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkSphereSource.h>
 
 int main(int, char*[])

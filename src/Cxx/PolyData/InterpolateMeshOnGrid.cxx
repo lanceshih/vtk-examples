@@ -1,41 +1,24 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
-#include <vtkCellLocator.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDelaunay2D.h>
-#include <vtkDoubleArray.h>
 #include <vtkFloatArray.h>
-#include <vtkImageData.h>
 #include <vtkInteractorStyleTrackballCamera.h>
-#include <vtkLine.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProbeFilter.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkTriangle.h>
-#include <vtkVertexGlyphFilter.h>
 #include <vtkWarpScalar.h>
 #include <vtkXMLPolyDataWriter.h>
 
 #include <iostream>
-
-namespace {
-
-// Get the camera position.
-void CameraModifiedCallback(vtkObject* caller,
-                            long unsigned int vtkNotUsed(eventId),
-                            void* vtkNotUsed(clientData),
-                            void* vtkNotUsed(callData));
-} // namespace
 
 int main(int, char*[])
 {
@@ -57,7 +40,7 @@ int main(int, char*[])
   for (unsigned int i = 0; i < 100; ++i)
   {
     double x, y, z;
-    // random position and radius
+    // random position and radius.
     x = randomSequence->GetRangeValue(0, gridSize);
     randomSequence->Next();
     y = randomSequence->GetRangeValue(0, gridSize);
@@ -70,7 +53,7 @@ int main(int, char*[])
     zvalues->InsertNextValue(z);
   }
 
-  // Add the grid points to a polydata object
+  // Add the grid points to a polydata object.
   vtkNew<vtkPolyData> randomPolyData;
   randomPolyData->SetPoints(randomPoints);
   randomPolyData->GetPointData()->SetScalars(zvalues);
@@ -81,7 +64,7 @@ int main(int, char*[])
   randomDelaunay->SetInputData(randomPolyData);
   randomDelaunay->Update();
 
-  // Create a grid of points to interpolate over
+  // Create a grid of points to interpolate over.
   vtkNew<vtkPoints> gridPoints;
   for (unsigned int x = 0; x < gridSize; x++)
   {
@@ -91,16 +74,16 @@ int main(int, char*[])
     }
   }
 
-  // Create a dataset from the grid points
+  // Create a dataset from the grid points.
   vtkNew<vtkPolyData> gridPolyData;
   gridPolyData->SetPoints(gridPoints);
 
-  // Perform the interpolation
+  // Perform the interpolation.
   vtkNew<vtkProbeFilter> probeFilter;
   probeFilter->SetSourceConnection(randomDelaunay->GetOutputPort());
   probeFilter->SetInputData(
       gridPolyData); //
-                     // Interpolate 'Source' at these points
+                     // Interpolate 'Source' at these points.
   probeFilter->Update();
 
   // Map the output zvalues to the z-coordinates of the data so that
@@ -111,8 +94,8 @@ int main(int, char*[])
   gridWarpScalar->Update();
 
   //////// Setup outputs ////////
-  // Output random points
-  // Map the output zvalues to the z-coordinates of the data
+  // Output random points.
+  // Map the output zvalues to the z-coordinates of the data.
   vtkNew<vtkWarpScalar> randomWarpScalar;
   randomWarpScalar->SetInputConnection(randomDelaunay->GetOutputPort());
   randomWarpScalar->Update();

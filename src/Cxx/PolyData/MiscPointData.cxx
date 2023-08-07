@@ -1,26 +1,25 @@
-#include <string>
-#include <vtkCellData.h>
-#include <vtkDoubleArray.h>
 #include <vtkFloatArray.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
-#include <vtkPolyDataNormals.h>
 #include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 2)
   {
-    std::cout << "Required arguments: Filename" << std::endl;
+    std::cout << "Required arguments: Filename e.g. cowHead.vtp" << std::endl;
     return EXIT_FAILURE;
   }
 
-  // Get filename from command line
-  std::string filename = argv[1]; // first command line argument
+  // Get filename from command line.
+  std::string filename = argv[1]; // First command line argument.
 
   // Read the file
   vtkNew<vtkXMLPolyDataReader> reader;
@@ -28,10 +27,10 @@ int main(int argc, char* argv[])
   reader->SetFileName(filename.c_str());
   reader->Update();
 
-  // Extract the polydata
+  // Extract the polydata.
   auto polydata = reader->GetOutput();
 
-  // Get the number of points in the polydata
+  // Get the number of points in the polydata.
   vtkIdType idNumPointsInFile = polydata->GetNumberOfPoints();
 
   // Add distances to each point

@@ -11,7 +11,6 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkTriangleFilter.h>
 #include <vtkXMLPolyDataReader.h>
 
 int main(int argc, char* argv[])
@@ -28,14 +27,14 @@ int main(int argc, char* argv[])
   }
   else
   {
-    // Small sphere with most polgons
+    // Small sphere with most polgons.
     vtkNew<vtkSphereSource> sphereSource1;
     sphereSource1->SetThetaResolution(10);
     sphereSource1->SetPhiResolution(10);
     sphereSource1->SetCenter(5, 5, 5);
     sphereSource1->SetRadius(1.5);
 
-    // Large sphere with least polygons
+    // Large sphere with least polygons.
     vtkNew<vtkSphereSource> sphereSource2;
     sphereSource2->SetRadius(10);
     sphereSource2->SetCenter(10, 1, 10);
@@ -62,7 +61,7 @@ int main(int argc, char* argv[])
   cellLocator->BuildLocator();
 
   // Now fire a ray from outside the bounds to the center and find a
-  // cell. This cell should be on the outside surface
+  // cell. This cell should be on the outside surface.
   double rayStart[3];
   for (unsigned int i = 0; i < 3; i++)
   {
@@ -83,7 +82,7 @@ int main(int argc, char* argv[])
   connectivityFilter->InitializeSeedList();
   connectivityFilter->AddSeed(cellId);
 
-  // Create a mapper and actor for original data
+  // Create a mapper and actor for original data.
   vtkNew<vtkPolyDataMapper> originalMapper;
   originalMapper->SetInputData(polyData);
 
@@ -95,7 +94,7 @@ int main(int argc, char* argv[])
   originalActor->GetProperty()->SetOpacity(0.6);
   originalActor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
-  // Create a mapper and actor for extracted data
+  // Create a mapper and actor for extracted data.
   vtkNew<vtkPolyDataMapper> extractedMapper;
   extractedMapper->SetInputConnection(connectivityFilter->GetOutputPort());
 
@@ -106,7 +105,7 @@ int main(int argc, char* argv[])
   extractedActor->GetProperty()->SetOpacity(0.6);
   extractedActor->GetProperty()->BackfaceCullingOn();
 
-  // Create a renderer
+  // Create a renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(originalActor);
   renderer->AddActor(extractedActor);
@@ -117,13 +116,14 @@ int main(int argc, char* argv[])
 
   extractedActor->SetPosition((bounds[1] - bounds[0]) / 1.9, 0, 0);
   originalActor->SetPosition(-(bounds[1] - bounds[0]) / 1.9, 0, 0);
-  // Create a render window
+
+  // Create a render window.
   vtkNew<vtkRenderWindow> renwin;
   renwin->AddRenderer(renderer);
   renwin->SetSize(512, 512);
   renwin->SetWindowName("ExtractOutsideSurface");
 
-  // Create an interactor
+  // Create an interactor.
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renwin);
   renwin->Render();

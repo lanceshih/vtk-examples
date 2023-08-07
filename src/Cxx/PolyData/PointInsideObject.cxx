@@ -1,11 +1,9 @@
 #include <vtkActor.h>
 #include <vtkCubeSource.h>
 #include <vtkDataArray.h>
-#include <vtkIntArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -14,11 +12,14 @@
 #include <vtkSelectEnclosedPoints.h>
 #include <vtkVertexGlyphFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // cube centered in origin, 1cm side.
+  // A cube centered on the origin, 1cm sides.
   vtkNew<vtkCubeSource> cubeSource;
   cubeSource->Update();
 
@@ -35,13 +36,13 @@ int main(int, char* argv[])
   vtkNew<vtkPolyData> pointsPolydata;
   pointsPolydata->SetPoints(points);
 
-  // Points inside test
+  // Points inside test.
   vtkNew<vtkSelectEnclosedPoints> selectEnclosedPoints;
   selectEnclosedPoints->SetInputData(pointsPolydata);
   selectEnclosedPoints->SetSurfaceData(cube);
   selectEnclosedPoints->Update();
 
-  for (unsigned int i = 0; i < 2; i++)
+  for (unsigned int i = 0; i < 3; ++i)
   {
     std::cout << "Point " << i << ": ";
     if (selectEnclosedPoints->IsInside(i) == 1)
@@ -58,7 +59,7 @@ int main(int, char* argv[])
       selectEnclosedPoints->GetOutput()->GetPointData()->GetArray(
           "SelectedPoints"));
 
-  for (vtkIdType i = 0; i < insideArray->GetNumberOfTuples(); i++)
+  for (vtkIdType i = 0; i < insideArray->GetNumberOfTuples(); ++i)
   {
     std::cout << "Tuple " << i << ": ";
     if (insideArray->GetComponent(i, 0) == 1)
@@ -73,7 +74,7 @@ int main(int, char* argv[])
 
   // RENDERING PART
 
-  // Cube mapper, actor
+  // Cube mapper, actor.
   vtkNew<vtkPolyDataMapper> cubeMapper;
   cubeMapper->SetInputConnection(cubeSource->GetOutputPort());
 
@@ -83,7 +84,7 @@ int main(int, char* argv[])
   cubeActor->GetProperty()->SetColor(
       colors->GetColor3d("SandyBrown").GetData());
 
-  // Points mapper, actor
+  // Points mapper, actor.
   // First, apply vtkVertexGlyphFilter to make cells around points, vtk only
   // render cells.
   vtkNew<vtkVertexGlyphFilter> vertexGlyphFilter;
@@ -99,7 +100,7 @@ int main(int, char* argv[])
   pointsActor->GetProperty()->SetColor(
       colors->GetColor3d("GreenYellow").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -108,12 +109,12 @@ int main(int, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(cubeActor);
   renderer->AddActor(pointsActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

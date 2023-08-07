@@ -1,7 +1,6 @@
 #include <vtkCleanPolyData.h>
 #include <vtkCubeSource.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 
 int main(int, char*[])
 {

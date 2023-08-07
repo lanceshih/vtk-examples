@@ -4,9 +4,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
-#ifdef VTK_CELL_ARRAY_V2
-#include <vtkCellArrayIterator.h>
-#endif // VTK_CELL_ARRAY_V2
 #include <vtkCutter.h>
 #include <vtkKochanekSpline.h>
 #include <vtkNamedColors.h>
@@ -20,11 +17,17 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkSpline.h>
 #include <vtkSplineFilter.h>
 #include <vtkStripper.h>
 #include <vtkTubeFilter.h>
 #include <vtkXMLPolyDataReader.h>
+
+#ifdef VTK_CELL_ARRAY_V2
+#include <vtkCellArrayIterator.h>
+#endif // VTK_CELL_ARRAY_V2
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -97,7 +100,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the renderer
+  // Add the actors to the renderer.
   renderer->AddActor(model);
   renderer->AddActor(lines);
 
@@ -114,7 +117,7 @@ int main(int argc, char* argv[])
   renderWindow->Render();
   interactor->Start();
 
-  // Extract the lines from the polydata
+  // Extract the lines from the polydata.
   vtkIdType numberOfLines = cutter->GetOutput()->GetNumberOfLines();
 
   std::cout << "-----------Lines without using vtkStripper" << std::endl;

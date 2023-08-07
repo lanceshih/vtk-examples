@@ -1,12 +1,13 @@
-#include <vtkCellArray.h>
 #include <vtkGeometryFilter.h>
 #include <vtkNew.h>
-#include <vtkPointSource.h>
 #include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridReader.h>
 #include <vtkVertex.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 template <typename T>

@@ -69,7 +69,7 @@ int main(int, char*[])
   functionSource->SetWResolution(50 * numberOfPoints);
   functionSource->Update();
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(functionSource->GetOutputPort());
 
@@ -78,13 +78,13 @@ int main(int, char*[])
   actor->GetProperty()->SetColor(colors->GetColor3d("DarkSlateGrey").GetData());
   actor->GetProperty()->SetLineWidth(3.0);
 
-  // Glyph the points
+  // Glyph the points.
   vtkNew<vtkSphereSource> sphere;
   sphere->SetPhiResolution(21);
   sphere->SetThetaResolution(21);
   sphere->SetRadius(.1);
 
-  // Create a polydata to store everything in
+  // Create a polydata to store everything in.
   vtkNew<vtkPolyData> polyData;
   polyData->SetPoints(points);
 
@@ -98,7 +98,7 @@ int main(int, char*[])
   pointActor->GetProperty()->SetOpacity(.5);
   ;
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -168,7 +168,7 @@ void MakeTensionWidget(vtkSliderWidget* widget,
                        vtkRenderer* renderer,
                        vtkRenderWindowInteractor* interactor)
 {
-  // Setup a slider widget for each varying parameter
+  // Setup a slider widget for each varying parameter.
   double tubeWidth(.005);
   double sliderLength(.02);
   double titleHeight(.02);
@@ -249,7 +249,7 @@ void MakeContinuityWidget(vtkSliderWidget* widget,
                           vtkRenderer* renderer,
                           vtkRenderWindowInteractor* interactor)
 {
-  // Setup a slider widget for each varying parameter
+  // Setup a slider widget for each varying parameter.
   double tubeWidth(.005);
   double sliderLength(.02);
   double titleHeight(.02);
@@ -330,7 +330,7 @@ void MakeBiasWidget(vtkSliderWidget* widget,
                     vtkRenderer* renderer,
                     vtkRenderWindowInteractor* interactor)
 {
-  // Setup a slider widget for each varying parameter
+  // Setup a slider widget for each varying parameter.
   double tubeWidth(.005);
   double sliderLength(.02);
   double titleHeight(.02);
@@ -380,20 +380,20 @@ void SetSliderColors(vtkSliderRepresentation2D* slider)
 {
   vtkNew<vtkNamedColors> colors;
   // Set color properties:
-  // Change the color of the knob that slides
+  // Change the color of the knob that slides.
   slider->GetSliderProperty()->SetColor(colors->GetColor3d("Peru").GetData());
-  // Change the color of the text indicating what the slider controls
+  // Change the color of the text indicating what the slider controls.
   slider->GetTitleProperty()->SetColor(
       colors->GetColor3d("OrangeRed").GetData());
-  // Change the color of the text displaying the value
+  // Change the color of the text displaying the value.
   slider->GetLabelProperty()->SetColor(
       colors->GetColor3d("OrangeRed").GetData());
-  // Change the color of the knob when the mouse is held on it
+  // Change the color of the knob when the mouse is held on it.
   slider->GetSelectedProperty()->SetColor(
       colors->GetColor3d("DeepPink").GetData());
-  // Change the color of the bar
+  // Change the color of the bar.
   slider->GetTubeProperty()->SetColor(colors->GetColor3d("Gold").GetData());
-  // Change the color of the ends of the bar
+  // Change the color of the ends of the bar.
   slider->GetCapProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 }
 

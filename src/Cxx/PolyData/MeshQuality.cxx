@@ -1,13 +1,11 @@
 #include <vtkActor.h>
 #include <vtkCellData.h>
 #include <vtkColorSeries.h>
-#include <vtkDataSet.h>
 #include <vtkDoubleArray.h>
 #include <vtkLookupTable.h>
 #include <vtkMeshQuality.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
@@ -15,6 +13,9 @@
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
 #include <vtkTriangleFilter.h>
+
+#include <iostream>
+#include <string>
 
 void MakeLUT(vtkLookupTable* lut)
 {

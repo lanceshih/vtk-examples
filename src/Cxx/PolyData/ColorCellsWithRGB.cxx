@@ -4,7 +4,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -13,7 +12,7 @@
 
 int main(int, char*[])
 {
-  // Provide some geometry
+  // Provide some geometry.
   int resolutionX = 5;
   int resolutionY = 3;
 
@@ -22,7 +21,7 @@ int main(int, char*[])
   aPlane->SetYResolution(resolutionY);
   aPlane->Update();
 
-  // Create cell data
+  // Create cell data.
   vtkNew<vtkUnsignedCharArray> cellData;
   cellData->SetNumberOfComponents(3);
   cellData->SetNumberOfTuples(aPlane->GetOutput()->GetNumberOfCells());
@@ -44,7 +43,7 @@ int main(int, char*[])
 
   aPlane->GetOutput()->GetCellData()->SetScalars(cellData);
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkPolyDataMapper> mapper;
@@ -53,7 +52,7 @@ int main(int, char*[])
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

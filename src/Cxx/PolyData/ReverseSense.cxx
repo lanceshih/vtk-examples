@@ -1,9 +1,11 @@
 #include <vtkFloatArray.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPolyData.h>
 #include <vtkReverseSense.h>
 #include <vtkSphereSource.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -14,7 +16,7 @@ int main(int, char*[])
       sphereSource->GetOutput()->GetPointData()->GetNormals());
 
   std::cout << std::endl << "Normals: " << std::endl;
-  // Display the first few normals
+  // Display the first few normals.
   for (unsigned int i = 0; i < 5; i++)
   {
     double pN[3];

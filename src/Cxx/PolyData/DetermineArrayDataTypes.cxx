@@ -37,7 +37,7 @@ void FindAllData(const std::string& InputFilename)
 
   std::cout << "key: " << std::endl;
   ;
-  // more values can be found in <VTK_DIR>/Common/vtkSetGet.h
+  // More values can be found in <VTK_DIR>/Common/Core/vtkSetGet.h
   std::cout << VTK_UNSIGNED_CHAR << " unsigned char" << std::endl;
   std::cout << VTK_UNSIGNED_INT << " unsigned int" << std::endl;
   std::cout << VTK_FLOAT << " float" << std::endl;
@@ -46,7 +46,7 @@ void FindAllData(const std::string& InputFilename)
   std::vector<std::string> arrayNames;
   for (unsigned int i = 0; i < numberOfArrays; i++)
   {
-    // the following two lines are equivalent
+    // The following two lines are equivalent:
     // arrayNames.push_back(polydata->GetPointData()->GetArray(i)->GetName());
     arrayNames.push_back(polydata->GetPointData()->GetArrayName(i));
     int dataTypeID = polydata->GetPointData()->GetArray(i)->GetDataType();

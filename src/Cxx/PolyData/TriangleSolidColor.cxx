@@ -11,9 +11,8 @@
 #include <vtkRenderer.h>
 #include <vtkTriangle.h>
 #include <vtkUnsignedCharArray.h>
-#include <vtkXMLPolyDataWriter.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -22,7 +21,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> nc;
 
-  // Setup points
+  // Setup points.
   vtkNew<vtkPoints> points;
   // vtkNew<vtkCellArray> vertices;
   points->InsertNextPoint(0.0, 0.0, 0.0);

@@ -1,6 +1,6 @@
 #include <vtkNew.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
+#include <vtkSmartPointer.h>
 
 namespace {
 void OutputPoints(vtkSmartPointer<vtkPoints> points);
@@ -9,7 +9,7 @@ void ReallyDeletePoint(vtkSmartPointer<vtkPoints> points, vtkIdType id);
 
 int main(int, char*[])
 {
-  // Create a set of points
+  // Create a set of points.
   vtkNew<vtkPoints> points;
   points->InsertNextPoint(1.0, 0.0, 0.0);
   points->InsertNextPoint(0.0, 1.0, 0.0);

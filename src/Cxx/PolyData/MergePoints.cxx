@@ -2,19 +2,21 @@
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
-  // Create a set of points
+  // Create a set of points.
   vtkNew<vtkPointSource> pointsSource;
   pointsSource->SetNumberOfPoints(100);
   pointsSource->Update();
 
   vtkPolyData* points = pointsSource->GetOutput();
 
-  // Get a point point in the set
+  // Get a point point in the set.
   double inSet[3];
   points->GetPoint(25, inSet);
 
@@ -23,7 +25,7 @@ int main(int, char*[])
 
   vtkIdType id;
 
-  // Insert all of the points
+  // Insert all of the points.
   vtkNew<vtkMergePoints> mergePoints;
   mergePoints->SetDataSet(points);
   mergePoints->SetDivisions(10, 10, 10);
@@ -34,7 +36,7 @@ int main(int, char*[])
     mergePoints->InsertUniquePoint(points->GetPoint(i), id);
   }
 
-  // Insert a few of the original points
+  // Insert a few of the original points.
   std::cout << "Insert some of the original points" << std::endl;
   int inserted;
   for (vtkIdType i = 0; i < points->GetNumberOfPoints(); i += 10)
@@ -52,7 +54,7 @@ int main(int, char*[])
   rng->SetSeed(8775070);
   // rng->SetSeed(0);
 
-  // These points are probably outside the original set of points
+  // These points are probably outside the original set of points.
   std::cout << "Insert some new points" << std::endl;
   double outsideSet[3];
   auto radius = pointsSource->GetRadius();
