@@ -23,10 +23,9 @@
 #include <vtkSphereSource.h>
 
 #include <algorithm> // For transform()
-#include <cctype>    // For to_lower
-#include <string>    // For find_last_of()
-
 #include <array>
+#include <cctype> // For to_lower
+#include <string> // For find_last_of()
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName);
@@ -57,6 +56,11 @@ int main(int argc, char* argv[])
     std::cout << "where: filename is the file cow.obj" << std::endl;
     std::cout << "       figure is 0, 1, 2, or 3, default 0" << std::endl;
     std::cout << "       actorColor: A color name, default Wheat." << std::endl;
+    std::cout << "Options 0, 1, 2 and 3 are provided to let you generate "
+                 "approximations to the following figures:\n Figure 3-31d, "
+                 "Figure 3-31a, Figure 3-33b and Figure 3-33c in Chapter 3 of "
+                 "the VTK Textbook."
+              << std::endl;
     return EXIT_FAILURE;
   }
 

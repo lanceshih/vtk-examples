@@ -18,4 +18,5 @@
 #include <vtkXMLPolyDataReader.h>
 #include <vtksys/SystemTools.hxx>
 
+// The command line parameters are: cow.obj 0
 #include "Rotations.cxx"
