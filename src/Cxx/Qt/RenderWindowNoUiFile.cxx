@@ -10,7 +10,6 @@
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
-#include <vtkSphereSource.h>
 #include <vtkVersion.h>
 
 #if VTK_VERSION_NUMBER >= 89000000000ULL

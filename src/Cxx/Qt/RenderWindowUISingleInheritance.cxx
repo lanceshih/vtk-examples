@@ -11,7 +11,6 @@
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
-#include <vtkSphereSource.h>
 #include <vtkVersion.h>
 
 #if VTK_VERSION_NUMBER >= 89000000000ULL
@@ -67,7 +66,7 @@ RenderWindowUISingleInheritance::RenderWindowUISingleInheritance(
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // VTK/Qt wedded
+  // VTK/Qt wedded.
 #if VTK890
   this->ui->qvtkWidget->renderWindow()->AddRenderer(renderer);
   this->ui->qvtkWidget->renderWindow()->SetWindowName(
@@ -77,7 +76,7 @@ RenderWindowUISingleInheritance::RenderWindowUISingleInheritance(
   this->ui->qvtkWidget->GetRenderWindow()->SetWindowName(
       "RenderWindowUISingleInheritance");
 #endif
-  // Set up action signals and slots
+  // Set up action signals and slots.
   connect(this->ui->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
 }
 

@@ -5,14 +5,11 @@
 #include <vtkCommand.h>
 #include <vtkConeSource.h>
 #include <vtkCubeSource.h>
-#include <vtkDataObjectToTable.h>
-#include <vtkElevationFilter.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkQtTableView.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
 #include <vtkVersion.h>
@@ -60,18 +57,18 @@ ShareCameraQt::ShareCameraQt(QWidget* parent)
   cubeActor->GetProperty()->SetColor(
       colors->GetColor4d("MediumSeaGreen").GetData());
 
-  // VTK Renderer
+  // VTK Renderer.
   vtkNew<vtkRenderer> leftRenderer;
   leftRenderer->AddActor(coneActor);
   leftRenderer->SetBackground(colors->GetColor3d("LightSteelBlue").GetData());
 
   vtkNew<vtkRenderer> rightRenderer;
 
-  // Add Actor to renderer
+  // Add Actor to renderer.
   rightRenderer->AddActor(cubeActor);
   rightRenderer->SetBackground(colors->GetColor3d("LightSteelBlue").GetData());
 
-  // VTK/Qt wedded
+  // VTK/Qt wedded.
 #if VTK890
   this->ui->qvtkWidgetLeft->renderWindow()->AddRenderer(leftRenderer);
   this->ui->qvtkWidgetRight->renderWindow()->AddRenderer(rightRenderer);
@@ -83,14 +80,14 @@ ShareCameraQt::ShareCameraQt(QWidget* parent)
   rightRenderer->ResetCamera();
   leftRenderer->ResetCamera();
 
-  // Here we share the camera
+  // Here we share the camera.
   rightRenderer->SetActiveCamera(leftRenderer->GetActiveCamera());
 
-  // Position the cube using the left renderer active camera
+  // Position the cube using the left renderer active camera.
   leftRenderer->GetActiveCamera()->Azimuth(60);
   leftRenderer->ResetCamera();
 
-  // Set up action signals and slots
+  // Set up action signals and slots.
   connect(this->ui->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
 
 #if VTK890
