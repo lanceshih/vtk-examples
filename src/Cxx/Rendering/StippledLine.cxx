@@ -2,7 +2,6 @@
 #include <vtkDoubleArray.h>
 #include <vtkImageData.h>
 #include <vtkLineSource.h>
-#include <vtkMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
@@ -13,6 +12,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTexture.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 void StippledLine(vtkActor* actor, int LineStipplePattern = 0xFFFF,
@@ -68,7 +70,7 @@ void StippledLine(vtkActor* actor, int lineStipplePattern,
   vtkNew<vtkImageData> image;
   vtkNew<vtkTexture> texture;
 
-  // Create texture
+  // Create texture.
   int dimension = 16 * lineStippleRepeat;
 
   image->SetDimensions(dimension, 1, 1);
@@ -109,7 +111,7 @@ void StippledLine(vtkActor* actor, int lineStipplePattern,
   vtkPolyData* polyData =
       dynamic_cast<vtkPolyData*>(actor->GetMapper()->GetInput());
 
-  // Create texture coordnates
+  // Create texture coordnates.
   tcoords->SetNumberOfComponents(1);
   tcoords->SetNumberOfTuples(polyData->GetNumberOfPoints());
   for (int i = 0; i < polyData->GetNumberOfPoints(); ++i)

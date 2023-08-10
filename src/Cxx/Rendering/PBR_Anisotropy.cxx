@@ -79,7 +79,8 @@ int main(int argc, char* argv[])
   // Define options
   std::string fileName;
   app.add_option("fileName", fileName,
-                 "The path to the JSON file containing the parameters.");
+                 "The path to the JSON file containing the parameters e.g. "
+                 "PBR_Parameters.");
   auto useEquirectangular{false};
   app.add_flag("-e, --use_equirectangular", useEquirectangular,
                "Use the equirectangular entry in the json file.");

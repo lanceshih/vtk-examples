@@ -5,7 +5,6 @@
 #include <vtkCleanPolyData.h>
 #include <vtkClipPolyData.h>
 #include <vtkCubeSource.h>
-#include <vtkEquirectangularToCubeMapTexture.h>
 #include <vtkFloatArray.h>
 #include <vtkHDRReader.h>
 #include <vtkImageFlip.h>
@@ -19,7 +18,6 @@
 #include <vtkOpaquePass.h>
 #include <vtkOpenGLRenderWindow.h>
 #include <vtkOpenGLRenderer.h>
-#include <vtkOpenGLTexture.h>
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkOverlayPass.h>
 #include <vtkPBRIrradianceTexture.h>
@@ -383,7 +381,8 @@ int main(int argc, char* argv[])
   // Define options
   std::string fileName;
   app.add_option("fileName", fileName,
-                 "The path to the JSON file containing the parameters.");
+                 "The path to the JSON file containing the parameters e.g. "
+                 "PBR_Skybox.json.");
   std::string surfaceName;
   app.add_option("-s, --surface", surfaceName,
                  "The name of the surface. Overrides the surface entry in the "
