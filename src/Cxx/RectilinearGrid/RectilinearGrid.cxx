@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDoubleArray.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
@@ -9,6 +8,9 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -48,7 +50,7 @@ int main(int, char*[])
               << p[2] << ")" << std::endl;
   }
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkDataSetMapper> mapper;
   mapper->SetInputData(grid);
 

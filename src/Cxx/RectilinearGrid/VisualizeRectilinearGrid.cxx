@@ -2,7 +2,6 @@
 #include <vtkCamera.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDoubleArray.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
@@ -16,7 +15,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a grid
+  // Create a grid.
   vtkNew<vtkRectilinearGrid> grid;
 
   grid->SetDimensions(2, 3, 2);
@@ -42,7 +41,7 @@ int main(int, char*[])
   shrinkFilter->SetInputData(grid);
   shrinkFilter->SetShrinkFactor(.8);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkDataSetMapper> mapper;
   mapper->SetInputConnection(shrinkFilter->GetOutputPort());
 

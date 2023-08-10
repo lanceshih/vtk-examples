@@ -5,9 +5,12 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkXMLUnstructuredGridWriter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
-  // Create a grid
+  // Create a grid.
   vtkNew<vtkRectilinearGrid> grid;
 
   grid->SetDimensions(5, 4, 3);
