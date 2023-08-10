@@ -16,7 +16,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSphereSource.h>
 
 namespace {
 void MakeGlyphs(vtkPolyData* src, double size, vtkGlyph3D* glyph);
