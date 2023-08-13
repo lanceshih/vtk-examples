@@ -2,7 +2,6 @@
 #include <vtkCamera.h>
 #include <vtkCellTypes.h>
 #include <vtkDataSetMapper.h>
-#include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlane.h>
@@ -14,6 +13,9 @@
 #include <vtkTransform.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridReader.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
