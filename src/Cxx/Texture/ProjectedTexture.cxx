@@ -4,7 +4,6 @@
 #include <vtkImageData.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlanes.h>
@@ -28,6 +27,9 @@
 
 #include <vtksys/SystemTools.hxx>
 
+#include <iostream>
+#include <string>
+
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
 }
@@ -36,11 +38,11 @@ int main(int argc, char* argv[])
 {
   if (argc < 3)
   {
-    std::cout << "Usage: " << argv[0] << " polydata texture" << std::endl;
+    std::cout << "Usage: " << argv[0] << " polydata texture e.g. fran_cut.vtk fran_cut.png" << std::endl;
     return EXIT_FAILURE;
   }
   vtkSmartPointer<vtkPolyData> polyData = ReadPolyData(argc > 1 ? argv[1] : "");
-  ;
+ 
 
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> textureFile;
@@ -84,7 +86,7 @@ int main(int argc, char* argv[])
                           camera->GetViewUp()[2]);
 
   projectedTexture->SetInputData(
-      polyData); // this can be the same as the one to project on
+      polyData); // This can be the same as the one to project on.
   projectedTexture->Update();
 
   // Map Texture on Surface
