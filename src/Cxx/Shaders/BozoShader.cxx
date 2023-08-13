@@ -3,7 +3,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenGLPolyDataMapper.h>
-#include <vtkPolyDataNormals.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -31,7 +30,9 @@
 #endif
 
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <string>
 
 namespace {
 // -----------------------------------------------------------------------
@@ -76,7 +77,7 @@ int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " PerlnNoise.glsl "
+    std::cout << "Usage: " << argv[0] << " Shaders/PerlinNoise.glsl "
               << "[polydataFile] "
               << "[k(5)]" << std::endl;
     return EXIT_FAILURE;
