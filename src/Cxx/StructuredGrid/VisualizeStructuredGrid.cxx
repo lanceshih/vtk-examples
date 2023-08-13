@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkGlyph3DMapper.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
@@ -14,7 +13,9 @@
 #include <vtkSphereSource.h>
 #include <vtkStructuredGrid.h>
 #include <vtkStructuredGridGeometryFilter.h>
-#include <vtkXMLStructuredGridWriter.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 /**
