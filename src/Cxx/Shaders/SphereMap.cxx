@@ -14,20 +14,16 @@
 
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkImageData.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkJPEGReader.h>
 #include <vtkLight.h>
-#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenGLPolyDataMapper.h>
-#include <vtkOpenGLRenderWindow.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkShaderProgram.h>
 #include <vtkSkybox.h>
 #include <vtkTexture.h>
 #include <vtkVersion.h>

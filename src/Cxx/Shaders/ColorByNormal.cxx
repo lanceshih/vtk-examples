@@ -3,7 +3,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenGLPolyDataMapper.h>
-#include <vtkPolyDataNormals.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -25,6 +24,9 @@
 #define USE_SHADER_PROPERTIES 1
 #include <vtkShaderProperty.h>
 #endif
+
+#include <sstream>
+#include <string>
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);

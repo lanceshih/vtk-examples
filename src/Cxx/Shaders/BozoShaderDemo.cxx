@@ -4,7 +4,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenGLPolyDataMapper.h>
-#include <vtkPolyDataNormals.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -34,7 +33,9 @@
 #endif
 
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <string>
 
 namespace {
 // -----------------------------------------------------------------------

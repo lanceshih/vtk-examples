@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkDataSetMapper.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
@@ -13,6 +12,7 @@
 #include <vtkUnstructuredGrid.h>
 
 #include <iostream>
+#include <string>
 
 int main(int, char*[])
 {

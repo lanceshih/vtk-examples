@@ -35,7 +35,9 @@
 
 #include <chrono>
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <string>
 #include <thread>
 
 #define DELAY 200
