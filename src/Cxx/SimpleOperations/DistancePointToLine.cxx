@@ -1,6 +1,9 @@
 #include <vtkLine.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
+// #include <vtkPoints.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
