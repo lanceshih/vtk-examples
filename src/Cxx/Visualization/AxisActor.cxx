@@ -8,10 +8,12 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkStringArray.h>
 #include <vtkTextProperty.h>
+
+#include <iostream>
+#include <string>
 
 //----------------------------------------------------------------------------
 int main(int, char*[])
@@ -32,7 +34,7 @@ int main(int, char*[])
   std::cout << "Center: " << center[0] << ", " << center[1] << ", " << center[2]
             << std::endl;
 
-  // Create the axis actor
+  // Create the axis actor.
   vtkNew<vtkAxisActor> axis;
   axis->SetPoint1(-1.1, 0.0, 0.0);
   axis->SetPoint2(1.1, 0.0, 0.0);
@@ -68,7 +70,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetDiffuseColor(colors->GetColor4d("Tomato").GetData());
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -87,7 +89,7 @@ int main(int, char*[])
   renderer->ResetCamera();
   renderer->ResetCameraClippingRange();
 
-  // render the image
+  // Render the image.
   renderWindow->Render();
 
   interactor->Initialize();

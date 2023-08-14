@@ -1,11 +1,9 @@
-#include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCoordinate.h>
 #include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -27,7 +25,7 @@
 
 namespace {
 // Given a color, find a contrasting color. If the given color is "light",
-// use the lightColor otherwise use the darkColor
+// use the lightColor otherwise use the darkColor.
 void ChooseContrastingColor(double* rgbIn, double* rgbOut,
                             double threshold = .5,
                             const std::string& lightColor = "white",
@@ -66,7 +64,7 @@ int main(int argc, char* argv[])
   // Visualize
   vtkNew<vtkNamedColors> colors;
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   std::vector<vtkSmartPointer<vtkRenderer>> renderers;
   unsigned int xGridDimensions = 10;
@@ -139,7 +137,7 @@ namespace {
 // draw the borders of a renderer's viewport
 void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
 {
-  // points start at upper right and proceed anti-clockwise
+  // Points start at upper right and proceed anti-clockwise
   vtkNew<vtkPoints> points;
   points->SetNumberOfPoints(4);
   points->InsertPoint(0, 1, 1, 0);
@@ -153,10 +151,10 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
 
   vtkNew<vtkPolyLine> lines;
 
-  // only draw last line if this is the last viewport
-  // this prevents double vertical lines at right border
-  // if different colors are used for each border, then do
-  // not specify last
+  // Only draw the last line if this is the last viewport.
+  // This prevents double vertical lines at the right border.
+  // If different colors are used for each border, then do
+  // not specify last.
   if (last)
   {
     lines->GetPointIds()->SetNumberOfIds(5);
@@ -175,14 +173,14 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
   }
   cells->InsertNextCell(lines);
 
-  // now make tge polydata and display it
+  // Now make the polydata and display it.
   vtkNew<vtkPolyData> poly;
   poly->Initialize();
   poly->SetPoints(points);
   poly->SetLines(cells);
 
-  // use normalized viewport coordinates since
-  // they are independent of window size
+  // Use normalized viewport coordinates since
+  // they are independent of window size.
   vtkNew<vtkCoordinate> coordinate;
   coordinate->SetCoordinateSystemToNormalizedViewport();
 
@@ -193,7 +191,7 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
   vtkNew<vtkActor2D> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(color);
-  // line width should be at least 2 to be visible at extremes
+  // line width should be at least 2 to be visible at extremes.
 
   actor->GetProperty()->SetLineWidth(4.0); // Line Width
 
@@ -207,7 +205,8 @@ void ChooseContrastingColor(double* rgbIn, double* rgbOut, double threshold,
   vtkNew<vtkNamedColors> colors;
 
   double hsv[3];
-  // If the value is <= .5, use a light color, otherwise use a dark color
+  // If the value is <= threshold, use a light color, otherwise use a dark
+  // color.
   vtkMath::RGBToHSV(rgbIn, hsv);
   if (hsv[2] <= threshold)
   {

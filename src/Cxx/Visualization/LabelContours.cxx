@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
   randomSequence->SetSeed(1);
 
   // If a file is present, read it, otherwise generate some random
-  // scalars on a plane
+  // scalars on a plane.
   if (argc > 1)
   {
     vtkNew<vtkXMLPolyDataReader> reader;
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     pointThreshold = 0;
   }
 
-  // Connect the segments of the contours into polylines
+  // Connect the segments of the contours into polylines.
   vtkNew<vtkStripper> contourStripper;
   contourStripper->SetInputConnection(contours->GetOutputPort());
   contourStripper->Update();
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
       contourStripper->GetOutput()->GetPointData()->GetScalars();
 
   // Create a polydata that contains point locations for the contour
-  // line labels
+  // line labels.
   vtkNew<vtkPolyData> labelPolyData;
   vtkNew<vtkPoints> labelPoints;
   vtkNew<vtkDoubleArray> labelScalars;
@@ -131,8 +131,8 @@ int main(int argc, char* argv[])
     }
     std::cout << "Line " << cellIter->GetCurrentCellId() << ": " << std::endl;
 
-    // Compute the point id to hold the label
-    // Mid point or a random point
+    // Compute the point id to hold the label.
+    // Mid point or a random point.
     // const vtkIdType samplePtIdx = cell->GetNumberOfIds() / 2;
     const vtkIdType samplePtIdx = static_cast<vtkIdType>(
         randomSequence->GetRangeValue(0, cell->GetNumberOfIds()));
@@ -166,8 +166,8 @@ int main(int argc, char* argv[])
     }
     std::cout << "Line " << lineCount << ": " << std::endl;
 
-    // Compute the point id to hold the label
-    // Mid point or a random point
+    // Compute the point id to hold the label.
+    // Mid point or a random point.
     // auto midPointId = indices[numberOfPoints / 2];
     // auto midPointId =
     //    indices[static_cast<vtkIdType>(vtkMath::Random(0, numberOfPoints))];
@@ -213,7 +213,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> surface;
   surface->SetMapper(surfaceMapper);
 
-  // The labeled data mapper will place labels at the points
+  // The labeled data mapper will place labels at the points.
   vtkNew<vtkLabeledDataMapper> labelMapper;
   labelMapper->SetFieldDataName("Isovalues");
   labelMapper->SetInputData(labelPolyData);
@@ -225,7 +225,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor2D> isolabels;
   isolabels->SetMapper(labelMapper);
 
-  // Create a renderer and render window
+  // Create a renderer and render window.
   vtkNew<vtkRenderer> renderer;
 
   vtkNew<vtkRenderWindow> renderWindow;
@@ -243,7 +243,7 @@ int main(int argc, char* argv[])
   renderer->AddActor(isolabels);
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
 
-  // Render the scene (lights and cameras are created automatically)
+  // Render the scene (lights and cameras are created automatically).
   renderWindow->Render();
   renderWindowInteractor->Start();
 

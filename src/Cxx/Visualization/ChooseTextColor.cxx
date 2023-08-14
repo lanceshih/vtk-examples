@@ -5,15 +5,16 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTextActor.h>
-#include <vtkTextProperty.h>
+ #include <vtkTextProperty.h>
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vtksys/SystemTools.hxx>
 
 namespace {
-// Given a color, find a contrasting color. If the goven color is "light",
-// use the lightColor otherwise use the darkColor
+// Given a color, find a contrasting color. If the given color is "light",
+// use the lightColor otherwise use the darkColor.
 void ChooseContrastingColor(double* rgbIn, double* rgbOut,
                             const double threshold = .5,
                             const std::string& lightColor = "white",
@@ -26,6 +27,7 @@ int main(int argc, char* argv[])
   {
     std::cerr << "Usage: " << argv[0]
               << " font.ttf [backColor] [lightColor] [darkColor]" << std::endl;
+    std::cerr << "E.g. Canterbury.ttf Pink MintCream SaddleBrown" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -75,7 +77,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d(backColor.c_str()).GetData());
 
-  // Compute a good color for text on the renderer background
+  // Compute a good color for text on the renderer background.
   double rgb[3];
   ChooseContrastingColor(renderer->GetBackground(), rgb, threshold, lightColor,
                          darkColor);
@@ -109,7 +111,8 @@ void ChooseContrastingColor(double* rgbIn, double* rgbOut,
   vtkNew<vtkNamedColors> colors;
 
   double hsv[3];
-  // If the value is <= threshold, use a light color, otherwise use a dark color
+  // If the value is <= threshold, use a light color, otherwise use a dark
+  // color.
   vtkMath::RGBToHSV(rgbIn, hsv);
   if (hsv[2] <= threshold)
   {

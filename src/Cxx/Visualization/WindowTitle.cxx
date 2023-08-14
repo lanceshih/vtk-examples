@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,13 +12,13 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(0.0, 0.0, 0.0);
   sphereSource->SetRadius(5.0);
   sphereSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
   vtkNew<vtkActor> actor;
@@ -29,7 +28,7 @@ int main(int, char*[])
   // Visualize
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
-  renderWindow->SetWindowName("WindowTitle"); // Set the title
+  renderWindow->SetWindowName("WindowTitle"); // Set the title.
 
   renderWindow->AddRenderer(renderer);
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;

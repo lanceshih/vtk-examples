@@ -2,7 +2,6 @@
 #include <vtkLODProp3D.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -20,7 +19,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // High res sphere
+  // High res sphere.
   vtkNew<vtkSphereSource> highResSphereSource;
   int res = 100;
   highResSphereSource->SetThetaResolution(res);
@@ -30,7 +29,7 @@ int main(int, char*[])
   vtkNew<vtkPolyDataMapper> highResMapper;
   highResMapper->SetInputConnection(highResSphereSource->GetOutputPort());
 
-  // Low res sphere
+  // Low res sphere.
   vtkNew<vtkSphereSource> lowResSphereSource;
 
   vtkNew<vtkPolyDataMapper> lowResMapper;
@@ -51,7 +50,7 @@ int main(int, char*[])
 
   std::cout << "There are " << prop->GetNumberOfLODs() << " LODs" << std::endl;
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -64,7 +63,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(prop);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
@@ -76,7 +75,7 @@ int main(int, char*[])
 
   renderWindow->Render();
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

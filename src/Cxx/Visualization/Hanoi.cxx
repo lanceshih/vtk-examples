@@ -17,7 +17,6 @@ Usage:
 #include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
 #include <vtkCylinderSource.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>

@@ -3,6 +3,7 @@
 #include <vtkAxesActor.h>
 #include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
+#include <vtkCallbackCommand.h>
 #include <vtkCameraOrientationWidget.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -174,7 +175,7 @@ MakeAnnotatedCubeActor(std::array<std::string, 6> const& cubeLabels,
 vtkNew<vtkPropAssembly> MakeCubeActor(std::string const& labelSelector,
                                       vtkNamedColors* colors);
 
-class SliderCallbackOpacity : public vtkCommand
+class SliderCallbackOpacity : public vtkCallbackCommand
 {
 public:
   static SliderCallbackOpacity* New()

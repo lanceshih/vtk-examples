@@ -2,14 +2,12 @@
 This example demonstrates the usage of the vtNamedColor class.
 */
 #include <vtkActor.h>
-#include <vtkAlgorithm.h>
 #include <vtkBandedPolyDataContourFilter.h>
 #include <vtkConeSource.h>
 #include <vtkElevationFilter.h>
 #include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>

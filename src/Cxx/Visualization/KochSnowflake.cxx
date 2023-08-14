@@ -1,5 +1,4 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkCellData.h>
 #include <vtkIntArray.h>
 #include <vtkLookupTable.h>
@@ -24,14 +23,14 @@ constexpr int LEVEL = 6;
 /*----------------------------------------------------------------------------*
  *                       Koch Snowflake as vtkPolyLine                        *
  *----------------------------------------------------------------------------*/
-vtkSmartPointer<vtkPolyData> as_polyline(vtkSmartPointer<vtkPoints> points,
-                                         int level);
+vtkSmartPointer<vtkPolyData> AsPolyLine(vtkSmartPointer<vtkPoints> points,
+                                        int level);
 
 /*----------------------------------------------------------------------------*
  *                Koch Snowflake as collection of vtkTriangles                *
  *----------------------------------------------------------------------------*/
-void as_triangles(int start, int end, vtkCellArray* cells, int level,
-                  vtkIntArray* data);
+void AsTriangles(int start, int end, vtkCellArray* cells, int level,
+                 vtkIntArray* data);
 
 } // namespace
 
@@ -52,7 +51,7 @@ int main(int, char*[])
                             sin(2 * vtkMath::Pi() * i / 3.), 0.);
   }
 
-  auto outline_pd = as_polyline(points, LEVEL);
+  auto outline_pd = AsPolyLine(points, LEVEL);
   // You have already gone through the trouble of putting the points in the
   // right places - so "all" you need to do now is to create polygons from the
   // points that are in the vtkPoints.
@@ -79,9 +78,9 @@ int main(int, char*[])
   triangles->InsertNextCell(t);
   data->InsertNextValue(0);
 
-  as_triangles(0, stride, triangles, 1, data);
-  as_triangles(stride, 2 * stride, triangles, 1, data);
-  as_triangles(2 * stride, 3 * stride, triangles, 1, data);
+  AsTriangles(0, stride, triangles, 1, data);
+  AsTriangles(stride, 2 * stride, triangles, 1, data);
+  AsTriangles(2 * stride, 3 * stride, triangles, 1, data);
 
   vtkNew<vtkPolyData> triangle_pd;
   triangle_pd->SetPoints(outline_pd->GetPoints());
@@ -141,8 +140,8 @@ int main(int, char*[])
 
 namespace {
 
-vtkSmartPointer<vtkPolyData> as_polyline(vtkSmartPointer<vtkPoints> points,
-                                         int level)
+vtkSmartPointer<vtkPolyData> AsPolyLine(vtkSmartPointer<vtkPoints> points,
+                                        int level)
 {
   // Use the points from the previous iteration to create the points of the
   // next level. There is an assumption on my part that the curve is traversed
@@ -204,7 +203,7 @@ vtkSmartPointer<vtkPolyData> as_polyline(vtkSmartPointer<vtkPoints> points,
   }
   lines->InsertNextCell(pl);
 
-  // complete the polydata
+  // Complete the polydata.
   vtkNew<vtkPolyData> polydata;
   polydata->SetLines(lines);
   polydata->SetPoints(points);
@@ -212,8 +211,8 @@ vtkSmartPointer<vtkPolyData> as_polyline(vtkSmartPointer<vtkPoints> points,
   return polydata;
 }
 
-void as_triangles(int start, int end, vtkCellArray* cells, int level,
-                  vtkIntArray* data)
+void AsTriangles(int start, int end, vtkCellArray* cells, int level,
+                 vtkIntArray* data)
 {
   if (end - start >= 3)
   {
@@ -227,12 +226,10 @@ void as_triangles(int start, int end, vtkCellArray* cells, int level,
     cells->InsertNextCell(triangle);
     data->InsertNextValue(level);
 
-    as_triangles(start, start + stride, cells, level + 1, data);
-    as_triangles(start + stride, start + 2 * stride, cells, level + 1, data);
-    as_triangles(start + 2 * stride, start + 3 * stride, cells, level + 1,
-                 data);
-    as_triangles(start + 3 * stride, start + 4 * stride, cells, level + 1,
-                 data);
+    AsTriangles(start, start + stride, cells, level + 1, data);
+    AsTriangles(start + stride, start + 2 * stride, cells, level + 1, data);
+    AsTriangles(start + 2 * stride, start + 3 * stride, cells, level + 1, data);
+    AsTriangles(start + 3 * stride, start + 4 * stride, cells, level + 1, data);
   }
 }
 

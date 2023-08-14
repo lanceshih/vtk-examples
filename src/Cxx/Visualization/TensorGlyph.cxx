@@ -1,12 +1,9 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkCubeSource.h>
 #include <vtkDoubleArray.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPointSource.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
@@ -15,13 +12,12 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTensorGlyph.h>
-#include <vtkVertexGlyphFilter.h>
 
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Setup points
+  // Setup points.
   vtkNew<vtkPoints> points;
   points->InsertNextPoint(0.0, 0.0, 0.0);
   points->InsertNextPoint(5.0, 0.0, 0.0);

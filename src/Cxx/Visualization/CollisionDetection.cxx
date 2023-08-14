@@ -14,9 +14,7 @@
 #include <vtkTextProperty.h>
 #include <vtkTransform.h>
 
-#include <chrono>
 #include <sstream>
-#include <string>
 #include <thread>
 
 int main(int argc, char* argv[])
@@ -137,7 +135,7 @@ int main(int argc, char* argv[])
     {
       break;
     }
-    // The total animation time is 3 seconds
+    // The total animation time is 3 seconds.
     std::this_thread::sleep_for(std::chrono::milliseconds(3000 / numSteps));
   }
   renderer->ResetCamera();

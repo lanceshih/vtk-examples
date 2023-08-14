@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCubeSource.h>
 #include <vtkFloatArray.h>
 #include <vtkGlyph3DMapper.h>
@@ -57,7 +56,7 @@ int main(int, char*[])
   vtkNew<vtkActor> actor;
   actor->SetMapper(glyph3Dmapper);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -66,15 +65,15 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(namedColors->GetColor3d("SlateGray").GetData());
 
-  // Position the camera
+  // Position the camera.
   renderer->GetActiveCamera()->SetPosition(-10, 5, 0);
   renderer->GetActiveCamera()->SetFocalPoint(1, 1, 1);
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

@@ -20,10 +20,10 @@ namespace {
 /**
  * Convert points to glyphs.
  *
- * @param points - The points to glyph
- * @param scale - The scale, used to determine the size of the glyph
+ * @param points - The points to glyph.
+ * @param scale - The scale, used to determine the size of the glyph.
  * representing the point, expressed as a fraction of the largest side of the
- * bounding box surrounding the points. e.g. 0.05
+ * bounding box surrounding the points. e.g. 0.05.
  *
  * @return The actor.
  */
@@ -39,7 +39,7 @@ int main(int, char*[])
   pointSource->SetNumberOfPoints(10);
   pointSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> pointMapper;
   pointMapper->SetInputConnection(pointSource->GetOutputPort());
 
@@ -48,7 +48,7 @@ int main(int, char*[])
   pointActor->GetProperty()->SetPointSize(1);
   pointActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // Map the points to spheres
+  // Map the points to spheres.
   auto sphereActor = PointToGlyph(pointSource->GetOutput()->GetPoints(), 0.02);
   sphereActor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
@@ -60,7 +60,7 @@ int main(int, char*[])
   vtkNew<vtkActor2D> labelActor;
   labelActor->SetMapper(labelMapper);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -69,7 +69,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   // renderer->AddActor(pointActor);
   renderer->AddActor(sphereActor);
   renderer->AddActor(labelActor);

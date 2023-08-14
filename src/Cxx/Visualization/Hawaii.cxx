@@ -25,13 +25,13 @@ yellow-white (mountain top).
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkPolyDataReader.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
 #include <array>
+#include <iostream>
 #include <string>
 
 namespace {

@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkImageViewer.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPNGWriter.h>
@@ -11,6 +10,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -50,7 +52,7 @@ int main(int argc, char* argv[])
 
   renderer->AddActor(actor);
 
-  // Let the renderer compute good position and focal point
+  // Let the renderer compute good position and focal point.
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);
   renderer->ResetCamera();
@@ -61,9 +63,12 @@ int main(int argc, char* argv[])
   renderWindow->SetSize(640, 480);
   renderWindow->Render();
 
-  std::cout << "Interact with image to get desired view and then press 'e'"
-            << std::endl;
+  std::cout
+      << "Interact with image to get desired view and then press 'e' or 'q'"
+      << std::endl;
+
   interactor->Start();
+
   std::cout << "Generating large image size: "
             << renderWindow->GetSize()[0] * magnification << " by "
             << renderWindow->GetSize()[1] * magnification << std::endl;

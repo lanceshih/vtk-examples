@@ -20,20 +20,19 @@
 #include <vtksys/RegularExpression.hxx>
 #include <vtksys/SystemTools.hxx>
 
-Cnamespace {
+#include <fstream>
+#include <iostream>
+#include <string>
+
+namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
-}
-#include <vtkActor.h>
-#include <vtkCamera.h>
-namespace {
+
 void SaveSceneToFile(std::string fileName, vtkActor* actor, vtkCamera* camera);
-}
-#include <vtkActor.h>
-#include <vtkCamera.h>
-namespace {
+
 void RestoreSceneFromFile(std::string fileName, vtkActor* actor,
                           vtkCamera* camera);
-}
+} // namespace
+
 int main(int argc, char* argv[])
 {
   auto polyData = ReadPolyData(argc > 1 ? argv[1] : "");
@@ -60,6 +59,10 @@ int main(int argc, char* argv[])
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Silver").GetData());
 
+  std::cout
+      << "Interact with image to get desired view and then press 'e' or 'q'"
+      << std::endl;
+
   // Interact to change camera
   renderWindow->Render();
   renderWindowInteractor->Start();
@@ -69,7 +72,7 @@ int main(int argc, char* argv[])
   renderWindow->Render();
   renderWindowInteractor->Start();
 
-  // After interaction , restore the scene
+  // After interaction, restore the scene
   RestoreSceneFromFile(argv[2], actor, renderer->GetActiveCamera());
   renderWindow->Render();
   renderWindowInteractor->Start();
@@ -78,7 +81,7 @@ int main(int argc, char* argv[])
 }
 
 namespace {
-#include <fstream>
+
 void SaveSceneToFile(std::string fileName, vtkActor* /* actor */,
                      vtkCamera* camera)
 {
@@ -106,9 +109,7 @@ void SaveSceneToFile(std::string fileName, vtkActor* /* actor */,
            << std::endl;
   saveFile.close();
 }
-} // namespace
-namespace {
-#include <fstream>
+
 void RestoreSceneFromFile(std::string fileName, vtkActor* /* actor */,
                           vtkCamera* camera)
 {
@@ -181,8 +182,7 @@ void RestoreSceneFromFile(std::string fileName, vtkActor* /* actor */,
   }
   saveFile.close();
 }
-} // namespace
-namespace {
+
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName)
 {
   vtkSmartPointer<vtkPolyData> polyData;

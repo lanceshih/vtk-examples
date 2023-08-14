@@ -21,6 +21,7 @@
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
 
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -57,6 +58,10 @@ int main(int argc, char* argv[])
 
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Silver").GetData());
+
+  std::cout
+      << "Interact with image to get desired view and then press 'e' or 'q'"
+      << std::endl;
 
   // Interact to change camera.
   renderWindow->Render();

@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCubeSource.h>
 #include <vtkGlyph3D.h>
 #include <vtkNamedColors.h>
@@ -15,7 +14,7 @@
 #include <vtkRenderer.h>
 #include <vtkUnsignedCharArray.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif

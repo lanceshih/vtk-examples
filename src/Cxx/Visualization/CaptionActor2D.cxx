@@ -1,34 +1,22 @@
 #include <vtkAbstractPicker.h>
-#include <vtkActor.h>
 #include <vtkActor2D.h>
 #include <vtkCaptionActor2D.h>
-#include <vtkCoordinate.h>
-#include <vtkFollower.h>
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
 #include <vtkImageMapper3D.h>
 #include <vtkInteractorStyleImage.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkPolyDataMapper2D.h>
 #include <vtkProperty.h>
-#include <vtkProperty2D.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkRendererCollection.h>
-#include <vtkSphereSource.h>
-#include <vtkTextActor.h>
 #include <vtkTextProperty.h>
-#include <vtkTransform.h>
-#include <vtkTransformPolyDataFilter.h>
-#include <vtkVectorText.h>
 
+#include <iostream>
 #include <sstream>
+#include <string>
 
 namespace {
 class MyStyle : public vtkInteractorStyleImage
@@ -104,14 +92,14 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a blank, black image
+  // Create a blank, black image.
   vtkNew<vtkImageCanvasSource2D> drawing;
   drawing->SetScalarTypeToUnsignedChar();
   drawing->SetNumberOfScalarComponents(3);
   drawing->SetExtent(0, 20, 0, 50, 0, 0);
   drawing->FillBox(0, 20, 0, 50);
 
-  // Draw a red circle of radius 5 centered at (9,10)
+  // Draw a red circle of radius 5 centered at (9,10).
   drawing->SetDrawColor(255, 0, 0, 0);
   drawing->DrawCircle(9, 10, 5);
   drawing->Update();

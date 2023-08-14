@@ -7,7 +7,6 @@
 #include <vtkNew.h>
 #include <vtkOBJReader.h>
 #include <vtkPLYReader.h>
-#include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPolyDataReader.h>
 #include <vtkProbeFilter.h>
@@ -23,13 +22,16 @@
 
 #include <vtksys/SystemTools.hxx>
 
+#include <iostream>
+#include <string>
+
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
 }
 
 int main(int argc, char* argv[])
 {
-  // Parse input arguments
+  // Parse input arguments.
   if (argc < 3)
   {
     std::cout

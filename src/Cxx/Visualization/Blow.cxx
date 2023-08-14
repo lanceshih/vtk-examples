@@ -29,7 +29,8 @@ int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " filename [data_point]" << std::endl;
+    std::cout << "Usage: " << argv[0] << " filename [data_point] e.g. blow.vtk"
+              << std::endl;
     std::cout << "where: filename is blow.vtk." << std::endl;
     std::cout << "       data_point allows you to specify which frame is to be "
                  "displayed."

@@ -1,26 +1,23 @@
 #include <vtkActor.h>
-#include <vtkAssembly.h>
-#include <vtkAxesActor.h>
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkOrientationMarkerWidget.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkPropAssembly.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
-#include <vtkTransform.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
@@ -31,7 +28,7 @@ int main(int, char*[])
   sphereActor->GetProperty()->SetColor(
       colors->GetColor3d("MistyRose").GetData());
 
-  // Create a cube
+  // Create a cube.
   vtkNew<vtkCubeSource> cubeSource;
   cubeSource->SetCenter(5.0, 0.0, 0.0);
   cubeSource->Update();
@@ -42,7 +39,7 @@ int main(int, char*[])
   cubeActor->SetMapper(cubeMapper);
   cubeActor->GetProperty()->SetColor(colors->GetColor3d("Thistle").GetData());
 
-  // Visualization
+  // Visualization.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

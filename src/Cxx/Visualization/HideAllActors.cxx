@@ -1,9 +1,7 @@
 #include <vtkActor.h>
-#include <vtkInteractorStyleTrackball.h>
-#include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkInteractorStyleSwitch.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -34,16 +32,16 @@ int main(int, char*[])
   sphereSource2->SetRadius(3.0);
   sphereSource2->Update();
 
-  // Create a mapper
+  // Create a mapper.
   vtkNew<vtkPolyDataMapper> mapper2;
   mapper2->SetInputConnection(sphereSource2->GetOutputPort());
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkActor> actor2;
   actor2->SetMapper(mapper2);
   actor2->GetProperty()->SetColor(colors->GetColor3d("Honeydew").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -53,20 +51,20 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor1);
   renderer->AddActor(actor2);
   renderer->SetBackground(colors->GetColor3d("LightSlateGray").GetData());
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindow->Render();
 
-  vtkNew<vtkInteractorStyleTrackballCamera> style;
+  vtkNew<vtkInteractorStyleSwitch> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Begin mouse interaction
-  renderWindowInteractor->Start();
+  // Begin mouse interaction.
+  // renderWindowInteractor->Start();
 
   renderer->RemoveAllViewProps();
 

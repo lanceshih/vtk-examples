@@ -8,9 +8,11 @@
 #include <vtkTextMapper.h>
 #include <vtkTextProperty.h>
 
+#include <vtksys/SystemTools.hxx>
+
+#include <iostream>
 #include <sstream>
 #include <string>
-#include <vtksys/SystemTools.hxx>
 
 int main(int argc, char* argv[])
 {

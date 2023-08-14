@@ -25,10 +25,10 @@ namespace {
 /**
  * Convert points to glyphs.
  *
- * @param points - The points to glyph
- * @param scale - The scale, used to determine the size of the glyph
+ * @param points - The points to glyph.
+ * @param scale - The scale, used to determine the size of the glyph.
  * representing the point, expressed as a fraction of the largest side of the
- * bounding box surrounding the points. e.g. 0.05
+ * bounding box surrounding the points. e.g. 0.05.
  *
  * @return The actor.
  */

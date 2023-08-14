@@ -50,7 +50,7 @@ MakeAxesActor(std::array<double, 3>& scale,
 int main(int, char*[])
 {
   // Basic stuff setup
-  // Set up the renderer, window, and interactor
+  // Set up the renderer, window, and interactor.
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkRenderer> ren;
@@ -159,7 +159,7 @@ int main(int, char*[])
 namespace {
 vtkSmartPointer<vtkPropAssembly> MakeAnnotatedCubeActor(vtkNamedColors* colors)
 {
-  // Annotated Cube setup
+  // Annotated Cube setup.
   vtkNew<vtkAnnotatedCubeActor> annotated_cube;
   annotated_cube->SetFaceTextScale(0.366667);
 
@@ -171,7 +171,7 @@ vtkSmartPointer<vtkPropAssembly> MakeAnnotatedCubeActor(vtkNamedColors* colors)
   annotated_cube->SetZPlusFaceText("Z+");
   annotated_cube->SetZMinusFaceText("Z-");
 
-  // Change the vector text colors
+  // Change the vector text colors.
   annotated_cube->GetTextEdgesProperty()->SetColor(
       colors->GetColor3d("Black").GetData());
   annotated_cube->GetTextEdgesProperty()->SetLineWidth(1);
@@ -191,10 +191,10 @@ vtkSmartPointer<vtkPropAssembly> MakeAnnotatedCubeActor(vtkNamedColors* colors)
   annotated_cube->SetXFaceTextRotation(90);
   annotated_cube->SetYFaceTextRotation(180);
   annotated_cube->SetZFaceTextRotation(-90);
-  // Make the annotated cube transparent
+  // Make the annotated cube transparent.
   annotated_cube->GetCubeProperty()->SetOpacity(0);
 
-  // Colored faces cube setup
+  // Colored faces cube setup.
   vtkNew<vtkCubeSource> cube_source;
   cube_source->Update();
 
