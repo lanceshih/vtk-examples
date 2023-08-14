@@ -1,4 +1,8 @@
 #include <vtkVersion.h>
+
+#include <iostream>
+#include <string>
+
 #if VTK_MAJOR_VERSION >= 6
 int main(int, char* argv[])
 {
@@ -11,7 +15,6 @@ int main(int, char* argv[])
 #include <vtkGraphicsFactory.h>
 #include <vtkImagingFactory.h>
 #include <vtkPNGWriter.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>

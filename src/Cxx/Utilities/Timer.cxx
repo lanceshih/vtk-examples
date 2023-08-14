@@ -3,9 +3,12 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkRendererCollection.h>
+#include <vtkCallbackCommand.h>
 
-class vtkTimerCallback : public vtkCommand
+#include <iostream>
+#include <string>
+
+class vtkTimerCallback : public vtkCallbackCommand
 {
 public:
   vtkTimerCallback() = default;
@@ -45,7 +48,7 @@ public:
 
 int main(int, char*[])
 {
-  // Setup renderer, render window, and interactor
+  // Setup renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -58,7 +61,7 @@ int main(int, char*[])
   renderWindow->Render();
   interactor->Initialize();
 
-  // Sign up to receive TimerEvent
+  // Sign up to receive TimerEvent.
   vtkNew<vtkTimerCallback> cb;
   interactor->AddObserver(vtkCommand::TimerEvent, cb);
 
@@ -69,7 +72,7 @@ int main(int, char*[])
   cb->timerId = timerId;
 
   // Note: nothing is displayed in the render window.
-  // Start the interaction and timer
+  // Start the interaction and timer.
   interactor->Start();
 
   return EXIT_SUCCESS;

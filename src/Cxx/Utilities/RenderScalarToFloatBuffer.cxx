@@ -1,4 +1,4 @@
-// Renders a scalar from a polydata into a float buffer
+// Renders a scalar from a polydata into a float buffer.
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCameraPass.h>
@@ -22,6 +22,9 @@
 #include <vtkVersion.h>
 #include <vtkWindowToImageFilter.h>
 #include <vtkXMLImageDataWriter.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {

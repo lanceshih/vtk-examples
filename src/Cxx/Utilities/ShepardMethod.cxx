@@ -21,6 +21,9 @@
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
@@ -41,7 +44,7 @@ int main(int, char*[])
   vertexColors->InsertNextTupleValue(white);
 
   // Create a scalar array for the pointdata, each value represents the distance
-  // of the vertices from the first vertex
+  // of the vertices from the first vertex.
   vtkNew<vtkFloatArray> values;
   values->SetNumberOfComponents(1);
   values->SetName("Values");
@@ -62,7 +65,7 @@ int main(int, char*[])
   vertexGlyphFilter->AddInputData(polydataToVisualize);
   vertexGlyphFilter->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> vertsMapper;
   // vertsMapper->ScalarVisibilityOff();
   vertsMapper->SetInputConnection(vertexGlyphFilter->GetOutputPort());
@@ -73,16 +76,16 @@ int main(int, char*[])
   vertsActor->GetProperty()->SetPointSize(3);
 
   // Create a shepard filter to interpolate the vertices over a regularized
-  // image grid
+  // image grid.
   vtkNew<vtkShepardMethod> shepard;
   shepard->SetInputData(polydataToProcess);
   shepard->SetSampleDimensions(2, 2, 2);
   shepard->SetModelBounds(100, 300, -10, 10, -10, 10);
   shepard->SetMaximumDistance(1);
 
-  // Contour the shepard generated image at 3 isovalues
+  // Contour the shepard generated image at 3 isovalues.
   // The accuracy of the results are highly dependent on how the shepard filter
-  // is set up
+  // is set up.
   vtkNew<vtkContourFilter> contourFilter;
   contourFilter->SetNumberOfContours(3);
   contourFilter->SetValue(0, 0.25);
@@ -91,7 +94,7 @@ int main(int, char*[])
   contourFilter->SetInputConnection(shepard->GetOutputPort());
   contourFilter->Update();
 
-  // Create a mapper and actor for the resulting isosurfaces
+  // Create a mapper and actor for the resulting isosurfaces.
   vtkNew<vtkPolyDataMapper> contourMapper;
   contourMapper->SetInputConnection(contourFilter->GetOutputPort());
   contourMapper->ScalarVisibilityOn();
@@ -103,11 +106,11 @@ int main(int, char*[])
   contourActor->GetProperty()->SetSpecular(0);
   contourActor->GetProperty()->SetDiffuse(0);
 
-  // Report the results of the interpolation
+  // Report the results of the interpolation.
   double* range = contourFilter->GetOutput()->GetScalarRange();
 
   std::cout << "Shepard interpolation:" << std::endl;
-  std::cout << "contour output scalar range: " << range[0] << ", " << range[1]
+  std::cout << "Contour output scalar range: " << range[0] << ", " << range[1]
             << std::endl;
 
   vtkIdType nCells = contourFilter->GetOutput()->GetNumberOfCells();
@@ -115,14 +118,14 @@ int main(int, char*[])
   for (vtkIdType i = 0; i < nCells; ++i)
   {
     if (i %
-        2) // each isosurface value only has 2 cells to report on the odd ones
+        2) // each isosurface value only has 2 cells so report on the odd ones.
     {
       contourFilter->GetOutput()->GetCellBounds(i, bounds);
-      std::cout << "cell " << i << ", x position: " << bounds[0] << std::endl;
+      std::cout << "Cell " << i << ", x position: " << bounds[0] << std::endl;
     }
   }
 
-  // Create a transfer function to color the isosurfaces
+  // Create a transfer function to color the isosurfaces.
   vtkNew<vtkColorTransferFunction> lut;
   lut->SetColorSpaceToRGB();
   lut->AddRGBPoint(range[0], 0, 0, 0); // black
@@ -131,7 +134,7 @@ int main(int, char*[])
 
   contourMapper->SetLookupTable(lut);
 
-  // Create a renderer, render window and interactor
+  // Create a renderer, render window and interactor.
   vtkNew<vtkRenderer> renderer;
   renderer->GradientBackgroundOn();
   renderer->AddActor(contourActor);

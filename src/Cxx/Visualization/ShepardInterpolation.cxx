@@ -20,6 +20,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
+
 #include <vtksys/SystemTools.hxx>
 
 namespace {

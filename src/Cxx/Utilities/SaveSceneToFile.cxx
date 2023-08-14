@@ -20,7 +20,7 @@
 #include <vtksys/RegularExpression.hxx>
 #include <vtksys/SystemTools.hxx>
 
-namespace {
+Cnamespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
 }
 #include <vtkActor.h>
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
   renderWindow->Render();
   renderWindowInteractor->Start();
 
-  // After the interaction is done, save the scene
+  // After the interaction is done, save the scene.
   SaveSceneToFile(argv[2], actor, renderer->GetActiveCamera());
   renderWindow->Render();
   renderWindowInteractor->Start();

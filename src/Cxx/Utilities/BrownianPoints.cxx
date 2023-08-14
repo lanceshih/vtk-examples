@@ -6,7 +6,6 @@
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -19,7 +18,7 @@ int main(int, char*[])
   // Create a sphere
   vtkNew<vtkSphereSource> sphereSource;
 
-  // Generate random vectors
+  // Generate random vectors.
   vtkMath::RandomSeed(5070); // for testing
   vtkNew<vtkBrownianPoints> brownianPoints;
   brownianPoints->SetInputConnection(sphereSource->GetOutputPort());
@@ -31,7 +30,7 @@ int main(int, char*[])
   glyph3D->SetInputConnection(brownianPoints->GetOutputPort());
   glyph3D->SetScaleFactor(0.3);
 
-  // Create a mapper and actor for sphere
+  // Create a mapper and actor for sphere.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
@@ -40,7 +39,7 @@ int main(int, char*[])
   actor->GetProperty()->SetInterpolationToFlat();
   actor->SetMapper(mapper);
 
-  // Create a mapper and actor for glyphs
+  // Create a mapper and actor for glyphs.
   vtkNew<vtkPolyDataMapper> glyphMapper;
   glyphMapper->SetInputConnection(glyph3D->GetOutputPort());
 
@@ -61,7 +60,7 @@ int main(int, char*[])
   renderer->AddActor(actor);
   renderer->AddActor(glyphActor);
 
-  // Create a nice view
+  // Create a nice view.
   renderer->ResetCamera();
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);
@@ -70,7 +69,7 @@ int main(int, char*[])
 
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->SetSize(640, 480);
   renderWindow->SetWindowName("BrownianPoints");
   renderWindow->Render();

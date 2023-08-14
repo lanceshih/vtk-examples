@@ -1,9 +1,9 @@
 #include <vtkActor.h>
+#include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
 #include <vtkCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -12,7 +12,7 @@
 #include <vtkSphereSource.h>
 
 namespace {
-class vtkTimerCallback2 : public vtkCommand
+class vtkTimerCallback2 : public vtkCallbackCommand
 {
 public:
   vtkTimerCallback2() = default;
