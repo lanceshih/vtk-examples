@@ -19,6 +19,9 @@
 
 //// LOx post CFD case study
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)
@@ -26,7 +29,7 @@ int main(int argc, char* argv[])
     std::cout << "Usage: " << argv[0] << " postxyz.bin postq.bin" << std::endl;
     return EXIT_FAILURE;
   }
-  // read data
+  // Read the data.
   //
   vtkNew<vtkMultiBlockPLOT3DReader> pl3d;
   pl3d->AutoDetectFormatOn();
@@ -41,12 +44,12 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // blue to red lut
+  // Blue to red lut.
   //
   vtkNew<vtkLookupTable> lut;
   lut->SetHueRange(0.667, 0.0);
 
-  // computational planes
+  // Computational planes.
   vtkNew<vtkStructuredGridGeometryFilter> floorComp;
   floorComp->SetExtent(0, 37, 0, 75, 0, 0);
   floorComp->SetInputData(sg);
@@ -120,12 +123,12 @@ int main(int argc, char* argv[])
 
   // streamers
   //
-  // spherical seed points
+  // Spherical seed points.
   vtkNew<vtkPointSource> rake;
   rake->SetCenter(-0.74, 0, 0.3);
   rake->SetNumberOfPoints(10);
 
-  // a line of seed points
+  // A line of seed points.
   vtkNew<vtkStructuredGridGeometryFilter> seedsComp;
   seedsComp->SetExtent(10, 10, 37, 39, 1, 35);
   seedsComp->SetInputData(sg);
@@ -155,7 +158,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> tubesActor;
   tubesActor->SetMapper(mapTubes);
 
-  // outline
+  // Outline
   vtkNew<vtkStructuredGridOutlineFilter> outline;
   outline->SetInputData(sg);
 
@@ -174,7 +177,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(outlineActor);
   ren1->AddActor(floorActor);

@@ -17,6 +17,9 @@
 #include <vtkStructuredGridGeometryFilter.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)
@@ -25,7 +28,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkNamedColors> colors;
 
@@ -63,7 +66,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> cutActor;
   cutActor->SetMapper(cutMapper);
 
-  // extract plane
+  // Extract plane.
   vtkNew<vtkStructuredGridGeometryFilter> compPlane;
   compPlane->SetInputData(sg);
   compPlane->SetExtent(0, 100, 0, 100, 9, 9);
@@ -77,7 +80,7 @@ int main(int argc, char* argv[])
   planeActor->GetProperty()->SetRepresentationToWireframe();
   planeActor->GetProperty()->SetColor(colors->GetColor3d("Wheat").GetData());
 
-  // outline
+  // Outline
   vtkNew<vtkStructuredGridOutlineFilter> outline;
   outline->SetInputData(pl3d->GetOutput()->GetBlock(0));
 
@@ -88,7 +91,7 @@ int main(int argc, char* argv[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Wheat").GetData());
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(outlineActor);
   ren1->AddActor(planeActor);
@@ -105,7 +108,7 @@ int main(int argc, char* argv[])
   camera->SetDistance(31.3997);
   camera->SetClippingRange(12.1468, 55.8147);
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   iren->Start();

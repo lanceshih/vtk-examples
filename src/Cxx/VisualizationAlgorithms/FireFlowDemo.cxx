@@ -1,6 +1,6 @@
 #include <vtkActor.h>
+#include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
-#include <vtkCommand.h>
 #include <vtkContourFilter.h>
 #include <vtkGenericOutlineFilter.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -25,6 +25,8 @@
 
 #include <array>
 #include <chrono>
+#include <iostream>
+#include <string>
 #include <thread>
 
 namespace {
@@ -60,13 +62,13 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Import the VRML Files that define the geometry
+  // Import the VRML Files that define the geometry.
   vtkNew<vtkVRMLImporter> vrmlImport;
   vrmlImport->SetRenderWindow(renderWindow);
   vrmlImport->SetFileName(argv[1]);
   vrmlImport->Update();
 
-  // Read the UnstructuredGrid define the solution
+  // Read the UnstructuredGrid define the solution.
   vtkNew<vtkXMLUnstructuredGridReader> solution;
   solution->SetFileName(argv[2]);
   solution->Update();
@@ -74,17 +76,17 @@ int main(int argc, char* argv[])
   std::array<double, 6> bounds;
   solution->GetOutput()->GetBounds(bounds.data());
 
-  // Create an outline
+  // Create an outline.
   vtkNew<vtkGenericOutlineFilter> outline;
   outline->SetInputConnection(solution->GetOutputPort());
 
-  // Create Seeds
+  // Create Seeds.
   vtkNew<vtkPointSource> seeds;
   seeds->SetRadius(0.2);
   seeds->SetCenter(3.0, 1.6, 1.25);
   seeds->SetNumberOfPoints(50);
 
-  // Create streamlines
+  // Create streamlines.
   vtkNew<vtkStreamTracer> streamTracer;
   streamTracer->SetIntegrationDirectionToBoth();
   streamTracer->SetInputConnection(solution->GetOutputPort());
@@ -108,7 +110,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> tubesActor;
   tubesActor->SetMapper(mapTubes);
 
-  // Create an Isosurface
+  // Create an Isosurface.
   vtkNew<vtkContourFilter> isoSurface;
   isoSurface->SetValue(0, 500.0);
   isoSurface->SetInputConnection(solution->GetOutputPort());
@@ -151,7 +153,7 @@ int main(int argc, char* argv[])
   renderer->GetActiveCamera()->Dolly(1.25);
   renderer->ResetCameraClippingRange();
 
-  // Create widgets to manipulate point source center
+  // Create widgets to manipulate point source center.
   vtkNew<vtkSliderWidget> xWidget;
   MakeXWidget(xWidget, seeds, sphere, renderer, renderWindowInteractor);
   dynamic_cast<vtkSliderRepresentation2D*>(xWidget->GetRepresentation())
@@ -184,7 +186,7 @@ namespace {
 #define DELAY 500
 // These callbacks do the actual work.
 // Callbacks for the interactions
-class SliderCallbackX : public vtkCommand
+class SliderCallbackX : public vtkCallbackCommand
 {
 public:
   static SliderCallbackX* New()
@@ -215,7 +217,7 @@ void MakeXWidget(vtkSliderWidget* widget, vtkPointSource* pointSource,
                  vtkSphereSource* sphereSource, vtkRenderer* renderer,
                  vtkRenderWindowInteractor* interactor)
 {
-  // Setup a slider widget for each varying parameter
+  // Setup a slider widget for each varying parameter.
   double tubeWidth(.005);
   double sliderLength(.02);
   double titleHeight(.02);
@@ -256,7 +258,7 @@ void MakeXWidget(vtkSliderWidget* widget, vtkPointSource* pointSource,
   widget->AddObserver(vtkCommand::InteractionEvent, callbackX);
 }
 
-class SliderCallbackY : public vtkCommand
+class SliderCallbackY : public vtkCallbackCommand
 {
 public:
   static SliderCallbackY* New()
@@ -287,7 +289,7 @@ void MakeYWidget(vtkSliderWidget* widget, vtkPointSource* pointSource,
                  vtkSphereSource* sphereSource, vtkRenderer* renderer,
                  vtkRenderWindowInteractor* interactor)
 {
-  // Setup a slider widget for each varying parameter
+  // Setup a slider widget for each varying parameter.
   double tubeWidth(.005);
   double sliderLength(.02);
   double titleHeight(.02);
@@ -329,7 +331,7 @@ void MakeYWidget(vtkSliderWidget* widget, vtkPointSource* pointSource,
   widget->AddObserver(vtkCommand::InteractionEvent, callbackY);
 }
 
-class SliderCallbackZ : public vtkCommand
+class SliderCallbackZ : public vtkCallbackCommand
 {
 public:
   static SliderCallbackZ* New()
@@ -360,7 +362,7 @@ void MakeZWidget(vtkSliderWidget* widget, vtkPointSource* pointSource,
                  vtkSphereSource* sphereSource, vtkRenderer* renderer,
                  vtkRenderWindowInteractor* interactor)
 {
-  // Setup a slider widget for each varying parameter
+  // Setup a slider widget for each varying parameter.
   double tubeWidth(.005);
   double sliderLength(.02);
   double titleHeight(.02);

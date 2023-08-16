@@ -1,18 +1,14 @@
 // Translated from vib.tcl
 
 #include <vtkActor.h>
-#include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
 #include <vtkDataSetMapper.h>
-#include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkPolyDataReader.h>
-#include <vtkProp3D.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -21,6 +17,7 @@
 #include <vtkWarpVector.h>
 
 #include <array>
+#include <iostream>
 #include <string>
 
 int main(int argc, char* argv[])
@@ -51,7 +48,7 @@ int main(int argc, char* argv[])
   std::array<unsigned char, 4> bkg{{65, 99, 149}};
   colors->SetColor("BkgColor", bkg.data());
 
-  // Read a vtk file
+  // Read a vtk file.
   //
   vtkNew<vtkPolyDataReader> plate;
   plate->SetFileName(fileName.c_str());
@@ -79,14 +76,14 @@ int main(int argc, char* argv[])
   //
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputConnection(plate->GetOutputPort());
-  vtkNew<vtkPolyDataMapper> spikeMapper;
-  spikeMapper->SetInputConnection(outline->GetOutputPort());
+  vtkNew<vtkPolyDataMapper> outlineMapper;
+  outlineMapper->SetInputConnection(outline->GetOutputPort());
   vtkNew<vtkActor> outlineActor;
-  outlineActor->SetMapper(spikeMapper);
+  outlineActor->SetMapper(outlineMapper);
   outlineActor->RotateX(-90);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("White").GetData());
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> ren;
   vtkNew<vtkRenderWindow> renWin;
@@ -95,7 +92,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren->AddActor(plateActor);
   ren->AddActor(outlineActor);

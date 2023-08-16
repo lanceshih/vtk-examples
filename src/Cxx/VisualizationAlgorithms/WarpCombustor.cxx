@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // Create the usual graphics stuff/
+  // Create the usual graphics stuff.
   //
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
   ren1->GetActiveCamera()->SetViewUp(0.060772, -0.319905, 0.945498);
   iren->Initialize();
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   iren->Start();

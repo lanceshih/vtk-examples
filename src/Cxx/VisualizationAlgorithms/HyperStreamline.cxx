@@ -17,7 +17,7 @@
 
 int main(int, char*[])
 {
-  // Create the RenderWindow, Renderer and interactive renderer
+  // Create the RenderWindow, Renderer and interactive renderer.
   //
   vtkNew<vtkNamedColors> colors;
 
@@ -32,7 +32,7 @@ int main(int, char*[])
   // set VTK_INTEGRATE_BOTH_DIRECTIONS 2
 
   //
-  // generate tensors
+  // Generate tensors.
   vtkNew<vtkPointLoad> ptLoad;
   ptLoad->SetLoadValue(100.0);
   ptLoad->SetSampleDimensions(20, 20, 20);
@@ -40,7 +40,7 @@ int main(int, char*[])
   ptLoad->SetModelBounds(-10, 10, -10, 10, -10, 10);
   ptLoad->Update();
 
-  // Generate hyperstreamlines
+  // Generate hyperstreamlines.
   vtkNew<vtkHyperStreamline> s1;
   s1->SetInputData(ptLoad->GetOutput());
   s1->SetStartPosition(9, 9, -9);
@@ -53,7 +53,7 @@ int main(int, char*[])
   s1->SetIntegrationDirectionToIntegrateBothDirections();
   s1->Update();
 
-  // Map hyperstreamlines
+  // Map hyperstreamlines.
   vtkNew<vtkLogLookupTable> lut;
   lut->SetHueRange(.6667, 0.0);
 
@@ -125,7 +125,7 @@ int main(int, char*[])
   vtkNew<vtkActor> s4Actor;
   s4Actor->SetMapper(s4Mapper);
 
-  // plane for context
+  // Plane for context.
   //
   vtkNew<vtkImageDataGeometryFilter> g;
   g->SetInputData(ptLoad->GetOutput());
@@ -139,7 +139,7 @@ int main(int, char*[])
   vtkNew<vtkActor> ga;
   ga->SetMapper(gm);
 
-  // Create outline around data
+  // Create outline around data.
   //
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputData(ptLoad->GetOutput());
@@ -151,7 +151,7 @@ int main(int, char*[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // Create cone indicating application of load
+  // Create cone indicating application of load.
   //
   vtkNew<vtkConeSource> coneSrc;
   coneSrc->SetRadius(0.5);

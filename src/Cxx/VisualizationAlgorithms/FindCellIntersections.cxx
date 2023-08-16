@@ -1,10 +1,7 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCellData.h>
 #include <vtkCellLocator.h>
-#include <vtkDataObject.h>
-#include <vtkDataSetMapper.h>
 #include <vtkDataSetSurfaceFilter.h>
 #include <vtkIdList.h>
 #include <vtkLineSource.h>
@@ -20,6 +17,9 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkXMLUnstructuredGridReader.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // Get the filename from the command line
+  // Get the filename from the command line.
   std::string inputFilename = argv[1];
 
   // Read a xml unstructured grid dataset
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
   reader->SetFileName(inputFilename.c_str());
   reader->Update();
 
-  // The line goes through the center of the data and runs along the x axis
+  // The line goes through the center of the data and runs along the x axis.
   double center[3];
   reader->GetOutput()->GetCenter(center);
   double bounds[6];
@@ -62,13 +62,13 @@ int main(int argc, char* argv[])
   std::cout << "endRay: " << endRay[0] << ", " << endRay[1] << ", " << endRay[2]
             << std::endl;
 
-  // Initialize all of the cell data colors
+  // Initialize all of the cell data colors.
   vtkNew<vtkUnsignedCharArray> cellData;
   cellData->SetNumberOfComponents(3);
   cellData->SetNumberOfTuples(reader->GetOutput()->GetNumberOfCells());
   reader->GetOutput()->GetCellData()->SetScalars(cellData);
 
-  // A lambda to scale the contents of the array x by 255
+  // A lambda to scale the contents of the array x by 255.
   auto scale = [](double* x) {
     for (int i = 0; i < 3; ++i)
     {
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     cellData->InsertTuple(i, rgb);
   }
 
-  // Find the cells that intersect the line and color those cells
+  // Find the cells that intersect the line and color those cells.
   vtkNew<vtkIdList> cellIds;
   vtkNew<vtkCellLocator> locator;
   locator->SetDataSet(reader->GetOutput());
@@ -98,18 +98,18 @@ int main(int argc, char* argv[])
     cellData->InsertTuple(cellIds->GetId(i), rgb);
   }
 
-  // Shrink each cell to make them visible
+  // Shrink each cell to make them visible.
   vtkNew<vtkShrinkFilter> shrink;
   shrink->SetInputConnection(reader->GetOutputPort());
   shrink->SetShrinkFactor(0.95);
 
-  // Convert the cells to polydata
+  // Convert the cells to polydata.
   vtkNew<vtkDataSetSurfaceFilter> surface;
   surface->SetInputConnection(shrink->GetOutputPort());
   surface->SetNonlinearSubdivisionLevel(2);
   surface->Update();
 
-  // Create a line
+  // Create a line.
   vtkNew<vtkLineSource> lineSource;
   lineSource->SetPoint1(startRay);
   lineSource->SetPoint2(endRay);
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> lineActor;
   lineActor->SetMapper(lineMapper);
 
-  // Render the results
+  // Render the results.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(surface->GetOutputPort());
   mapper->ScalarVisibilityOn();
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
   renderer->AddActor(lineActor);
   renderer->SetBackground(colors->GetColor3d("Cobalt").GetData());
 
-  // Make an oblique view
+  // Make an oblique view.
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);
   renderer->ResetCamera();

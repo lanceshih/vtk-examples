@@ -13,6 +13,9 @@
 #include <vtkRenderer.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)
@@ -22,7 +25,7 @@ int main(int argc, char* argv[])
   }
   vtkNew<vtkNamedColors> colors;
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
@@ -30,7 +33,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // create pipeline
+  // Create pipeline.
   //
   vtkNew<vtkMultiBlockPLOT3DReader> pl3d;
   pl3d->SetXYZFileName(argv[1]);
@@ -64,7 +67,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> outlineActor;
   outlineActor->SetMapper(outlineMapper);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(outlineActor);
   ren1->AddActor(isoActor);
@@ -78,9 +81,10 @@ int main(int argc, char* argv[])
   ren1->GetActiveCamera()->Zoom(1.3);
   ren1->ResetCameraClippingRange();
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   iren->Start();
+
   return EXIT_SUCCESS;
 }

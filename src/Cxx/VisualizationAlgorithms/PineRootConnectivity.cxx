@@ -13,9 +13,13 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+
 #ifdef VTK_CELL_ARRAY_V2
 #include <vtkCellArrayIterator.h>
 #endif // VTK_CELL_ARRAY_V2
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -42,7 +46,6 @@ int main(int argc, char* argv[])
 #ifdef VTK_CELL_ARRAY_V2
 
     // Newer versions of vtkCellArray prefer local iterators:
-    std::cout << pd->GetNumberOfPolys() << std::endl;
     auto cellIter = vtk::TakeSmartPointer(cells->NewIterator());
     for (cellIter->GoToFirstCell(); !cellIter->IsDoneWithTraversal();
          cellIter->GoToNextCell())
@@ -98,9 +101,9 @@ int main(int argc, char* argv[])
   if (!noConnectivity)
   {
     reader->Update();
-    std::cout << "Before Connectivity." << std::endl;
-    std::cout << "There are: " << NumberofTriangles(reader->GetOutput())
-              << " triangles." << std::endl;
+    std::cout << "Before Connectivity there are: "
+              << NumberofTriangles(reader->GetOutput()) << " triangles."
+              << std::endl;
   }
 
   vtkNew<vtkPolyDataConnectivityFilter> connect;
@@ -109,9 +112,7 @@ int main(int argc, char* argv[])
   if (!noConnectivity)
   {
     connect->Update();
-    std::cout << "After Connectivity." << std::endl;
-    // Note the use of dynamic_cast<vtkPolyData*> here.
-    std::cout << "There are: "
+    std::cout << "After Connectivity there are:  "
               << NumberofTriangles(
                      dynamic_cast<vtkPolyData*>(connect->GetOutput()))
               << " triangles." << std::endl;

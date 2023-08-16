@@ -31,7 +31,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // create plane to warp
+  // Create plane to warp.
   vtkNew<vtkPlaneSource> plane;
   plane->SetResolution(300, 300);
 
@@ -43,7 +43,7 @@ int main(int, char*[])
   transF->SetTransform(transform);
   transF->Update();
 
-  // compute Bessel function and derivatives. This portion could be
+  // Compute Bessel function and derivatives. This portion could be
   // encapsulated into source or filter object.
   //
   auto input = transF->GetOutput();
@@ -72,13 +72,13 @@ int main(int, char*[])
     derivs->SetValue(i, deriv);
   }
 
-  // warp plane
+  // Warp plane.
   vtkNew<vtkWarpScalar> warp;
   warp->SetInputData(bessel);
   warp->XYPlaneOn();
   warp->SetScaleFactor(0.5);
 
-  // mapper and actor
+  // Mapper and actor.
   vtkNew<vtkDataSetMapper> mapper;
   mapper->SetInputConnection(warp->GetOutputPort());
   double tmp[2];
@@ -88,13 +88,13 @@ int main(int, char*[])
   vtkNew<vtkActor> carpet;
   carpet->SetMapper(mapper);
 
-  // assign our actor to the renderer
+  // Assign our actor to the renderer.
   ren->AddActor(carpet);
   ren->SetBackground(colors->GetColor3d("Beige").GetData());
   renWin->SetSize(640, 480);
   renWin->SetWindowName("ExponentialCosine");
 
-  // draw the resulting scene
+  // Draw the resulting scene.
   ren->ResetCamera();
   ren->GetActiveCamera()->Zoom(1.35);
   ren->GetActiveCamera()->Elevation(-55);

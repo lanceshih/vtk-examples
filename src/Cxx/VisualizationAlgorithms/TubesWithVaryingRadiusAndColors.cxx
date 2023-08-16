@@ -1,12 +1,7 @@
 #include <math.h>
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCell.h>
 #include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkDataSet.h>
-#include <vtkDataSetAttributes.h>
-#include <vtkDataSetMapper.h>
 #include <vtkDoubleArray.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkMath.h>
@@ -20,7 +15,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkTubeFilter.h>
 #include <vtkUnsignedCharArray.h>
 
@@ -36,11 +30,11 @@ int main(int, char*[])
   double h = 10;               // Height
   unsigned int nTv = 8;        // No. of surface elements for each tube vertex
 
-  // Create points and cells for the spiral
+  // Create points and cells for the helix.
   vtkNew<vtkPoints> points;
   for (unsigned int i = 0; i < nV; i++)
   {
-    // Spiral coordinates
+    // Helcial coordinates
     auto vX = rS * cos(2 * vtkMath::Pi() * nCyc * i / (nV - 1));
     auto vY = rS * sin(2 * vtkMath::Pi() * nCyc * i / (nV - 1));
     auto vZ = h * i / nV;
@@ -58,7 +52,7 @@ int main(int, char*[])
   polyData->SetPoints(points);
   polyData->SetLines(lines);
 
-  // Varying tube radius using sine-function
+  // Varying tube radius using sine-function.
   vtkNew<vtkDoubleArray> tubeRadius;
   tubeRadius->SetName("TubeRadius");
   tubeRadius->SetNumberOfTuples(nV);
@@ -70,8 +64,8 @@ int main(int, char*[])
   polyData->GetPointData()->AddArray(tubeRadius);
   polyData->GetPointData()->SetActiveScalars("TubeRadius");
 
-  // RBG array (could add Alpha channel too I guess...)
-  // Varying from blue to red
+  // RBG array (could add Alpha channel too I guess...).
+  // Varying from blue to red.
   vtkNew<vtkUnsignedCharArray> colors;
   colors->SetName("Colors");
   colors->SetNumberOfComponents(3);
@@ -101,7 +95,7 @@ int main(int, char*[])
   renderer->AddActor(actor);
   renderer->SetBackground(nc->GetColor3d("SteelBlue").GetData());
 
-  // Make an oblique view
+  // Make an oblique view.
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);
   renderer->ResetCamera();

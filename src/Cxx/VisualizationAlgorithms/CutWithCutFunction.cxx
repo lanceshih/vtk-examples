@@ -4,15 +4,16 @@
 #include <vtkNew.h>
 #include <vtkPlane.h>
 #include <vtkPointData.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkXMLPolyDataReader.h>
-
 #include <vtkCutter.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
                    bounds[4]);
   plane->SetNormal(0, 0, 1);
 
-  // Create cutter
+  // Create cutter.
   double high = plane->EvaluateFunction(
       (bounds[1] + bounds[0]) / 2.0, (bounds[3] + bounds[2]) / 2.0, bounds[5]);
 
@@ -62,13 +63,13 @@ int main(int argc, char* argv[])
   cutterMapper->SetInputConnection(cutter->GetOutputPort());
   cutterMapper->ScalarVisibilityOff();
 
-  // Create cut actor
+  // Create cut actor.
   vtkNew<vtkActor> cutterActor;
   cutterActor->GetProperty()->SetColor(colors->GetColor3d("Banana").GetData());
   cutterActor->GetProperty()->SetLineWidth(2);
   cutterActor->SetMapper(cutterMapper);
 
-  // Create model actor
+  // Create model actor.
   vtkNew<vtkPolyDataMapper> modelMapper;
   modelMapper->SetInputConnection(reader->GetOutputPort());
   modelMapper->ScalarVisibilityOff();
@@ -77,12 +78,12 @@ int main(int argc, char* argv[])
   modelActor->GetProperty()->SetColor(colors->GetColor3d("Flesh").GetData());
   modelActor->SetMapper(modelMapper);
 
-  // Create renderers and add actors of plane and model
+  // Create renderers and add actors of plane and model.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(cutterActor);
   renderer->AddActor(modelActor);
 
-  // Add renderer to renderwindow and render
+  // Add renderer to renderwindow and render.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetSize(600, 600);

@@ -15,6 +15,9 @@
 #include <vtkRenderer.h>
 #include <vtkXMLPolyDataReader.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
@@ -50,7 +53,7 @@ int main(int argc, char* argv[])
                    (bounds[5] + bounds[4]) / 2.0);
   plane->SetNormal(0, 0, 1);
 
-  // Create Scalars
+  // Create Scalars.
   vtkNew<vtkDoubleArray> scalars;
   int numberOfPoints = reader->GetOutput()->GetNumberOfPoints();
   scalars->SetNumberOfTuples(numberOfPoints);
@@ -64,7 +67,7 @@ int main(int argc, char* argv[])
   reader->GetOutput()->GetPointData()->SetScalars(scalars);
   reader->GetOutput()->GetPointData()->GetScalars()->GetRange();
 
-  // Create cutter
+  // Create cutter.
   vtkNew<vtkContourFilter> cutter;
   cutter->SetInputConnection(reader->GetOutputPort());
   cutter->ComputeScalarsOff();
@@ -78,13 +81,13 @@ int main(int argc, char* argv[])
   cutterMapper->SetInputConnection(cutter->GetOutputPort());
   cutterMapper->ScalarVisibilityOff();
 
-  // Create cut actor
+  // Create cut actor.
   vtkNew<vtkActor> cutterActor;
   cutterActor->GetProperty()->SetColor(colors->GetColor3d("Banana").GetData());
   cutterActor->GetProperty()->SetLineWidth(2);
   cutterActor->SetMapper(cutterMapper);
 
-  // Create model actor
+  // Create model actor.
   vtkNew<vtkPolyDataMapper> modelMapper;
   modelMapper->SetInputConnection(reader->GetOutputPort());
   modelMapper->ScalarVisibilityOff();
@@ -93,12 +96,12 @@ int main(int argc, char* argv[])
   modelActor->GetProperty()->SetColor(colors->GetColor3d("Flesh").GetData());
   modelActor->SetMapper(modelMapper);
 
-  // Create renderers and add actors of plane and model
+  // Create renderers and add actors of plane and model.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(cutterActor);
   renderer->AddActor(modelActor);
 
-  // Add renderer to renderwindow and render
+  // Add renderer to renderwindow and render.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetSize(600, 600);

@@ -17,6 +17,9 @@
 #include <vtkStructuredPointsReader.h>
 #include <vtkThresholdPoints.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
@@ -83,7 +86,7 @@ int main(int argc, char* argv[])
   vtkSmartPointer<vtkActor> vectorActor = vtkSmartPointer<vtkActor>::New();
   vectorActor->SetMapper(vectorMapper);
 
-  // contours of speed
+  // Contours of speed.
   vtkSmartPointer<vtkContourFilter> iso =
       vtkSmartPointer<vtkContourFilter>::New();
   iso->SetInputConnection(reader->GetOutputPort());
@@ -99,7 +102,7 @@ int main(int argc, char* argv[])
   isoActor->GetProperty()->SetRepresentationToWireframe();
   isoActor->GetProperty()->SetOpacity(0.25);
 
-  // outline
+  // Outline
   vtkSmartPointer<vtkOutlineFilter> outline =
       vtkSmartPointer<vtkOutlineFilter>::New();
   outline->SetInputConnection(reader->GetOutputPort());
@@ -112,7 +115,7 @@ int main(int argc, char* argv[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(outlineActor);
   ren1->AddActor(vectorActor);
@@ -129,7 +132,7 @@ int main(int argc, char* argv[])
   cam1->Zoom(1.2);
   ren1->SetActiveCamera(cam1);
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   iren->Start();

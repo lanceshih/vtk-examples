@@ -1,11 +1,9 @@
 #include <vtkActor.h>
-#include <vtkAppendPolyData.h>
 #include <vtkCamera.h>
 #include <vtkFollower.h>
 #include <vtkLinearExtrusionFilter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPolyDataReader.h>
 #include <vtkProperty.h>
@@ -14,7 +12,6 @@
 #include <vtkRenderer.h>
 #include <vtkRibbonFilter.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
 #include <vtkTubeFilter.h>
@@ -22,6 +19,7 @@
 
 #include <vtksys/SystemTools.hxx>
 
+#include <iostream>
 #include <string>
 
 namespace {
@@ -42,7 +40,17 @@ int main(int argc, char* argv[])
   renderers.push_back(bottomRenderer);
 
   // List of one or more filenames corresponding to stocks.
-  // e.g. GE.vtk GM.vtk IBM.vtk DEC.vtk [0|1]
+  // e.g. GE.vtk GM.vtk IBM.vtk DEC.vtk [0|1].
+  if (argc < 3)
+  {
+    std::cout << "Usage: " << argv[0]
+              << "\n A list of one or more filenames corresponding to\n stocks "
+                 "with a flag to use tubes.\n e.g. GE.vtk GM.vtk "
+                 "IBM.vtk DEC.vtk 0"
+              << std::endl;
+    return EXIT_FAILURE;
+  }
+
   bool useTubes = true;
   if (atoi(argv[argc - 1]) == 1)
   {
@@ -57,7 +65,7 @@ int main(int argc, char* argv[])
              zPosition, useTubes);
   }
 
-  // Setup render window and interactor
+  // Setup render window and interactor.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderers[0]);
   renderWindow->AddRenderer(renderers[1]);
@@ -93,19 +101,19 @@ int main(int argc, char* argv[])
 }
 
 namespace {
-// create the stocks
+// Create the stocks.
 void AddStock(std::vector<vtkSmartPointer<vtkRenderer>> renderers,
               char* filename, std::string name, double& zPosition,
               bool useTubes)
 {
   std::cout << "Adding " << name << std::endl;
 
-  // read the data
+  // Read the data.
   vtkNew<vtkPolyDataReader> PolyDataRead;
   PolyDataRead->SetFileName(filename);
   PolyDataRead->Update();
 
-  // create labels
+  // Create labels.
   vtkNew<vtkVectorText> TextSrc;
   TextSrc->SetText(name.c_str());
 
@@ -122,7 +130,7 @@ void AddStock(std::vector<vtkSmartPointer<vtkRenderer>> renderers,
   y = nameLocation[1] + 5.0;
   z = zPosition;
 
-  // Create a tube and ribbpn filter. One or the other will be used
+  // Create a tube and ribbpn filter. One or the other will be used.
 
   vtkNew<vtkTubeFilter> TubeFilter;
   TubeFilter->SetInputConnection(PolyDataRead->GetOutputPort());
@@ -150,7 +158,7 @@ void AddStock(std::vector<vtkSmartPointer<vtkRenderer>> renderers,
   vtkNew<vtkTransformPolyDataFilter> TransformFilter;
   TransformFilter->SetTransform(Transform);
 
-  // Select tubes or ribbons
+  // Select tubes or ribbons.
   if (useTubes)
   {
     TransformFilter->SetInputConnection(TubeFilter->GetOutputPort());
@@ -170,7 +178,7 @@ void AddStock(std::vector<vtkSmartPointer<vtkRenderer>> renderers,
     LabelActor->SetScale(2, 2, 2);
     LabelActor->SetOrigin(TextSrc->GetOutput()->GetCenter());
 
-    // increment zPosition
+    // Increment zPosition.
     zPosition += 8.0;
 
     vtkNew<vtkPolyDataMapper> StockMapper;

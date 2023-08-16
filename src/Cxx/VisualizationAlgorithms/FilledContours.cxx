@@ -14,10 +14,11 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkScalarsToColors.h>
 #include <vtkSmartPointer.h>
 #include <vtkXMLPolyDataReader.h>
 
+#include <iostream>
+#include <string>
 #include <vector>
 
 int main(int argc, char* argv[])
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkXMLPolyDataReader> reader;
 
   reader->SetFileName(argv[1]);
-  reader->Update(); // Update so that we can get the scalar range
+  reader->Update(); // Update so that we can get the scalar range.
 
   double scalarRange[2];
   reader->GetOutput()->GetPointData()->GetScalars()->GetRange(scalarRange);
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
   double delta = (scalarRange[1] - scalarRange[0]) /
       static_cast<double>(numberOfContours - 1);
 
-  // Keep the clippers alive
+  // Keep the clippers alive.
   std::vector<vtkSmartPointer<vtkClipPolyData>> clippersLo;
   std::vector<vtkSmartPointer<vtkClipPolyData>> clippersHi;
 
@@ -119,7 +120,7 @@ int main(int argc, char* argv[])
   contourLineActor->SetMapper(contourLineMapperer);
   contourLineActor->GetProperty()->SetLineWidth(2);
 
-  // The usual renderer, render window and interactor
+  // The usual renderer, render window and interactor.
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
   vtkNew<vtkRenderWindowInteractor> iren;
@@ -134,7 +135,7 @@ int main(int argc, char* argv[])
   ren1->AddActor(contourLineActor);
   ren1->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
-  // Begin interaction
+  // Begin interaction.
   renWin->Render();
   iren->Start();
 
