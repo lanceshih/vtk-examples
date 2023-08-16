@@ -238,7 +238,7 @@ if (BUILD_TESTING)
     TestNormalsDemo ${DATA}/42400-IDGH.stl)
 
   add_test(${KIT}-PointDataSubdivision ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
-    TestPointDataSubdivision 2)
+    TestPointDataSubdivision Boy)
 
   add_test(${KIT}-ProteinRibbons ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestProteinRibbons ${DATA}/2j6g.pdb)
