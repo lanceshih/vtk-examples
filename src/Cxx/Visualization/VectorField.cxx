@@ -3,7 +3,7 @@
 #include <vtkImageData.h>
 #include <vtkImageSlice.h>
 #include <vtkImageSliceMapper.h>
-//#include <vtkInteractorStyleImage.h>
+// #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>

@@ -22,8 +22,8 @@ int main(int argc, char* argv[])
   // Verify input arguments.
   if (argc != 2)
   {
-    std::cout << "Usage: " << argv[0] << " Filename e.g. AttenuationArtifact.pgm"
-              << std::endl;
+    std::cout << "Usage: " << argv[0]
+              << " Filename e.g. AttenuationArtifact.pgm" << std::endl;
     return EXIT_FAILURE;
   }
 

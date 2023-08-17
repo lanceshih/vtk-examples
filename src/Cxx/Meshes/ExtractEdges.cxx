@@ -71,8 +71,7 @@ int main(int, char*[])
 
   // Add the actor to the scene.
   renderer->AddActor(actor);
-  renderer->SetBackground(
-      colors->GetColor3d("RoyalBlue").GetData());
+  renderer->SetBackground(colors->GetColor3d("RoyalBlue").GetData());
 
   // Render and interact
   renderWindow->Render();

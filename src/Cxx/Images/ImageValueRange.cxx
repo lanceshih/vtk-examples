@@ -30,7 +30,8 @@ int main(int, char*[])
   // Alternatively.
   auto min = imageData->GetScalarRange()[0];
   auto max = imageData->GetScalarRange()[1];
-  std::cout << "alternatively:\nvaluesRange = " << min << " " << max << std::endl;
+  std::cout << "alternatively:\nvaluesRange = " << min << " " << max
+            << std::endl;
 
   return EXIT_SUCCESS;
 }

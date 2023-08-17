@@ -26,7 +26,7 @@
 #include <vtkSphereSource.h>
 
 #include <algorithm> // For transform()
-#include <cctype> // For to_lower
+#include <cctype>    // For to_lower
 #include <iostream>
 #include <string> // For find_last_of()
 

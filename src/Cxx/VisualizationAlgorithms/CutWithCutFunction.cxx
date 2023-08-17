@@ -1,5 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
+#include <vtkCutter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlane.h>
@@ -10,7 +11,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkXMLPolyDataReader.h>
-#include <vtkCutter.h>
 
 #include <iostream>
 #include <string>

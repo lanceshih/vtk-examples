@@ -1,4 +1,4 @@
-#include<vtkActor.h>
+#include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
 #include <vtkDataSetMapper.h>
@@ -23,11 +23,9 @@
 #include <sstream>
 #include <string>
 
-    namespace
-{
-  vtkSmartPointer<vtkPolyData> SweepLine(vtkPolyData * line,
-                                         double direction[3], double distance,
-                                         unsigned int cols);
+namespace {
+vtkSmartPointer<vtkPolyData> SweepLine(vtkPolyData* line, double direction[3],
+                                       double distance, unsigned int cols);
 }
 
 int main(int argc, char* argv[])

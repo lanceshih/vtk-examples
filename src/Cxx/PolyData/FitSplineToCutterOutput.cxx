@@ -1,12 +1,10 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkProperty.h>
 #include <vtkCutter.h>
 #include <vtkKochanekSpline.h>
 #include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPlane.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>

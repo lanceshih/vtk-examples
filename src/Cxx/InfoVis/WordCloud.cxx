@@ -309,7 +309,8 @@ int main(int argc, char* argv[])
   std::cout << "Kept " << keep << " words" << std::endl;
   std::cout << "Skipped " << numberSkipped << " words" << std::endl;
 
-  // If a maskFile is specified, replace the maskColor with the background color.
+  // If a maskFile is specified, replace the maskColor with the background
+  // color.
   ReplaceMaskColorWithBackgroundColor(final->GetOutput(), cloudParameters);
 
   // Display the final image.

@@ -42,8 +42,8 @@ int main(int, char*[])
   vertexColors->InsertNextTupleValue(black);
   vertexColors->InsertNextTupleValue(white);
 
-  // Create a scalar array for the pointdata, each value represents the distance.
-  // of the vertices from the first vertex
+  // Create a scalar array for the pointdata, each value represents the
+  // distance. of the vertices from the first vertex
   vtkNew<vtkFloatArray> values;
   values->SetNumberOfComponents(1);
   values->SetName("Values");

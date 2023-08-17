@@ -50,7 +50,7 @@ int main(int, char*[])
   renderer->AddActor(coneActor);
   renderer->AddActor(reflectionActor);
   renderer->SetBackground(colors->GetColor3d("Burlywood").GetData());
-  
+
   // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();

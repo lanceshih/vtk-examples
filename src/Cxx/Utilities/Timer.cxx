@@ -1,9 +1,9 @@
+#include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkCallbackCommand.h>
 
 #include <iostream>
 #include <string>

@@ -38,11 +38,12 @@ int main(int argc, char* argv[])
 {
   if (argc < 3)
   {
-    std::cout << "Usage: " << argv[0] << " polydata texture e.g. fran_cut.vtk fran_cut.png" << std::endl;
+    std::cout << "Usage: " << argv[0]
+              << " polydata texture e.g. fran_cut.vtk fran_cut.png"
+              << std::endl;
     return EXIT_FAILURE;
   }
   vtkSmartPointer<vtkPolyData> polyData = ReadPolyData(argc > 1 ? argv[1] : "");
- 
 
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> textureFile;

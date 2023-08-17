@@ -5,7 +5,7 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTextActor.h>
- #include <vtkTextProperty.h>
+#include <vtkTextProperty.h>
 
 #include <iostream>
 #include <sstream>

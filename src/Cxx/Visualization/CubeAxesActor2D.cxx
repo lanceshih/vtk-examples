@@ -2,7 +2,7 @@
 #include <vtkCamera.h>
 #include <vtkCubeAxesActor2D.h>
 #include <vtkLODActor.h>
-//#include <vtkLight.h>
+// #include <vtkLight.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>

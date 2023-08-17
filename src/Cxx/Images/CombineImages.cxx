@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
   imgReader2.TakeReference(readerFactory->CreateImageReader2(argv[2]));
   imgReader2->SetFileName(argv[2]);
 
-  // Combine the images (blend takes multiple connections on the 0th input port).
+  // Combine the images (blend takes multiple connections on the 0th input
+  // port).
   vtkNew<vtkImageBlend> blend;
   blend->AddInputConnection(imgReader1->GetOutputPort());
   blend->AddInputConnection(imgReader2->GetOutputPort());

@@ -48,8 +48,7 @@ int main(int, char*[])
   // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->AddActor(outlineActor);
-  renderer->SetBackground(
-      colors->GetColor3d("MidnightBlue").GetData());
+  renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
   // Render and interact.
   renderWindow->Render();

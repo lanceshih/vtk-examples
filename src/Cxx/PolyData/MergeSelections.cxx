@@ -4,7 +4,7 @@
 #include <vtkDataSetMapper.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdTypeArray.h>
-//#include <vtkInformation.h>
+// #include <vtkInformation.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>

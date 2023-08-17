@@ -1,6 +1,6 @@
 #include <vtkActor.h>
-#include <vtkCamera.h>
 #include <vtkCallbackCommand.h>
+#include <vtkCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>

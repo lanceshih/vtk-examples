@@ -3,7 +3,6 @@
 #include <vtkAxesActor.h>
 #include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
-#include <vtkCallbackCommand.h>
 #include <vtkCameraOrientationWidget.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -292,7 +291,8 @@ private:
 
 int main(int argc, char* argv[])
 {
-  CLI::App app{"View surfaces of a segmented frog dataset using preprocessed VTK tissue files."};
+  CLI::App app{"View surfaces of a segmented frog dataset using preprocessed "
+               "VTK tissue files."};
 
   // Define options
   std::string fileName;

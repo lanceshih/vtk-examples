@@ -36,10 +36,11 @@ int main(int, char*[])
   maskSource->FillBox(0, 200, 0, 200);
 
   // Create a square.
-  maskSource->SetDrawColor(255, 255,
-                           255); // Anything non-zero means "make the output
-                                 // pixel equal the input pixel". If the mask is
-                                 // zero, the output pixel is set to MaskedValue.
+  maskSource->SetDrawColor(
+      255, 255,
+      255); // Anything non-zero means "make the output
+            // pixel equal the input pixel". If the mask is
+            // zero, the output pixel is set to MaskedValue.
   maskSource->FillBox(100, 120, 100, 120);
   maskSource->Update();
 

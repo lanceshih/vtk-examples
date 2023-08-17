@@ -44,7 +44,7 @@ int main(int, char*[])
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(imageSlice);
   renderer->ResetCamera();
-  
+
   // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

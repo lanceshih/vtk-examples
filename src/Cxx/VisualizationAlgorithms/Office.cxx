@@ -25,8 +25,7 @@ int main(int argc, char* argv[])
   if (argc < 2)
   {
     std::cout << "Usage: " << argv[0]
-              << " filename [center] e.g. office.binary.vtk 3"
-              << std::endl;
+              << " filename [center] e.g. office.binary.vtk 3" << std::endl;
     std::cout
         << "Demonstrate the use of vtkPointSource to generate streamlines."
         << std::endl;

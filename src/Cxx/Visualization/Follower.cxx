@@ -23,7 +23,8 @@ int main(int, char*[])
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(textSource->GetOutputPort());
 
-  // Create a subclass of vtkActor: a vtkFollower that remains facing the camera.
+  // Create a subclass of vtkActor: a vtkFollower that remains facing the
+  // camera.
   vtkNew<vtkFollower> follower;
   follower->SetMapper(mapper);
   follower->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());

@@ -2,7 +2,7 @@
 #include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageStencil.h>
-//#include <vtkImageStencilData.h>
+// #include <vtkImageStencilData.h>
 #include <vtkImageToImageStencil.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>

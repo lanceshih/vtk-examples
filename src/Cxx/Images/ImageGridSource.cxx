@@ -22,7 +22,7 @@ int main(int, char*[])
   castFilter->SetInputConnection(source->GetOutputPort());
   castFilter->SetOutputScalarTypeToUnsignedChar();
   castFilter->Update();
-  
+
   // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(castFilter->GetOutputPort());

@@ -3,7 +3,7 @@
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-//#include <vtkPoints.h>
+// #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper2D.h>
 #include <vtkProperty.h>

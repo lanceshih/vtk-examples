@@ -1,12 +1,12 @@
 #include <vtkActor.h>
-//#include <vtkCallbackCommand.h>
+// #include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkCaptionRepresentation.h>
 #include <vtkCaptionWidget.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-//#include <vtkPolyData.h>
+// #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>

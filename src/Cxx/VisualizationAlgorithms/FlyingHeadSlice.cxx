@@ -33,7 +33,8 @@ int main(int argc, char* argv[])
     std::cout << "Examples:" << std::endl;
     std::cout << "Contouring, using vtkFlyingEdges2D: FullHead.mhd"
               << std::endl;
-    std::cout << "Contouring, using vtkContourFilter: FullHead.mhd 1" << std::endl;
+    std::cout << "Contouring, using vtkContourFilter: FullHead.mhd 1"
+              << std::endl;
     return EXIT_FAILURE;
   }
   auto useContourFilter = false;

@@ -23,30 +23,30 @@ int main(int argc, char* argv[])
   reader->SetFileName(inputFilename.c_str());
   reader->Update();
 
-    // All of the standard data types can be checked and obtained like this:
-    if (reader->IsFilePolyData())
-    {
-      std::cout << "output is polydata," << std::endl;
-      auto output = reader->GetPolyDataOutput();
-      std::cout << "   output has " << output->GetNumberOfPoints() << " points."
-                << std::endl;
-    }
+  // All of the standard data types can be checked and obtained like this:
+  if (reader->IsFilePolyData())
+  {
+    std::cout << "output is polydata," << std::endl;
+    auto output = reader->GetPolyDataOutput();
+    std::cout << "   output has " << output->GetNumberOfPoints() << " points."
+              << std::endl;
+  }
 
-    if (reader->IsFileUnstructuredGrid())
-    {
-      std::cout << "output is unstructured grid," << std::endl;
-      auto output = reader->GetUnstructuredGridOutput();
-      std::cout << "   output has " << output->GetNumberOfPoints() << " points."
-                << std::endl;
-    }
+  if (reader->IsFileUnstructuredGrid())
+  {
+    std::cout << "output is unstructured grid," << std::endl;
+    auto output = reader->GetUnstructuredGridOutput();
+    std::cout << "   output has " << output->GetNumberOfPoints() << " points."
+              << std::endl;
+  }
 
-    if (reader->IsFileStructuredGrid())
-    {
-      std::cout << "output is structured grid," << std::endl;
-      auto output = reader->GetStructuredGridOutput();
-      std::cout << "   output has " << output->GetNumberOfPoints() << " points."
-                << std::endl;
-    }
+  if (reader->IsFileStructuredGrid())
+  {
+    std::cout << "output is structured grid," << std::endl;
+    auto output = reader->GetStructuredGridOutput();
+    std::cout << "   output has " << output->GetNumberOfPoints() << " points."
+              << std::endl;
+  }
 
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }

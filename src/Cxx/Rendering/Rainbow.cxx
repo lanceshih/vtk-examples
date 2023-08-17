@@ -1,7 +1,7 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkLookupTable.h>
- #include <vtkMultiBlockDataSet.h>
+#include <vtkMultiBlockDataSet.h>
 #include <vtkMultiBlockPLOT3DReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>

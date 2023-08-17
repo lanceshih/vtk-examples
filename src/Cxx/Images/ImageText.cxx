@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
   blendRenderer->ResetCamera();
   blendRenderer->SetBackground(colors->GetColor3d("DodgerBlue").GetData());
 
- vtkNew<vtkRenderWindow> renderWindow;
+  vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(300, 300);
   renderWindow->AddRenderer(blendRenderer);
   renderWindow->SetWindowName("ImageText");
