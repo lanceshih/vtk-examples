@@ -16,6 +16,9 @@
 #include <vtkStructuredGridOutlineFilter.h>
 #include <vtkWarpScalar.h>
 
+#include <iostream>
+#include <string>
+
 // This example demonstrates how to extract "computational planes" from a
 // structured dataset. Structured data has a natural, logical coordinate
 // system based on i-j-k indices. Specifying imin,imax, jmin,jmax, kmin,kmax

@@ -20,6 +20,9 @@
 #include <vtkStructuredGridOutlineFilter.h>
 #include <vtkTubeFilter.h>
 
+#include <iostream>
+#include <string>
+
 // Perform psuedo volume rendering in a structured grid by compositing
 // translucent cut planes. This same trick can be used for unstructured
 // grids. Note that for better results, more planes can be created. Also,
@@ -53,7 +56,7 @@ int main(int argc, char* argv[])
   extract->SetVOI(1, 55, -1000, 1000, -1000, 1000);
   extract->SetInputData(pl3dOutput);
 
-  // The (implicit) plane is used to do the cutting
+  // The (implicit) plane is used to do the cutting.
   vtkNew<vtkPlane> plane;
   plane->SetOrigin(0, 4, 2);
   plane->SetNormal(0, 1, 0);
@@ -119,7 +122,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> outlineActor;
   outlineActor->SetMapper(outlineMapper);
 
-  // Create the RenderWindow, Renderer and Interactor
+  // Create the RenderWindow, Renderer and Interactor.
   //
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
@@ -128,7 +131,7 @@ int main(int argc, char* argv[])
 
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(outlineActor);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Banana").GetData());
@@ -150,7 +153,7 @@ int main(int argc, char* argv[])
   ren1->GetActiveCamera()->ComputeViewPlaneNormal();
   ren1->GetActiveCamera()->SetViewUp(-0.16123, 0.264271, 0.950876);
 
-  // Cut: generates n cut planes normal to camera's view plane
+  // Cut: generates n cut planes normal to camera's view plane.
   //
   plane->SetNormal(ren1->GetActiveCamera()->GetViewPlaneNormal());
   plane->SetOrigin(ren1->GetActiveCamera()->GetFocalPoint());

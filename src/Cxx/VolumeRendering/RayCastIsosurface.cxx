@@ -13,6 +13,9 @@
 #include <vtkVolume.h>
 #include <vtkVolumeProperty.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   double iso1 = 500.0;
