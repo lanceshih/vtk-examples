@@ -16,4 +16,5 @@
 #include <vtkVersionMacros.h>
 #include <vtkWindowToImageFilter.h>
 
+// The command line parameters are: cow.g 1
 #include "WalkCow.cxx"

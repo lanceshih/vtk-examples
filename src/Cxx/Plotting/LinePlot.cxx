@@ -1,10 +1,8 @@
 #include <vtkChartXY.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPen.h>
 #include <vtkPlot.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>

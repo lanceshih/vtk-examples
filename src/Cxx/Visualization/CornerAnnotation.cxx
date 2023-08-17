@@ -28,14 +28,14 @@ int main(int, char*[])
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
-  renderWindow->SetWindowName("ComplexV");
+  renderWindow->SetWindowName("CornerAnnotation");
 
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
 
-  // Annotate the image with window/level and mouse over pixel information
+  // Annotate the image with window/level and mouse over pixel information.
   vtkNew<vtkCornerAnnotation> cornerAnnotation;
   cornerAnnotation->SetLinearFontScaleFactor(2);
   cornerAnnotation->SetNonlinearFontScaleFactor(1);

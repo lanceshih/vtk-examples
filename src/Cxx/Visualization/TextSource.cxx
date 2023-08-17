@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -22,14 +21,14 @@ int main(int, char*[])
   textSource->BackingOn();
   textSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(textSource->GetOutputPort());
 
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -38,11 +37,11 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Bisque").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

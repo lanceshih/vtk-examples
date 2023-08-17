@@ -12,7 +12,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkVolume.h>
 #include <vtkVolumeProperty.h>
 

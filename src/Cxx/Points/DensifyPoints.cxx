@@ -5,7 +5,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -70,7 +69,6 @@ int main(int argc, char* argv[])
   glyph3DActor1->GetProperty()->SetColor(
       colors->GetColor3d("Banana").GetData());
 
-  ////
   vtkNew<vtkSphereSource> sphereSource2;
   sphereSource2->SetRadius(radius * .75);
 
@@ -85,7 +83,7 @@ int main(int argc, char* argv[])
   glyph3DActor2->GetProperty()->SetColor(
       colors->GetColor3d("Tomato").GetData());
 
-  // Create graphics stuff
+  // Create graphics stuff.
   //
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("SlateGray").GetData());

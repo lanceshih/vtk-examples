@@ -1,23 +1,16 @@
 #include <vtkAnnotationLink.h>
-#include <vtkDoubleArray.h>
-#include <vtkGraphLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
-#include <vtkGraphWriter.h>
-#include <vtkHardwareSelector.h>
 #include <vtkIdTypeArray.h>
 #include <vtkInteractorStyleRubberBand2D.h>
 #include <vtkMutableUndirectedGraph.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderedGraphRepresentation.h>
 #include <vtkRenderer.h>
 #include <vtkSelection.h>
 #include <vtkSelectionNode.h>
-#include <vtkSimple2DLayoutStrategy.h>
-#include <vtkUnsignedCharArray.h>
 
 namespace {
 class RubberBandStyle : public vtkInteractorStyleRubberBand2D

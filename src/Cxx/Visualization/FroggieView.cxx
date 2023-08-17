@@ -174,7 +174,7 @@ MakeAnnotatedCubeActor(std::array<std::string, 6> const& cubeLabels,
 vtkNew<vtkPropAssembly> MakeCubeActor(std::string const& labelSelector,
                                       vtkNamedColors* colors);
 
-class SliderCallbackOpacity : public vtkCommand
+class SliderCallbackOpacity : public vtkCallbackCommand
 {
 public:
   static SliderCallbackOpacity* New()
@@ -291,7 +291,8 @@ private:
 
 int main(int argc, char* argv[])
 {
-  CLI::App app{"View surfaces of a segmented frog dataset using preprocessed VTK tissue files."};
+  CLI::App app{"View surfaces of a segmented frog dataset using preprocessed "
+               "VTK tissue files."};
 
   // Define options
   std::string fileName;

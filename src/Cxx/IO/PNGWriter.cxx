@@ -1,6 +1,5 @@
 #include <vtkImageCanvasSource2D.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPNGWriter.h>

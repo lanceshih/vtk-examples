@@ -1,5 +1,4 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkGlyph2D.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>

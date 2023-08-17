@@ -13,6 +13,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
@@ -20,7 +23,8 @@ int main(int argc, char* argv[])
     std::cout << "Usage: " << argv[0] << " image.pgm e.g. B.pgm" << std::endl;
     return EXIT_FAILURE;
   }
-  // Now create the RenderWindow, Renderer and Interactor
+
+  // Now create the RenderWindow, Renderer and Interactor.
   //
   vtkNew<vtkNamedColors> colors;
 
@@ -72,7 +76,7 @@ int main(int argc, char* argv[])
   renWin->SetSize(640, 480);
   renWin->SetWindowName("CreateBFont");
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   iren->Start();

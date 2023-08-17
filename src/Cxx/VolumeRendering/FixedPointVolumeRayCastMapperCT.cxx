@@ -1,16 +1,14 @@
-#include <vtkBoxWidget.h>
 #include <vtkCamera.h>
 #include <vtkColorTransferFunction.h>
-#include <vtkCommand.h>
 #include <vtkDICOMImageReader.h>
 #include <vtkFixedPointVolumeRayCastMapper.h>
 #include <vtkImageData.h>
 #include <vtkImageResample.h>
+#include <vtkInteractorObserver.h>
 #include <vtkMetaImageReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPiecewiseFunction.h>
-#include <vtkPlanes.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -19,76 +17,89 @@
 #include <vtkVolumeProperty.h>
 #include <vtkXMLImageDataReader.h>
 
+#include <iostream>
+#include <string>
+
 #define VTI_FILETYPE 1
 #define MHA_FILETYPE 2
 
 namespace {
 void PrintUsage()
 {
-  cout << "Usage: " << endl;
-  cout << endl;
-  cout << "  FixedPointVolumeRayCastMapperCT <options>" << endl;
-  cout << endl;
-  cout << "where options may include: " << endl;
-  cout << endl;
-  cout << "  -DICOM <directory>" << endl;
-  cout << "  -VTI <filename>" << endl;
-  cout << "  -MHA <filename>" << endl;
-  cout << "  -DependentComponents" << endl;
-  cout << "  -Clip" << endl;
-  cout << "  -MIP <window> <level>" << endl;
-  cout << "  -CompositeRamp <window> <level>" << endl;
-  cout << "  -CompositeShadeRamp <window> <level>" << endl;
-  cout << "  -CT_Skin" << endl;
-  cout << "  -CT_Bone" << endl;
-  cout << "  -CT_Muscle" << endl;
-  cout << "  -FrameRate <rate>" << endl;
-  cout << "  -DataReduction <factor>" << endl;
-  cout << endl;
-  cout << "You must use either the -DICOM option to specify the directory where"
-       << endl;
-  cout << "the data is located or the -VTI or -MHA option to specify the path "
-          "of a .vti file."
-       << endl;
-  cout << endl;
-  cout << "By default, the program assumes that the file has independent "
-          "components,"
-       << endl;
-  cout << "use -DependentComponents to specify that the file has dependent "
-          "components."
-       << endl;
-  cout << endl;
-  cout << "Use the -Clip option to display a cube widget for clipping the "
-          "volume."
-       << endl;
-  cout << "Use the -FrameRate option with a desired frame rate (in frames per "
-          "second)"
-       << endl;
-  cout << "which will control the interactive rendering rate." << endl;
-  cout << "Use the -DataReduction option with a reduction factor (greater than "
-          "zero and"
-       << endl;
-  cout << "less than one) to reduce the data before rendering." << endl;
-  cout << "Use one of the remaining options to specify the blend function"
-       << endl;
-  cout << "and transfer functions. The -MIP option utilizes a maximum intensity"
-       << endl;
-  cout << "projection method, while the others utilize compositing. The"
-       << endl;
-  cout << "-CompositeRamp option is unshaded compositing, while the other"
-       << endl;
-  cout << "compositing options employ shading." << endl;
-  cout << endl;
-  cout << "Note: MIP, CompositeRamp, CompositeShadeRamp, CT_Skin, CT_Bone,"
-       << endl;
-  cout << "and CT_Muscle are appropriate for DICOM data. MIP, CompositeRamp,"
-       << endl;
-  cout << "and RGB_Composite are appropriate for RGB data." << endl;
-  cout << endl;
-  cout
+  std::cout << "Usage: " << std::endl;
+  std::cout << std::endl;
+  std::cout << "  FixedPointVolumeRayCastMapperCT <options>" << std::endl;
+  std::cout << std::endl;
+  std::cout << "where options may include: " << std::endl;
+  std::cout << std::endl;
+  std::cout << "  -DICOM <directory>" << std::endl;
+  std::cout << "  -VTI <filename>" << std::endl;
+  std::cout << "  -MHA <filename>" << std::endl;
+  std::cout << "  -DependentComponents" << std::endl;
+  std::cout << "  -Clip" << std::endl;
+  std::cout << "  -MIP <window> <level>" << std::endl;
+  std::cout << "  -CompositeRamp <window> <level>" << std::endl;
+  std::cout << "  -CompositeShadeRamp <window> <level>" << std::endl;
+  std::cout << "  -CT_Skin" << std::endl;
+  std::cout << "  -CT_Bone" << std::endl;
+  std::cout << "  -CT_Muscle" << std::endl;
+  std::cout << "  -FrameRate <rate>" << std::endl;
+  std::cout << "  -DataReduction <factor>" << std::endl;
+  std::cout << std::endl;
+  std::cout
+      << "You must use either the -DICOM option to specify the directory where"
+      << std::endl;
+  std::cout
+      << "the data is located or the -VTI or -MHA option to specify the path "
+         "of a .vti file."
+      << std::endl;
+  std::cout << std::endl;
+  std::cout << "By default, the program assumes that the file has independent "
+               "components,"
+            << std::endl;
+  std::cout
+      << "use -DependentComponents to specify that the file has dependent "
+         "components."
+      << std::endl;
+  std::cout << std::endl;
+  std::cout << "Use the -Clip option to display a cube widget for clipping the "
+               "volume."
+            << std::endl;
+  std::cout
+      << "Use the -FrameRate option with a desired frame rate (in frames per "
+         "second)"
+      << std::endl;
+  std::cout << "which will control the interactive rendering rate."
+            << std::endl;
+  std::cout
+      << "Use the -DataReduction option with a reduction factor (greater than "
+         "zero and"
+      << std::endl;
+  std::cout << "less than one) to reduce the data before rendering."
+            << std::endl;
+  std::cout << "Use one of the remaining options to specify the blend function"
+            << std::endl;
+  std::cout
+      << "and transfer functions. The -MIP option utilizes a maximum intensity"
+      << std::endl;
+  std::cout << "projection method, while the others utilize compositing. The"
+            << std::endl;
+  std::cout << "-CompositeRamp option is unshaded compositing, while the other"
+            << std::endl;
+  std::cout << "compositing options employ shading." << std::endl;
+  std::cout << std::endl;
+  std::cout << "Note: MIP, CompositeRamp, CompositeShadeRamp, CT_Skin, CT_Bone,"
+            << std::endl;
+  std::cout
+      << "and CT_Muscle are appropriate for DICOM data. MIP, CompositeRamp,"
+      << std::endl;
+  std::cout << "and RGB_Composite are appropriate for RGB data." << std::endl;
+  std::cout << std::endl;
+  std::cout
       << "Example: FixedPointVolumeRayCastMapperCT -DICOM CTNeck -MIP 4096 1024"
-      << endl;
-  cout << endl;
+      << std::endl;
+  std::cout << "e.g. -MHA /FullHead.mhd -CT_Bone" << std::endl;
+  std::cout << std::endl;
 }
 } // namespace
 
@@ -190,9 +201,10 @@ int main(int argc, char* argv[])
       frameRate = atof(argv[count + 1]);
       if (frameRate < 0.01 || frameRate > 60.0)
       {
-        cout << "Invalid frame rate - use a number between 0.01 and 60.0"
-             << endl;
-        cout << "Using default frame rate of 10 frames per second." << endl;
+        std::cout << "Invalid frame rate - use a number between 0.01 and 60.0"
+                  << std::endl;
+        std::cout << "Using default frame rate of 10 frames per second."
+                  << std::endl;
         frameRate = 10.0;
       }
       count += 2;
@@ -202,10 +214,10 @@ int main(int argc, char* argv[])
       reductionFactor = atof(argv[count + 1]);
       if (reductionFactor <= 0.0 || reductionFactor >= 1.0)
       {
-        cout << "Invalid reduction factor - use a number between 0 and 1 "
-                "(exclusive)"
-             << endl;
-        cout << "Using the default of no reduction." << endl;
+        std::cout << "Invalid reduction factor - use a number between 0 and 1 "
+                     "(exclusive)"
+                  << std::endl;
+        std::cout << "Using the default of no reduction." << std::endl;
         reductionFactor = 1.0;
       }
       count += 2;
@@ -217,8 +229,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-      cout << "Unrecognized option: " << argv[count] << endl;
-      cout << endl;
+      std::cout << "Unrecognized option: " << argv[count] << std::endl;
+      std::cout << std::endl;
       PrintUsage();
       exit(EXIT_FAILURE);
     }
@@ -226,10 +238,11 @@ int main(int argc, char* argv[])
 
   if (!dirname && !fileName)
   {
-    cout << "Error: you must specify a directory of DICOM data or a .vti file "
-            "or a .mha!"
-         << endl;
-    cout << endl;
+    std::cout
+        << "Error: you must specify a directory of DICOM data or a .vti file "
+           "or a .mha!"
+        << std::endl;
+    std::cout << std::endl;
     PrintUsage();
     exit(EXIT_FAILURE);
   }
@@ -280,7 +293,7 @@ int main(int argc, char* argv[])
   }
   else
   {
-    cout << "Error! Not VTI or MHA!" << endl;
+    std::cout << "Error! Not VTI or MHA!" << std::endl;
     exit(EXIT_FAILURE);
   }
 
@@ -290,7 +303,7 @@ int main(int argc, char* argv[])
 
   if (dim[0] < 2 || dim[1] < 2 || dim[2] < 2)
   {
-    cout << "Error loading data!" << endl;
+    std::cout << "Error loading data!" << std::endl;
     exit(EXIT_FAILURE);
   }
 

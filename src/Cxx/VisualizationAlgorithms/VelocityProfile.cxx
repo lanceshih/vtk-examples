@@ -3,7 +3,6 @@
 #include <vtkActor.h>
 #include <vtkAppendPolyData.h>
 #include <vtkCamera.h>
-#include <vtkLookupTable.h>
 #include <vtkMultiBlockDataSet.h>
 #include <vtkMultiBlockPLOT3DReader.h>
 #include <vtkNamedColors.h>
@@ -20,15 +19,11 @@
 #include <vtkWarpVector.h>
 
 #include <array>
+#include <iostream>
 #include <string>
 
 int main(int argc, char* argv[])
 {
-  //   auto Scale = [](std::vector<double>& v, double scale) {
-  //     std::transform(std::begin(v), std::end(v), std::begin(v),
-  //                    [=](double const& n) { return n / scale; });
-  //     return;
-  //   };
 
   if (argc < 2)
   {
@@ -61,13 +56,13 @@ int main(int argc, char* argv[])
       dynamic_cast<vtkStructuredGrid*>(pl3d->GetOutput()->GetBlock(0));
 
   // What do we know about the data?
-  // Get the extent of the data: imin,imax, jmin,jmax, kmin,kmax
+  // Get the extent of the data: imin, imax, jmin, jmax, kmin, kmax
   int extent[6] = {0, 0, 0, 0, 0, 0};
   pl3dOutput->GetExtent(extent);
   double scalarRange[2] = {0.0, 0.0};
   pl3dOutput->GetScalarRange(scalarRange);
 
-  // Planes are specified using a imin,imax, jmin,jmax, kmin,kmax coordinate
+  // Planes are specified using a imin, imax, jmin, jmax, kmin, kmax coordinate
   // specification. Min and max i,j,k values are clamped to 0 and maximum value.
   // See the variable named extent for the values.
   //
@@ -119,7 +114,7 @@ int main(int argc, char* argv[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> ren;
   vtkNew<vtkRenderWindow> renWin;
@@ -128,7 +123,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren->AddActor(planeActor);
   ren->AddActor(outlineActor);

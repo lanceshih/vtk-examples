@@ -2,7 +2,6 @@
 #include <vtkCardinalSpline.h>
 #include <vtkCellArray.h>
 #include <vtkGlyph3D.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -38,7 +37,7 @@ int main(int argc, char* argv[])
     for (unsigned int i = 0; i < numberOfPoints; ++i)
     {
       double x, y, z;
-      // random position and radius
+      // Random position and radius.
       x = randomSequence->GetRangeValue(-1.0, 1.0);
       randomSequence->Next();
       y = randomSequence->GetRangeValue(-1.0, 1.0);
@@ -108,7 +107,7 @@ int main(int argc, char* argv[])
   newActor->SetMapper(newMapper);
   newActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
@@ -116,11 +115,11 @@ int main(int argc, char* argv[])
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ResamplePolyLine");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(originalActor);
   renderer->AddActor(newActor);
   renderer->AddActor(splineActor);

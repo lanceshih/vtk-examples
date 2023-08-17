@@ -8,14 +8,12 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenGLPolyDataMapper.h>
-#include <vtkOpenGLRenderWindow.h>
 #include <vtkPLYReader.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkShaderProgram.h>
 #include <vtkSmartPointer.h>
 #include <vtkTexture.h>
 #include <vtkVersion.h>
@@ -24,6 +22,9 @@
 #define USE_SHADER_PROPERTIES 1
 #include <vtkShaderProperty.h>
 #endif
+
+#include <iostream>
+#include <string>
 
 namespace {
 /**

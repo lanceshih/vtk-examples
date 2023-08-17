@@ -39,7 +39,7 @@ int main(int, char*[])
   sgridActor->SetMapper(sgridMapper);
   sgridActor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
-  // Create the usual rendering stuff
+  // Create the usual rendering stuff.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(renderer);

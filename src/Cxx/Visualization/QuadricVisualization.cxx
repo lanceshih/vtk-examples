@@ -14,17 +14,16 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSampleFunction.h>
-#include <vtkUnstructuredGrid.h>
 
 namespace {
 void CreateIsosurface(vtkSampleFunction* function, vtkActor* actor,
                       unsigned int numberOfContours = 5);
 
 void CreatePlanes(vtkSampleFunction* function, vtkActor* actor,
-                  unsigned numberOfPlanes);
+                  unsigned int numberOfPlanes);
 
 void CreateContours(vtkSampleFunction* function, vtkActor* actor,
-                    unsigned numberOfPlanes, unsigned numberOfContours);
+                    unsigned int numberOfPlanes, unsigned int numberOfContours);
 
 void CreateOutline(vtkSampleFunction* function, vtkActor* actor);
 
@@ -44,11 +43,11 @@ int main(int, char*[])
   renderWindow->SetSize(640, 480);
 
   //
-  // Create surface of implicit function
+  // Create the surface of the implicit function.
   //
   // double range[2];
 
-  // Sample quadric function
+  // Sample the quadric function.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 2, 3, 0, 1, 0, 0, 0, 0, 0);
 
@@ -86,7 +85,7 @@ int main(int, char*[])
 
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Try to set camera to match figure on book
+  // Try to set camera to match figure on book.
   renderer->GetActiveCamera()->SetPosition(0, -1, 0);
   renderer->GetActiveCamera()->SetFocalPoint(0, 0, 0);
   renderer->GetActiveCamera()->SetViewUp(0, 0, -1);
@@ -101,7 +100,7 @@ int main(int, char*[])
 
   renderWindow->Render();
 
-  // interact with data
+  // interact with data.
   interactor->Start();
 
   return EXIT_SUCCESS;
@@ -112,7 +111,7 @@ void CreateIsosurface(vtkSampleFunction* function, vtkActor* actor,
                       unsigned int numberOfContours)
 {
   double range[2];
-  // Generate implicit surface
+  // Generate the implicit surface.
   vtkNew<vtkContourFilter> contour;
   contour->SetInputConnection(function->GetOutputPort());
   range[0] = 1.0;
@@ -120,11 +119,11 @@ void CreateIsosurface(vtkSampleFunction* function, vtkActor* actor,
   contour->GenerateValues(numberOfContours, range);
 
   // Map contour
-  vtkNew<vtkPolyDataMapper> contourMapper;
-  contourMapper->SetInputConnection(contour->GetOutputPort());
-  contourMapper->SetScalarRange(0, 7);
+  vtkNew<vtkPolyDataMapper> isosurfaceMapper;
+  isosurfaceMapper->SetInputConnection(contour->GetOutputPort());
+  isosurfaceMapper->SetScalarRange(0, 7);
 
-  actor->SetMapper(contourMapper);
+  actor->SetMapper(isosurfaceMapper);
   return;
 }
 
@@ -132,7 +131,7 @@ void CreatePlanes(vtkSampleFunction* function, vtkActor* actor,
                   unsigned int numberOfPlanes)
 {
   //
-  // Extract planes from implicit function
+  // Extract planes from the implicit function.
   //
 
   vtkNew<vtkAppendFilter> append;
@@ -153,7 +152,7 @@ void CreatePlanes(vtkSampleFunction* function, vtkActor* actor,
   }
   append->Update();
 
-  // Map planes
+  // Map planes.
   vtkNew<vtkDataSetMapper> planesMapper;
   planesMapper->SetInputConnection(append->GetOutputPort());
   planesMapper->SetScalarRange(0, 7);
@@ -167,7 +166,7 @@ void CreateContours(vtkSampleFunction* function, vtkActor* actor,
                     unsigned int numberOfPlanes, unsigned int numberOfContours)
 {
   //
-  // Extract planes from implicit function
+  // Extract planes from the implicit function.
   //
 
   vtkNew<vtkAppendFilter> append;
@@ -194,12 +193,12 @@ void CreateContours(vtkSampleFunction* function, vtkActor* actor,
   }
   append->Update();
 
-  // Map planes
-  vtkNew<vtkDataSetMapper> planesMapper;
-  planesMapper->SetInputConnection(append->GetOutputPort());
-  planesMapper->SetScalarRange(0, 7);
+  // Map contours.
+  vtkNew<vtkDataSetMapper> contoursMapper;
+  contoursMapper->SetInputConnection(append->GetOutputPort());
+  contoursMapper->SetScalarRange(0, 7);
 
-  actor->SetMapper(planesMapper);
+  actor->SetMapper(contoursMapper);
   actor->GetProperty()->SetAmbient(1.);
   return;
 }
@@ -208,9 +207,10 @@ void CreateOutline(vtkSampleFunction* source, vtkActor* actor)
 {
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputConnection(source->GetOutputPort());
-  vtkNew<vtkPolyDataMapper> mapper;
-  mapper->SetInputConnection(outline->GetOutputPort());
-  actor->SetMapper(mapper);
+
+  vtkNew<vtkPolyDataMapper> outlineMapper;
+  outlineMapper->SetInputConnection(outline->GetOutputPort());
+  actor->SetMapper(outlineMapper);
   return;
 }
 } // namespace

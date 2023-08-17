@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkDataSetMapper.h>
-#include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
 #include <vtkImageContinuousDilate3D.h>
 #include <vtkImageData.h>

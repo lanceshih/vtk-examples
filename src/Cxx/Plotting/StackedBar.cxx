@@ -2,7 +2,6 @@
 #include <vtkChartLegend.h>
 #include <vtkChartXY.h>
 #include <vtkColorSeries.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkDoubleArray.h>
 #include <vtkIntArray.h>
@@ -59,7 +58,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderWindow()->SetSize(500, 350);
   vtkNew<vtkChartXY> chart;
@@ -108,7 +107,7 @@ int main(int, char*[])
   vtkNew<vtkColorSeries> colorSeries1;
   colorSeries1->SetColorScheme(vtkColorSeries::WILD_FLOWER);
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
   vtkPlotBar* bar = 0;
 
   bar = dynamic_cast<vtkPlotBar*>(chart->AddPlot(vtkChart::BAR));
@@ -175,7 +174,7 @@ int main(int, char*[])
   axis->GetLabelProperties()->SetVerticalJustification(VTK_TEXT_CENTERED);
   axis->GetLabelProperties()->SetJustification(VTK_TEXT_RIGHT);
 
-  // Finally render the scene and compare the image to a reference image
+  // Finally render the scene and compare the image to a reference image.
   view->GetRenderer()->SetBackground(colors->GetColor3d("Cornsilk").GetData());
   view->GetRenderWindow()->SetMultiSamples(0);
   view->GetRenderWindow()->Render();

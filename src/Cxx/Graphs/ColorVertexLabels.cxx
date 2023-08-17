@@ -15,14 +15,14 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a graph
+  // Create a graph.
   vtkNew<vtkMutableDirectedGraph> graph;
 
   vtkIdType v1 = graph->AddVertex();
   vtkIdType v2 = graph->AddVertex();
   graph->AddEdge(v1, v2);
 
-  // Create an array for the vertex labels
+  // Create an array for the vertex labels.
   vtkNew<vtkIntArray> vertexIDs;
   vertexIDs->SetNumberOfComponents(1);
   vertexIDs->SetName("VertexIDs");
@@ -31,7 +31,7 @@ int main(int, char*[])
   vertexIDs->InsertNextValue(0);
   vertexIDs->InsertNextValue(1);
 
-  // Add the array to the graph
+  // Add the array to the graph.
   graph->GetVertexData()->AddArray(vertexIDs);
 
   vtkNew<vtkGraphLayoutView> graphLayoutView;

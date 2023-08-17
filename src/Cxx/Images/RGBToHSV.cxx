@@ -1,6 +1,5 @@
 #include <vtkCamera.h>
 #include <vtkImageActor.h>
-#include <vtkImageData.h>
 #include <vtkImageExtractComponents.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageRGBToHSV.h>
@@ -18,14 +17,14 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify command line arguments
+  // Verify command line arguments.
   if (argc != 2)
   {
     std::cerr << "Usage: " << argv[0] << "image e.g. Gourds2.jpg" << std::endl;
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader;
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -46,7 +45,7 @@ int main(int argc, char* argv[])
   extractValueFilter->SetInputConnection(hsvFilter->GetOutputPort());
   extractValueFilter->SetComponents(2);
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkImageActor> inputActor;
   inputActor->GetMapper()->SetInputConnection(reader->GetOutputPort());
 
@@ -60,17 +59,17 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageActor> vActor;
   vActor->GetMapper()->SetInputConnection(extractValueFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double inputViewport[4] = {0.0, 0.0, 0.25, 1.0};
   double hViewport[4] = {0.25, 0.0, 0.5, 1.0};
   double sViewport[4] = {0.5, 0.0, 0.75, 1.0};
   double vViewport[4] = {0.75, 0.0, 1.0, 1.0};
 
-  // Shared camera
+  // Shared camera.
   vtkNew<vtkCamera> sharedCamera;
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> inputRenderer;
   inputRenderer->SetViewport(inputViewport);
   inputRenderer->AddActor(inputActor);
@@ -95,7 +94,7 @@ int main(int argc, char* argv[])
   vRenderer->SetActiveCamera(sharedCamera);
   vRenderer->SetBackground(colors->GetColor3d("Lavender").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(1000, 250);
   renderWindow->SetWindowName("RGBToHSV");
@@ -105,13 +104,13 @@ int main(int argc, char* argv[])
   renderWindow->AddRenderer(vRenderer);
   inputRenderer->ResetCamera();
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

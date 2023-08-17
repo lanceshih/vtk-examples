@@ -4,7 +4,6 @@
 #include <vtkCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -56,7 +55,7 @@ int main(int, char*[])
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
   vtkNew<vtkActor> actor;
@@ -64,7 +63,7 @@ int main(int, char*[])
   actor->GetProperty()->SetColor(
       colors->GetColor3d("DarkOliveGreen").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -86,14 +85,14 @@ int main(int, char*[])
   biDimensionalWidget->AddObserver(vtkCommand::InteractionEvent,
                                    biDimensionalCallback);
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindow->Render();
 
   renderWindowInteractor->Initialize();
   renderWindow->Render();
   biDimensionalWidget->On();
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

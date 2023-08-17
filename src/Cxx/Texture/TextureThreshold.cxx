@@ -30,6 +30,7 @@ fluid flow->
 #include <vtkThresholdTextureCoords.h>
 
 #include <array>
+#include <iostream>
 #include <string>
 #include <vector>
 

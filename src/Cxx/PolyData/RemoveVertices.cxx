@@ -1,5 +1,4 @@
 #include <vtkCellArray.h>
-#include <vtkCellData.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
 #include <vtkXMLPolyDataReader.h>
@@ -9,12 +8,13 @@ int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " filename.vtp" << std::endl;
+    std::cout << "Usage: " << argv[0] << " filename.vtp e.g. Bunny.vtp"
+              << std::endl;
     return EXIT_FAILURE;
   }
   std::string filename = argv[1];
 
-  // Read all the data from the file
+  // Read all the data from the file.
   vtkNew<vtkXMLPolyDataReader> reader;
   reader->SetFileName(filename.c_str());
   reader->Update();

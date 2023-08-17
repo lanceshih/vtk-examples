@@ -20,12 +20,12 @@ int main(int, char*[])
   vtkIdType v2 = g->AddVertex();
   vtkIdType v3 = g->AddVertex();
 
-  // Create a fully connected graph
+  // Create a fully connected graph.
   g->AddEdge(v1, v2);
   g->AddEdge(v2, v3);
   g->AddEdge(v1, v3);
 
-  // Create the edge weight array
+  // Create the edge weight array.
   vtkNew<vtkDoubleArray> weights;
   weights->SetNumberOfComponents(1);
   weights->SetName("Weights");
@@ -35,7 +35,7 @@ int main(int, char*[])
   weights->InsertNextValue(1.0);
   weights->InsertNextValue(2.0);
 
-  // Add the edge weight array to the graph
+  // Add the edge weight array to the graph.
   g->GetEdgeData()->AddArray(weights);
 
   std::cout << "Number of Weights: "

@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
-#include <vtkLine.h>
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -17,19 +16,19 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Spiral parameters
+  // Spiral parameters.
   unsigned int nV = 256; // No. of vertices
   double rS = 2;         // Spiral radius
-  unsigned int nCyc = 3; // No. of spiral cycles
+  unsigned int nCyc = 3; // No. of helical cycles
   double h = 10;         // Height
 
   unsigned int i;
 
-  // Create points and cells for a spiral
+  // Create points and cells for a helix.
   vtkNew<vtkPoints> points;
   for (i = 0; i < nV; i++)
   {
-    // Spiral coordinates
+    // Helical coordinates.
     auto vX = rS * cos(2 * vtkMath::Pi() * nCyc * i / (nV - 1));
     auto vY = rS * sin(2 * vtkMath::Pi() * nCyc * i / (nV - 1));
     auto vZ = h * i / nV;
@@ -47,7 +46,7 @@ int main(int, char*[])
   polyData->SetPoints(points);
   polyData->SetLines(lines);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> lineMapper;
   lineMapper->SetInputData(polyData);
 
@@ -56,12 +55,12 @@ int main(int, char*[])
   lineActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
   lineActor->GetProperty()->SetLineWidth(3);
 
-  // Create a ribbon around the line
+  // Create a ribbon around the line.
   vtkNew<vtkRibbonFilter> ribbonFilter;
   ribbonFilter->SetInputData(polyData);
   ribbonFilter->SetWidth(.4);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> ribbonMapper;
   ribbonMapper->SetInputConnection(ribbonFilter->GetOutputPort());
 
@@ -70,7 +69,7 @@ int main(int, char*[])
   ribbonActor->GetProperty()->SetColor(
       colors->GetColor3d("AliceBlue").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
 
   vtkNew<vtkRenderWindow> renderWindow;
@@ -80,14 +79,14 @@ int main(int, char*[])
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->SetWindowName("RibbonFilter");
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(ribbonActor);
   renderer->AddActor(lineActor);
 
-  // Render and interact
+  // Render and interact.
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // Generate an interesting view
+  // Generate an interesting view.
   renderer->GetActiveCamera()->Azimuth(40);
   renderer->GetActiveCamera()->Elevation(30);
   renderer->ResetCamera();

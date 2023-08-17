@@ -2,6 +2,9 @@
 #include <vtkPoints.h>
 #include <vtkPolygon.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   // Create the polygon

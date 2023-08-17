@@ -1,11 +1,6 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkDoubleArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
@@ -14,7 +9,6 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkTriangle.h>
 #include <vtkTriangleFilter.h>
 #include <vtkXMLPolyDataReader.h>
 
@@ -39,7 +33,7 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName);
 
 int main(int argc, char* argv[])
 {
-  // Test with these parameters: footbones.ply 2
+  // Test with these parameters: footbones.ply 2.
   vtkNew<vtkNamedColors> colors;
 
   std::map<int, std::string> actorColors;
@@ -58,13 +52,13 @@ int main(int argc, char* argv[])
   {
     auto polyData = ReadPolyData(argc > 1 ? argv[1] : "");
 
-    // Subdivision filters only work on triangles
+    // Subdivision filters only work on triangles.
     vtkNew<vtkTriangleFilter> triangles;
     triangles->SetInputData(polyData);
     triangles->Update();
     originalMesh = triangles->GetOutput();
   }
-  else // If a file name is not specified, create a sphere
+  else // If a file name is not specified, create a sphere.
   {
     vtkNew<vtkSphereSource> sphereSource;
     sphereSource->Update();
@@ -126,7 +120,7 @@ int main(int argc, char* argv[])
     renderer->SetViewport(static_cast<double>(i) / numberOfViewports, 0,
                           static_cast<double>(i + 1) / numberOfViewports, 1);
 
-    // Create a mapper and actor
+    // Create a mapper and actor.
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(subdivisionFilter->GetOutputPort());
     vtkNew<vtkActor> actor;

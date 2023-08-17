@@ -1,10 +1,7 @@
 #include <vtkImageActor.h>
-#include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageMandelbrotSource.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageThreshold.h>
-#include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
@@ -15,7 +12,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageMandelbrotSource> imageSource;
   imageSource->Update();
 
@@ -29,7 +26,7 @@ int main(int, char*[])
   imageThreshold->SetInValue(255);
   imageThreshold->Update();
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkImageActor> inputActor;
   inputActor->GetMapper()->SetInputConnection(imageSource->GetOutputPort());
 
@@ -37,21 +34,21 @@ int main(int, char*[])
   thresholdedActor->GetMapper()->SetInputConnection(
       imageThreshold->GetOutputPort());
 
-  // There will be one render window
+  // There will be one render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->SetWindowName("ImageThreshold");
 
-  // And one interactor
+  // And one interactor.
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);

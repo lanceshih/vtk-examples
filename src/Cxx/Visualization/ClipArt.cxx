@@ -2,8 +2,6 @@
 #include <vtkCamera.h>
 #include <vtkClipPolyData.h>
 #include <vtkDecimatePro.h>
-#include <vtkImageConstantPad.h>
-#include <vtkImageData.h>
 #include <vtkImageDataGeometryFilter.h>
 #include <vtkImageExtractComponents.h>
 #include <vtkImageGaussianSmooth.h>
@@ -14,7 +12,6 @@
 #include <vtkJPEGReader.h>
 #include <vtkLinearExtrusionFilter.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -27,18 +24,22 @@
 #include <vtkInformation.h>
 #include <vtkStreamingDemandDrivenPipeline.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " Filename(.jpg)" << std::endl;
+    std::cout << "Usage: " << argv[0] << " Filename(.jpg) e.g. stormy.jpg"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
   vtkNew<vtkJPEGReader> imageIn;
   imageIn->SetFileName(argv[1]);
 
-  // Convert the image to hsv so that we can threshold on value
+  // Convert the image to hsv so that we can threshold on value.
   vtkNew<vtkImageRGBToHSV> toHSV;
   toHSV->SetInputConnection(imageIn->GetOutputPort());
 
@@ -47,7 +48,7 @@ int main(int argc, char* argv[])
   extractImage->SetInputConnection(toHSV->GetOutputPort());
   extractImage->SetComponents(2);
 
-  // Threshold to a black/white image
+  // Threshold to a black/white image.
   vtkNew<vtkImageThreshold> threshold1;
   threshold1->SetInputConnection(extractImage->GetOutputPort());
   threshold1->ThresholdByUpper(230);
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
   threshold1->SetOutValue(0);
   threshold1->Update();
 
-  // Place a seed in each corner and label connected pixels with 255
+  // Place a seed in each corner and label connected pixels with 255.
   threshold1->UpdateInformation();
 
   int* extent = threshold1->GetOutputInformation(0)->Get(
@@ -70,7 +71,7 @@ int main(int argc, char* argv[])
   connect->AddSeed(extent[1], extent[3]);
   connect->AddSeed(extent[0], extent[3]);
 
-  // Smooth a little before clipping
+  // Smooth a little before clipping.
   vtkNew<vtkImageGaussianSmooth> smooth;
   smooth->SetDimensionality(2);
   smooth->SetStandardDeviation(1.0, 1.0);
@@ -81,7 +82,7 @@ int main(int argc, char* argv[])
   shrink->SetShrinkFactors(1, 1, 1);
   shrink->AveragingOn();
 
-  // Convert the image to polydata
+  // Convert the image to polydata.
   vtkNew<vtkImageDataGeometryFilter> geometry;
   geometry->SetInputConnection(shrink->GetOutputPort());
 
@@ -92,7 +93,7 @@ int main(int argc, char* argv[])
   geometryTexture->SetPoint1(extent[1], 0, 0);
   geometryTexture->SetPoint2(0, extent[3], 0);
 
-  // Clip the geometry
+  // Clip the geometry.
   vtkNew<vtkClipPolyData> clip;
   clip->SetInputConnection(geometryTexture->GetOutputPort());
   clip->SetValue(5.5);
@@ -127,7 +128,7 @@ int main(int argc, char* argv[])
   clipart->SetMapper(map);
   clipart->SetTexture(imageTexture);
 
-  // Create the RenderWindow, Renderer and Interactor
+  // Create the RenderWindow, Renderer and Interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -138,7 +139,7 @@ int main(int argc, char* argv[])
 
   renderer->AddActor(clipart);
 
-  // Create a nice view
+  // Create a nice view.
   renderer->ResetCamera();
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);

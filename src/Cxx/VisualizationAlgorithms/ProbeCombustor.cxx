@@ -19,6 +19,9 @@
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
 
+#include <iostream>
+#include <string>
+
 // This shows how to probe a dataset with a plane. The probed data is then
 // contoured.
 
@@ -146,7 +149,7 @@ int main(int argc, char* argv[])
   outlineActor->GetProperty()->SetColor(0, 0, 0);
   outlineActor->GetProperty()->SetLineWidth(2.0);
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> ren1;
 

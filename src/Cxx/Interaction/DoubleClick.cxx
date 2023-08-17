@@ -3,7 +3,6 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointPicker.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -40,7 +39,7 @@ public:
 
     int moveDistance = (int)sqrt((double)(xdist * xdist + ydist * ydist));
 
-    // Reset numClicks - If mouse moved further than resetPixelDistance
+    // Reset numClicks - If mouse moved further than resetPixelDistance.
     if (moveDistance > this->ResetPixelDistance)
     {
       this->NumberOfClicks = 1;
@@ -52,7 +51,7 @@ public:
       this->NumberOfClicks = 0;
     }
 
-    // forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
   }
 

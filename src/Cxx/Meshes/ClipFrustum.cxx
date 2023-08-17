@@ -1,30 +1,24 @@
+#include <vtkActor.h>
+#include <vtkBYUReader.h>
+#include <vtkCamera.h>
 #include <vtkClipPolyData.h>
 #include <vtkFrustumSource.h>
-
 #include <vtkNamedColors.h>
-#include <vtkPlanes.h>
-#include <vtkPolyDataNormals.h>
-
-#include <vtkBYUReader.h>
+#include <vtkNew.h>
 #include <vtkOBJReader.h>
 #include <vtkPLYReader.h>
-#include <vtkPolyDataReader.h>
-#include <vtkSTLReader.h>
-#include <vtkSphereSource.h>
-#include <vtkXMLPolyDataReader.h>
-
-#include <vtksys/SystemTools.hxx>
-
-#include <vtkActor.h>
-#include <vtkCamera.h>
-#include <vtkMapper.h>
-#include <vtkNew.h>
+#include <vtkPlanes.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkPolyDataReader.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkSTLReader.h>
 #include <vtkSmartPointer.h>
+#include <vtkSphereSource.h>
+#include <vtkXMLPolyDataReader.h>
+#include <vtksys/SystemTools.hxx>
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
@@ -37,12 +31,12 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // a renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
 
-  // an interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
@@ -69,7 +63,7 @@ int main(int argc, char* argv[])
   outActor->GetProperty()->SetSpecular(.6);
   outActor->GetProperty()->SetSpecularPower(30);
 
-  // Position the camera so that we can see the frustum
+  // Position the camera so that we can see the frustum.
   double viewUp[3] = {0.0, 1.0, 0.0};
   double position[3] = {1.0, 0.0, 0.0};
   PositionCamera(renderer, viewUp, position);
@@ -121,13 +115,12 @@ int main(int argc, char* argv[])
 
   renderWindow->Render();
 
-  // begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
 }
 
-// Snippets
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName)
 {

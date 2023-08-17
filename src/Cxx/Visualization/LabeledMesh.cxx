@@ -1,6 +1,3 @@
-#include <vtkNew.h>
-#include <vtkSmartPointer.h>
-
 #include <vtkActor.h>
 #include <vtkActor2D.h>
 #include <vtkCellArray.h>
@@ -19,6 +16,7 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSelectVisiblePoints.h>
+#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkTextProperty.h>
 

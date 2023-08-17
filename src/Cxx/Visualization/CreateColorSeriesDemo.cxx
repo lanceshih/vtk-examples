@@ -6,7 +6,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -38,19 +37,19 @@ int main(int argc, char* argv[])
     seriesName = argv[1];
   }
 
-  // Provide some geometry
+  // Provide some geometry.
   int resolution = 6;
   vtkNew<vtkPlaneSource> aPlane;
   aPlane->SetXResolution(resolution);
   aPlane->SetYResolution(resolution);
 
-  // Create cell data
+  // Create cell data.
   vtkNew<vtkFloatArray> cellData;
   for (int i = 0; i < resolution * resolution; i++)
   {
     cellData->InsertNextValue(i);
   }
-  aPlane->Update(); // Force an update so we can set cell data
+  aPlane->Update(); // Force an update so we can set cell data.
   aPlane->GetOutput()->GetCellData()->SetScalars(cellData);
 
   vtkNew<vtkNamedColors> colors;
@@ -102,7 +101,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetLookupTable(lut);
   mapper->SetInputConnection(aPlane->GetOutputPort());
@@ -113,7 +112,7 @@ int main(int argc, char* argv[])
   actor->SetMapper(mapper);
   actor->GetProperty()->EdgeVisibilityOn();
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

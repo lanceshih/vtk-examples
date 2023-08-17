@@ -1,6 +1,8 @@
 #ifndef __vtkTestFilter_h
 #define __vtkTestFilter_h
 
+#include <vtkInformation.h>
+#include <vtkInformationVector.h>
 #include <vtkPolyDataAlgorithm.h>
 
 class vtkTestFilter : public vtkPolyDataAlgorithm
@@ -21,18 +23,6 @@ private:
   vtkTestFilter(const vtkTestFilter&);  // Not implemented.
   void operator=(const vtkTestFilter&); // Not implemented.
 };
-
-#endif
-
-#include <vtkAppendPolyData.h>
-#include <vtkCommand.h>
-#include <vtkDataObject.h>
-#include <vtkInformation.h>
-#include <vtkInformationVector.h>
-#include <vtkObjectFactory.h>
-#include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
-#include <vtkStreamingDemandDrivenPipeline.h>
 
 vtkStandardNewMacro(vtkTestFilter);
 
@@ -55,3 +45,5 @@ int vtkTestFilter::RequestData(vtkInformation* vtkNotUsed(request),
 
   return 1;
 }
+
+#endif // __vtkTestFilter_h

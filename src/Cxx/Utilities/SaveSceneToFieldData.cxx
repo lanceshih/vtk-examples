@@ -1,5 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
+#include <vtkFieldData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
@@ -8,7 +9,8 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkTimerLog.h>
+
+#include <vtksys/RegularExpression.hxx>
 #include <vtksys/SystemTools.hxx>
 
 #include <vtkBYUReader.h>
@@ -19,8 +21,9 @@
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
 
-#include <vtkFieldData.h>
-#include <vtksys/RegularExpression.hxx>
+#include <fstream>
+#include <iostream>
+#include <string>
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
@@ -56,16 +59,20 @@ int main(int argc, char* argv[])
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Silver").GetData());
 
-  // Interact to change camera
+  std::cout
+      << "Interact with image to get desired view and then press 'e' or 'q'"
+      << std::endl;
+
+  // Interact to change camera.
   renderWindow->Render();
   renderWindowInteractor->Start();
 
-  // After the interaction is done, save the scene
+  // After the interaction is done, save the scene.
   SaveSceneToFieldData(polyData, actor, renderer->GetActiveCamera());
   renderWindow->Render();
   renderWindowInteractor->Start();
 
-  // After interaction , restore the scene
+  // After interaction, restore the scene.
   RestoreSceneFromFieldData(polyData, actor, renderer->GetActiveCamera());
   renderWindow->Render();
   renderWindowInteractor->Start();

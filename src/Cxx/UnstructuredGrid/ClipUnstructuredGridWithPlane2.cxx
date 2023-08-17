@@ -3,7 +3,6 @@
 #include <vtkCellTypes.h>
 #include <vtkClipDataSet.h>
 #include <vtkDataSetMapper.h>
-#include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlane.h>
@@ -15,11 +14,14 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridReader.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " filename.vtk e.g. treemesh.vt"
+    std::cout << "Usage: " << argv[0] << " filename.vtk e.g. treemesh.vtk"
               << std::endl;
     return EXIT_FAILURE;
   }

@@ -1,5 +1,5 @@
 #include <vtkActor.h>
-#include <vtkCommand.h>
+#include <vtkCallbackCommand.h>
 #include <vtkContourWidget.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -14,9 +14,12 @@
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 
+#include <iostream>
+#include <string>
+
 namespace {
 
-class MyCallback : public vtkCommand
+class MyCallback : public vtkCallbackCommand
 {
 public:
   static MyCallback* New()
@@ -63,7 +66,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create the RenderWindow, Renderer
+  // Create the RenderWindow, Renderer.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);

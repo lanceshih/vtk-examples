@@ -12,9 +12,11 @@
 //
 #include <vtkGeometryFilter.h>
 #include <vtkImageAccumulate.h>
+#include <vtkImageData.h>
 #include <vtkMaskFields.h>
 #include <vtkMetaImageReader.h>
 #include <vtkNew.h>
+#include <vtkPointData.h>
 #include <vtkThreshold.h>
 #include <vtkVersion.h>
 #include <vtkWindowedSincPolyDataFilter.h>
@@ -35,9 +37,6 @@
 #endif
 
 #include <sstream>
-#include <vtkImageData.h>
-#include <vtkPointData.h>
-#include <vtkUnstructuredGrid.h>
 
 int main(int argc, char* argv[])
 {
@@ -50,7 +49,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Create all of the classes we will need
+  // Create all of the classes we will need.
   vtkNew<vtkMetaImageReader> reader;
   vtkNew<vtkImageAccumulate> histogram;
 #ifdef USE_FLYING_EDGES
@@ -72,7 +71,7 @@ int main(int argc, char* argv[])
   double passBand = 0.001;
   double featureAngle = 120.0;
 
-  // Generate models from labels
+  // Generate models from labels.
   // 1) Read the meta file
   // 2) Generate a histogram of the labels
   // 3) Generate models from the labeled volume

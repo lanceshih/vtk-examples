@@ -2,11 +2,13 @@
 #include <vtkConeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {

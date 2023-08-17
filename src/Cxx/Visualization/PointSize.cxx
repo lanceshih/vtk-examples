@@ -2,7 +2,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,7 +12,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create points
+  // Create points.
   vtkNew<vtkPointSource> src;
   src->SetCenter(0, 0, 0);
   src->SetNumberOfPoints(10);
@@ -27,7 +26,7 @@ int main(int, char*[])
   actor->GetProperty()->SetPointSize(5);
   actor->GetProperty()->SetColor(colors->GetColor3d("Yellow").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -37,7 +36,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("RoyalBLue").GetData());
 

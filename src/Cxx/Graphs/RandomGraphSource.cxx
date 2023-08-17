@@ -1,6 +1,5 @@
 #include <vtkForceDirectedLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
-#include <vtkGraphWriter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRandomGraphSource.h>

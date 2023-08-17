@@ -25,8 +25,7 @@ int main(int, char*[])
   vtkNew<vtkNamedColors> colors;
 
   // Create polydata to slice the grid with. In this case, use a cone. This
-  // could
-  // be any polydata including a stl file.
+  // could be any polydata including an stl file.
   vtkNew<vtkConeSource> cone;
   cone->SetResolution(50);
   cone->SetDirection(0, 0, -1);
@@ -34,11 +33,11 @@ int main(int, char*[])
   cone->CappingOn();
   cone->Update();
 
-  // Implicit function that will be used to slice the mesh
+  // Implicit function that will be used to slice the mesh.
   vtkNew<vtkImplicitPolyDataDistance> implicitPolyDataDistance;
   implicitPolyDataDistance->SetInput(cone->GetOutput());
 
-  // create a grid
+  // Create a grid
   unsigned int dimension = 51;
   vtkNew<vtkFloatArray> xCoords;
   for (unsigned int i = 0; i < dimension; ++i)
@@ -69,12 +68,12 @@ int main(int, char*[])
   rgrid->SetYCoordinates(yCoords);
   rgrid->SetZCoordinates(zCoords);
 
-  // Create an array to hold distance information
+  // Create an array to hold distance information.
   vtkNew<vtkFloatArray> signedDistances;
   signedDistances->SetNumberOfComponents(1);
   signedDistances->SetName("SignedDistances");
 
-  // Evaluate the signed distance function at all of the grid points
+  // Evaluate the signed distance function at all of the grid points.
   for (vtkIdType pointId = 0; pointId < rgrid->GetNumberOfPoints(); ++pointId)
   {
     double p[3];
@@ -83,25 +82,43 @@ int main(int, char*[])
     signedDistances->InsertNextValue(signedDistance);
   }
 
-  // Add the SignedDistances to the grid
+  // Add the SignedDistances to the grid.
   rgrid->GetPointData()->SetScalars(signedDistances);
 
-  // Use vtkClipDataSet to slice the grid with the polydata
+  // Use vtkClipDataSet to slice the grid with the polydata.
   vtkNew<vtkClipDataSet> clipper;
   clipper->SetInputData(rgrid);
   clipper->InsideOutOn();
   clipper->SetValue(0.0);
-  clipper->GenerateClippedOutputOn();
+  clipper->GenerateClippedOutputOff();
   clipper->Update();
 
+  // For some reason we cannot use:
+  /*
+   vtkNew<vtkClipDataSet> clipper;
+   clipper->SetInputData(rgrid);
+   clipper->InsideOutOn();
+   clipper->SetValue(0.0);
+   clipper->GenerateClippedOutputOn();
+   clipper->Update();
+  */
+
+  // So we define a new clipper for the outside clip.
+  vtkNew<vtkClipDataSet> clipper1;
+  clipper1->SetInputData(rgrid);
+  clipper1->InsideOutOff();
+  clipper1->SetValue(0.0);
+  clipper1->GenerateClippedOutputOff();
+  clipper1->Update();
+
   // --- mappers, actors, render, etc. ---
-  // mapper and actor to view the cone
+  // Mapper and actor to view the cone.
   vtkNew<vtkPolyDataMapper> coneMapper;
   coneMapper->SetInputConnection(cone->GetOutputPort());
   vtkNew<vtkActor> coneActor;
   coneActor->SetMapper(coneMapper);
 
-  // geometry filter to view the background grid
+  // Geometry filter to view the background grid.
   vtkNew<vtkRectilinearGridGeometryFilter> geometryFilter;
   geometryFilter->SetInputData(rgrid);
   geometryFilter->SetExtent(0, dimension, 0, dimension, dimension / 2,
@@ -117,13 +134,14 @@ int main(int, char*[])
   wireActor->SetMapper(rgridMapper);
   wireActor->GetProperty()->SetRepresentationToWireframe();
 
-  // mapper and actor to view the clipped mesh
+  // Mapper and actor to view the clipped mesh.
   vtkNew<vtkDataSetMapper> clipperMapper;
   clipperMapper->SetInputConnection(clipper->GetOutputPort());
   clipperMapper->ScalarVisibilityOff();
 
   vtkNew<vtkDataSetMapper> clipperOutsideMapper;
-  clipperOutsideMapper->SetInputConnection(clipper->GetOutputPort(1));
+  // clipperOutsideMapper->SetInputConnection(clipper->GetOutputPort(1));
+  clipperOutsideMapper->SetInputConnection(clipper1->GetOutputPort());
   clipperOutsideMapper->ScalarVisibilityOff();
 
   vtkNew<vtkActor> clipperActor;
@@ -135,8 +153,8 @@ int main(int, char*[])
   clipperOutsideActor->GetProperty()->SetColor(
       colors->GetColor3d("Banana").GetData());
 
-  // A renderer and render window
-  // Create a renderer, render window, and interactor
+  // A renderer and render window.
+  // Create a renderer, render window, and interactor.
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   vtkNew<vtkRenderer> leftRenderer;
   leftRenderer->SetViewport(leftViewport);
@@ -147,7 +165,7 @@ int main(int, char*[])
   rightRenderer->SetViewport(rightViewport);
   rightRenderer->SetBackground(colors->GetColor3d("CadetBlue").GetData());
 
-  // add the actors
+  // Add the actors.
   leftRenderer->AddActor(wireActor);
   leftRenderer->AddActor(clipperActor);
   rightRenderer->AddActor(clipperOutsideActor);
@@ -158,11 +176,11 @@ int main(int, char*[])
   renwin->AddRenderer(rightRenderer);
   renwin->SetWindowName("ClipDataSetWithPolyData");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renwin);
 
-  // Share the camera
+  // Share the camera.
 
   leftRenderer->GetActiveCamera()->SetPosition(0, -1, 0);
   leftRenderer->GetActiveCamera()->SetFocalPoint(0, 0, 0);
@@ -175,7 +193,7 @@ int main(int, char*[])
   renwin->Render();
   interactor->Start();
 
-  // Generate a report
+  // Generate a report.
   vtkIdType numberOfCells = clipper->GetOutput()->GetNumberOfCells();
   std::cout << "------------------------" << std::endl;
   std::cout << "The clipped dataset(inside) contains a " << std::endl
@@ -197,16 +215,16 @@ int main(int, char*[])
     ++it;
   }
 
-  numberOfCells = clipper->GetClippedOutput()->GetNumberOfCells();
+  numberOfCells = clipper1->GetOutput()->GetNumberOfCells();
   std::cout << "------------------------" << std::endl;
   std::cout << "The clipped dataset(outside) contains a " << std::endl
-            << clipper->GetClippedOutput()->GetClassName() << " that has "
+            << clipper1->GetOutput()->GetClassName() << " that has "
             << numberOfCells << " cells" << std::endl;
   typedef std::map<int, int> OutsideCellContainer;
   CellContainer outsideCellMap;
   for (vtkIdType i = 0; i < numberOfCells; i++)
   {
-    outsideCellMap[clipper->GetClippedOutput()->GetCellType(i)]++;
+    outsideCellMap[clipper1->GetOutput()->GetCellType(i)]++;
   }
 
   it = outsideCellMap.begin();

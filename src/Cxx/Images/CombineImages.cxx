@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Parse input arguments
+  // Parse input arguments.
   if (argc != 3)
   {
     std::cerr << "Usage: " << argv[0]
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the images
+  // Read the images.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> imgReader1;
   imgReader1.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -35,14 +35,15 @@ int main(int argc, char* argv[])
   imgReader2.TakeReference(readerFactory->CreateImageReader2(argv[2]));
   imgReader2->SetFileName(argv[2]);
 
-  // Combine the images (blend takes multiple connections on the 0th input port)
+  // Combine the images (blend takes multiple connections on the 0th input
+  // port).
   vtkNew<vtkImageBlend> blend;
   blend->AddInputConnection(imgReader1->GetOutputPort());
   blend->AddInputConnection(imgReader2->GetOutputPort());
   blend->SetOpacity(0, 0.5);
   blend->SetOpacity(1, 0.5);
 
-  // Display the result
+  // Display the result.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<vtkImageViewer2> imageViewer;

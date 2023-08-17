@@ -96,8 +96,7 @@ int main(int argc, char* argv[])
   surfaceActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
   surfaceActor->SetBackfaceProperty(back);
 
-  // Create graphics stuff
-  //
+  // Create graphics stuff.
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
@@ -109,12 +108,10 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer,set the background and size.
   ren1->AddActor(surfaceActor);
 
-  // Generate an interesting view
-  //
+  // Generate an interesting view.
   ren1->ResetCamera();
   ren1->GetActiveCamera()->Azimuth(120);
   ren1->GetActiveCamera()->Elevation(30);

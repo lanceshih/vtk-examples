@@ -1,8 +1,6 @@
 #include <vtkActor.h>
-#include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
 #include <vtkImageBlend.h>
-#include <vtkImageData.h>
 #include <vtkImageMapToColors.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
@@ -17,7 +15,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Parse input arguments
+  // Parse input arguments.
   if (argc < 3)
   {
     std::cerr << "Usage: " << argv[0]

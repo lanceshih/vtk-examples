@@ -210,13 +210,13 @@ if (BUILD_TESTING)
     add_test(${KIT}-PBR_Skybox ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests TestPBR_Skybox
       ${DATA}/PBR_Skybox.json)
   endif()
-  if(TARGET PBR_Skybox_Texturing)
-    add_test(${KIT}-PBR_Skybox_Texturing ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
-      TestPBR_Skybox_Texturing ${DATA}/PBR_Skybox_Texturing)
-  endif()
   if(TARGET PBR_Skybox_Anisotropy)
     add_test(${KIT}-PBR_Skybox_Anisotropy ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
       TestPBR_Skybox_Anisotropy ${DATA}/PBR_Skybox_Anisotropy -sBoy)
+  endif()
+  if(TARGET PBR_Skybox_Texturing)
+    add_test(${KIT}-PBR_Skybox_Texturing ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
+      TestPBR_Skybox_Texturing ${DATA}/PBR_Skybox_Texturing)
   endif()
 
   include(${WikiExamples_SOURCE_DIR}/CMake/ExamplesTesting.cmake)

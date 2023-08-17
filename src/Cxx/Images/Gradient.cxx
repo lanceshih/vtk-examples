@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkArrowSource.h>
-#include <vtkCamera.h>
 #include <vtkDoubleArray.h>
 #include <vtkFieldDataToAttributeDataFilter.h>
 #include <vtkGlyph3D.h>
@@ -50,7 +49,7 @@ int main(int argc, char* argv[])
       drawColor2[i] = color2[i];
     }
 
-    // Create an image
+    // Create an image.
     vtkNew<vtkImageCanvasSource2D> imageSource;
     imageSource->SetScalarTypeToDouble();
     imageSource->SetNumberOfScalarComponents(1);
@@ -64,19 +63,19 @@ int main(int argc, char* argv[])
     originalImage = imageSource->GetOutput();
     image = imageSource->GetOutput();
 
-    // Use all of the points
+    // Use all of the points.
     onRatio = 1;
     scaleFactor = .01;
   }
   else
   {
-    // Read an image
+    // Read an image.
     vtkNew<vtkImageReader2Factory> readerFactory;
     vtkSmartPointer<vtkImageReader2> reader;
     reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
     reader->SetFileName(argv[1]);
 
-    // Convert to HSV and extract the Value
+    // Convert to HSV and extract the Value.
     vtkNew<vtkImageRGBToHSV> hsvFilter;
     hsvFilter->SetInputConnection(reader->GetOutputPort());
 
@@ -88,19 +87,19 @@ int main(int argc, char* argv[])
     image = extractValue->GetOutput();
     originalImage = reader->GetOutput();
 
-    // Use 1% of the points
+    // Use 1% of the points.
     onRatio = image->GetPointData()->GetScalars()->GetNumberOfTuples() /
         (image->GetPointData()->GetScalars()->GetNumberOfTuples() * .01);
     scaleFactor = 1.0;
   }
 
-  // Compute the gradient of the Value
+  // Compute the gradient of the Value.
   vtkNew<vtkImageGradient> gradientFilter;
   gradientFilter->SetInputData(image);
   gradientFilter->SetDimensionality(2);
   gradientFilter->Update();
 
-  // Extract the x component of the gradient
+  // Extract the x component of the gradient.
   vtkNew<vtkImageExtractComponents> extractXFilter;
   extractXFilter->SetComponents(0);
   extractXFilter->SetInputConnection(gradientFilter->GetOutputPort());
@@ -110,18 +109,18 @@ int main(int argc, char* argv[])
   extractXFilter->Update();
   extractXFilter->GetOutput()->GetPointData()->GetScalars()->GetRange(xRange);
 
-  // Gradient could be negative, so take the absolute value
+  // Gradient could be negative, so take the absolute value.
   vtkNew<vtkImageMathematics> imageAbsX;
   imageAbsX->SetOperationToAbsoluteValue();
   imageAbsX->SetInputConnection(extractXFilter->GetOutputPort());
 
-  // Scale the output (0,255)
+  // Scale the output (0,255).
   vtkNew<vtkImageShiftScale> shiftScaleX;
   shiftScaleX->SetOutputScalarTypeToUnsignedChar();
   shiftScaleX->SetScale(255 / xRange[1]);
   shiftScaleX->SetInputConnection(imageAbsX->GetOutputPort());
 
-  // Extract the y component of the gradient
+  // Extract the y component of the gradient.
   vtkNew<vtkImageExtractComponents> extractYFilter;
   extractYFilter->SetComponents(1);
   extractYFilter->SetInputConnection(gradientFilter->GetOutputPort());
@@ -130,7 +129,7 @@ int main(int argc, char* argv[])
   extractYFilter->Update();
   extractYFilter->GetOutput()->GetPointData()->GetScalars()->GetRange(yRange);
 
-  // Gradient could be negative, so take the absolute value
+  // Gradient could be negative, so take the absolute value.
   vtkNew<vtkImageMathematics> imageAbsY;
   imageAbsY->SetOperationToAbsoluteValue();
   imageAbsY->SetInputConnection(extractYFilter->GetOutputPort());
@@ -141,12 +140,12 @@ int main(int argc, char* argv[])
   shiftScaleY->SetScale(255 / yRange[1]);
   shiftScaleY->SetInputConnection(imageAbsY->GetOutputPort());
 
-  // Create the Glyphs for the gradient
+  // Create the Glyphs for the gradient.
   vtkNew<vtkArrowSource> arrowSource;
 
   // The gradient is 2D but Glyph3D needs 3D vectors. Add a 0 z-component
   // Also, ImageGradient generates a 2-component scalar for the
-  // gradient, but Glyph3D needs normals or vectors
+  // gradient, but Glyph3D needs normals or vectors.
   vtkNew<vtkDoubleArray> zeroes;
   zeroes->SetNumberOfComponents(1);
   zeroes->SetName("Zero");
@@ -168,7 +167,7 @@ int main(int argc, char* argv[])
   scalarsToVectors->SetVectorComponent(1, scalarName.c_str(), 1);
   scalarsToVectors->SetVectorComponent(2, "Zero", 0);
 
-  // Select a small percentage of the gradients
+  // Select a small percentage of the gradients.
   vtkNew<vtkMaskPoints> maskPoints;
   maskPoints->SetInputConnection(scalarsToVectors->GetOutputPort());
   maskPoints->RandomModeOff();
@@ -181,7 +180,7 @@ int main(int argc, char* argv[])
   vectorGradientGlyph->SetVectorModeToUseVector();
   vectorGradientGlyph->SetScaleFactor(scaleFactor);
 
-  // Visualize
+  // Visualize.
 
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.25, 1.0};
@@ -199,7 +198,7 @@ int main(int argc, char* argv[])
   vectorGradientActor->GetProperty()->SetColor(
       namedColors->GetColor3d("Tomato").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   // vtkNew<vtkCamera> sharedCamera;
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(originalViewport);
@@ -243,7 +242,7 @@ int main(int argc, char* argv[])
   yGradientActor->GetMapper()->SetInputConnection(shiftScaleY->GetOutputPort());
   yGradientActor->InterpolateOff();
 
-  // Add the actors to the scenes
+  // Add the actors to the scenes.
   originalRenderer->AddActor(originalActor);
   xGradientRenderer->AddActor(xGradientActor);
   yGradientRenderer->AddActor(yGradientActor);

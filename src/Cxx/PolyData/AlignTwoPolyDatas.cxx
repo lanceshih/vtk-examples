@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
   auto sourcePolyData = ReadPolyData(argv[1]);
 
   // Save the source polydata in case the align does not improve
-  // segmentation
+  // segmentation.
   vtkNew<vtkPolyData> originalSourcePolyData;
   originalSourcePolyData->DeepCopy(sourcePolyData);
 
@@ -100,8 +100,9 @@ int main(int argc, char* argv[])
 
   // If the target orientation is markedly different, you may need to apply a
   // transform to orient the target with the source.
-  // For example, when using Grey_Nurse_Shark.stl as the source and
-  // greatWhite.stl as the target, you need to transform the target.
+  // For example, when using Grey_Nurse_Shark.stl as the
+  //  source and thingiverse/greatWhite.stl as the target,
+  // you need to transform the target.
   auto sourceFound =
       std::string(argv[1]).find("Grey_Nurse_Shark.stl") != std::string::npos;
   auto targetFound =
@@ -126,7 +127,7 @@ int main(int argc, char* argv[])
                                    ->GetArray("HausdorffDistance")
                                    ->GetComponent(0, 0);
 
-  // Get initial alignment using oriented bounding boxes
+  // Get initial alignment using oriented bounding boxes.
   AlignBoundingBoxes(sourcePolyData, tpd->GetOutput());
 
   distance->SetInputData(0, tpd->GetOutput());
@@ -145,7 +146,7 @@ int main(int argc, char* argv[])
     sourcePolyData->DeepCopy(originalSourcePolyData);
   }
 
-  // Refine the alignment using IterativeClosestPoint
+  // Refine the alignment using IterativeClosestPoint.
   vtkNew<vtkIterativeClosestPointTransform> icp;
   icp->SetSource(sourcePolyData);
   icp->SetTarget(tpd->GetOutput());

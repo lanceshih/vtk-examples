@@ -1,11 +1,8 @@
 #include <vtkActor.h>
 #include <vtkCommand.h>
-#include <vtkInteractorStyle.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -16,7 +13,7 @@
 
 namespace {
 
-// A class not derived from vtkObjectBase
+// A class not derived from vtkObjectBase.
 class MyClass
 {
 public:
@@ -28,7 +25,7 @@ public:
   }
 };
 
-// A class that is derived from vtkObjectBase
+// A class that is derived from vtkObjectBase.
 class MyInteractorStyle : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -50,7 +47,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(0.0, 0.0, 0.0);
   sphereSource->SetRadius(5.0);
@@ -59,18 +56,18 @@ int main(int, char*[])
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ObserverMemberFunction");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 

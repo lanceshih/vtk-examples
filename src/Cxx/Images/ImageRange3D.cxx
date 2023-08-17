@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Parse input arguments
+  // Parse input arguments.
   if (argc != 2)
   {
     std::cout << "Required parameters: Filename.jpg e.g. Gourds2.jpg"
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageActor> rangeActor;
   rangeActor->GetMapper()->SetInputConnection(rangeCastFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rangeViewport[4] = {0.5, 0.0, 1.0, 1.0};

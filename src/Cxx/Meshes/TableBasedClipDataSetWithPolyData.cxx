@@ -15,7 +15,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkTableBasedClipDataSet.h>
 #include <vtkUnstructuredGrid.h>
 
@@ -38,7 +37,7 @@ int main(int, char*[])
   vtkNew<vtkImplicitPolyDataDistance> implicitPolyDataDistance;
   implicitPolyDataDistance->SetInput(cone->GetOutput());
 
-  // create a grid
+  // create a grid.
   unsigned int dimension = 51;
   vtkNew<vtkFloatArray> xCoords;
   for (unsigned int i = 0; i < dimension; ++i)
@@ -69,7 +68,7 @@ int main(int, char*[])
   rgrid->SetYCoordinates(yCoords);
   rgrid->SetZCoordinates(zCoords);
 
-  // Create an array to hold distance information
+  // Create an array to hold distance information.
   vtkNew<vtkFloatArray> signedDistances;
   signedDistances->SetNumberOfComponents(1);
   signedDistances->SetName("SignedDistances");
@@ -83,10 +82,10 @@ int main(int, char*[])
     signedDistances->InsertNextValue(signedDistance);
   }
 
-  // Add the SignedDistances to the grid
+  // Add the SignedDistances to the grid.
   rgrid->GetPointData()->SetScalars(signedDistances);
 
-  // Use vtkTableBasedClipDataSet to slice the grid with the polydata
+  // Use vtkTableBasedClipDataSet to slice the grid with the polydata.
   vtkNew<vtkTableBasedClipDataSet> clipper;
   clipper->SetInputData(rgrid);
   clipper->InsideOutOn();
@@ -95,13 +94,13 @@ int main(int, char*[])
   clipper->Update();
 
   // --- mappers, actors, render, etc. ---
-  // mapper and actor to view the cone
+  // Mapper and actor to view the cone.
   vtkNew<vtkPolyDataMapper> coneMapper;
   coneMapper->SetInputConnection(cone->GetOutputPort());
   vtkNew<vtkActor> coneActor;
   coneActor->SetMapper(coneMapper);
 
-  // geometry filter to view the background grid
+  // Geometry filter to view the background grid.
   vtkNew<vtkRectilinearGridGeometryFilter> geometryFilter;
   geometryFilter->SetInputData(rgrid);
   geometryFilter->SetExtent(0, dimension, 0, dimension, dimension / 2,
@@ -117,7 +116,7 @@ int main(int, char*[])
   wireActor->SetMapper(rgridMapper);
   wireActor->GetProperty()->SetRepresentationToWireframe();
 
-  // mapper and actor to view the clipped mesh
+  // Mapper and actor to view the clipped mesh.
   vtkNew<vtkDataSetMapper> clipperMapper;
   clipperMapper->SetInputConnection(clipper->GetOutputPort());
   clipperMapper->ScalarVisibilityOff();
@@ -136,7 +135,7 @@ int main(int, char*[])
       colors->GetColor3d("Banana").GetData());
 
   // A renderer and render window
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   vtkNew<vtkRenderer> leftRenderer;
   leftRenderer->SetViewport(leftViewport);
@@ -149,7 +148,7 @@ int main(int, char*[])
   rightRenderer->SetBackground(colors->GetColor3d("CadetBlue").GetData());
   rightRenderer->UseHiddenLineRemovalOn();
 
-  // add the actors
+  // Add the actors.
   leftRenderer->AddActor(wireActor);
   leftRenderer->AddActor(clipperActor);
   rightRenderer->AddActor(clipperOutsideActor);
@@ -160,11 +159,11 @@ int main(int, char*[])
   renderWindow->AddRenderer(rightRenderer);
   renderWindow->SetWindowName("TableBasedClipDataSetWithPolyData");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Share the camera
+  // Share the camera.
 
   leftRenderer->GetActiveCamera()->SetPosition(0, -1, 0);
   leftRenderer->GetActiveCamera()->SetFocalPoint(0, 0, 0);
@@ -177,7 +176,7 @@ int main(int, char*[])
   renderWindow->Render();
   interactor->Start();
 
-  // Generate a report
+  // Generate a report.
   vtkIdType numberOfCells = clipper->GetOutput()->GetNumberOfCells();
   std::cout << "------------------------" << std::endl;
   std::cout << "The clipped dataset(inside) contains a " << std::endl

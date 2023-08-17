@@ -1,7 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCallbackCommand.h>
-#include <vtkCommand.h>
-#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -18,12 +16,10 @@
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
 #include <vtkTextProperty.h>
-#include <vtkWidgetEvent.h>
-#include <vtkWidgetEventTranslator.h>
 
 namespace {
 
-class vtkSliderCallback : public vtkCommand
+class vtkSliderCallback : public vtkCallbackCommand
 {
 public:
   static vtkSliderCallback* New()
@@ -72,12 +68,12 @@ int main(int, char*[])
   pointsActor->GetProperty()->SetColor(
       colors->GetColor3d("Seashell").GetData());
 
-  // Create the tree
+  // Create the tree.
   vtkNew<vtkPointLocator> pointLocator;
   pointLocator->SetDataSet(inputSource->GetOutput());
   pointLocator->BuildLocator();
 
-  // Initialize the representation
+  // Initialize the representation.
   vtkNew<vtkPolyData> polydata;
   pointLocator->GenerateRepresentation(0, polydata);
 
@@ -91,13 +87,13 @@ int main(int, char*[])
   locatorTreeActor->GetProperty()->SetColor(
       colors->GetColor3d("MistyRose").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("PointLocatorVisualization");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
@@ -106,7 +102,7 @@ int main(int, char*[])
   renderer->AddActor(locatorTreeActor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindow->Render();
 
   vtkNew<vtkSliderRepresentation2D> sliderRep;
@@ -150,18 +146,18 @@ void SetSliderColors(vtkSliderRepresentation2D* slider)
 {
   vtkNew<vtkNamedColors> colors;
   // Set color properties:
-  // Change the color of the knob that slides
+  // Change the color of the knob that slides.
   slider->GetSliderProperty()->SetColor(colors->GetColor3d("Peru").GetData());
-  // Change the color of the text indicating what the slider controls
+  // Change the color of the text indicating what the slider controls.
   slider->GetTitleProperty()->SetColor(colors->GetColor3d("Silver").GetData());
-  // Change the color of the text displaying the value
+  // Change the color of the text displaying the value.
   slider->GetLabelProperty()->SetColor(colors->GetColor3d("Silver").GetData());
-  // Change the color of the knob when the mouse is held on it
+  // Change the color of the knob when the mouse is held on it.
   slider->GetSelectedProperty()->SetColor(
       colors->GetColor3d("DeepPink").GetData());
-  // Change the color of the bar
+  // Change the color of the bar.
   slider->GetTubeProperty()->SetColor(colors->GetColor3d("Teal").GetData());
-  // Change the color of the ends of the bar
+  // Change the color of the ends of the bar.
   slider->GetCapProperty()->SetColor(colors->GetColor3d("Teal").GetData());
 }
 

@@ -1,6 +1,5 @@
 #include <vtkImageActor.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageFlip.h>
 #include <vtkImageMandelbrotSource.h>
 #include <vtkImageMapper3D.h>
@@ -15,7 +14,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageMandelbrotSource> source;
   source->Update();
 
@@ -67,7 +66,7 @@ int main(int, char*[])
   vtkNew<vtkImageActor> zActor;
   zActor->GetMapper()->SetInputConnection(castZFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double inputViewport[4] = {0.0, 0.0, 0.25, 1.0};
   double xViewport[4] = {0.25, 0.0, 0.5, 1.0};
@@ -99,7 +98,7 @@ int main(int, char*[])
   zRenderer->ResetCamera();
   zRenderer->SetBackground(colors->GetColor3d("Peacock").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(1000, 250);
   renderWindow->AddRenderer(inputRenderer);
@@ -108,13 +107,13 @@ int main(int, char*[])
   renderWindow->AddRenderer(zRenderer);
   renderWindow->SetWindowName("Flip");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

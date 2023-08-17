@@ -2,21 +2,20 @@
 #include <vtkDataSetMapper.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdTypeArray.h>
-#include <vtkInformation.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSelection.h>
 #include <vtkSelectionNode.h>
-#include <vtkSphereSource.h>
 #include <vtkUnstructuredGrid.h>
-#include <vtkVertexGlyphFilter.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -99,24 +98,24 @@ int main(int, char*[])
       colors->GetColor3d("MidnightBlue").GetData());
   selectedActor->GetProperty()->SetPointSize(5);
 
-  // There will be one render window
+  // There will be one render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->SetWindowName("ExtractSelectionOriginalId");
 
-  // And one interactor
+  // And one interactor.
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Create a camera for all renderers
+  // Create a camera for all renderers.
   vtkNew<vtkCamera> camera;
 
-  // Setup the renderers
+  // Setup the renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);

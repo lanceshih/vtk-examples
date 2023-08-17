@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkAppendPolyData.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCellLocator.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkMinimalStandardRandomSequence.h>
@@ -23,7 +22,7 @@
 
 int main(int, char*[])
 {
-  // Define adjustable paramaters
+  // Define adjustable paramaters.
   constexpr double xMin = -10.0;
   constexpr double xMax = 10.0;
   constexpr double yMin = -10.0;
@@ -35,7 +34,7 @@ int main(int, char*[])
   constexpr int numberOfObjects = 200;
   constexpr int probeResolution = 200.0;
 
-  // Generate terrain
+  // Generate terrain.
   vtkNew<vtkPlaneSource> terrain;
   terrain->SetOrigin(xMin, yMin, 0.0);
   terrain->SetPoint2(xMin, yMax, 0.0);
@@ -44,7 +43,7 @@ int main(int, char*[])
   terrain->SetYResolution(yResolution);
   terrain->Update();
 
-  // Generate objects and append them to terrain
+  // Generate objects and append them to terrain.
   vtkNew<vtkAppendPolyData> append;
   append->AddInputConnection(terrain->GetOutputPort());
 
@@ -69,12 +68,12 @@ int main(int, char*[])
     y = randomSequence->GetRangeValue(yMin + 1.0, yMax - 1.0);
     randomSequence->Next();
 
-    // Generate an object
+    // Generate an object.
     vtkNew<vtkPlatonicSolidSource> platonic;
     // platonic->SetSolidType(solid(mt));
     platonic->SetSolidType(solid);
 
-    // Translate and scale
+    // Translate and scale.
     vtkNew<vtkTransform> transform;
     // double s = scale(mt);
     // transform->Translate(position(mt), position(mt), 0.0);
@@ -91,12 +90,12 @@ int main(int, char*[])
   }
   append->Update();
 
-  // Resample terrian
+  // Resample terrian.
   vtkNew<vtkCellLocator> cellLocator;
   cellLocator->SetDataSet(append->GetOutput());
   cellLocator->BuildLocator();
 
-  // Generate a probe plane
+  // Generate a probe plane.
   vtkNew<vtkPlaneSource> probeTerrain;
   probeTerrain->SetOrigin(terrain->GetOrigin());
   probeTerrain->SetPoint2(terrain->GetPoint2());
@@ -119,7 +118,7 @@ int main(int, char*[])
     if (cellLocator->IntersectWithLine(rayStart, rayEnd, 0.0001, t, xyz,
                                        pcoords, subId))
     {
-      // The new elevation is in xyz[2]
+      // The new elevation is in xyz[2].
       double pt[3];
       probePoints->GetPoint(i, pt);
       probePoints->SetPoint(i, pt[0], pt[1], xyz[2]);
@@ -130,7 +129,7 @@ int main(int, char*[])
   // Visualize
   vtkNew<vtkNamedColors> colors;
 
-  // Two viewports, left for original and right for resampled
+  // Two viewports, left for original and right for resampled.
   vtkNew<vtkPolyDataMapper> originalMapper;
   originalMapper->SetInputConnection(append->GetOutputPort());
   originalMapper->SetInputData(append->GetOutput());

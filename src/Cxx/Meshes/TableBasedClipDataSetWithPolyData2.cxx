@@ -19,7 +19,6 @@
 #include <vtkPoints.h>
 #include <vtkProperty.h>
 #include <vtkRectilinearGrid.h>
-#include <vtkRenderStepsPass.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
@@ -38,9 +37,9 @@ vtkSmartPointer<vtkRectilinearGrid> makeImage(int n);
 
 int main(int, char*[])
 {
-  constexpr int imageSize = 64; // number of checkerboard squares on a side
+  constexpr int imageSize = 64; // number of checkerboard squares on a side.
 
-  // Offsets for clipping planes with normals in the X and Y directions
+  // Offsets for clipping planes with normals in the X and Y directions.
   constexpr int xOffset = 8;
   constexpr int yOffset = 8;
 
@@ -105,7 +104,7 @@ namespace {
 vtkSmartPointer<vtkRectilinearGrid> makeImage(int n)
 {
   constexpr double cubeSize =
-      20.0; // physical linear dimension of entire system
+      20.0; // physical linear dimension of entire system.
 
   // This is a simplification of a program that uses actual image data
   // as a source for the rectilinear grid.  In order to recreate the

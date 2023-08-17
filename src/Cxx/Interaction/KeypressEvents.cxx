@@ -2,8 +2,6 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,7 +11,7 @@
 
 namespace {
 
-// Define interaction style
+// Define interaction style.
 class KeyPressInteractorStyle : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -22,26 +20,26 @@ public:
 
   virtual void OnKeyPress() override
   {
-    // Get the keypress
+    // Get the keypress.
     vtkRenderWindowInteractor* rwi = this->Interactor;
     std::string key = rwi->GetKeySym();
 
-    // Output the key that was pressed
+    // Output the key that was pressed.
     std::cout << "Pressed " << key << std::endl;
 
-    // Handle an arrow key
+    // Handle an arrow key.
     if (key == "Up")
     {
       std::cout << "The up arrow was pressed." << std::endl;
     }
 
-    // Handle a "normal" key
+    // Handle a "normal" key.
     if (key == "a")
     {
       std::cout << "The a key was pressed." << std::endl;
     }
 
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnKeyPress();
   }
 };
@@ -66,13 +64,13 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("KeypressEvents");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 

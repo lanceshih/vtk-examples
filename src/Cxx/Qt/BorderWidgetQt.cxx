@@ -18,6 +18,9 @@
 #include <vtkWidgetCallbackMapper.h>
 #include <vtkWidgetEvent.h>
 
+#include <iostream>
+#include <string>
+
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1
 #endif
@@ -85,14 +88,14 @@ BorderWidgetQt::BorderWidgetQt(QWidget* parent)
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // Connect VTK with Qt
+  // Connect VTK with Qt.
 #if VTK890
   this->ui->qvtkWidget->renderWindow()->AddRenderer(renderer);
 #else
   this->ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 #endif
 
-  // Add a border widget to the renderer
+  // Add a border widget to the renderer.
   this->BorderWidget = vtkNew<vtkCustomBorderWidget>();
 #if VTK890
   this->BorderWidget->SetInteractor(this->ui->qvtkWidget->interactor());
@@ -151,10 +154,10 @@ void vtkCustomBorderWidget::EndSelectAction(vtkAbstractWidget* w)
 {
   vtkBorderWidget* borderWidget = dynamic_cast<vtkBorderWidget*>(w);
 
-  // Get the actual box coordinates/planes
+  // Get the actual box coordinates/planes.
   // vtkNew<vtkPolyData> polydata;
 
-  // Get the bottom left corner
+  // Get the bottom left corner.
   auto lowerLeft =
       static_cast<vtkBorderRepresentation*>(borderWidget->GetRepresentation())
           ->GetPosition();

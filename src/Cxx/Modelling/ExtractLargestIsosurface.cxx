@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkStructuredPointsReader> reader;
   reader->SetFileName(fileName);
 
-  // Create a 3D model using flying edges or marching cubes
+  // Create a 3D model using flying edges or marching cubes.
 #ifdef USE_FLYING_EDGES
   vtkNew<vtkFlyingEdges3D> mc;
 #else
@@ -65,14 +65,14 @@ int main(int argc, char* argv[])
   mc->SetInputConnection(reader->GetOutputPort());
   mc->ComputeNormalsOn();
   mc->ComputeGradientsOn();
-  mc->SetValue(0, threshold); // second value acts as threshold
+  mc->SetValue(0, threshold); // Second value acts as threshold.
 
-  // To remain largest region
+  // To remain largest region.
   vtkNew<vtkPolyDataConnectivityFilter> confilter;
   confilter->SetInputConnection(mc->GetOutputPort());
   confilter->SetExtractionModeToLargestRegion();
 
-  // Create a mapper
+  // Create a mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   if (extractLargest)
   {

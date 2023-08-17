@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCellArray.h>
-#include <vtkCellType.h>
 #include <vtkDataSetMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>

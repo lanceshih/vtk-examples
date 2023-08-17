@@ -1,4 +1,3 @@
-#include <vtkActor.h>
 #include <vtkDataArray.h>
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>

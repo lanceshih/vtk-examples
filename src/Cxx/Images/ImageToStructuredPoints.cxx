@@ -1,14 +1,13 @@
 #include <vtkActor.h>
 #include <vtkDataSetMapper.h>
 #include <vtkImageCanvasSource2D.h>
-#include <vtkImageData.h>
+// #include <vtkImageData.h>
 #include <vtkImageToStructuredPoints.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkStructuredPoints.h>
 
 #include <array>
 
@@ -27,7 +26,7 @@ int main(int, char*[])
   }
   drawColor2[0] = 255;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageCanvasSource2D> source;
   source->SetExtent(0, 20, 0, 20, 0, 0);
   source->SetScalarTypeToUnsignedChar();
@@ -41,9 +40,6 @@ int main(int, char*[])
   vtkNew<vtkImageToStructuredPoints> convertFilter;
   convertFilter->SetInputConnection(source->GetOutputPort());
   convertFilter->Update();
-
-  //  vtkStructuredPoints* structuredPoints =
-  //  convertFilter->GetStructuredPointsOutput();
 
   // Create a mapper and actor
   vtkNew<vtkDataSetMapper> mapper;

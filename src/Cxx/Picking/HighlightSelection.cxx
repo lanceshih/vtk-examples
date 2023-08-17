@@ -4,14 +4,10 @@
 #include <vtkDataSetSurfaceFilter.h>
 #include <vtkExtractPolyDataGeometry.h>
 #include <vtkIdFilter.h>
-#include <vtkIdTypeArray.h>
 #include <vtkInteractorStyleRubberBandPick.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPlanes.h>
-#include <vtkPointData.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -20,9 +16,7 @@
 #include <vtkRendererCollection.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkUnstructuredGrid.h>
 #include <vtkVersion.h>
-#include <vtkVertexGlyphFilter.h>
 
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1
@@ -78,8 +72,8 @@ public:
       this->SelectedMapper->SetInputData(extractPolyDataGeometry->GetOutput());
       this->SelectedMapper->ScalarVisibilityOff();
 
-      //        vtkIdTypeArray* ids =
-      //        dynamic_cast<vtkIdTypeArray*>(selected->GetPointData()->GetArray("OriginalIds"));
+      // vtkIdTypeArray* ids =
+      // dynamic_cast<vtkIdTypeArray*>(selected->GetPointData()->GetArray("OriginalIds"));
 
       this->SelectedActor->GetProperty()->SetColor(
           colors->GetColor3d("Tomato").GetData());
@@ -128,14 +122,14 @@ int main(int argc, char* argv[])
   idFilter->Update();
 
   // This is needed to convert the ouput of vtkIdFilter (vtkDataSet) back to
-  // vtkPolyData
+  // vtkPolyData.
   vtkNew<vtkDataSetSurfaceFilter> surfaceFilter;
   surfaceFilter->SetInputConnection(idFilter->GetOutputPort());
   surfaceFilter->Update();
 
   vtkPolyData* input = surfaceFilter->GetOutput();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputData(polyData);
   mapper->ScalarVisibilityOff();

@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkDoubleArray.h>
 #include <vtkIdList.h>
 #include <vtkKdTreePointLocator.h>
@@ -8,8 +7,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPointSource.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>

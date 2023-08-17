@@ -4,6 +4,9 @@
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkPoints> points;

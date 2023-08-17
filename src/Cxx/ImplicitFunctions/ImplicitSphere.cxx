@@ -1,9 +1,7 @@
 #include <vtkActor.h>
 #include <vtkContourFilter.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -25,7 +23,7 @@ int main(int, char*[])
 
   vtkNew<vtkSphere> sphere;
 
-  // Sample the function
+  // Sample the function.
   vtkNew<vtkSampleFunction> sample;
   sample->SetSampleDimensions(50, 50, 50);
   sample->SetImplicitFunction(sphere);
@@ -34,17 +32,17 @@ int main(int, char*[])
          zmin = -value, zmax = value;
   sample->SetModelBounds(xmin, xmax, ymin, ymax, zmin, zmax);
 
-  // Create the 0 isosurface
+  // Create the 0 isosurface.
   vtkNew<vtkContourFilter> contours;
   contours->SetInputConnection(sample->GetOutputPort());
   contours->GenerateValues(1, 1, 1);
 
-  // Map the contours to graphical primitives
+  // Map the contours to graphical primitives.
   vtkNew<vtkPolyDataMapper> contourMapper;
   contourMapper->SetInputConnection(contours->GetOutputPort());
   contourMapper->ScalarVisibilityOff();
 
-  // Create an actor for the contours
+  // Create an actor for the contours.
   vtkNew<vtkActor> contourActor;
   contourActor->SetMapper(contourMapper);
 

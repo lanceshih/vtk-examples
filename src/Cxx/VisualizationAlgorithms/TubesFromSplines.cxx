@@ -6,7 +6,6 @@
 #include <vtkParametricSpline.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -25,7 +24,7 @@ int main(int, char*[])
   points->InsertPoint(4, 5, 0, 0);
   points->InsertPoint(5, 6, 0, 0);
 
-  // Fit a spline to the points
+  // Fit a spline to the points.
   vtkNew<vtkParametricSpline> spline;
   spline->SetPoints(points);
   vtkNew<vtkParametricFunctionSource> functionSource;
@@ -33,7 +32,7 @@ int main(int, char*[])
   functionSource->SetUResolution(10 * points->GetNumberOfPoints());
   functionSource->Update();
 
-  // Interpolate the scalars
+  // Interpolate the scalars.
   double rad;
   vtkNew<vtkTupleInterpolator> interpolatedRadius;
   interpolatedRadius->SetInterpolationTypeToLinear();
@@ -51,7 +50,7 @@ int main(int, char*[])
   rad = .1;
   interpolatedRadius->AddTuple(5, &rad);
 
-  // Generate the radius scalars
+  // Generate the radius scalars.
   vtkNew<vtkDoubleArray> tubeRadius;
   unsigned int n = functionSource->GetOutput()->GetNumberOfPoints();
   tubeRadius->SetNumberOfTuples(n);
@@ -66,19 +65,19 @@ int main(int, char*[])
     tubeRadius->SetTuple1(i, r);
   }
 
-  // Add the scalars to the polydata
+  // Add the scalars to the polydata.
   auto tubePolyData = functionSource->GetOutput();
   tubePolyData->GetPointData()->AddArray(tubeRadius);
   tubePolyData->GetPointData()->SetActiveScalars("TubeRadius");
 
-  // Create the tubes
+  // Create the tubes.
   vtkNew<vtkTubeFilter> tuber;
   tuber->SetInputData(tubePolyData);
   tuber->SetNumberOfSides(20);
   tuber->SetVaryRadiusToVaryRadiusByAbsoluteScalar();
 
   //--------------
-  // Setup actors and mappers
+  // Setup actors and mappers.
   vtkNew<vtkPolyDataMapper> lineMapper;
   lineMapper->SetInputData(tubePolyData);
   lineMapper->SetScalarRange(tubePolyData->GetScalarRange());
@@ -94,7 +93,7 @@ int main(int, char*[])
   tubeActor->SetMapper(tubeMapper);
   tubeActor->GetProperty()->SetOpacity(0.6);
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkNamedColors> colors;
   vtkNew<vtkRenderer> renderer;
   renderer->UseHiddenLineRemovalOn();

@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,11 +12,11 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
@@ -25,7 +24,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
 
@@ -35,14 +34,14 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
   // Render and interact
   renderWindow->Render();
 
-  // This must occur after the above Render() call or it does not work
+  // This must occur after the above Render() call or it does not work.
   renderWindow->SetCurrentCursor(VTK_CURSOR_HAND);
 
   renderWindowInteractor->Start();

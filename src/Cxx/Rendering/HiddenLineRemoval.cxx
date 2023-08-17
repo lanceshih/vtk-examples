@@ -1,23 +1,21 @@
-#include <vtkBYUReader.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
-#include <vtkOBJReader.h>
-#include <vtkPLYReader.h>
-#include <vtkPolyDataReader.h>
-#include <vtkProperty.h>
-#include <vtkSTLReader.h>
-#include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
-#include <vtkTimerLog.h>
-#include <vtkXMLPolyDataReader.h>
-
 #include <vtkActor.h>
 #include <vtkCamera.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkSmartPointer.h>
+
+#include <vtkBYUReader.h>
+#include <vtkOBJReader.h>
+#include <vtkPLYReader.h>
+#include <vtkPolyDataReader.h>
+#include <vtkSTLReader.h>
+#include <vtkSphereSource.h>
+#include <vtkXMLPolyDataReader.h>
 
 #include <vtksys/SystemTools.hxx>
 

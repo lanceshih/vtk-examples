@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,13 +12,13 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(0.0, 0.0, 0.0);
   sphereSource->SetRadius(5.0);
   sphereSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
   vtkNew<vtkActor> actor;
@@ -29,11 +28,11 @@ int main(int, char*[])
   // Flat shading
   actor->GetProperty()->SetInterpolationToFlat();
 
-  // Set the color for edges of the sphere
+  // Set the color for edges of the sphere.
   actor->GetProperty()->SetEdgeColor(colors->GetColor3d("Red").GetData());
   actor->GetProperty()->EdgeVisibilityOn();
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -42,11 +41,11 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

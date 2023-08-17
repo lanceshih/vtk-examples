@@ -16,6 +16,9 @@
 #include <vtkStructuredGridGeometryFilter.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc != 3)
@@ -42,7 +45,7 @@ int main(int argc, char* argv[])
   auto reader = vtkSmartPointer<vtkMultiBlockPLOT3DReader>::New();
   reader->SetXYZFileName(xyzFilename.c_str());
   reader->SetQFileName(qFilename.c_str());
-  reader->Update(); // force a read to occur
+  reader->Update(); // Force a read to occur.
 
   vtkStructuredGrid* pd =
       dynamic_cast<vtkStructuredGrid*>(reader->GetOutput()->GetBlock(0));
@@ -69,7 +72,7 @@ int main(int argc, char* argv[])
   outline->GetProperty()->SetLineWidth(2.0);
 
   //
-  // Some geometry for context
+  // Some geometry for context.
   //
   auto wall = vtkSmartPointer<vtkStructuredGridGeometryFilter>::New();
   wall->SetInputData(pd);
@@ -95,7 +98,7 @@ int main(int argc, char* argv[])
   finActor->SetMapper(finMap);
   finActor->GetProperty()->SetColor(colors->GetColor3d("Silver").GetData());
   //
-  // regular streamlines
+  // Regular streamlines.
   //
   auto line1 = vtkSmartPointer<vtkLineSource>::New();
   line1->SetResolution(25);
@@ -144,10 +147,8 @@ int main(int argc, char* argv[])
   renWin->SetWindowName("BluntStreamlines");
   renWin->Render();
 
-  // interact with data
+  // Interact with data.
   iren->Start();
-
-  // Clean up
 
   return EXIT_SUCCESS;
 }

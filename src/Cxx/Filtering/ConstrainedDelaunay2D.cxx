@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCellArray.h>
 #include <vtkDelaunay2D.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>

@@ -36,12 +36,13 @@ int main(int argc, char* argv[])
   std::string zAxis = "MONTHLY_INCOME";
   std::string scalar = "TIME_LATE";
 
-  // extract data from field as a polydata (just points), then extract scalars
+  // Extract the data from field as a polydata (just points),
+  // then extract scalars.
   vtkNew<vtkDataObjectToDataSetFilter> do2ds;
   do2ds->SetInputConnection(reader->GetOutputPort());
   do2ds->SetDataSetTypeToPolyData();
   // format: component//, arrayname, arraycomp, minArrayId, maxArrayId,
-  // normalize
+  // Normalize
   do2ds->DefaultNormalizeOn();
   do2ds->SetPointComponent(0, const_cast<char*>(xAxis.c_str()), 0);
   do2ds->SetPointComponent(1, const_cast<char*>(yAxis.c_str()), 0, 0, size, 1);
@@ -54,7 +55,7 @@ int main(int argc, char* argv[])
   fd2ad->DefaultNormalizeOn();
   fd2ad->SetScalarComponent(0, scalar.c_str(), 0);
 
-  // construct pipeline for original population
+  // Construct pipeline for the original population.
   vtkNew<vtkGaussianSplatter> popSplatter;
   popSplatter->SetInputConnection(fd2ad->GetOutputPort());
   popSplatter->SetSampleDimensions(150, 150, 150);
@@ -72,7 +73,7 @@ int main(int argc, char* argv[])
   popActor->GetProperty()->SetOpacity(0.3);
   popActor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
-  // construct pipeline for delinquent population
+  // Construct the pipeline for the delinquent population.
   vtkNew<vtkGaussianSplatter> lateSplatter;
   lateSplatter->SetInputConnection(fd2ad->GetOutputPort());
   lateSplatter->SetSampleDimensions(150, 150, 150);
@@ -89,7 +90,7 @@ int main(int argc, char* argv[])
   lateActor->SetMapper(lateMapper);
   lateActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
 
-  // create axes
+  // Create axes.
   popSplatter->Update();
   double* bounds;
   bounds = popSplatter->GetOutput()->GetBounds();
@@ -105,7 +106,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> axesActor;
   axesActor->SetMapper(axesMapper);
 
-  // label the axes
+  // Label the axes.
   vtkNew<vtkVectorText> XText;
   XText->SetText(const_cast<char*>(xAxis.c_str()));
   vtkNew<vtkPolyDataMapper> XTextMapper;
@@ -138,14 +139,14 @@ int main(int argc, char* argv[])
   ZActor->SetPosition(-0.05, -0.05, 0.35);
   ZActor->GetProperty()->SetColor(0, 0, 0);
 
-  // Graphics stuff
+  // Graphics stuff.
   //
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("FinanceFieldData");
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   renderer->AddActor(axesActor);
   renderer->AddActor(lateActor);
@@ -166,7 +167,7 @@ int main(int argc, char* argv[])
   YActor->SetCamera(camera);
   ZActor->SetCamera(camera);
 
-  // render and interact with data
+  // Render and interact with the data.
 
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);

@@ -1,7 +1,5 @@
 #include <vtkDelimitedTextWriter.h>
-#include <vtkPolyData.h>
-#include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
+#include <vtkNew.h>
 #include <vtkTable.h>
 #include <vtkVariantArray.h>
 
@@ -12,19 +10,18 @@ int main(int argc, char* argv[])
 {
   std::string outputFilename = "output.txt";
 
-  // Use the specified filename if it is provided
+  // Use the specified filename if it is provided.
   if (argc == 2)
   {
     outputFilename = argv[1];
   }
 
   // Construct an empty table
-  vtkSmartPointer<vtkTable> table = vtkSmartPointer<vtkTable>::New();
+  vtkNew<vtkTable> table;
 
   for (unsigned int i = 0; i < 3; i++)
   {
-    vtkSmartPointer<vtkVariantArray> col =
-        vtkSmartPointer<vtkVariantArray>::New();
+    vtkNew<vtkVariantArray> col;
 
     std::ostringstream oss;
     oss << "column-" << i;
@@ -48,8 +45,7 @@ int main(int argc, char* argv[])
     }
   }
 
-  vtkSmartPointer<vtkDelimitedTextWriter> writer =
-      vtkSmartPointer<vtkDelimitedTextWriter>::New();
+  vtkNew<vtkDelimitedTextWriter> writer;
   writer->SetFileName(outputFilename.c_str());
   writer->SetInputData(table);
   writer->Write();

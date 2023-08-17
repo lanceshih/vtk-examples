@@ -1,7 +1,5 @@
 #include <vtkCamera.h>
 #include <vtkDataSetAttributes.h>
-#include <vtkGraphLayout.h>
-#include <vtkGraphLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
 #include <vtkIntArray.h>
 #include <vtkLookupTable.h>
@@ -19,14 +17,14 @@ int main(int, char*[])
 
   vtkNew<vtkMutableDirectedGraph> graph;
 
-  // Create a graph
+  // Create a graph.
   vtkIdType v1 = graph->AddVertex();
   vtkIdType v2 = graph->AddVertex();
   vtkIdType v3 = graph->AddVertex();
   graph->AddEdge(v1, v2);
   graph->AddEdge(v2, v3);
 
-  // Create the color array
+  // Create the color array.
   vtkNew<vtkIntArray> edgeColors;
   edgeColors->SetNumberOfComponents(1);
   edgeColors->SetName("Color");
@@ -40,12 +38,12 @@ int main(int, char*[])
   edgeColors->InsertNextValue(0);
   edgeColors->InsertNextValue(1);
 
-  // Add the color array to the graph
+  // Add the color array to the graph.
   graph->GetEdgeData()->AddArray(edgeColors);
 
   vtkNew<vtkGraphLayoutView> graphLayoutView;
   graphLayoutView->AddRepresentationFromInput(graph);
-  // Needs VTK::InfovisBoostGraphAlgorithms
+  // Needs VTK::InfovisBoostGraphAlgorithms.
   // graphLayoutView->SetLayoutStrategyToTree();
   graphLayoutView->SetLayoutStrategy("Simple 2D");
 

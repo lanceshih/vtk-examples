@@ -51,7 +51,7 @@ int main(int, char*[])
 
   renderer->GetActiveCamera()->Zoom(1.5);
 
-  // interact with data
+  // Interact with the data.
   iren->Start();
 
   return EXIT_SUCCESS;

@@ -1,9 +1,7 @@
 #include <vtkActor.h>
-#include <vtkInteractorStyleTrackball.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -36,17 +34,17 @@ int main(int, char*[])
     actors.push_back(actor);
   }
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("VectorOfActors");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   for (unsigned int i = 0; i < actors.size(); i++)
   {
     renderer->AddActor(actors[i]);
@@ -61,7 +59,7 @@ int main(int, char*[])
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

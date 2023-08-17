@@ -1,12 +1,8 @@
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
-#include <vtkImageCast.h>
-#include <vtkImageData.h>
-#include <vtkImageEllipsoidSource.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageMask.h>
 #include <vtkInteractorStyleImage.h>
-#include <vtkJPEGWriter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
@@ -17,33 +13,34 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image of a rectangle
+  // Create an image of a rectangle.
   vtkNew<vtkImageCanvasSource2D> source;
   source->SetScalarTypeToUnsignedChar();
   source->SetNumberOfScalarComponents(3);
   source->SetExtent(0, 200, 0, 200, 0, 0);
 
-  // Create a red image
+  // Create a red image.
   source->SetDrawColor(255, 0, 0);
   source->FillBox(0, 200, 0, 200);
 
   source->Update();
 
-  // Create a rectanglular mask
+  // Create a rectanglular mask.
   vtkNew<vtkImageCanvasSource2D> maskSource;
   maskSource->SetScalarTypeToUnsignedChar();
   maskSource->SetNumberOfScalarComponents(1);
   maskSource->SetExtent(0, 200, 0, 200, 0, 0);
 
-  // Initialize the mask to black
+  // Initialize the mask to black.
   maskSource->SetDrawColor(0, 0, 0);
   maskSource->FillBox(0, 200, 0, 200);
 
-  // Create a square
-  maskSource->SetDrawColor(255, 255,
-                           255); // anything non-zero means "make the output
-                                 // pixel equal the input pixel." If the mask is
-                                 // zero, the output pixel is set to MaskedValue
+  // Create a square.
+  maskSource->SetDrawColor(
+      255, 255,
+      255); // Anything non-zero means "make the output
+            // pixel equal the input pixel". If the mask is
+            // zero, the output pixel is set to MaskedValue.
   maskSource->FillBox(100, 120, 100, 120);
   maskSource->Update();
 
@@ -60,7 +57,7 @@ int main(int, char*[])
   inverseMaskFilter->NotMaskOn();
   inverseMaskFilter->Update();
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkImageActor> originalActor;
   originalActor->GetMapper()->SetInputConnection(source->GetOutputPort());
 
@@ -74,14 +71,14 @@ int main(int, char*[])
   inverseMaskedActor->GetMapper()->SetInputConnection(
       inverseMaskFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.25, 1.0};
   double maskViewport[4] = {0.25, 0.0, 0.5, 1.0};
   double maskedViewport[4] = {0.5, 0.0, 0.75, 1.0};
   double inverseMaskedViewport[4] = {0.75, 0.0, 1.0, 1.0};
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(originalViewport);
   originalRenderer->AddActor(originalActor);

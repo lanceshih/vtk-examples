@@ -1,10 +1,8 @@
-#include <vtkActor.h>
 #include <vtkActor2D.h>
 #include <vtkBarChartActor.h>
 #include <vtkDataObject.h>
 #include <vtkFieldData.h>
 #include <vtkIntArray.h>
-#include <vtkLegendBoxActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty2D.h>
@@ -71,7 +69,7 @@ int main(int, char*[])
     {
       chart->SetBarColor(c, colors->GetColor3d("MidnightBlue").GetData());
     }
-    // Create a title
+    // Create a title.
     vtkNew<vtkTextProperty> titleProperty;
     titleProperty->SetFontSize(16);
     titleProperty->SetJustificationToCentered();
@@ -96,17 +94,17 @@ int main(int, char*[])
     renderWindow->AddRenderer(renderer);
   }
 
-  // Setup a grid of renderers
+  // Setup a grid of renderers.
   int gridCols = 3;
   int gridRows = 2;
 
-  // Define side length (in pixels) of each renderer square
+  // Define side length (in pixels) of each renderer square.
   int rendererSize = 300;
 
   renderWindow->SetWindowName("CompareRandomGeneratorsCxx");
   renderWindow->SetSize(rendererSize * gridCols, rendererSize * gridRows);
 
-  // Set up a grid of viewports for each renderer
+  // Set up a grid of viewports for each renderer.
   int r = 0;
   for (auto row = 0; row < gridRows; row++)
   {
@@ -117,7 +115,7 @@ int main(int, char*[])
       // Set the renderer's viewport dimensions (xmin, ymin, xmax, ymax) within
       // the render window. Note that for the Y values, we need to subtract the
       // row index from gridRows because the viewport Y axis points upwards, but
-      // we want to draw the grid from top to down
+      // we want to draw the grid from top to down.
       double viewport[4] = {static_cast<double>(col) / gridCols,
                             static_cast<double>(gridRows - row - 1) / gridRows,
                             static_cast<double>(col + 1) / gridCols,
@@ -132,7 +130,7 @@ int main(int, char*[])
 
   renderWindow->Render();
 
-  // Initialize the event loop and then start it
+  // Initialize the event loop and then start it.
   interactor->Initialize();
   interactor->Start();
 

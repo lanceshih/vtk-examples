@@ -14,13 +14,10 @@
 #include <vtkCell.h>
 #include <vtkCellData.h>
 #include <vtkCompositeDataWriter.h>
-#include <vtkDataArray.h>
 #include <vtkDoubleArray.h>
 #include <vtkMultiBlockDataSet.h>
 #include <vtkNew.h>
 #include <vtkOverlappingAMR.h>
-#include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkUniformGrid.h>
 #include <vtkXMLImageDataWriter.h>
 #include <vtkXMLMultiBlockDataWriter.h>
@@ -36,6 +33,7 @@ vtkSmartPointer<vtkUniformGrid> GetGrid(double* origin, double* h, int* ndim);
 void ComputeCellCenter(vtkUniformGrid* grid, const int cellIdx, double c[3]);
 } // namespace AMRCommon
 } // namespace
+
 namespace {
 static struct PulseAttributes
 {

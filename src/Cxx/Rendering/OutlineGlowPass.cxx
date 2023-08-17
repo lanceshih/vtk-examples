@@ -13,6 +13,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <string>
 
 namespace {
 /**
@@ -48,8 +49,8 @@ int main(int, char*[])
 
   iren->SetRenderWindow(renWin);
 
-  // Set up the renderers
-  // One for the object and the other for the outline
+  // Set up the renderers.
+  // One for the object and the other for the outline.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderer> rendererOutline;
   rendererOutline->SetLayer(1);
@@ -63,7 +64,7 @@ int main(int, char*[])
   // arrowSource->SetTipLength(1.0);
   arrowSource->Update();
 
-  // Create mapper and actor for the main renderer
+  // Create mapper and actor for the main renderer.
   vtkNew<vtkPolyDataMapper> mapperMain;
   mapperMain->SetInputConnection(arrowSource->GetOutputPort());
 
@@ -75,15 +76,15 @@ int main(int, char*[])
   renderer->AddActor(actorMain);
 
   // Lets make the outline glow!
-  // Create the render pass
+  // Create the render pass.
   vtkNew<vtkRenderStepsPass> basicPasses;
   vtkNew<vtkOutlineGlowPass> glowPass;
   glowPass->SetDelegatePass(basicPasses);
 
-  // Apply the render pass to the highlight renderer
+  // Apply the render pass to the highlight renderer.
   rendererOutline->SetPass(glowPass);
 
-  // Create mapper and actor for the outline
+  // Create mapper and actor for the outline.
   vtkNew<vtkPolyDataMapper> mapperOutline;
   mapperOutline->SetInputConnection(arrowSource->GetOutputPort());
 
@@ -107,7 +108,7 @@ int main(int, char*[])
   camera->Azimuth(-30.0);
   camera->Elevation(-15.0);
   renderer->ResetCamera();
-  // Now set the active camera for the outline
+  // Now set the active camera for the outline.
   rendererOutline->SetActiveCamera(camera);
 
   renWin->SetWindowName("OutlineGlowPass");

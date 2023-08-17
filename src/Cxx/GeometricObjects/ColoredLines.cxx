@@ -13,7 +13,7 @@
 #include <vtkRenderer.h>
 #include <vtkUnsignedCharArray.h>
 
-// For compatibility with new VTK generic data arrays
+// For compatibility with new VTK generic data arrays.
 #ifdef vtkGenericDataArray_h
 #define InsertNextTupleValue InsertNextTypedTuple
 #endif
@@ -28,42 +28,42 @@ int main(int, char*[])
   double p0[3] = {1.0, 0.0, 0.0};
   double p1[3] = {0.0, 1.0, 0.0};
 
-  // Create a vtkPoints container and store the points in it
+  // Create a vtkPoints container and store the points in it.
   vtkNew<vtkPoints> pts;
   pts->InsertNextPoint(origin);
   pts->InsertNextPoint(p0);
   pts->InsertNextPoint(p1);
 
-  // Add the points to the polydata container
+  // Add the points to the polydata container.
   linesPolyData->SetPoints(pts);
 
-  // Create the first line (between Origin and P0)
+  // Create the first line (between Origin and P0).
   vtkNew<vtkLine> line0;
   line0->GetPointIds()->SetId(
       0,
-      0); // the second 0 is the index of the Origin in linesPolyData's points
+      0); // the second 0 is the index of the Origin in linesPolyData's points.
   line0->GetPointIds()->SetId(
-      1, 1); // the second 1 is the index of P0 in linesPolyData's points
+      1, 1); // the second 1 is the index of P0 in linesPolyData's points.
 
-  // Create the second line (between Origin and P1)
+  // Create the second line (between Origin and P1).
   vtkNew<vtkLine> line1;
   line1->GetPointIds()->SetId(
       0,
-      0); // the second 0 is the index of the Origin in linesPolyData's points
+      0); // the second 0 is the index of the Origin in linesPolyData's points.
   line1->GetPointIds()->SetId(
-      1, 2); // 2 is the index of P1 in linesPolyData's points
+      1, 2); // 2 is the index of P1 in linesPolyData's points.
 
-  // Create a vtkCellArray container and store the lines in it
+  // Create a vtkCellArray container and store the lines in it.
   vtkNew<vtkCellArray> lines;
   lines->InsertNextCell(line0);
   lines->InsertNextCell(line1);
 
-  // Add the lines to the polydata container
+  // Add the lines to the polydata container.
   linesPolyData->SetLines(lines);
 
   vtkNew<vtkNamedColors> namedColors;
 
-  // Create a vtkUnsignedCharArray container and store the colors in it
+  // Create a vtkUnsignedCharArray container and store the colors in it.
   vtkNew<vtkUnsignedCharArray> colors;
   colors->SetNumberOfComponents(3);
   colors->InsertNextTupleValue(namedColors->GetColor3ub("Tomato").GetData());
@@ -75,10 +75,10 @@ int main(int, char*[])
   // which it is called. This means the first component (red) of the colors
   // array is matched with the first component of the cell array (line 0) and
   // the second component (green) of the colors array is matched with the second
-  // component of the cell array (line 1)
+  // component of the cell array (line 1).
   linesPolyData->GetCellData()->SetScalars(colors);
 
-  // Setup the visualization pipeline
+  // Setup the visualization pipeline.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputData(linesPolyData);
 

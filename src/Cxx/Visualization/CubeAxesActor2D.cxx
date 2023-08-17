@@ -2,7 +2,7 @@
 #include <vtkCamera.h>
 #include <vtkCubeAxesActor2D.h>
 #include <vtkLODActor.h>
-#include <vtkLight.h>
+// #include <vtkLight.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>
@@ -85,14 +85,14 @@ int main(int, char*[])
   ren->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
   ren2->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
-  // Create a text property for both cube axes
+  // Create a text property for both cube axes.
   vtkNew<vtkTextProperty> tprop;
   tprop->SetColor(colors->GetColor3d("Yellow").GetData());
   tprop->ShadowOn();
   tprop->SetFontSize(20);
 
-  // Create a vtkCubeAxesActor2D.  Use the outer edges of the bounding box to
-  // draw the axes.  Add the actor to the renderer.
+  // Create a vtkCubeAxesActor2D. Use the outer edges of the bounding box to
+  // draw the axes. Add the actor to the renderer.
   vtkNew<vtkCubeAxesActor2D> axes;
   axes->SetInputConnection(normals->GetOutputPort());
   axes->SetCamera(ren->GetActiveCamera());
@@ -102,8 +102,8 @@ int main(int, char*[])
   axes->SetAxisLabelTextProperty(tprop.GetPointer());
   ren->AddViewProp(axes.GetPointer());
 
-  // Create a vtkCubeAxesActor2D.  Use the closest vertex to the camera to
-  // determine where to draw the axes.  Add the actor to the renderer.
+  // Create a vtkCubeAxesActor2D. Use the closest vertex to the camera to
+  // determine where to draw the axes. Add the actor to the renderer.
   vtkNew<vtkCubeAxesActor2D> axes2;
   axes2->SetViewProp(icosahedron_actor.GetPointer());
   axes2->SetCamera(ren2->GetActiveCamera());

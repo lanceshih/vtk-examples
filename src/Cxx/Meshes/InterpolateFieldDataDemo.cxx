@@ -6,7 +6,6 @@
 #include <vtkExodusIIReader.h>
 #include <vtkGaussianKernel.h>
 #include <vtkInterpolateDataSetAttributes.h>
-#include <vtkLookupTable.h>
 #include <vtkMultiBlockDataSet.h>
 #include <vtkNamedColors.h>
 #include <vtkPointData.h>

@@ -14,8 +14,10 @@
 #include <vtkStreamTracer.h>
 #include <vtkStructuredGrid.h>
 #include <vtkStructuredGridGeometryFilter.h>
-#include <vtkStructuredGridOutlineFilter.h>
 #include <vtkTubeFilter.h>
+
+#include <iostream>
+#include <string>
 
 //// LOx post CFD case study
 
@@ -26,7 +28,7 @@ int main(int argc, char* argv[])
     std::cout << "Usage: " << argv[0] << " postxyz.bin postq.bin" << std::endl;
     return EXIT_FAILURE;
   }
-  // read data
+  // Read the data.
   //
   vtkNew<vtkMultiBlockPLOT3DReader> pl3d;
   pl3d->AutoDetectFormatOn();
@@ -41,7 +43,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // blue to red lut
+  // Blue to red lut.
   //
   vtkNew<vtkLookupTable> lut;
   lut->SetHueRange(0.667, 0.0);
@@ -60,7 +62,7 @@ int main(int argc, char* argv[])
 
   for (size_t s = 0; s < seeds.size(); ++s)
   {
-    // computational planes
+    // Computational planes.
     vtkNew<vtkStructuredGridGeometryFilter> floorComp;
     floorComp->SetExtent(0, 37, 0, 75, 0, 0);
     floorComp->SetInputData(sg);
@@ -94,7 +96,7 @@ int main(int argc, char* argv[])
 
     // streamers
     //
-    // spherical seed points
+    // Spherical seed points.
     vtkNew<vtkPointSource> rake;
     rake->SetCenter(seeds[s]);
     rake->SetNumberOfPoints(10);
@@ -135,7 +137,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkRenderWindow> renderWindow;
 
-  // Setup viewports for the renderers
+  // Setup viewports for the renderers.
   int rendererSize = 256;
   unsigned int xGridDimensions = 2;
   unsigned int yGridDimensions = 2;

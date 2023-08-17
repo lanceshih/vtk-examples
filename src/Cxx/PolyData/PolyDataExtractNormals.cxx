@@ -3,11 +3,13 @@
 #include <vtkFloatArray.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 

@@ -54,7 +54,7 @@ int main(int, char*[])
   renderer->AddActor(cubeActor);
   cubeActor->GetProperty()->SetRepresentationToSurface();
 
-  // Now the chart
+  // Now the chart,
   vtkNew<vtkChartXY> chart;
   vtkNew<vtkContextScene> chartScene;
   vtkNew<vtkContextActor> chartActor;
@@ -65,7 +65,7 @@ int main(int, char*[])
   chartScene->AddItem(chart);
   chartActor->SetScene(chartScene);
 
-  // both needed
+  // Both needed.
   renderer->AddActor(chartActor);
   chartScene->SetRenderer(renderer);
 
@@ -100,7 +100,7 @@ int main(int, char*[])
     table->SetValue(i, 3, tan(i * inc) + 0.5);
   }
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
   vtkColor3d color3d = colors->GetColor3d("banana");
 
   vtkPlot* points = chart->AddPlot(vtkChart::POINTS);

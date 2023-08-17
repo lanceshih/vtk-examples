@@ -28,19 +28,19 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // PART 1 Make some Data
-  // make a tree
+  // PART 1 Make some Data.
+  // Make a tree.
   vtkNew<vtkMultiBlockDataSet> root;
 
   vtkNew<vtkMultiBlockDataSet> branch;
   root->SetBlock(0, branch);
 
-  // make some leaves
+  // Make some leaves.
   branch->SetBlock(0, CreateSphereDataSet({0, 0, 0}));
   branch->SetBlock(1, CreateSphereDataSet({1.75, 2.5, 0.0}, 1.5));
   root->SetBlock(1, CreateSphereDataSet({4, 0, 0}, 2.0));
 
-  // uncomment to inspect
+  // Uncomment to inspect.
   // std::cerr << root->GetClassName() << std::endl;
   // root->PrintSelf(std::cerr, vtkIndent(0));
 
@@ -49,24 +49,24 @@ int main(int, char*[])
   vtkNew<vtkExtractEdges> edges;
   edges->SetInputData(root);
 
-  // uncomment to inspect
+  // Uncomment to inspect.
   // edges->Update();
   // cerr << edges->GetOutputDataObject(0)->GetClassName() << endl;
   // edges->GetOutputDataObject(0)->PrintSelf(std::cerr, vtkIndent(0));
 
-  // PART 3 Show the data
+  // PART 3 Show the data.
   // also demonstrate a composite aware filter
   // this filter aggregates all blocks into one polydata
   // this is handy for display, although fairly limited.
   vtkNew<vtkCompositeDataGeometryFilter> polydata;
   polydata->SetInputConnection(edges->GetOutputPort());
 
-  // uncomment to inspect
+  // Uncomment to inspect.
   // polydata->Update();
   // std::cerr << polydata->GetOutput()->GetClassName() << std::endl;
   // polydata->GetOutput()->PrintSelf(std::cerr, vtkIndent(0));
 
-  // display the data
+  // Display the data.
   vtkNew<vtkRenderer> aren;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(aren);

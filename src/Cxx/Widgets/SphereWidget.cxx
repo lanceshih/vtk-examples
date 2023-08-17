@@ -1,20 +1,18 @@
-#include <vtkActor.h>
-#include <vtkCommand.h>
+#include <vtkCallbackCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphereRepresentation.h>
-#include <vtkSphereSource.h>
 #include <vtkSphereWidget.h>
 
+#include <iostream>
+#include <string>
+
 namespace {
-class SphereCallback : public vtkCommand
+class SphereCallback : public vtkCallbackCommand
 {
 public:
   static SphereCallback* New()
@@ -42,7 +40,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
@@ -50,7 +48,7 @@ int main(int, char*[])
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("SphereWidget");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 

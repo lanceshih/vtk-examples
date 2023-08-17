@@ -114,8 +114,7 @@ int main(int argc, char* argv[])
   glyph3DActor->GetProperty()->SetColor(
       colors->GetColor3d("MidnightBlue").GetData());
 
-  // Create graphics stuff
-  //
+  // Create graphics stuff.
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("CornflowerBlue").GetData());
 
@@ -127,13 +126,11 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer, set the background and size.
   ren1->AddActor(surfaceActor);
   ren1->AddActor(glyph3DActor);
 
-  // Generate an interesting view
-  //
+  // Generate an interesting view.
   ren1->ResetCamera();
   ren1->GetActiveCamera()->Azimuth(120);
   ren1->GetActiveCamera()->Elevation(30);
@@ -154,7 +151,7 @@ void MakeGlyphs(vtkPolyData* src, double size, vtkGlyph3D* glyph)
   maskPts->SetOnRatio(20);
   maskPts->RandomModeOn();
   maskPts->SetInputData(src);
-  // Source for the glyph filter
+  // Source for the glyph filter.
   vtkNew<vtkArrowSource> arrow;
   arrow->SetTipResolution(16);
   arrow->SetTipLength(0.3);
@@ -226,7 +223,7 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName)
     points->SetNumberOfPoints(100000);
     points->SetRadius(10.0);
     double x, y, z;
-    // random position
+    // A random position.
     x = randomSequence->GetRangeValue(-100, 100);
     randomSequence->Next();
     y = randomSequence->GetRangeValue(-100, 100);

@@ -22,7 +22,7 @@
 
 namespace {
 
-// Template for image value reading
+// Template for image value reading.
 template <typename T>
 void vtkValueMessageTemplate(vtkImageData* image, int* position,
                              std::string& message)
@@ -40,7 +40,7 @@ void vtkValueMessageTemplate(vtkImageData* image, int* position,
   message += " )";
 }
 
-// The mouse motion callback, to pick the image and recover pixel values
+// The mouse motion callback, to pick the image and recover pixel values.
 class vtkImageInteractionCallback : public vtkCommand
 {
 public:
@@ -88,12 +88,12 @@ public:
     vtkInteractorStyle* style =
         dynamic_cast<vtkInteractorStyle*>(interactor->GetInteractorStyle());
 
-    // Pick at the mouse location provided by the interactor
+    // Pick at the mouse location provided by the interactor.
     this->Picker->Pick(interactor->GetEventPosition()[0],
                        interactor->GetEventPosition()[1], 0.0, renderer);
 
     // There could be other props assigned to this picker, so
-    // make sure we picked the image actor
+    // make sure we picked the image actor.
     vtkAssemblyPath* path = this->Picker->GetPath();
     bool validPick = false;
 
@@ -115,12 +115,12 @@ public:
     {
       this->Annotation->SetText(0, "Off Image");
       interactor->Render();
-      // Pass the event further on
+      // Pass the event further on.
       style->OnMouseMove();
       return;
     }
 
-    // Get the world coordinates of the pick
+    // Get the world coordinates of the pick.
     double pos[3];
     this->Picker->GetPickPosition(pos);
 
@@ -182,7 +182,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkImageViewer2> imageViewer;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << argv[0]
@@ -191,27 +191,27 @@ int main(int argc, char* argv[])
               << "missing..." << std::endl;
     std::cout << "A noise image will be created!" << std::endl;
 
-    // create a noise image
+    // Create a noise image.
     vtkNew<vtkImageNoiseSource> noiseSource;
     noiseSource->SetWholeExtent(0, 512, 0, 512, 0, 0);
     noiseSource->SetMinimum(0.0);
     noiseSource->SetMaximum(255.0);
 
-    // cast noise image to unsigned char
+    // Cast noise image to unsigned char.
     vtkNew<vtkImageCast> imageCast;
     imageCast->SetInputConnection(noiseSource->GetOutputPort());
     imageCast->SetOutputScalarTypeToUnsignedChar();
     imageCast->Update();
 
-    // connect to image viewer pipeline
+    // Connect to image viewer pipeline.
     imageViewer->SetInputConnection(imageCast->GetOutputPort());
   }
   else
   {
-    // Parse input argument
+    // Parse input argument.
     std::string inputFilename = argv[1];
 
-    // Read the image
+    // Read the image.
     vtkNew<vtkTIFFReader> tiffReader;
     if (!tiffReader->CanReadFile(inputFilename.c_str()))
     {
@@ -221,22 +221,22 @@ int main(int argc, char* argv[])
     }
     tiffReader->SetFileName(inputFilename.c_str());
 
-    // connect to image viewer pipeline
+    // Connect to image viewer pipeline.
     imageViewer->SetInputConnection(tiffReader->GetOutputPort());
   }
 
-  // Picker to pick pixels
+  // Picker to pick pixels.
   vtkNew<vtkPropPicker> propPicker;
   propPicker->PickFromListOn();
 
-  // Give the picker a prop to pick
+  // Give the picker a prop to pick.
   vtkImageActor* imageActor = imageViewer->GetImageActor();
   propPicker->AddPickList(imageActor);
 
-  // disable interpolation, so we can see each pixel
+  // Disable interpolation, so we can see each pixel.
   imageActor->InterpolateOff();
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   imageViewer->SetupInteractor(renderWindowInteractor);
   imageViewer->SetSize(600, 600);

@@ -3,7 +3,6 @@
 #include <vtkDecimatePro.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPNGReader.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkPolyDataReader.h>
@@ -11,6 +10,9 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -60,7 +62,7 @@ int main(int argc, char* argv[])
   originalActor->GetProperty()->SetColor(
       colors->GetColor3d("Sienna").GetData());
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> renderer1;
   renderer1->SetViewport(0.0, 0.0, 0.5, 1.0);
@@ -76,7 +78,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   renderer1->AddActor(originalActor);
   renderer2->AddActor(decimatedActor);
@@ -84,7 +86,7 @@ int main(int argc, char* argv[])
   renderer2->SetBackground(colors->GetColor3d("Papaya_Whip").GetData());
   renderWindow->SetSize(800, 400);
 
-  // render the image
+  // Render the image.
   //
   vtkNew<vtkCamera> cam1;
   renderer1->SetActiveCamera(cam1);

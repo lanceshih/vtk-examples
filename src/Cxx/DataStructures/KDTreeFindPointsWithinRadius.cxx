@@ -1,24 +1,20 @@
-#include <vtkCellArray.h>
-#include <vtkIdList.h>
 #include <vtkKdTreePointLocator.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 
 int main(int, char*[])
 {
-  // Create some random points
+  // Create some random points.
   vtkNew<vtkPointSource> pointSource;
   pointSource->SetNumberOfPoints(10);
   pointSource->Update();
 
-  // Create the tree
+  // Create the tree.
   vtkNew<vtkKdTreePointLocator> pointTree;
   pointTree->SetDataSet(pointSource->GetOutput());
   pointTree->BuildLocator();
 
-  // Find the k closest points to (0,0,0)
+  // Find the k closest points to (0,0,0).
   vtkIdType k = 1;
   double testPoint[3] = {0.0, 0.0, 0.0};
   vtkNew<vtkIdList> result;

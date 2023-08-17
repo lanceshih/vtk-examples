@@ -3,7 +3,6 @@
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPropPicker.h>
 #include <vtkProperty.h>
@@ -40,7 +39,7 @@ public:
     vtkNew<vtkPropPicker> picker;
     picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
 
-    // If we picked something before, reset its property
+    // If we picked something before, reset its property.
     if (this->LastPickedActor)
     {
       this->LastPickedActor->GetProperty()->DeepCopy(this->LastPickedProperty);
@@ -49,9 +48,9 @@ public:
     if (this->LastPickedActor)
     {
       // Save the property of the picked actor so that we can
-      // restore it next time
+      // restore it next time.
       this->LastPickedProperty->DeepCopy(this->LastPickedActor->GetProperty());
-      // Highlight the picked actor by changing its properties
+      // Highlight the picked actor by changing its properties.
       this->LastPickedActor->GetProperty()->SetColor(
           colors->GetColor3d("Red").GetData());
       this->LastPickedActor->GetProperty()->SetDiffuse(1.0);
@@ -59,7 +58,7 @@ public:
       this->LastPickedActor->GetProperty()->EdgeVisibilityOn();
     }
 
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
   }
 
@@ -81,14 +80,14 @@ int main(int argc, char* argv[])
   {
     numberOfSpheres = atoi(argv[1]);
   }
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(640, 480);
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("HighlightPickedActor");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
@@ -139,7 +138,7 @@ int main(int argc, char* argv[])
 
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Initialize();
   renderWindowInteractor->Start();

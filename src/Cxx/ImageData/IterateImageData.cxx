@@ -1,4 +1,3 @@
-#include <vtkDataSet.h>
 #include <vtkImageData.h>
 #include <vtkIntArray.h>
 #include <vtkNew.h>

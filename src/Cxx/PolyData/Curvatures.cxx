@@ -13,10 +13,8 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkScalarBarActor.h>
-#include <vtkTextProperty.h>
 #include <vtkVersion.h>
 #include <vtkXMLPolyDataReader.h>
-#include <vtkXMLPolyDataWriter.h>
 
 #if VTK_VERSION_NUMBER >= 90020210809ULL
 #define HAS_COW
@@ -90,7 +88,7 @@ int main(int argc, char* argv[])
     scheme = atoi(argv[3]);
   }
 
-  // Create a polydata
+  // Create a polydata.
   vtkNew<vtkXMLPolyDataReader> reader;
   reader->SetFileName(argv[1]);
   reader->Update();
@@ -127,7 +125,7 @@ int main(int argc, char* argv[])
   auto curvatureTitle = curvature;
   std::replace(curvatureTitle.begin(), curvatureTitle.end(), '_', '\n');
 
-  // Build a lookup table
+  // Build a lookup table.
   vtkNew<vtkColorSeries> colorSeries;
   colorSeries->SetColorScheme(scheme);
   std::cout << "Using color scheme #: " << colorSeries->GetColorScheme() << ", "
@@ -136,7 +134,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkColorTransferFunction> lut;
   lut->SetColorSpaceToHSV();
 
-  // Use a color series to create a transfer function
+  // Use a color series to create a transfer function.
   auto numColors = colorSeries->GetNumberOfColors();
   for (int i = 0; i < numColors; i++)
   {
@@ -165,7 +163,7 @@ int main(int argc, char* argv[])
   auto windowWidth = 800;
   auto windowHeight = 800;
 
-  // Create a scalar bar
+  // Create a scalar bar.
   vtkNew<vtkScalarBarActor> scalarBar;
   scalarBar->SetLookupTable(mapper->GetLookupTable());
   scalarBar->SetTitle(curvatureTitle.c_str());
@@ -174,7 +172,7 @@ int main(int argc, char* argv[])
   scalarBar->SetMaximumWidthInPixels(windowWidth / 8);
   scalarBar->SetMaximumHeightInPixels(windowHeight / 3);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(renderer);
@@ -193,12 +191,12 @@ int main(int argc, char* argv[])
   camOrientManipulator->On();
 #endif
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->AddActor2D(scalarBar);
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renWin->Render();
   iRen->Start();
 

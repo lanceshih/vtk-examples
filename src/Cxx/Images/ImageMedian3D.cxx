@@ -1,7 +1,5 @@
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
-#include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageMedian3D.h>
 #include <vtkInteractorStyleImage.h>
@@ -15,7 +13,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageCanvasSource2D> imageSource;
   imageSource->SetNumberOfScalarComponents(1);
   imageSource->SetScalarTypeToUnsignedChar();
@@ -25,15 +23,15 @@ int main(int, char*[])
   unsigned int ymax = 20;
   imageSource->SetExtent(xmin, xmax, ymin, ymax, 0, 0);
 
-  // Make the image all black
+  // Make the image all black.
   imageSource->SetDrawColor(0.0);
   imageSource->FillBox(xmin, xmax, ymin, ymax);
 
-  // Draw a big white square
+  // Draw a big white square.
   imageSource->SetDrawColor(255.0);
   imageSource->FillBox(5, 15, 5, 15);
 
-  // Add some single white pixels
+  // Add some single white pixels.
   imageSource->SetDrawColor(255.0);
   imageSource->FillBox(1, 1, 1, 1);
   imageSource->FillBox(17, 17, 17, 17);
@@ -52,12 +50,12 @@ int main(int, char*[])
   vtkNew<vtkImageActor> medianActor;
   medianActor->GetMapper()->SetInputConnection(medianFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(leftViewport);
   originalRenderer->AddActor(originalActor);

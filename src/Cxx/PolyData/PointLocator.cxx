@@ -3,7 +3,6 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPointLocator.h>
 #include <vtkPointSource.h>
 #include <vtkPolyData.h>
@@ -12,6 +11,9 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 
@@ -52,14 +54,14 @@ public:
 
     std::cout << "PointsPerBucket = " << this->PointsPerBucket << std::endl;
 
-    // Create the tree
+    // Create the tree.
     pointLocator->SetNumberOfPointsPerBucket(this->PointsPerBucket);
     pointLocator->BuildLocator();
     pointLocator->GenerateRepresentation(1, polydata);
 
     renderWindow->Render();
 
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnChar();
   }
 

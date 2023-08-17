@@ -1,12 +1,9 @@
 #include <vtkActor.h>
 #include <vtkArrowSource.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkGlyph3D.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
@@ -14,7 +11,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
-#include <vtkXMLPolyDataWriter.h>
 
 int main(int, char*[])
 {

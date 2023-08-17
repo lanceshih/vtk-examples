@@ -1,20 +1,16 @@
 #include <vtkDataObject.h>
 #include <vtkFieldData.h>
 #include <vtkFloatArray.h>
-#include <vtkIdList.h>
 #include <vtkLegendBoxActor.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkProperty2D.h>
-#include <vtkRegressionTestImage.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSpiderPlotActor.h>
-#include <vtkTestUtilities.h>
 #include <vtkTextProperty.h>
 
 //----------------------------------------------------------------------------

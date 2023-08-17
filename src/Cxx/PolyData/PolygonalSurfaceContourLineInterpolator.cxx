@@ -1,12 +1,9 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkContourWidget.h>
-#include <vtkImageDataGeometryFilter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOrientedGlyphContourRepresentation.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataCollection.h>
 #include <vtkPolyDataMapper.h>
@@ -43,14 +40,14 @@ int main(int argc, char* argv[])
     polyData = reader->GetOutput();
   }
 
-  // The Dijkistra interpolator will not accept cells that aren't triangles
+  // The Dijkistra interpolator will not accept cells that aren't triangles.
   vtkNew<vtkTriangleFilter> triangleFilter;
   triangleFilter->SetInputData(polyData);
   triangleFilter->Update();
 
   auto pd = triangleFilter->GetOutput();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(triangleFilter->GetOutputPort());
 
@@ -69,7 +66,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
 
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("CadetBlue").GetData());

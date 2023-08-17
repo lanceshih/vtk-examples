@@ -1,13 +1,11 @@
 #include <vtkActor.h>
 #include <vtkActor2D.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkDataSetMapper.h>
 #include <vtkGlyph3DMapper.h>
 #include <vtkLabeledDataMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>

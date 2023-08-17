@@ -1,10 +1,8 @@
 #include <vtkActor.h>
 #include <vtkDelaunay2D.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
@@ -18,7 +16,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create points on an XY grid with random Z coordinate
+  // Create points on an XY grid with random Z coordinate.
   vtkNew<vtkPoints> points;
 
   unsigned int gridSize = 10;

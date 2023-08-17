@@ -1,5 +1,4 @@
 #include <vtkChartXY.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
@@ -14,7 +13,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderWindow()->SetSize(400, 300);
   view->GetRenderWindow()->SetWindowName("ScatterPlot");
@@ -55,7 +54,7 @@ int main(int, char*[])
     table->SetValue(i, 3, sin(i * inc) - cos(i * inc));
   }
 
-  // Add multiple scatter plots, setting the colors etc
+  // Add multiple scatter plots, setting the colors etc.
   vtkPlot* points = chart->AddPlot(vtkChart::POINTS);
   points->SetInputData(table, 0, 1);
   points->SetColor(0, 0, 0, 255);
@@ -74,7 +73,7 @@ int main(int, char*[])
   points->SetWidth(1.0);
   dynamic_cast<vtkPlotPoints*>(points)->SetMarkerStyle(vtkPlotPoints::CIRCLE);
 
-  // Finally render the scene
+  // Finally render the scene.
   view->GetRenderWindow()->SetMultiSamples(0);
   view->GetRenderWindow()->Render();
   view->GetInteractor()->Initialize();

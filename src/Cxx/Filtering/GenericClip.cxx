@@ -3,13 +3,9 @@
 #include <vtkCellData.h>
 #include <vtkContourFilter.h>
 #include <vtkDataSetMapper.h>
-#include <vtkDelaunay3D.h>
-#include <vtkElevationFilter.h>
 #include <vtkGenericClip.h>
 #include <vtkIdFilter.h>
 #include <vtkIdTypeArray.h>
-#include <vtkImageData.h>
-#include <vtkImplicitDataSet.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlane.h>

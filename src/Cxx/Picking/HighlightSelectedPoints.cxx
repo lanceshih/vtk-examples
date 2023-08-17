@@ -8,11 +8,9 @@
 #include <vtkInteractorStyleRubberBandPick.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPlanes.h>
 #include <vtkPointData.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -20,7 +18,6 @@
 #include <vtkRenderer.h>
 #include <vtkRendererCollection.h>
 #include <vtkSmartPointer.h>
-#include <vtkUnstructuredGrid.h>
 #include <vtkVersion.h>
 #include <vtkVertexGlyphFilter.h>
 

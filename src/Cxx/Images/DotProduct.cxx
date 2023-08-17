@@ -2,7 +2,6 @@
 #include <vtkArrowSource.h>
 #include <vtkGlyph3DMapper.h>
 #include <vtkImageActor.h>
-#include <vtkImageCanvasSource2D.h>
 #include <vtkImageCast.h>
 #include <vtkImageData.h>
 #include <vtkImageDotProduct.h>
@@ -11,11 +10,9 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkXMLImageDataWriter.h>
 
 int main(int, char*[])
 {
@@ -62,17 +59,12 @@ int main(int, char*[])
   pixel[1] = 1.0;
   pixel[2] = 0.0;
 
-  // vtkNew<vtkXMLImageDataWriter> writer;
-  // writer->SetInputData(image1);
-  // writer->SetFileName("test.vti");
-  // writer->Write();
-
-  // Create another image
+  // Create another image.
   vtkNew<vtkImageData> image2;
   image2->SetExtent(0, 1, 0, 1, 0, 0);
   image2->AllocateScalars(VTK_FLOAT, 3);
 
-  // Fill the image with vectors
+  // Fill the image with vectors.
   coord[0] = 0;
   coord[1] = 0;
   coord[2] = 0;
@@ -105,7 +97,7 @@ int main(int, char*[])
   pixel[1] = 0.0;
   pixel[2] = 0.0;
 
-  // Compute the dot product of the images pixel wise
+  // Compute the dot product of the images pixel wise.
   vtkNew<vtkImageDotProduct> dotProductFilter;
   dotProductFilter->SetInput1Data(image1);
   dotProductFilter->SetInput2Data(image2);
@@ -128,7 +120,7 @@ int main(int, char*[])
   vtkNew<vtkImageActor> dotProductActor;
   dotProductActor->GetMapper()->SetInputConnection(imageCast->GetOutputPort());
 
-  // Display output to the terminal
+  // Display output to the terminal.
   for (vtkIdType i = 0; i < 2; i++)
   {
     for (vtkIdType j = 0; j < 2; j++)
@@ -164,13 +156,13 @@ int main(int, char*[])
   vtkNew<vtkActor> actor2;
   actor2->SetMapper(glyph3Dmapper2);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.33, 1.0};
   double centerViewport[4] = {0.33, 0.0, 0.66, 1.0};
   double rightViewport[4] = {0.66, 0.0, 1.0, 1.0};
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> leftRenderer;
   leftRenderer->SetViewport(leftViewport);
   leftRenderer->SetBackground(colors->GetColor3d("DimGray").GetData());

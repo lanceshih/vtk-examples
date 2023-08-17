@@ -17,6 +17,9 @@
 #include <vtkVRMLImporter.h>
 #include <vtkXMLUnstructuredGridReader.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)
@@ -40,28 +43,28 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Import the VRML Files that define the geometry
+  // Import the VRML Files that define the geometry.
   vtkNew<vtkVRMLImporter> vrmlImport;
   vrmlImport->SetRenderWindow(renderWindow);
   vrmlImport->SetFileName(argv[1]);
   vrmlImport->Update();
 
-  // Read the UnstructuredGrid define the solution
+  // Read the UnstructuredGrid define the solution.
   vtkNew<vtkXMLUnstructuredGridReader> solution;
   solution->SetFileName(argv[2]);
   solution->Update();
 
-  // Create an outline
+  // Create an outline.
   vtkNew<vtkGenericOutlineFilter> outline;
   outline->SetInputConnection(solution->GetOutputPort());
 
-  // Create Seeds
+  // Create Seeds.
   vtkNew<vtkPointSource> seeds;
   seeds->SetRadius(0.2);
   seeds->SetCenter(3.5, 0.625, 1.25);
   seeds->SetNumberOfPoints(50);
 
-  // Create streamlines
+  // Create streamlines.
   vtkNew<vtkStreamTracer> streamTracer;
   streamTracer->SetIntegrationDirectionToBoth();
   streamTracer->SetInputConnection(solution->GetOutputPort());
@@ -85,7 +88,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> tubesActor;
   tubesActor->SetMapper(mapTubes);
 
-  // Create an Isosurface
+  // Create an Isosurface.
   vtkNew<vtkContourFilter> isoSurface;
   isoSurface->SetValue(0, 550.0);
   isoSurface->SetInputConnection(solution->GetOutputPort());

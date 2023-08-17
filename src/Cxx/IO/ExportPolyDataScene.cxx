@@ -1,10 +1,7 @@
 #include <vtkActor.h>
-#include <vtkActorCollection.h>
 #include <vtkCamera.h>
 #include <vtkDoubleArray.h>
 #include <vtkFieldData.h>
-#include <vtkIdTypeArray.h>
-#include <vtkIntArray.h>
 #include <vtkLinearTransform.h>
 #include <vtkLookupTable.h>
 #include <vtkMultiBlockDataSet.h>
@@ -18,7 +15,6 @@
 #include <vtkRenderer.h>
 #include <vtkScalarsToColors.h>
 #include <vtkSmartPointer.h>
-#include <vtkStringArray.h>
 #include <vtkTransform.h>
 #include <vtkXMLMultiBlockDataWriter.h>
 #include <vtksys/SystemTools.hxx>
@@ -182,7 +178,7 @@ namespace {
 void ExportMultiBlockScene(vtkRenderer* renderer, std::string fileName,
                            bool binary)
 {
-  // Iterate over all actors in the renderer
+  // Iterate over all actors in the renderer.
   auto actors = renderer->GetActors();
   std::cout << "There are " << actors->GetNumberOfItems() << " actors"
             << std::endl;
@@ -195,29 +191,29 @@ void ExportMultiBlockScene(vtkRenderer* renderer, std::string fileName,
   {
     vtkActor* actor = actors->GetNextActor();
 
-    // Deep copy the polydata because it may be shared with other actors
+    // Deep copy the polydata because it may be shared with other actors.
     vtkNew<vtkPolyData> pd;
     pd->DeepCopy(dynamic_cast<vtkPolyData*>(actor->GetMapper()->GetInput()));
 
-    // Set metadata for block
+    // Set metadata for block.
     multiBlockDataset->SetBlock(a, pd);
 
-    // Save Camera
+    // Save Camera.
     SaveCameraAsFieldData("Camera", renderer->GetActiveCamera(), pd);
 
-    // Save Property
+    // Save Property.
     SavePropertyAsFieldData("Property", actor->GetProperty(), pd);
     SavePropertyAsFieldData("BackfaceProperty", actor->GetBackfaceProperty(),
                             pd);
-    // Save Mapper
+    // Save Mapper.
     SaveMapperAsFieldData("PolyDataMapper",
                           dynamic_cast<vtkPolyDataMapper*>(actor->GetMapper()),
                           pd);
-    // Save Actor
+    // Save Actor.
     SaveActorAsFieldData("Actor", actor, pd);
   }
 
-  // Write multiblock dataset to disk
+  // Write multiblock dataset to disk.
   vtkNew<vtkXMLMultiBlockDataWriter> writer;
   if (binary)
   {

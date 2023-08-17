@@ -3,7 +3,6 @@
 #include <vtkCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProgrammableFilter.h>
 #include <vtkProperty.h>
@@ -11,6 +10,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 unsigned int counter = 0;
@@ -27,7 +29,7 @@ public:
   void Execute(vtkObject* caller, unsigned long vtkNotUsed(eventId),
                void* vtkNotUsed(callData)) override
   {
-    std::cout << "timer callback" << std::endl;
+    std::cout << "Timer callback" << std::endl;
 
     vtkRenderWindowInteractor* iren =
         static_cast<vtkRenderWindowInteractor*>(caller);
@@ -55,7 +57,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
@@ -63,14 +65,14 @@ int main(int, char*[])
   programmableFilter->SetInputConnection(sphereSource->GetOutputPort());
   programmableFilter->SetExecuteMethod(AdjustPoints, programmableFilter);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(programmableFilter->GetOutputPort());
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Peacock").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -88,11 +90,11 @@ int main(int, char*[])
 
   renderWindowInteractor->AddObserver(vtkCommand::TimerEvent, timerCallback);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("MistyRose").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   auto camera = renderer->GetActiveCamera();
   camera->SetPosition(2.26841, -1.51874, 1.805);

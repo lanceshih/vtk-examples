@@ -2,12 +2,10 @@
 #include <vtkBrush.h>
 #include <vtkCharArray.h>
 #include <vtkChartXY.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPlot.h>
 #include <vtkPlotArea.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -27,7 +25,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderWindow()->SetSize(640, 480);
   view->GetRenderWindow()->SetWindowName("AreaPlot");
@@ -100,7 +98,7 @@ int main(int, char*[])
     validMask->SetValue(i, (i > 30 && i < 40) ? 0 : 1);
   }
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
   vtkColor3d color3d = colors->GetColor3d("tomato");
   vtkPlotArea* area =
       dynamic_cast<vtkPlotArea*>(chart->AddPlot(vtkChart::AREA));
@@ -119,7 +117,7 @@ int main(int, char*[])
 
   chart->GetAxis(vtkAxis::LEFT)->SetLogScale(true);
 
-  // Render the scene and compare the image to a reference image
+  // Render the scene and compare the image to a reference image.
   view->GetRenderer()->SetBackground(colors->GetColor3d("SlateGray").GetData());
   view->GetRenderWindow()->SetMultiSamples(0);
   view->GetRenderWindow()->Render();

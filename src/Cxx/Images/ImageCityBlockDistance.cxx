@@ -1,12 +1,9 @@
 #include <vtkImageActor.h>
 #include <vtkImageCast.h>
 #include <vtkImageCityBlockDistance.h>
-#include <vtkImageData.h>
-#include <vtkImageExtractComponents.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
-#include <vtkImageThreshold.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -19,7 +16,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify command line arguments
+  // Verify command line arguments.
   if (argc < 2)
   {
     std::cout << "Usage: " << argv[0] << " BinaryImage e.g. Yinyang.jpg"
@@ -27,7 +24,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read file
+  // Read file.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader;
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -42,7 +39,7 @@ int main(int argc, char* argv[])
   cityBlockDistanceFilter->SetDimensionality(2);
   cityBlockDistanceFilter->Update();
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkImageCast> inputCastFilter;
   inputCastFilter->SetOutputScalarTypeToUnsignedChar();
   inputCastFilter->SetInputConnection(reader->GetOutputPort());
@@ -59,12 +56,12 @@ int main(int argc, char* argv[])
   distanceActor->GetMapper()->SetInputConnection(
       distanceCastFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double inputViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double distanceViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> inputRenderer;
   inputRenderer->SetViewport(inputViewport);
   inputRenderer->AddActor(inputActor);
@@ -77,20 +74,20 @@ int main(int argc, char* argv[])
   distanceRenderer->ResetCamera();
   distanceRenderer->SetBackground(colors->GetColor3d("LightSkyBlue").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->AddRenderer(inputRenderer);
   renderWindow->AddRenderer(distanceRenderer);
   renderWindow->SetWindowName("ImageCityBlockDistance");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

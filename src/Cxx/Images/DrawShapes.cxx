@@ -1,5 +1,4 @@
 #include <vtkImageCanvasSource2D.h>
-#include <vtkImageData.h>
 #include <vtkImageViewer2.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -23,16 +22,16 @@ int main(int, char*[])
     drawColor2[i] = color2[i];
   }
 
-  // Create a blank, colored image
+  // Create a blank, colored image.
   vtkNew<vtkImageCanvasSource2D> drawing;
   drawing->SetScalarTypeToUnsignedChar();
   drawing->SetNumberOfScalarComponents(3);
   drawing->SetExtent(0, 20, 0, 50, 0, 0);
-  // Comment out or set color1 to "Black" if you want a black image
+  // Comment out or set color1 to "Black" if you want a black image.
   drawing->SetDrawColor(drawColor1.data());
   drawing->FillBox(0, 20, 0, 50);
 
-  // Draw a red circle of radius 5 centered at (9,10)
+  // Draw a red circle of radius 5 centered at (9,10).
   drawing->SetDrawColor(drawColor2.data());
   drawing->DrawCircle(9, 10, 5);
   drawing->Update();

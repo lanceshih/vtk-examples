@@ -22,7 +22,7 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last = false);
 
 int main(int argc, char* argv[])
 {
-  //
+
   int numberOfFiles = argc - 1;
   if (numberOfFiles == 0)
   {
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
   return EXIT_SUCCESS;
 }
 namespace {
-// draw the borders of a renderer's viewport
+// Draw the borders of a renderer's viewport.
 void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
 {
   // points start at upper right and proceed anti-clockwise
@@ -86,16 +86,16 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
   points->InsertPoint(2, 0, 0, 0);
   points->InsertPoint(3, 1, 0, 0);
 
-  // create cells, and lines
+  // Create cells, and lines.
   vtkNew<vtkCellArray> cells;
   cells->Initialize();
 
   vtkNew<vtkPolyLine> lines;
 
-  // only draw last line if this is the last viewport
-  // this prevents double vertical lines at right border
-  // if different colors are used for each border, then do
-  // not specify last
+  // Only draw last line if this is the last viewport.
+  // This prevents double vertical lines at right border.
+  // If different colors are used for each border, then do
+  // not specify last.
   if (last)
   {
     lines->GetPointIds()->SetNumberOfIds(5);
@@ -114,14 +114,14 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
   }
   cells->InsertNextCell(lines);
 
-  // now make tge polydata and display it
+  // Now make the polydata and display it.
   vtkNew<vtkPolyData> poly;
   poly->Initialize();
   poly->SetPoints(points);
   poly->SetLines(cells);
 
-  // use normalized viewport coordinates since
-  // they are independent of window size
+  // Use normalized viewport coordinates since
+  // they are independent of window size.
   vtkNew<vtkCoordinate> coordinate;
   coordinate->SetCoordinateSystemToNormalizedViewport();
 
@@ -132,7 +132,7 @@ void ViewportBorder(vtkRenderer* renderer, double* color, bool last)
   vtkNew<vtkActor2D> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(color);
-  // line width should be at least 2 to be visible at extremes
+  // Line width should be at least 2 to be visible at extremes.
 
   actor->GetProperty()->SetLineWidth(4.0); // Line Width
 

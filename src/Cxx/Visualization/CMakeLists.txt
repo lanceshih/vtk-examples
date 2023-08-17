@@ -170,7 +170,7 @@ if (BUILD_TESTING)
     TestClipArt ${DATA}/stormy.jpg)
 
   add_test(${KIT}-ChooseTextColor ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
-    TestChooseTextColor ${DATA}/Canterbury.ttf Pink  MintCream SaddleBrown)
+    TestChooseTextColor ${DATA}/Canterbury.ttf Pink MintCream SaddleBrown)
 
   add_test(${KIT}-ChooseTextColorDemo ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestChooseTextColorDemo .8 mintcream ivoryblack)
@@ -238,7 +238,7 @@ if (BUILD_TESTING)
     TestNormalsDemo ${DATA}/42400-IDGH.stl)
 
   add_test(${KIT}-PointDataSubdivision ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
-    TestPointDataSubdivision 2)
+    TestPointDataSubdivision Boy)
 
   add_test(${KIT}-ProteinRibbons ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${KIT}CxxTests
     TestProteinRibbons ${DATA}/2j6g.pdb)

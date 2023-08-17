@@ -10,7 +10,6 @@
 #include <vtkOutlineFilter.h>
 #include <vtkPointLoad.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkProp3D.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>

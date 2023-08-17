@@ -11,13 +11,21 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSimpleMotionBlurPass.h>
-#include <vtkTextureObject.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 //----------------------------------------------------------------------------
-int main(int, char* argv[])
+int main(int argc, char* argv[])
 {
+
+  if (argc < 2)
+  {
+    cout << "Usage: " << argv[0] << " file e.g. Armadillo.ply" << endl;
+    return EXIT_FAILURE;
+  }
+
   vtkNew<vtkNamedColors> colors;
 
   // Set the colors.
@@ -50,7 +58,7 @@ int main(int, char* argv[])
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(reader->GetOutputPort());
 
-  // create three models
+  // Create three models.
   {
     vtkNew<vtkActor> actor;
     actor->SetMapper(mapper);
@@ -96,13 +104,13 @@ int main(int, char* argv[])
 
   renderWindow->SetMultiSamples(0);
 
-  // create the basic VTK render steps
+  // Create the basic VTK render steps.
   vtkNew<vtkRenderStepsPass> basicPasses;
 
   vtkNew<vtkSimpleMotionBlurPass> motion;
   motion->SetDelegatePass(basicPasses);
 
-  // tell the renderer to use our render pass pipeline
+  // Tell the renderer to use our render pass pipeline.
   vtkOpenGLRenderer* glrenderer =
       dynamic_cast<vtkOpenGLRenderer*>(renderer.GetPointer());
   glrenderer->SetPass(motion);

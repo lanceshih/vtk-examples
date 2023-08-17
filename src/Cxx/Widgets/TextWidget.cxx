@@ -1,6 +1,4 @@
 #include <vtkActor.h>
-#include <vtkCommand.h>
-#include <vtkCoordinate.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
@@ -18,7 +16,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -26,7 +24,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Create a test pipeline
+  // Create a test pipeline.
   vtkNew<vtkSphereSource> sphereSource;
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
@@ -50,7 +48,7 @@ int main(int, char*[])
   textWidget->SetTextActor(textActor);
   textWidget->SelectableOff();
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
   renderWindow->SetSize(300, 300);

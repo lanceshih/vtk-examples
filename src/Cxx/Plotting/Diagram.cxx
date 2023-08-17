@@ -7,13 +7,11 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
-#include <vtkOpenGLContextDevice2D.h>
 #include <vtkPen.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkStdString.h>
 #include <vtkTextProperty.h>
 
 namespace {
@@ -29,7 +27,7 @@ public:
     this->ColorSchemeName = "Brewer Diverging Spectral (7)";
     this->ColorSeries->SetColorSchemeByName(this->ColorSchemeName);
   }
-  // Paint event for the chart, called whenever the chart needs to be drawn
+  // Paint event for the chart, called whenever the chart needs to be drawn.
   virtual bool Paint(vtkContext2D* painter);
   void SetColorSchemeName(std::string seriesName)
   {
@@ -66,7 +64,7 @@ int main(int argc, char* argv[])
     colorSchemeName = std::string(argv[1]);
   }
 
-  // Set up a 2D chart actor, APIDiagram object andn add them to the renderer
+  // Set up a 2D chart actor, APIDiagram object andn add them to the renderer.
   vtkNew<APIDiagram> diagram;
   diagram->SetColorSchemeName(colorSchemeName);
 
@@ -94,12 +92,12 @@ int main(int argc, char* argv[])
   return EXIT_SUCCESS;
 }
 
-// Make our new derived class to draw a diagram
+// Make our new derived class to draw a diagram.
 vtkStandardNewMacro(APIDiagram);
 // This function draws our API diagram
 bool APIDiagram::Paint(vtkContext2D* painter)
 {
-  // Drawing a hard wired diagram 800x600 as a demonstration of the 2D API
+  // Drawing a hard wired diagram 800x600 as a demonstration of the 2D API.
   painter->GetTextProp()->SetVerticalJustificationToCentered();
   painter->GetTextProp()->SetJustificationToCentered();
   painter->GetTextProp()->SetColor(0.0, 0.0, 0.0);

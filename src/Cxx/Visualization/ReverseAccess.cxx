@@ -2,7 +2,7 @@
 // This example demonstrates how to access the source object
 // (e.g. vtkSphereSource) from the actor reversely.
 //
-// some standard vtk headers
+// Some standard vtk headers.
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkMath.h>
@@ -15,26 +15,26 @@
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 
-// additionally needed vtk header for this example
+// Additionally needed vtk header for this example.
 #include <vtkAlgorithmOutput.h>
 
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // source
+  // Source
   vtkNew<vtkSphereSource> sphere;
   sphere->SetRadius(0.5);
-  // mapper
+  // Mapper
   vtkNew<vtkPolyDataMapper> sphereMapper;
   sphereMapper->SetInputConnection(sphere->GetOutputPort());
-  // actor
+  // Actor
   vtkNew<vtkActor> sphereActor;
   sphereActor->SetMapper(sphereMapper);
   sphereActor->GetProperty()->SetColor(
       colors->GetColor3d("MistyRose").GetData());
 
-  // renderer
+  // Renderer
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("CadetBlue").GetData());
 
@@ -43,7 +43,7 @@ int main(int, char*[])
   renWin->SetSize(300, 300);
   renWin->SetWindowName("ReverseAccess");
 
-  // add actor to the renderer
+  // Add actor to the renderer.
   ren1->AddActor(sphereActor);
 
   //
@@ -61,7 +61,7 @@ int main(int, char*[])
   // change actor's x-position),
   // we change the radius of the spheresource as well.
   //
-  // next two lines are the core lines for reverse access
+  // The next two lines are the core lines for reverse access.
   //
   vtkSmartPointer<vtkAlgorithm> algorithm =
       sphereActor->GetMapper()->GetInputConnection(0, 0)->GetProducer();
@@ -70,10 +70,10 @@ int main(int, char*[])
   float origRadius = srcReference->GetRadius();
   for (int i = 0; i < 360; ++i)
   {
-    // change radius of the spheresource
+    // Change radius of the sphere source.
     srcReference->SetRadius(origRadius *
                             (1 + sin((float)i / 180.0 * vtkMath::Pi())));
-    // change x-position of the actor
+    // Change the x-position of the actor.
     sphereActor->SetPosition(sin((float)i / 45.0 * vtkMath::Pi()) * 0.5, 0, 0);
     renWin->Render();
   }

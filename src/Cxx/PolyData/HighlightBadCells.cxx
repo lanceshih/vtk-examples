@@ -16,6 +16,9 @@
 #include <vtkTriangleFilter.h>
 #include <vtkUnstructuredGrid.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
@@ -27,7 +30,7 @@ int main(int, char*[])
   triangleFilter->SetInputConnection(sphereSource->GetOutputPort());
   triangleFilter->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkDataSetMapper> sphereMapper;
   sphereMapper->SetInputConnection(triangleFilter->GetOutputPort());
   vtkNew<vtkActor> sphereActor;
@@ -68,7 +71,7 @@ int main(int, char*[])
 
   vtkUnstructuredGrid* ug = selectCells->GetOutput();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkDataSetMapper> mapper;
   mapper->SetInputData(ug);
 
@@ -78,7 +81,7 @@ int main(int, char*[])
   actor->GetProperty()->SetLineWidth(5);
   actor->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -87,12 +90,12 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->AddActor(sphereActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

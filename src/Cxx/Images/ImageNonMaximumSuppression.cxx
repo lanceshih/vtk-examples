@@ -48,7 +48,7 @@ int main(int, char*[])
   suppressionCastFilter->SetInputConnection(suppressionFilter->GetOutputPort());
   suppressionCastFilter->Update();
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkImageActor> originalActor;
   originalActor->GetMapper()->SetInputConnection(
       sourceCastFilter->GetOutputPort());
@@ -61,13 +61,13 @@ int main(int, char*[])
   suppressionActor->GetMapper()->SetInputConnection(
       suppressionCastFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.33, 1.0};
   double gradientMagnitudeViewport[4] = {0.33, 0.0, 0.66, 1.0};
   double suppressionViewport[4] = {0.66, 0.0, 1.0, 1.0};
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(originalViewport);
   originalRenderer->AddActor(originalActor);

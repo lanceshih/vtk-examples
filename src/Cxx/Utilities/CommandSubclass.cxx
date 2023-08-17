@@ -2,13 +2,15 @@
 #include <vtkCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 
@@ -30,7 +32,7 @@ public:
   void Execute(vtkObject* vtkNotUsed(caller), unsigned long vtkNotUsed(eventId),
                void* vtkNotUsed(callData))
   {
-    std::cout << "timer callback" << std::endl;
+    std::cout << "Timer callback" << std::endl;
     if (counter > maxCounter)
     {
       iren->DestroyTimer();

@@ -17,7 +17,10 @@
 #include <vtkRenderer.h>
 #include <vtkThinPlateSplineTransform.h>
 
-// Warp an image with a thin plate spline
+#include <iostream>
+#include <string>
+
+// Warp an image with a thin plate spline.
 
 int main(int argc, char* argv[])
 {
@@ -30,7 +33,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // First, create an image to warp
+  // First, create an image to warp.
   vtkNew<vtkImageGridSource> imageGrid;
   imageGrid->SetGridSpacing(16, 16, 0);
   imageGrid->SetGridOrigin(0, 0, 0);
@@ -59,7 +62,7 @@ int main(int argc, char* argv[])
   blend->AddInputConnection(0, reader->GetOutputPort());
   blend->AddInputConnection(0, alpha->GetOutputPort());
 
-  // Next, create a ThinPlateSpline transform
+  // Next, create a ThinPlateSpline transform.
 
   vtkNew<vtkPoints> p1;
   p1->SetNumberOfPoints(8);
@@ -87,7 +90,7 @@ int main(int argc, char* argv[])
   transform->SetSourceLandmarks(p2);
   transform->SetTargetLandmarks(p1);
   transform->SetBasisToR2LogR();
-  // You must invert the transform before passing it to vtkImageReslice
+  // You must invert the transform before passing it to vtkImageReslice.
   transform->Inverse();
 
   vtkNew<vtkImageReslice> reslice;

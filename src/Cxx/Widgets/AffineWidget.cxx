@@ -2,12 +2,12 @@
 #include <vtkAffineRepresentation2D.h>
 #include <vtkAffineWidget.h>
 #include <vtkAppendPolyData.h>
+#include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
 #include <vtkInteractorStyleSwitch.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlaneSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -17,7 +17,7 @@
 #include <vtkTransform.h>
 
 namespace {
-class vtkAffineCallback : public vtkCommand
+class vtkAffineCallback : public vtkCallbackCommand
 {
 public:
   static vtkAffineCallback* New()

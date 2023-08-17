@@ -19,11 +19,11 @@
 int main(int argc, char* argv[])
 {
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
-    std::cout << "Usage: " << argv[0] << " Filename e.g. AttenuationArtifact.pg"
-              << std::endl;
+    std::cout << "Usage: " << argv[0]
+              << " Filename e.g. AttenuationArtifact.pgm" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
   cast->SetInputConnection(reader->GetOutputPort());
   cast->SetOutputScalarTypeToDouble();
 
-  // get rid of discrete scalars);
+  // Get rid of discrete scalars.
   vtkNew<vtkImageGaussianSmooth> smooth;
   smooth->SetInputConnection(cast->GetOutputPort());
   smooth->SetStandardDeviations(0.8, 0.8, 0);
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
   div->SetInputConnection(1, m3->GetOutputPort());
   div->SetOperationToMultiply();
 
-  // Create actors
+  // Create actors.
   vtkNew<vtkNamedColors> colors;
 
   double colorWindow = 256.0;
@@ -73,12 +73,12 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageActor> filteredActor;
   filteredActor->GetMapper()->SetInputConnection(div->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double originalViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double filteredViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(originalViewport);
   originalRenderer->AddActor(originalActor);

@@ -1,13 +1,10 @@
 #include <vtkExtractCells.h>
 #include <vtkIdList.h>
-#include <vtkLine.h>
 #include <vtkLineSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOBBTree.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkSphereSource.h>
 
 #include <vtkActor.h>
@@ -46,7 +43,7 @@ int main(int, char*[])
   std::cout << "NumPoints: " << intersectPoints->GetNumberOfPoints()
             << std::endl;
 
-  // Display list of intersections
+  // Display list of intersections.
   double intersection[3];
   for (int i = 0; i < intersectPoints->GetNumberOfPoints(); i++)
   {
@@ -64,7 +61,7 @@ int main(int, char*[])
     std::cout << "\tCellId " << i << ": " << cellId << std::endl;
   }
 
-  // Render the line, sphere and intersected cells
+  // Render the line, sphere and intersected cells.
   vtkNew<vtkLineSource> lineSource;
   lineSource->SetPoint1(lineP0);
   lineSource->SetPoint2(lineP1);

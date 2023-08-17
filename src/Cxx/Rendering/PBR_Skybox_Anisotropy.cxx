@@ -1,31 +1,24 @@
 #include <vtkActor.h>
 #include <vtkAxesActor.h>
-#include <vtkBMPReader.h>
 #include <vtkCallbackCommand.h>
 #include <vtkCameraPass.h>
 #include <vtkCleanPolyData.h>
 #include <vtkClipPolyData.h>
 #include <vtkCubeSource.h>
-#include <vtkDataSet.h>
-#include <vtkEquirectangularToCubeMapTexture.h>
 #include <vtkFloatArray.h>
 #include <vtkHDRReader.h>
 #include <vtkImageFlip.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkInteractorStyleTrackballCamera.h>
-#include <vtkJPEGReader.h>
 #include <vtkLightsPass.h>
 #include <vtkLinearSubdivisionFilter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpaquePass.h>
 #include <vtkOpenGLRenderer.h>
-#include <vtkOpenGLTexture.h>
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkOverlayPass.h>
 #include <vtkPBRIrradianceTexture.h>
-#include <vtkPNGReader.h>
-#include <vtkPNMReader.h>
 #include <vtkParametricBoy.h>
 #include <vtkParametricFunctionSource.h>
 #include <vtkParametricMobius.h>
@@ -47,7 +40,6 @@
 #include <vtkSliderRepresentation2D.h>
 #include <vtkSliderWidget.h>
 #include <vtkSmartPointer.h>
-#include <vtkTIFFReader.h>
 #include <vtkTextProperty.h>
 #include <vtkTexture.h>
 #include <vtkTexturedSphereSource.h>
@@ -490,7 +482,8 @@ int main(int argc, char* argv[])
   // Define options
   std::string fileName;
   app.add_option("fileName", fileName,
-                 "The path to the JSON file containing the parameters.");
+                 "The path to the JSON file containing the parameters e.g. "
+                 "PBR_Skybox_Anisotropy.json.");
   std::string surfaceName;
   app.add_option("-s, --surface", surfaceName,
                  "The name of the surface. Overrides the surface entry in the "

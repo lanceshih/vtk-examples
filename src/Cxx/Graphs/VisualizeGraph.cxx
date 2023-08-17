@@ -1,13 +1,10 @@
-#include <vtkGraphLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
-#include <vtkGraphWriter.h>
 #include <vtkMutableUndirectedGraph.h>
 #include <vtkNamedColors.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSimple2DLayoutStrategy.h>
-#include <vtkSmartPointer.h>
 
 int main(int, char*[])
 {

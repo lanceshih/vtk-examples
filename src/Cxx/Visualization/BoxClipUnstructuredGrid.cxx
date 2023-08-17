@@ -1,27 +1,24 @@
+#include <vtkActor.h>
 #include <vtkBoxClipDataSet.h>
+#include <vtkCamera.h>
+#include <vtkDataSetMapper.h>
 #include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkSmartPointer.h>
-
-#include <vtkUnstructuredGrid.h>
-#include <vtkUnstructuredGridReader.h>
-
-#include <vtkActor.h>
-#include <vtkCamera.h>
-#include <vtkDataSetMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkUnstructuredGrid.h>
+#include <vtkUnstructuredGridReader.h>
 
-#include <vtkColor.h>
-#include <vtkNamedColors.h>
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " file.vtk" << endl;
+    std::cout << "Usage: " << argv[0] << " file.vtk e.g. hexa.vtk" << endl;
     return EXIT_FAILURE;
   }
 

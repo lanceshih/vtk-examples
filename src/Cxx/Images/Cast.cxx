@@ -14,7 +14,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a float image
+  // Create a float image.
   vtkNew<vtkImageMandelbrotSource> source;
   source->Update();
 
@@ -25,28 +25,28 @@ int main(int, char*[])
   castFilter->SetOutputScalarTypeToUnsignedChar();
   castFilter->Update();
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(castFilter->GetOutputPort());
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
   renderer->ResetCamera();
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("Cast");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

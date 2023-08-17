@@ -36,7 +36,7 @@ int main(int, char*[])
   vtkNew<vtkImageActor> secondImageActor;
   secondImageActor->SetInputData(secondImage);
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderer> renderer;
 
 #ifdef DISPLAY_FIRST_IMAGE
@@ -44,7 +44,7 @@ int main(int, char*[])
   renderer->AddActor(secondImageActor);
   renderer->AddActor(firstImageActor);
 #else
-  // The second image is displayed
+  // The second image is displayed.
   renderer->AddActor(firstImageActor);
   renderer->AddActor(secondImageActor);
 #endif

@@ -13,7 +13,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> namedColors;
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -27,7 +27,7 @@ int main(int, char*[])
   lineSource->SetResolution(20);
   lineSource->Update();
 
-  // Create a tube (cylinder) around the line
+  // Create a tube (cylinder) around the line.
   vtkNew<vtkTubeFilter> tubeFilter;
   tubeFilter->SetInputConnection(lineSource->GetOutputPort());
   tubeFilter->SetRadius(.01); // default is .5

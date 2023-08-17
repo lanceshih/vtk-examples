@@ -2,7 +2,6 @@
 #include <vtkImageDataToPointSet.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
-#include <vtkStructuredGrid.h>
 #include <vtkXMLStructuredGridWriter.h>
 
 namespace {

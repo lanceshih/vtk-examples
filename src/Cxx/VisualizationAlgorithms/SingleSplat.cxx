@@ -16,10 +16,10 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
+#include <array>
+
 int main(int, char*[])
 {
-  double x[3], n[3];
-
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkRenderer> aren;
@@ -28,20 +28,18 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Create single splat point
+  // Create single splat point.
   vtkNew<vtkPoints> pts;
   vtkNew<vtkCellArray> verts;
   vtkNew<vtkDoubleArray> norms;
   vtkNew<vtkDoubleArray> scalars;
 
-  x[0] = x[1] = x[2] = 0.0;
-  pts->InsertNextPoint(x);
+  std::array<double, 3> x{0.0, 0.0, 0.0};
+  pts->InsertNextPoint(x.data());
   norms->SetNumberOfTuples(1);
   norms->SetNumberOfComponents(3);
-  n[0] = 0.707;
-  n[1] = 0.707;
-  n[2] = 0.0;
-  norms->InsertTuple(0, n);
+  std::array<double, 3> n{0.707, 0.707, 0.0};
+  norms->InsertTuple(0, n.data());
   scalars->SetNumberOfTuples(1);
   scalars->SetNumberOfComponents(1);
   scalars->InsertTuple1(0, 1.0);
@@ -55,7 +53,7 @@ int main(int, char*[])
   pData->GetPointData()->SetNormals(norms);
   pData->GetPointData()->SetScalars(scalars);
 
-  // Splat point and generate isosurface
+  // Splat point and generate isosurface.
   vtkNew<vtkGaussianSplatter> splat;
   splat->SetInputData(pData);
   splat->SetModelBounds(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
@@ -71,7 +69,7 @@ int main(int, char*[])
   vtkNew<vtkActor> splatActor;
   splatActor->SetMapper(splatMapper);
 
-  // Create outline
+  // Create outline.
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputConnection(splat->GetOutputPort());
   vtkNew<vtkPolyDataMapper> outlineMapper;
@@ -80,7 +78,7 @@ int main(int, char*[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Brown").GetData());
 
-  // Create cone to indicate direction
+  // Create cone to indicate direction.
   vtkNew<vtkConeSource> cone;
   cone->SetResolution(24);
   vtkNew<vtkPolyDataMapper> coneMapper;
@@ -92,7 +90,7 @@ int main(int, char*[])
   coneActor->AddPosition(0.50, 0.50, 0.0);
   coneActor->GetProperty()->SetColor(colors->GetColor3d("DeepPink").GetData());
   //
-  // Rendering stuff
+  // Rendering stuff.
   //
   aren->SetBackground(colors->GetColor3d("Beige").GetData());
   aren->AddActor(splatActor);
@@ -103,7 +101,7 @@ int main(int, char*[])
   renWin->SetWindowName("SingleSplat");
   renWin->Render();
 
-  // interact with data
+  // interact with data.
   iren->Start();
 
   return EXIT_SUCCESS;

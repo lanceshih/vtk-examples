@@ -16,7 +16,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageMandelbrotSource> mandelbrotSource;
   mandelbrotSource->Update();
 
@@ -40,12 +40,12 @@ int main(int, char*[])
   double spacing[3];
   castFilter->GetOutput()->GetSpacing(spacing);
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(imageSlice);
   renderer->ResetCamera();
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("FillWindow");
@@ -64,13 +64,13 @@ int main(int, char*[])
   camera->SetFocalPoint(xc, yc, 0.0);
   camera->SetPosition(xc, yc, +d);
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

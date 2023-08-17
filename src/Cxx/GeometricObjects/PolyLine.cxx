@@ -1,7 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkDoubleArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
@@ -24,7 +22,7 @@ int main(int, char*[])
   double p2[3] = {0.0, 1.0, 2.0};
   double p3[3] = {1.0, 2.0, 3.0};
 
-  // Create a vtkPoints object and store the points in it
+  // Create a vtkPoints object and store the points in it.
   vtkNew<vtkPoints> points;
   points->InsertNextPoint(origin);
   points->InsertNextPoint(p0);
@@ -39,20 +37,20 @@ int main(int, char*[])
     polyLine->GetPointIds()->SetId(i, i);
   }
 
-  // Create a cell array to store the lines in and add the lines to it
+  // Create a cell array to store the lines in and add the lines to it.
   vtkNew<vtkCellArray> cells;
   cells->InsertNextCell(polyLine);
 
-  // Create a polydata to store everything in
+  // Create a polydata to store everything in.
   vtkNew<vtkPolyData> polyData;
 
-  // Add the points to the dataset
+  // Add the points to the dataset.
   polyData->SetPoints(points);
 
-  // Add the lines to the dataset
+  // Add the lines to the dataset.
   polyData->SetLines(cells);
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputData(polyData);
 
@@ -60,7 +58,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetWindowName("PolyLine");

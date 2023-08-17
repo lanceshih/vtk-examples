@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkContourFilter.h>
 #include <vtkGaussianSplatter.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
@@ -11,7 +10,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
-#include <vtkXMLImageDataWriter.h>
 #include <vtkXMLPolyDataReader.h>
 
 int main(int argc, char* argv[])
@@ -20,14 +18,14 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkPolyData> input;
 
-  if (argc == 1) // Generate the data
+  if (argc == 1) // Generate the data.
   {
     vtkNew<vtkSphereSource> sphereSource;
     sphereSource->SetRadius(.01);
     sphereSource->Update();
     input->ShallowCopy(sphereSource->GetOutput());
   }
-  else // Read the data from a file
+  else // Read the data from a file.
   {
     vtkNew<vtkXMLPolyDataReader> reader;
     reader->SetFileName(argv[1]);

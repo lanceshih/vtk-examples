@@ -3,7 +3,6 @@
 
 #include <vtkEventQtSlotConnect.h>
 #include <vtkGenericOpenGLRenderWindow.h>
-#include <vtkInteractorStyleTrackballActor.h>
 #include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -14,6 +13,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkVersion.h>
+
+#include <iostream>
+#include <string>
 
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1

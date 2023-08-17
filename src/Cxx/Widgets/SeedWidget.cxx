@@ -3,7 +3,7 @@
 #include <vtkPointHandleRepresentation2D.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
-#include <vtkProperty2D.h> // For setting the color in the handles
+#include <vtkProperty2D.h> // For setting the color in the handles.
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
@@ -18,7 +18,7 @@ int main(int vtkNotUsed(argc), char* vtkNotUsed(argv)[])
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
   vtkNew<vtkActor> actor;
@@ -36,13 +36,13 @@ int main(int vtkNotUsed(argc), char* vtkNotUsed(argv)[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(window);
 
-  // Create the representation for the seed widget and for its handles
+  // Create the representation for the seed widget and for its handles.
   vtkNew<vtkPointHandleRepresentation2D> handleRep;
   handleRep->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
   vtkNew<vtkSeedRepresentation> widgetRep;
   widgetRep->SetHandleRepresentation(handleRep);
 
-  // Create the seed widget
+  // Create the seed widget.
   vtkNew<vtkSeedWidget> seedWidget;
   seedWidget->SetInteractor(interactor);
   seedWidget->SetRepresentation(widgetRep);

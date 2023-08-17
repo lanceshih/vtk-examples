@@ -43,7 +43,6 @@ of the elements of the vector together to form a pipeline.
 #include <vtkParametricFunctionSource.h>
 #include <vtkParametricRandomHills.h>
 #include <vtkPointData.h>
-#include <vtkPolyDataAlgorithm.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>

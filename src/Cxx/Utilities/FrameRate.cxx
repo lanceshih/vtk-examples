@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCallbackCommand.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
@@ -9,7 +8,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
-#include <vtkTimerLog.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 void CallbackFunction(vtkObject* caller, long unsigned int eventId,

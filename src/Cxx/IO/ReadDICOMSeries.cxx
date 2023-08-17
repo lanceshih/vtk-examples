@@ -3,15 +3,14 @@
 // and how to scroll with the mousewheel or the up/down keys
 // through all slices
 //
-// some standard vtk headers
-#include <vtkActor.h>
+// Some standard vtk headers.
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-// headers needed for this example
+// Headers needed for this example.
 #include <vtkActor2D.h>
 #include <vtkDICOMImageReader.h>
 #include <vtkImageViewer2.h>
@@ -19,12 +18,12 @@
 #include <vtkTextMapper.h>
 #include <vtkTextProperty.h>
 
-// needed to easily convert int to std::string
+// Needed to easily convert int to std::string.
 #include <sstream>
 
 namespace {
 
-// helper class to format slice status message
+// Helper class to format slice status message.
 class StatusMessage
 {
 public:
@@ -36,7 +35,7 @@ public:
   }
 };
 
-// Define own interaction style
+// Define own interaction style.
 class myVtkInteractorStyleImage : public vtkInteractorStyleImage
 {
 public:
@@ -140,7 +139,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " FolderName" << std::endl;
@@ -159,7 +158,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkImageViewer2> imageViewer;
   imageViewer->SetInputConnection(reader->GetOutputPort());
 
-  // slice status message
+  // Slice status message.
   vtkNew<vtkTextProperty> sliceTextProp;
   sliceTextProp->SetFontFamilyToCourier();
   sliceTextProp->SetFontSize(20);
@@ -176,7 +175,7 @@ int main(int argc, char* argv[])
   sliceTextActor->SetMapper(sliceTextMapper);
   sliceTextActor->SetPosition(15, 10);
 
-  // usage hint message
+  // Usage hint message.
   vtkNew<vtkTextProperty> usageTextProp;
   usageTextProp->SetFontFamilyToCourier();
   usageTextProp->SetFontSize(14);
@@ -195,27 +194,27 @@ int main(int argc, char* argv[])
       ->SetCoordinateSystemToNormalizedDisplay();
   usageTextActor->GetPositionCoordinate()->SetValue(0.05, 0.95);
 
-  // create an interactor with our own style (inherit from
-  // vtkInteractorStyleImage) in order to catch mousewheel and key events
+  // Create an interactor with our own style (inherit from
+  // vtkInteractorStyleImage) in order to catch mousewheel and key events.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<myVtkInteractorStyleImage> myInteractorStyle;
 
-  // make imageviewer2 and sliceTextMapper visible to our interactorstyle
-  // to enable slice status message updates when scrolling through the slices
+  // Make imageviewer2 and sliceTextMapper visible to our interactorstyle
+  // to enable slice status message updates when scrolling through the slices.
   myInteractorStyle->SetImageViewer(imageViewer);
   myInteractorStyle->SetStatusMapper(sliceTextMapper);
 
   imageViewer->SetupInteractor(renderWindowInteractor);
-  // make the interactor use our own interactorstyle
+  // Make the interactor use our own interactorstyle
   // cause SetupInteractor() is defining it's own default interatorstyle
-  // this must be called after SetupInteractor()
+  // this must be called after SetupInteractor().
   renderWindowInteractor->SetInteractorStyle(myInteractorStyle);
-  // add slice status message and usage hint message to the renderer
+  // Sdd slice status message and usage hint message to the renderer.
   imageViewer->GetRenderer()->AddActor2D(sliceTextActor);
   imageViewer->GetRenderer()->AddActor2D(usageTextActor);
 
-  // initialize rendering and interaction
+  // Initialize rendering and interaction.
   imageViewer->Render();
   imageViewer->GetRenderer()->ResetCamera();
   imageViewer->GetRenderer()->SetBackground(

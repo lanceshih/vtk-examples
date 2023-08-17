@@ -15,13 +15,12 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a "grayscale" 16x16 image, 1-component pixels of type "double"
+  // Create a "grayscale" 16x16 image, 1-component pixels of type "double".
   vtkNew<vtkImageData> image;
   int imageExtent[6] = {0, 15, 0, 15, 0, 0};
   image->SetExtent(imageExtent);
@@ -52,13 +51,13 @@ int main(int, char*[])
   scalarValuesToColors->PassAlphaToOutputOn();
   scalarValuesToColors->SetInputData(image);
 
-  // Create an image actor
+  // Create an image actor.
   vtkNew<vtkImageActor> imageActor;
   imageActor->GetMapper()->SetInputConnection(
       scalarValuesToColors->GetOutputPort());
   imageActor->GetProperty()->SetInterpolationTypeToNearest();
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(imageActor);
   renderer->ResetCamera();

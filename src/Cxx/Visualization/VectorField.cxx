@@ -1,36 +1,32 @@
 #include <vtkArrowSource.h>
-#include <vtkCellArray.h>
 #include <vtkGlyph2D.h>
 #include <vtkImageData.h>
 #include <vtkImageSlice.h>
 #include <vtkImageSliceMapper.h>
-#include <vtkInteractorStyleImage.h>
+// #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkXMLPolyDataWriter.h>
 
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageData> image;
 
-  // Specify the size of the image data
+  // Specify the size of the image data.
   image->SetDimensions(50, 50, 1);
   image->AllocateScalars(VTK_FLOAT, 3);
 
   int* dims = image->GetDimensions();
 
-  // Zero the image
+  // Zero the image.
   for (auto z = 0; z < dims[2]; ++z)
   {
     for (auto y = 0; y < dims[1]; ++y)
@@ -45,7 +41,7 @@ int main(int, char*[])
     }
   }
 
-  // Set two vectors
+  // Set two vectors.
   {
     auto pixel = static_cast<float*>(image->GetScalarPointer(20, 20, 0));
     pixel[0] = -10.0;
@@ -88,24 +84,24 @@ int main(int, char*[])
   vtkNew<vtkActor> vectorActor;
   vectorActor->SetMapper(vectorMapper);
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddViewProp(imageSlice);
   renderer->AddViewProp(vectorActor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("VectorField");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   // vtkNew<vtkInteractorStyleImage> style;
   // renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

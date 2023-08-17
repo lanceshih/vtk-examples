@@ -1,8 +1,6 @@
 #include <vtkChartLegend.h>
 #include <vtkChartXY.h>
-#include <vtkColor.h>
 #include <vtkColorSeries.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkDoubleArray.h>
 #include <vtkLookupTable.h>
@@ -14,7 +12,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkStringArray.h>
 #include <vtkTable.h>
 
 #include <sstream>

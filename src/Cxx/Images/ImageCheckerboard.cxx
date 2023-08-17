@@ -1,5 +1,4 @@
 #include <vtkImageCheckerboard.h>
-#include <vtkImageData.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkImageViewer2.h>
@@ -14,7 +13,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 3)
   {
     std::cerr << "Usage: " << argv[0]
@@ -23,7 +22,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the images
+  // Read the images.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader1;
   reader1.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -38,7 +37,7 @@ int main(int argc, char* argv[])
   checkerboardFilter->SetInputConnection(1, reader2->GetOutputPort());
   checkerboardFilter->SetNumberOfDivisions(3, 3, 1);
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<vtkImageViewer2> imageViewer;

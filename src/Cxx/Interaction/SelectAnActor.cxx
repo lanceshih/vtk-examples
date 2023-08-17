@@ -1,15 +1,10 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
 #include <vtkCubeSource.h>
 #include <vtkInteractorStyleTrackballActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkPropPicker.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -18,7 +13,7 @@
 
 namespace {
 
-// Handle mouse events
+// Handle mouse events.
 class MouseInteractorStyle5 : public vtkInteractorStyleTrackballActor
 {
 public:
@@ -27,7 +22,7 @@ public:
 
   virtual void OnLeftButtonDown() override
   {
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballActor::OnLeftButtonDown();
 
     if (this->InteractionProp == this->Cube)
@@ -52,7 +47,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a cube
+  // Create a cube.
   vtkNew<vtkCubeSource> cubeSource;
   cubeSource->Update();
 
@@ -63,28 +58,28 @@ int main(int, char*[])
   cubeActor->SetMapper(cubeMapper);
   cubeActor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(2, 0, 0);
   sphereSource->Update();
 
-  // Create a mapper
+  // Create a mapper.
   vtkNew<vtkPolyDataMapper> sphereMapper;
   sphereMapper->SetInputConnection(sphereSource->GetOutputPort());
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkActor> sphereActor;
   sphereActor->SetMapper(sphereMapper);
   sphereActor->GetProperty()->SetColor(
       colors->GetColor3d("LightGoldenrodYellow").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("SelectAnActor");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
@@ -102,7 +97,7 @@ int main(int, char*[])
   renderer->ResetCamera();
   renderer->GetActiveCamera()->Zoom(0.9);
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Initialize();
   renderWindowInteractor->Start();

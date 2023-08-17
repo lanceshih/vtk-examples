@@ -3,7 +3,6 @@
 #include <vtkContourFilter.h>
 #include <vtkExtractVOI.h>
 #include <vtkFlyingEdges2D.h>
-#include <vtkImageData.h>
 #include <vtkMetaImageReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -15,6 +14,8 @@
 #include <vtkRenderer.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -32,7 +33,8 @@ int main(int argc, char* argv[])
     std::cout << "Examples:" << std::endl;
     std::cout << "Contouring, using vtkFlyingEdges2D: FullHead.mhd"
               << std::endl;
-    std::cout << "Frog, using vtkContourFilter: FullHead.mhd, 1" << std::endl;
+    std::cout << "Contouring, using vtkContourFilter: FullHead.mhd 1"
+              << std::endl;
     return EXIT_FAILURE;
   }
   auto useContourFilter = false;

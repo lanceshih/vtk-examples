@@ -16,6 +16,8 @@
 #include <vtkStructuredGridReader.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -38,11 +40,11 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
   //
-  // Read data
+  // Read data.
   //
   vtkNew<vtkStructuredGridReader> reader;
   reader->SetFileName(argv[1]);
-  reader->Update(); // force a read to occur
+  reader->Update(); // Force a read to occur.
   reader->GetOutput()->GetLength();
 
   double maxTime = 0.0;
@@ -58,7 +60,7 @@ int main(int argc, char* argv[])
     maxTime = 4.0 * reader->GetOutput()->GetLength() / maxVelocity;
   }
   //
-  // Outline around data
+  // Outline around data.
   //
   vtkNew<vtkStructuredGridOutlineFilter> outlineF;
   outlineF->SetInputConnection(reader->GetOutputPort());
@@ -68,7 +70,7 @@ int main(int argc, char* argv[])
   outline->SetMapper(outlineMapper);
   outline->GetProperty()->SetColor(colors->GetColor3d("LampBlack").GetData());
   //
-  // Set up shaded surfaces (i.e., supporting geometry)
+  // Set up shaded surfaces (i.e., supporting geometry).
   //
   vtkNew<vtkStructuredGridGeometryFilter> doorGeom;
   doorGeom->SetInputConnection(reader->GetOutputPort());
@@ -242,7 +244,7 @@ int main(int argc, char* argv[])
   filter->SetMapper(mapFilter);
   filter->GetProperty()->SetColor(colors->GetColor3d("Furniture").GetData());
   //
-  // regular streamlines
+  // Regular streamlines.
   //
   vtkNew<vtkLineSource> line;
   line->SetResolution(39);
@@ -312,7 +314,7 @@ int main(int argc, char* argv[])
   renWin->Render();
   renWin->SetWindowName("Kitchen");
 
-  // interact with data
+  // Interact with the data.
   iren->Start();
 
   return EXIT_SUCCESS;

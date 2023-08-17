@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkBoxClipDataSet.h>
 #include <vtkCamera.h>
-#include <vtkColor.h>
 #include <vtkDataSetMapper.h>
 #include <vtkImageData.h>
 #include <vtkLookupTable.h>
@@ -12,18 +11,22 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
   {
-    std::cout << "Usage: " << argv[0] << " file.mhd" << endl;
+    std::cout << "Usage: " << argv[0] << " file.mhd e.g. HeadMRVolume.mhd"
+              << endl;
     return EXIT_FAILURE;
   }
 
   vtkNew<vtkNamedColors> colors;
   vtkColor3d backgroundColor = colors->GetColor3d("Silver");
 
-  // Read the data
+  // Read the data.
   vtkNew<vtkMetaImageReader> reader;
   reader->SetFileName(argv[1]);
   reader->Update();
@@ -57,7 +60,7 @@ int main(int argc, char* argv[])
                       plusz, maxBoxPoint);
   boxClip->GenerateClippedOutputOn();
 
-  // Define a lut
+  // Define a lut.
   vtkNew<vtkLookupTable> lut1;
   lut1->SetHueRange(0.667, 0);
 
@@ -76,14 +79,14 @@ int main(int argc, char* argv[])
   mapperOut->SetLookupTable(lut1);
   mapperOut->SetColorModeToMapScalars();
 
-  // Move the outside actor
+  // Move the outside actor.
   vtkNew<vtkActor> actorOut;
   actorOut->SetMapper(mapperOut);
   actorOut->AddPosition(-0.5 * (maxBoxPoint[0] - minBoxPoint[0]),
                         -0.5 * (maxBoxPoint[1] - minBoxPoint[1]),
                         -0.5 * (maxBoxPoint[2] - minBoxPoint[2]));
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(backgroundColor.GetData());
   renderer->UseHiddenLineRemovalOn();
@@ -96,11 +99,11 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actorIn);
   renderer->AddActor(actorOut);
 
-  // Generate an interesting view
+  // Generate an interesting view.
   renderer->ResetCamera();
   renderer->GetActiveCamera()->Azimuth(120);
   renderer->GetActiveCamera()->Elevation(30);

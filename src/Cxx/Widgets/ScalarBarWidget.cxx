@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkDataSet.h>
 #include <vtkDataSetMapper.h>
 #include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
@@ -13,11 +12,14 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkUnstructuredGridReader.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 2)
   {
     std::cerr << "Usage: " << argv[0] << " Filename(.vtk) e.g.uGridEx.vtk"
@@ -26,14 +28,14 @@ int main(int argc, char* argv[])
   }
 
   // Create a custom lut. The lut is used for both the mapper and the
-  // scalarBar
+  // scalarBar.
   vtkNew<vtkLookupTable> lut;
   lut->Build();
 
   // Read the source file.
   vtkNew<vtkUnstructuredGridReader> reader;
   reader->SetFileName(argv[1]);
-  reader->Update(); // Needed because of GetScalarRange
+  reader->Update(); // Needed because of GetScalarRange.
   auto output = reader->GetOutput();
   auto scalarRange = output->GetScalarRange();
 
@@ -57,12 +59,12 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // create the scalarBar
+  // Create the scalarBar.
   vtkNew<vtkScalarBarActor> scalarBar;
   scalarBar->SetOrientationToHorizontal();
   scalarBar->SetLookupTable(lut);
 
-  // create the scalarBarWidget
+  // Create the scalarBarWidget.
   vtkNew<vtkScalarBarWidget> scalarBarWidget;
   scalarBarWidget->SetInteractor(interactor);
   scalarBarWidget->SetScalarBarActor(scalarBar);

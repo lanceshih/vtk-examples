@@ -7,7 +7,6 @@
 #include <vtkImageReader2Factory.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -24,7 +23,7 @@ int main(int argc, char* argv[])
 
   vtkSmartPointer<vtkImageData> imageData;
 
-  // Verify input arguments
+  // Verify input arguments.
   if (argc > 1)
   {
     // Read the image
@@ -64,19 +63,19 @@ int main(int argc, char* argv[])
     canvasSource->Update();
     imageData = canvasSource->GetOutput();
   }
-  // Create an image actor to display the image
+  // Create an image actor to display the image.
   vtkNew<vtkImageActor> imageActor;
   imageActor->SetInputData(imageData);
 
-  // Create a renderer to display the image in the background
+  // Create a renderer to display the image in the background.
   vtkNew<vtkRenderer> backgroundRenderer;
 
-  // Create a superquadric
+  // Create a superquadric.
   vtkNew<vtkSuperquadricSource> superquadricSource;
   superquadricSource->SetPhiRoundness(1.1);
   superquadricSource->SetThetaRoundness(.2);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> superquadricMapper;
   superquadricMapper->SetInputConnection(superquadricSource->GetOutputPort());
 
@@ -90,7 +89,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindow> renderWindow;
 
   // Set up the render window and renderers such that there is
-  // a background layer and a foreground layer
+  // a background layer and a foreground layer.
   backgroundRenderer->SetLayer(0);
   backgroundRenderer->InteractiveOff();
   sceneRenderer->SetLayer(1);
@@ -106,10 +105,10 @@ int main(int argc, char* argv[])
   sceneRenderer->AddActor(superquadricActor);
   backgroundRenderer->AddActor(imageActor);
 
-  // Render once to figure out where the background camera will be
+  // Render once to figure out where the background camera will be.
   renderWindow->Render();
 
-  // Set up the background camera to fill the renderer with the image
+  // Set up the background camera to fill the renderer with the image.
   double origin[3];
   double spacing[3];
   int extent[6];
@@ -129,10 +128,10 @@ int main(int argc, char* argv[])
   camera->SetFocalPoint(xc, yc, 0.0);
   camera->SetPosition(xc, yc, d);
 
-  // Render again to set the correct view
+  // Render again to set the correct view.
   renderWindow->Render();
 
-  // Interact with the window
+  // Interact with the window.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

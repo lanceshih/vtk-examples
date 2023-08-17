@@ -1,11 +1,9 @@
 #include <vtkImageActor.h>
-#include <vtkImageData.h>
 #include <vtkImageExtractComponents.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkInteractorStyleImage.h>
-#include <vtkJPEGReader.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
@@ -17,7 +15,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify command line arguments
+  // Verify command line arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " InputFilename e.g. Gourds2.jpg"
@@ -25,7 +23,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader;
   reader.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -62,7 +60,7 @@ int main(int argc, char* argv[])
   blueActor->GetMapper()->SetInputConnection(
       extractBlueFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double inputViewport[4] = {0.0, 0.0, 0.25, 1.0};
   double redViewport[4] = {0.25, 0.0, 0.5, 1.0};
@@ -103,13 +101,13 @@ int main(int argc, char* argv[])
   renderWindow->AddRenderer(blueRenderer);
   renderWindow->SetWindowName("ExtractComponents");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

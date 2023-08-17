@@ -13,7 +13,6 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkLinearSubdivisionFilter.h>
 #include <vtkLookupTable.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkParametricBour.h>
@@ -39,7 +38,6 @@
 #include <vtkTransformPolyDataFilter.h>
 #include <vtkTriangleFilter.h>
 #include <vtkVersion.h>
-#include <vtkXMLPolyDataWriter.h>
 
 #if VTK_VERSION_NUMBER >= 90020210809ULL
 #define HAS_COW
@@ -58,6 +56,7 @@
 #include <map>
 #include <numeric>
 #include <set>
+#include <sstream>
 
 namespace {
 

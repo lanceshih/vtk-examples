@@ -6,8 +6,6 @@
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPen.h>
-#include <vtkPlot.h>
 #include <vtkPlotPoints.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -137,7 +135,7 @@ int main(int, char*[])
   arrS->SetName("Sine");
   table->AddColumn(arrS);
 
-  //// Fill in the table with some example values.
+  // Fill in the table with some example values.
   auto numPoints = 40;
   auto inc = 7.5 / (numPoints - 1.0);
   table->SetNumberOfRows(numPoints);

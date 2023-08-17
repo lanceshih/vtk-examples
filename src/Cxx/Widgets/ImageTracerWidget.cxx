@@ -1,4 +1,3 @@
-#include <vtkActor.h>
 #include <vtkCallbackCommand.h>
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
@@ -8,14 +7,14 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSphereSource.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 namespace {
 void CallbackFunction(vtkObject* caller, long unsigned int eventId,

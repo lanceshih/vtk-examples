@@ -41,11 +41,11 @@ int main(int argc, char* argv[])
 
   QApplication app(argc, argv);
 
-  // main window
+  // Main window.
   QMainWindow mainWindow;
   mainWindow.resize(1200, 900);
 
-  // control area
+  // Control area.
   QDockWidget controlDock;
   mainWindow.addDockWidget(Qt::LeftDockWidgetArea, &controlDock);
 
@@ -62,12 +62,12 @@ int main(int argc, char* argv[])
   randomizeButton.setText("Randomize");
   dockLayout->addWidget(&randomizeButton);
 
-  // render area
+  // Render area.
   QPointer<QVTKOpenGLNativeWidget> vtkRenderWidget =
       new QVTKOpenGLNativeWidget();
   mainWindow.setCentralWidget(vtkRenderWidget);
 
-  // VTK part
+  // VTK part.
   vtkNew<vtkGenericOpenGLRenderWindow> window;
   vtkRenderWidget->setRenderWindow(window.Get());
 
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 
   window->AddRenderer(renderer);
 
-  // setup initial status
+  // Setup initial status.
   std::mt19937 randEng(0);
   ::Randomize(sphere, mapper, window, randEng);
 
@@ -106,12 +106,12 @@ namespace {
 void Randomize(vtkSphereSource* sphere, vtkMapper* mapper,
                vtkGenericOpenGLRenderWindow* window, std::mt19937& randEng)
 {
-  // generate randomness
+  // Generate randomness.
   double randAmp = 0.2 + ((randEng() % 1000) / 1000.0) * 0.2;
   double randThetaFreq = 1.0 + (randEng() % 9);
   double randPhiFreq = 1.0 + (randEng() % 9);
 
-  // extract and prepare data
+  // Extract and prepare data.
   sphere->Update();
   vtkSmartPointer<vtkPolyData> newSphere;
   newSphere.TakeReference(sphere->GetOutput()->NewInstance());
@@ -122,7 +122,7 @@ void Randomize(vtkSphereSource* sphere, vtkMapper* mapper,
   height->SetNumberOfTuples(newSphere->GetNumberOfPoints());
   newSphere->GetPointData()->AddArray(height);
 
-  // deform the sphere
+  // Deform the sphere.
   for (int iP = 0; iP < newSphere->GetNumberOfPoints(); iP++)
   {
     double pt[3] = {0.0};
@@ -140,7 +140,7 @@ void Randomize(vtkSphereSource* sphere, vtkMapper* mapper,
   }
   newSphere->GetPointData()->SetScalars(height);
 
-  // reconfigure the pipeline to take the new deformed sphere
+  // Reconfigure the pipeline to take the new deformed sphere.
   mapper->SetInputDataObject(newSphere);
   mapper->SetScalarModeToUsePointData();
   mapper->ColorByArrayComponent("Height", 0);

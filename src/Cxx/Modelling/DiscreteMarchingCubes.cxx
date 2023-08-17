@@ -56,7 +56,7 @@ int main(int /*argc*/, char* /* argv */[])
   mapper->SetLookupTable(lut);
   mapper->SetScalarRange(0, lut->GetNumberOfColors());
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
@@ -133,7 +133,7 @@ vtkSmartPointer<vtkImageData> MakeBlob(int n, double radius)
   return blobImage;
 }
 
-// Generate some random colors
+// Generate some random colors.
 vtkSmartPointer<vtkLookupTable> MakeColors(unsigned int n)
 {
   vtkNew<vtkLookupTable> lut;

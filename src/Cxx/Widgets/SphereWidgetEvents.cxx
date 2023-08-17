@@ -2,14 +2,15 @@
 #include <vtkCommand.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphereRepresentation.h>
 #include <vtkSphereWidget.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 
@@ -39,7 +40,7 @@ MySphereWidget::MySphereWidget()
 
   // Connect our own callback command to our own ProcessEvents function.
   // This way we do not have to deal with side effects of
-  // SphereWidget::ProcessEvents
+  // SphereWidget::ProcessEvents.
   this->MyEventCallbackCommand->SetCallback(MySphereWidget::ProcessEvents);
 
   // Connect our callback function to a few events.
@@ -78,7 +79,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create  a renderer and render window
+  // Create  a renderer and render window.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
@@ -86,7 +87,7 @@ int main(int, char*[])
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("SphereWidgetEvents");
 
-  // Create an interactor
+  // Create an interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 

@@ -5,7 +5,6 @@
 #include <vtkInformation.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -16,6 +15,8 @@
 #include <vtkUnstructuredGrid.h>
 
 // #include <array>
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -40,7 +41,7 @@ int main(int, char*[])
   vtkNew<vtkIdTypeArray> ids;
   ids->SetNumberOfComponents(1);
 
-  // Specify that we want to extract cells 10 through 19
+  // Specify that we want to extract cells 10 through 19.
   for (unsigned int i = 10; i < 20; i++)
   {
     ids->InsertNextValue(i);
@@ -59,7 +60,7 @@ int main(int, char*[])
   extractSelection->SetInputData(1, selection);
   extractSelection->Update();
 
-  // In selection
+  // In selection.
   vtkNew<vtkUnstructuredGrid> selected;
   selected->ShallowCopy(extractSelection->GetOutput());
 
@@ -68,7 +69,7 @@ int main(int, char*[])
   std::cout << "There are " << selected->GetNumberOfCells()
             << " cells in the selection." << std::endl;
 
-  // Get points that are NOT in the selection
+  // Get points that are NOT in the selection.
   selectionNode->GetProperties()->Set(vtkSelectionNode::INVERSE(),
                                       1); // invert the selection
   extractSelection->Update();
@@ -110,7 +111,7 @@ int main(int, char*[])
       colors->GetColor3d("MistyRose").GetData());
   notSelectedActor->SetBackfaceProperty(backfaces);
 
-  // There will be one render window
+  // There will be one render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(900, 300);
   renderWindow->SetWindowName("ExtractSelectionCells");
@@ -119,16 +120,16 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.33, 1.0};
   double centerViewport[4] = {0.33, 0.0, .66, 1.0};
   double rightViewport[4] = {0.66, 0.0, 1.0, 1.0};
 
-  // Create a camera for all renderers
+  // Create a camera for all renderers.
   vtkNew<vtkCamera> camera;
 
-  // Setup the renderers
+  // Setup the renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);

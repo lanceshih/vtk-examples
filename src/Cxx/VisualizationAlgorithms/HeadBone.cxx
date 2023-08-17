@@ -25,6 +25,9 @@
 #include <vtkMarchingCubes.h>
 #endif
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)
@@ -33,7 +36,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkNamedColors> colors;
 
@@ -45,7 +48,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // create pipeline
+  // Create pipeline.
   //
 
   vtkNew<vtkMetaImageReader> reader;
@@ -87,7 +90,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> outlineActor;
   outlineActor->SetMapper(outlineMapper);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(outlineActor);
   ren1->AddActor(isoActor);

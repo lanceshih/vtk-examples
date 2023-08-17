@@ -1,7 +1,5 @@
-#include <vtkCellArray.h>
 #include <vtkDataSetSurfaceFilter.h>
 #include <vtkNew.h>
-#include <vtkPointSource.h>
 #include <vtkPolyData.h>
 #include <vtkSmartPointer.h>
 #include <vtkUnstructuredGrid.h>

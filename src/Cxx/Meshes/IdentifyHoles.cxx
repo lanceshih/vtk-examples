@@ -16,7 +16,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkUnstructuredGrid.h>
 #include <vtkXMLPolyDataReader.h>
 
 int main(int argc, char* argv[])

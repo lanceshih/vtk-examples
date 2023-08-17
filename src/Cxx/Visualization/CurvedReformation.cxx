@@ -19,7 +19,9 @@
 #include <vtkSplineFilter.h>
 #include <vtkWindowLevelLookupTable.h>
 
+#include <iostream>
 #include <sstream>
+#include <string>
 
 namespace {
 vtkSmartPointer<vtkPolyData> SweepLine(vtkPolyData* line, double direction[3],
@@ -39,7 +41,7 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Parse arguments
+  // Parse arguments.
   std::string volumeFileName = argv[1];
   std::string polyDataFileName = argv[2];
   std::stringstream ssResolution;
@@ -47,12 +49,12 @@ int main(int argc, char* argv[])
   unsigned int resolution;
   ssResolution >> resolution;
 
-  // Output arguments
+  // Output arguments.
   std::cout << "InputVolume: " << volumeFileName << std::endl
             << "PolyDataInput: " << polyDataFileName << std::endl
             << "Resolution: " << resolution << std::endl;
 
-  // Read the volume data
+  // Read the volume data.
   vtkNew<vtkImageReader2Factory> imageFactory;
   vtkSmartPointer<vtkImageReader2> imageReader;
   imageReader.TakeReference(
@@ -60,7 +62,7 @@ int main(int argc, char* argv[])
   imageReader->SetFileName(volumeFileName.c_str());
   imageReader->Update();
 
-  // Read the Polyline
+  // Read the Polyline.
   vtkNew<vtkPolyDataReader> polyLineReader;
   polyLineReader->SetFileName(polyDataFileName.c_str());
   polyLineReader->Update();
@@ -70,7 +72,7 @@ int main(int argc, char* argv[])
   spline->SetSubdivideToSpecified();
   spline->SetNumberOfSubdivisions(resolution);
 
-  // Sweep the line to form a surface
+  // Sweep the line to form a surface.
   double direction[3];
   direction[0] = 0.0;
   direction[1] = 0.0;
@@ -80,12 +82,12 @@ int main(int argc, char* argv[])
   auto surface =
       SweepLine(spline->GetOutput(), direction, distance, atoi(argv[3]));
 
-  // Probe the volume with the extruded surface
+  // Probe the volume with the extruded surface.
   vtkNew<vtkProbeFilter> sampleVolume;
   sampleVolume->SetInputConnection(1, imageReader->GetOutputPort());
   sampleVolume->SetInputData(0, surface);
 
-  // Compute a simple window/level based on scalar range
+  // Compute a simple window/level based on scalar range.
   vtkNew<vtkWindowLevelLookupTable> wlLut;
   double range = imageReader->GetOutput()->GetScalarRange()[1] -
       imageReader->GetOutput()->GetScalarRange()[0];
@@ -104,7 +106,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -113,11 +115,11 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
 
-  // Set the camera for viewing medical images
+  // Set the camera for viewing medical images.
   renderer->GetActiveCamera()->SetViewUp(0, 0, 1);
   renderer->GetActiveCamera()->SetPosition(0, 0, 0);
   renderer->GetActiveCamera()->SetFocalPoint(0, 1, 0);
@@ -139,7 +141,7 @@ vtkSmartPointer<vtkPolyData> SweepLine(vtkPolyData* line, double direction[3],
   double spacing = distance / cols;
   vtkNew<vtkPolyData> surface;
 
-  // Generate the points
+  // Generate the points.
   cols++;
   unsigned int numberOfPoints = rows * cols;
   unsigned int numberOfPolys = (rows - 1) * (cols - 1);
@@ -162,7 +164,7 @@ vtkSmartPointer<vtkPolyData> SweepLine(vtkPolyData* line, double direction[3],
       points->InsertPoint(cnt++, x);
     }
   }
-  // Generate the quads
+  // Generate the quads.
   vtkIdType pts[4];
   for (unsigned int row = 0; row < rows - 1; row++)
   {

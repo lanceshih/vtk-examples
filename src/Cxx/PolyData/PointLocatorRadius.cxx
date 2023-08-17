@@ -1,10 +1,10 @@
 #include <vtkIdList.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPointLocator.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -12,7 +12,7 @@ int main(int, char*[])
   pointSource->SetNumberOfPoints(400);
   pointSource->Update();
 
-  // Create the tree
+  // Create the tree.
   vtkNew<vtkPointLocator> pointLocator;
   pointLocator->SetDataSet(pointSource->GetOutput());
   pointLocator->AutomaticOn();

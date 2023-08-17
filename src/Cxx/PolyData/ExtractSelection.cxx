@@ -6,7 +6,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -15,7 +14,6 @@
 #include <vtkSelectionNode.h>
 #include <vtkSphereSource.h>
 #include <vtkUnstructuredGrid.h>
-#include <vtkVertexGlyphFilter.h>
 
 // #include <array>
 

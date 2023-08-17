@@ -3,7 +3,6 @@
 #include <vtkForceDirectedLayoutStrategy.h>
 #include <vtkGraphLayoutView.h>
 #include <vtkGraphToGlyphs.h>
-#include <vtkGraphWriter.h>
 #include <vtkLookupTable.h>
 #include <vtkMutableUndirectedGraph.h>
 #include <vtkNamedColors.h>

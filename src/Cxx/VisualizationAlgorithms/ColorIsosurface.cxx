@@ -17,6 +17,9 @@
 #include <vtkRenderer.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)
@@ -79,7 +82,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   renderer->AddActor(outlineActor);
   renderer->AddActor(isoActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());

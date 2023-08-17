@@ -1,17 +1,13 @@
-#include <vtkDataArray.h>
-#include <vtkFloatArray.h>
+// #include <vtkDataArray.h>
+// #include <vtkFloatArray.h>
 #include <vtkImageData.h>
 #include <vtkImageMagnitude.h>
-#include <vtkIntArray.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
-#include <vtkSelection.h>
-#include <vtkSelectionNode.h>
 #include <vtkThresholdPoints.h>
 #include <vtkXMLImageDataWriter.h>
 #include <vtkXMLPolyDataWriter.h>
-#include <vtkXMLUnstructuredGridWriter.h>
 
 namespace {
 void CreateVectorField(vtkImageData* image);
@@ -28,7 +24,7 @@ int main(int, char*[])
   vtkNew<vtkImageMagnitude> magnitudeFilter;
   magnitudeFilter->SetInputData(image);
   magnitudeFilter->Update(); // This filter produces a vtkImageData with an
-                             // array named "Magnitude"
+                             // array named "Magnitude".
 
   image->GetPointData()->AddArray(
       magnitudeFilter->GetOutput()->GetPointData()->GetScalars());

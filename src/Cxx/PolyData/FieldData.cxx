@@ -1,32 +1,27 @@
-#include <vtkCellData.h>
 #include <vtkDoubleArray.h>
-#include <vtkFieldData.h>
-#include <vtkMath.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkSphereSource.h>
-#include <vtkXMLPolyDataReader.h>
 
 int main(int, char*[])
 {
   vtkNew<vtkSphereSource> source;
   source->Update();
 
-  // Extract the polydata
+  // Extract the polydata.
   vtkNew<vtkPolyData> polydata;
   polydata->ShallowCopy(source->GetOutput());
 
   vtkNew<vtkDoubleArray> location;
 
-  // Create the data to store (here we just use (0,0,0))
+  // Create the data to store (here we just use (0,0,0)).
   double locationValue[3] = {0, 0, 0};
 
   location->SetNumberOfComponents(3);
   location->SetName("MyDoubleArray");
   location->InsertNextTuple(locationValue);
-  // The data is added to FIELD data (rather than POINT data as usual)
+  // The data is added to FIELD data (rather than POINT data as usual).
   polydata->GetFieldData()->AddArray(location);
 
   vtkNew<vtkIntArray> intValue;

@@ -3,7 +3,6 @@
 #include <vtkMetaImageWriter.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataToImageStencil.h>
 #include <vtkSphereSource.h>
 
@@ -49,7 +48,7 @@ int main(int, char*[])
   whiteImage->SetOrigin(origin);
   whiteImage->AllocateScalars(VTK_UNSIGNED_CHAR, 1);
 
-  // fill the image with foreground voxels:
+  // Fill the image with foreground voxels:
   unsigned char inval = 255;
   unsigned char outval = 0;
   vtkIdType count = whiteImage->GetNumberOfPoints();
@@ -66,7 +65,7 @@ int main(int, char*[])
   pol2stenc->SetOutputWholeExtent(whiteImage->GetExtent());
   pol2stenc->Update();
 
-  // cut the corresponding white image and set the background:
+  // Cut the corresponding white image and set the background:
   vtkNew<vtkImageStencil> imgstenc;
   imgstenc->SetInputData(whiteImage);
   imgstenc->SetStencilConnection(pol2stenc->GetOutputPort());

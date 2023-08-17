@@ -14,6 +14,9 @@
 #include <vtkStreamTracer.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)

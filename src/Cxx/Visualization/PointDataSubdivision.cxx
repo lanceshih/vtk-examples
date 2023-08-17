@@ -6,11 +6,9 @@
 #include <vtkCamera.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkCleanPolyData.h>
-#include <vtkColor.h>
 #include <vtkColorSeries.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkConeSource.h>
-#include <vtkDataObjectAlgorithm.h>
 #include <vtkDataSetMapper.h>
 #include <vtkElevationFilter.h>
 #include <vtkGlyph3D.h>
@@ -18,7 +16,6 @@
 #include <vtkMaskPoints.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkPNGWriter.h>
 #include <vtkParametricBoy.h>
@@ -37,7 +34,6 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphere.h>
 #include <vtkSphereSource.h>
 #include <vtkSuperquadricSource.h>
 #include <vtkTextActor.h>
@@ -46,12 +42,12 @@
 #include <vtkTriangleFilter.h>
 
 #include <algorithm>
+#include <iostream>
+#include <map>
+#include <string>
 
 namespace {
 /**
- * @class Sources
- * @brief This class acts as a storage vehicle for the various sources.
- *
  * If you add more sources, you may need to provide one or all of these filters:
  *  - A Triangle filter
  *  - A Normal filter
@@ -62,189 +58,25 @@ namespace {
  *
  * Use the representative sources provided here as templates.
  */
-class Sources : public vtkPolyDataAlgorithm
-{
-public:
-  static Sources* New();
 
-  vtkTypeMacro(Sources, vtkPolyDataAlgorithm);
+void ParametricTorusSource(vtkPolyData* src);
 
-  // If you add more sources update this dictionary.
-  enum SurfaceType
-  {
-    PARAMETRIC_TORUS = 0,
-    PARAMETRIC_ELLIPSOID,
-    BOY,
-    SPHERE,
-    MOBIUS,
-    CONE,
-    RANDOM_HILLS,
-    SUPERQUADRIC
-  };
+void EllipsoidSource(vtkPolyData* src);
 
-  Sources() : vtkPolyDataAlgorithm()
-  {
-  }
+void BoySource(vtkPolyData* src);
 
-  static void ParametricTorusSource(vtkPolyData* src)
-  {
-    vtkNew<vtkParametricTorus> torus;
-    torus->JoinUOff();
-    torus->JoinVOff();
+void MobiusSource(vtkPolyData* src);
 
-    vtkNew<vtkParametricFunctionSource> torusSource;
-    torusSource->SetParametricFunction(torus);
-    torusSource->SetScalarModeToZ();
-    torusSource->Update();
+void ParametricRandomHills(vtkPolyData* src);
 
-    src->ShallowCopy(torusSource->GetOutput());
-  }
+void SphereSource(vtkPolyData* src);
 
-  static void EllipsoidSource(vtkPolyData* src)
-  {
-    vtkNew<vtkParametricEllipsoid> ellipsoid;
-    ellipsoid->SetXRadius(0.5);
-    ellipsoid->SetYRadius(1.0);
-    ellipsoid->SetZRadius(2.0);
-    ellipsoid->JoinUOff();
-    // ellipsoid->JoinVOff();
+/**
+ * Make a torus as the source using vtkSuperquadricSource.
+ */
+void SuperquadricSource(vtkPolyData* src);
 
-    vtkNew<vtkParametricFunctionSource> ellipsoidSource;
-    ellipsoidSource->SetParametricFunction(ellipsoid);
-    ellipsoidSource->SetScalarModeToZ();
-    ellipsoidSource->Update();
-
-    src->ShallowCopy(ellipsoidSource->GetOutput());
-  }
-
-  static void BoySource(vtkPolyData* src)
-  {
-    vtkNew<vtkParametricBoy> boy;
-    boy->JoinUOff();
-    // boy->JoinVOff();
-
-    vtkNew<vtkParametricFunctionSource> boySource;
-    boySource->SetParametricFunction(boy);
-    boySource->SetScalarModeToZ();
-    boySource->Update();
-    src->ShallowCopy(boySource->GetOutput());
-  }
-
-  static void MobiusSource(vtkPolyData* src)
-  {
-    vtkNew<vtkParametricMobius> mobius;
-    mobius->SetRadius(2);
-    mobius->SetMinimumV(-0.5);
-    mobius->SetMaximumV(0.5);
-    mobius->JoinUOff();
-
-    vtkNew<vtkParametricFunctionSource> mobiusSource;
-    mobiusSource->SetParametricFunction(mobius);
-    mobiusSource->SetScalarModeToX();
-    mobiusSource->Update();
-
-    src->ShallowCopy(mobiusSource->GetOutput());
-  }
-
-  static void ParametricRandomHills(vtkPolyData* src)
-  {
-    vtkNew<vtkParametricRandomHills> randomHills;
-    // randomHills->AllowRandomGenerationOff();
-    randomHills->SetRandomSeed(1);
-    randomHills->SetNumberOfHills(30);
-
-    vtkNew<vtkParametricFunctionSource> randomHillsSource;
-    randomHillsSource->SetParametricFunction(randomHills);
-    randomHillsSource->SetScalarModeToZ();
-    randomHillsSource->SetUResolution(10);
-    randomHillsSource->SetVResolution(10);
-    randomHillsSource->Update();
-
-    src->ShallowCopy(randomHillsSource->GetOutput());
-  }
-
-  static void SphereSource(vtkPolyData* src)
-  {
-    vtkNew<vtkSphereSource> sphere;
-    sphere->SetPhiResolution(11);
-    sphere->SetThetaResolution(11);
-    sphere->Update();
-    double* sphereBounds = sphere->GetOutput()->GetBounds();
-
-    vtkNew<vtkElevationFilter> elev;
-    elev->SetInputConnection(sphere->GetOutputPort());
-    elev->SetLowPoint(0, sphereBounds[2], 0);
-    elev->SetHighPoint(0, sphereBounds[3], 0);
-    elev->Update();
-
-    src->ShallowCopy(elev->GetPolyDataOutput());
-  }
-
-  /**
-   * Make a torus as the source.
-   */
-  static void SuperquadricSource(vtkPolyData* src)
-  {
-    vtkNew<vtkSuperquadricSource> source;
-    source->SetCenter(0.0, 0.0, 0.0);
-    source->SetScale(1.0, 1.0, 1.0);
-    source->SetPhiResolution(64);
-    source->SetThetaResolution(64);
-    source->SetThetaRoundness(1);
-    source->SetThickness(0.5);
-    source->SetSize(10);
-    source->SetToroidal(1);
-
-    // The quadric is made of strips, so pass it through a triangle filter as
-    // the curvature filter only operates on polys
-    vtkNew<vtkTriangleFilter> tri;
-    tri->SetInputConnection(source->GetOutputPort());
-
-    // The quadric has nasty discontinuities from the way the edges are
-    // generated so let's pass it though a CleanPolyDataFilter and merge any
-    // points which are coincident, or very close
-    vtkNew<vtkCleanPolyData> cleaner;
-    cleaner->SetInputConnection(tri->GetOutputPort());
-    cleaner->SetTolerance(0.005);
-    cleaner->Update();
-    double* cleanerBounds = cleaner->GetOutput()->GetBounds();
-
-    vtkNew<vtkElevationFilter> elev;
-    elev->SetInputConnection(cleaner->GetOutputPort());
-    elev->SetLowPoint(0, cleanerBounds[2], 0);
-    elev->SetHighPoint(0, cleanerBounds[3], 0);
-    elev->Update();
-
-    src->ShallowCopy(elev->GetPolyDataOutput());
-  }
-
-  static void ConeSource(vtkPolyData* src)
-  {
-    vtkNew<vtkConeSource> cone;
-    cone->SetResolution(6);
-    cone->CappingOn();
-    cone->Update();
-    double* coneBounds = cone->GetOutput()->GetBounds();
-
-    vtkNew<vtkPolyDataNormals> coneNormals;
-    coneNormals->SetInputConnection(cone->GetOutputPort());
-
-    vtkNew<vtkElevationFilter> elev;
-    elev->SetInputConnection(coneNormals->GetOutputPort());
-    elev->SetLowPoint(coneBounds[0], 0, 0);
-    elev->SetHighPoint(coneBounds[1], 0, 0);
-
-    // vtkButterflySubdivisionFilter and vtkLinearSubdivisionFilter operate on
-    // triangles.
-    vtkNew<vtkTriangleFilter> tf;
-    tf->SetInputConnection(elev->GetOutputPort());
-    tf->Update();
-
-    src->ShallowCopy(tf->GetOutput());
-  }
-};
-
-vtkStandardNewMacro(Sources);
+void ConeSource(vtkPolyData* src);
 
 /**
  * Make a lookup table using a predefined color series.
@@ -337,54 +169,76 @@ void WritePNG(vtkRenderer* ren, char* fn, int magnification = 1);
  */
 int main(int argc, char* argv[])
 {
-  if (argc < 2)
+  if (argc < 1)
   {
     std::cerr << "Missing parameters." << std::endl;
     std::cerr << "Usage: " << argv[0]
-              << "sourceToUse: (PARAMETRIC_TORUS; PARAMETRIC_ELLIPSOID; BOY; "
-                 "SPHERE; MOBIUS; CONE; RANDOM_HILLS; SUPERQUADRIC)"
+              << "sourcetouse: (parametric_torus; parametric_ellipsoid; boy; "
+                 "sphere; mobius; cone; random_hills; superquadric)"
               << "[displayNormals]"
               << "[gouraudInterpolation]"
               << "[glyphPoints]" << std::endl;
     return EXIT_FAILURE;
   }
 
-  vtkNew<vtkPolyData> polyData;
-  Sources::SurfaceType sourceToUse =
-      static_cast<Sources::SurfaceType>(atoi(argv[1]));
-  switch (sourceToUse)
+  std::map<std::string, int> availableSurfaces{{"parametric_torus", 0},
+                                               {"parametric_ellipsoid", 1},
+                                               {"boy", 2},
+                                               {"sphere", 3},
+                                               {"mobius", 4},
+                                               {"cone", 5},
+                                               {"random_hills", 6},
+                                               {"superquadric", 7}};
+
+  std::string desiredSurface{"parametric_torus"};
+  if (argc < 2)
   {
-  case Sources::PARAMETRIC_TORUS:
-    Sources::ParametricTorusSource(polyData);
+    std::cout << "Using parametric_torus as the surface." << std::endl;
+  }
+  else
+  {
+    desiredSurface = argv[1];
+    std::transform(desiredSurface.begin(), desiredSurface.end(),
+                   desiredSurface.begin(),
+                   [](char c) { return std::tolower(c); });
+    if (availableSurfaces.find(desiredSurface) == availableSurfaces.end())
+    {
+      std::cout << "The requested surface: " << argv[1]
+                << " not found, reverting to using parametric_torus."
+                << std::endl;
+      desiredSurface = "parametric_torus";
+    }
+  }
+
+  vtkNew<vtkPolyData> polyData;
+  switch (availableSurfaces[desiredSurface])
+  {
+  case 0:
+    ParametricTorusSource(polyData);
     break;
-  case Sources::PARAMETRIC_ELLIPSOID:
-    Sources::EllipsoidSource(polyData);
+  case 1:
+    EllipsoidSource(polyData);
     break;
-  case Sources::BOY:
-    Sources::BoySource(polyData.GetPointer());
+  case 2:
+    BoySource(polyData.GetPointer());
     break;
-  case Sources::SPHERE:
-    Sources::SphereSource(polyData);
+  case 3:
+    SphereSource(polyData);
     break;
-  case Sources::MOBIUS:
-    Sources::MobiusSource(polyData);
+  case 4:
+    MobiusSource(polyData);
     break;
-  case Sources::CONE:
-    Sources::ConeSource(polyData);
+  case 5:
+    ConeSource(polyData);
     break;
-  case Sources::RANDOM_HILLS:
-    Sources::ParametricRandomHills(polyData);
+  case 6:
+    ParametricRandomHills(polyData);
     break;
-  case Sources::SUPERQUADRIC:
-    Sources::SuperquadricSource(polyData);
+  case 7:
+    SuperquadricSource(polyData);
     break;
   default:
-    std::cout
-        << "The source " << sourceToUse << " is not available" << std::endl
-        << "Available sources are: PARAMETRIC_TORUS; PARAMETRIC_ELLIPSOID; "
-           "BOY; SPHERE; MOBIUS; CONE; RANDOM_HILLS; SUPERQUADRIC"
-        << std::endl;
-    return EXIT_FAILURE;
+    ParametricTorusSource(polyData);
   }
 
   bool displayNormals = true;
@@ -473,7 +327,7 @@ int main(int argc, char* argv[])
   // Orientation markers.
   std::vector<vtkSmartPointer<vtkOrientationMarkerWidget>> om;
 
-  // Shared camera
+  // Shared camera.
   vtkNew<vtkCamera> camera;
 
   // Make the imaging pipelines.
@@ -519,13 +373,164 @@ int main(int argc, char* argv[])
 
   iren->Start();
 
-  // WritePNG(iren->GetRenderWindow()->GetRenderers()->GetFirstRenderer(),
-  // "PointDataSubdivision.png");
-
   return EXIT_SUCCESS;
 }
 
 namespace {
+
+void ParametricTorusSource(vtkPolyData* src)
+{
+  vtkNew<vtkParametricTorus> torus;
+  torus->JoinUOff();
+  torus->JoinVOff();
+
+  vtkNew<vtkParametricFunctionSource> torusSource;
+  torusSource->SetParametricFunction(torus);
+  torusSource->SetScalarModeToZ();
+  torusSource->Update();
+
+  src->ShallowCopy(torusSource->GetOutput());
+}
+
+void EllipsoidSource(vtkPolyData* src)
+{
+  vtkNew<vtkParametricEllipsoid> ellipsoid;
+  ellipsoid->SetXRadius(0.5);
+  ellipsoid->SetYRadius(1.0);
+  ellipsoid->SetZRadius(2.0);
+  ellipsoid->JoinUOff();
+  // ellipsoid->JoinVOff();
+
+  vtkNew<vtkParametricFunctionSource> ellipsoidSource;
+  ellipsoidSource->SetParametricFunction(ellipsoid);
+  ellipsoidSource->SetScalarModeToZ();
+  ellipsoidSource->Update();
+
+  src->ShallowCopy(ellipsoidSource->GetOutput());
+}
+
+void BoySource(vtkPolyData* src)
+{
+  vtkNew<vtkParametricBoy> boy;
+  boy->JoinUOff();
+  // boy->JoinVOff();
+
+  vtkNew<vtkParametricFunctionSource> boySource;
+  boySource->SetParametricFunction(boy);
+  boySource->SetScalarModeToZ();
+  boySource->Update();
+  src->ShallowCopy(boySource->GetOutput());
+}
+
+void MobiusSource(vtkPolyData* src)
+{
+  vtkNew<vtkParametricMobius> mobius;
+  mobius->SetRadius(2);
+  mobius->SetMinimumV(-0.5);
+  mobius->SetMaximumV(0.5);
+  mobius->JoinUOff();
+
+  vtkNew<vtkParametricFunctionSource> mobiusSource;
+  mobiusSource->SetParametricFunction(mobius);
+  mobiusSource->SetScalarModeToX();
+  mobiusSource->Update();
+
+  src->ShallowCopy(mobiusSource->GetOutput());
+}
+
+void ParametricRandomHills(vtkPolyData* src)
+{
+  vtkNew<vtkParametricRandomHills> randomHills;
+  // randomHills->AllowRandomGenerationOff();
+  randomHills->SetRandomSeed(1);
+  randomHills->SetNumberOfHills(30);
+
+  vtkNew<vtkParametricFunctionSource> randomHillsSource;
+  randomHillsSource->SetParametricFunction(randomHills);
+  randomHillsSource->SetScalarModeToZ();
+  randomHillsSource->SetUResolution(10);
+  randomHillsSource->SetVResolution(10);
+  randomHillsSource->Update();
+
+  src->ShallowCopy(randomHillsSource->GetOutput());
+}
+
+void SphereSource(vtkPolyData* src)
+{
+  vtkNew<vtkSphereSource> sphere;
+  sphere->SetPhiResolution(11);
+  sphere->SetThetaResolution(11);
+  sphere->Update();
+  double* sphereBounds = sphere->GetOutput()->GetBounds();
+
+  vtkNew<vtkElevationFilter> elev;
+  elev->SetInputConnection(sphere->GetOutputPort());
+  elev->SetLowPoint(0, sphereBounds[2], 0);
+  elev->SetHighPoint(0, sphereBounds[3], 0);
+  elev->Update();
+
+  src->ShallowCopy(elev->GetPolyDataOutput());
+}
+
+void SuperquadricSource(vtkPolyData* src)
+{
+  vtkNew<vtkSuperquadricSource> source;
+  source->SetCenter(0.0, 0.0, 0.0);
+  source->SetScale(1.0, 1.0, 1.0);
+  source->SetPhiResolution(64);
+  source->SetThetaResolution(64);
+  source->SetThetaRoundness(1);
+  source->SetThickness(0.5);
+  source->SetSize(10);
+  source->SetToroidal(1);
+
+  // The quadric is made of strips, so pass it through a triangle filter as
+  // the curvature filter only operates on polys.
+  vtkNew<vtkTriangleFilter> tri;
+  tri->SetInputConnection(source->GetOutputPort());
+
+  // The quadric has nasty discontinuities from the way the edges are
+  // generated so let's pass it though a CleanPolyDataFilter and merge any
+  // points which are coincident, or very close.
+  vtkNew<vtkCleanPolyData> cleaner;
+  cleaner->SetInputConnection(tri->GetOutputPort());
+  cleaner->SetTolerance(0.005);
+  cleaner->Update();
+  double* cleanerBounds = cleaner->GetOutput()->GetBounds();
+
+  vtkNew<vtkElevationFilter> elev;
+  elev->SetInputConnection(cleaner->GetOutputPort());
+  elev->SetLowPoint(0, cleanerBounds[2], 0);
+  elev->SetHighPoint(0, cleanerBounds[3], 0);
+  elev->Update();
+
+  src->ShallowCopy(elev->GetPolyDataOutput());
+}
+
+void ConeSource(vtkPolyData* src)
+{
+  vtkNew<vtkConeSource> cone;
+  cone->SetResolution(6);
+  cone->CappingOn();
+  cone->Update();
+  double* coneBounds = cone->GetOutput()->GetBounds();
+
+  vtkNew<vtkPolyDataNormals> coneNormals;
+  coneNormals->SetInputConnection(cone->GetOutputPort());
+
+  vtkNew<vtkElevationFilter> elev;
+  elev->SetInputConnection(coneNormals->GetOutputPort());
+  elev->SetLowPoint(coneBounds[0], 0, 0);
+  elev->SetHighPoint(coneBounds[1], 0, 0);
+
+  // vtkButterflySubdivisionFilter and vtkLinearSubdivisionFilter operate on
+  // triangles.
+  vtkNew<vtkTriangleFilter> tf;
+  tf->SetInputConnection(elev->GetOutputPort());
+  tf->Update();
+
+  src->ShallowCopy(tf->GetOutput());
+}
 
 vtkSmartPointer<vtkColorTransferFunction> MakeLUT(double* scalarRange)
 {

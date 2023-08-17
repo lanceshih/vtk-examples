@@ -1,9 +1,6 @@
 #include <vtkActor.h>
-#include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
-#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkKdTree.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
@@ -17,8 +14,6 @@
 #include <vtkSliderWidget.h>
 #include <vtkSmartPointer.h>
 #include <vtkTextProperty.h>
-#include <vtkWidgetEvent.h>
-#include <vtkWidgetEventTranslator.h>
 
 // Readers
 #include <vtkBYUReader.h>
@@ -31,8 +26,7 @@
 #include <vtkSphereSource.h>
 
 #include <algorithm> // For transform()
-// #include <array>
-#include <cctype> // For to_lower
+#include <cctype>    // For to_lower
 #include <iostream>
 #include <string> // For find_last_of()
 
@@ -83,21 +77,21 @@ int main(int argc, char* argv[])
   pointsActor->GetProperty()->SetColor(colors->GetColor4d("Yellow").GetData());
 
   int maxLevel = 5;
-  // Create the tree
+  // Create the tree.
   vtkNew<vtkKdTree> kdTree;
   kdTree->SetDataSet(polyData);
   kdTree->SetMaxLevel(maxLevel);
   kdTree->BuildLocator();
 
-  // Initialize the representation
+  // Initialize the representation.
   vtkNew<vtkPolyData> polydata;
   kdTree->GenerateRepresentation(maxLevel / 2, polydata);
 
-  vtkNew<vtkPolyDataMapper> octreeMapper;
-  octreeMapper->SetInputData(polydata);
+  vtkNew<vtkPolyDataMapper> kdtreeMapper;
+  kdtreeMapper->SetInputData(polydata);
 
   vtkNew<vtkActor> octreeActor;
-  octreeActor->SetMapper(octreeMapper);
+  octreeActor->SetMapper(kdtreeMapper);
   octreeActor->GetProperty()->SetInterpolationToFlat();
   octreeActor->GetProperty()->SetOpacity(.6);
   octreeActor->GetProperty()->EdgeVisibilityOn();
@@ -159,7 +153,7 @@ int main(int argc, char* argv[])
 
   sliderWidget->AddObserver(vtkCommand::InteractionEvent, callback);
 
-  // Ensure the current level is set
+  // Ensure the current level is set.
   callback->Execute(sliderWidget, 0, 0);
   renderWindowInteractor->Initialize();
   renderWindow->Render();

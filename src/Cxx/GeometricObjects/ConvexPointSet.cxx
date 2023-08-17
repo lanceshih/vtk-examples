@@ -10,7 +10,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkShrinkFilter.h>
 #include <vtkSphereSource.h>
 #include <vtkUnstructuredGrid.h>
 

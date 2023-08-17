@@ -2,7 +2,6 @@
 #include <vtkImplicitDataSet.h>
 #include <vtkNew.h>
 #include <vtkRTAnalyticSource.h>
-#include <vtkSphereSource.h>
 
 int main(int /* argc */, char* /* argv */[])
 {

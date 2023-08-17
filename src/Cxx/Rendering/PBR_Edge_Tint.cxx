@@ -10,7 +10,6 @@
 #include <vtkOpenGLTexture.h>
 #include <vtkPBRIrradianceTexture.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkPolyDataTangents.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -80,7 +79,8 @@ int main(int argc, char* argv[])
   // Define options
   std::string fileName;
   app.add_option("fileName", fileName,
-                 "The path to the JSON file containing the parameters.");
+                 "The path to the JSON file containing the parameters e.g. "
+                 "PBR_Parameters.");
   auto useCubemap{false};
   app.add_flag("-c, --use_cubemap", useCubemap,
                "Build the cubemap from the six cubemap files. Overrides the "

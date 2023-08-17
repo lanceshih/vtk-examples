@@ -3,6 +3,7 @@
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+// #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper2D.h>
 #include <vtkProperty.h>
@@ -12,6 +13,9 @@
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
+
+#include <iostream>
+#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -45,7 +49,7 @@ int main(int argc, char* argv[])
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
 
-  // Renderer and RenderWindow
+  // Renderer and RenderWindow.
   renderer->ResetCamera();
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetWindowName("Visualize2DPoints");

@@ -26,6 +26,7 @@ int main(int argc, char* argv[])
 
   if (argc > 1)
   {
+    // E.g. Bunny.vtp
     vtkNew<vtkXMLPolyDataReader> reader;
     reader->SetFileName(argv[1]);
     reader->Update();
@@ -48,7 +49,7 @@ int main(int argc, char* argv[])
   data3d->GetBounds(bounds_data);
   data3d->GetCenter(center_data);
 
-  // Black and white scene with the data in order to print the view
+  // Black and white scene with the data in order to print the view.
   vtkNew<vtkPolyDataMapper> mapper_data;
   mapper_data->SetInputData(data3d);
 
@@ -57,7 +58,7 @@ int main(int argc, char* argv[])
   actor_data->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
   vtkNew<vtkRenderer> tmp_rend;
-  tmp_rend->SetBackground(colors->GetColor3d("WHite").GetData());
+  tmp_rend->SetBackground(colors->GetColor3d("White").GetData());
 
   tmp_rend->AddActor(actor_data);
   tmp_rend->ResetCamera();
@@ -79,7 +80,7 @@ int main(int argc, char* argv[])
 #endif
   windowToImageFilter->Update();
 
-  // Extract the silhouette corresponding to the black limit of the image
+  // Extract the silhouette corresponding to the black limit of the image.
   vtkNew<vtkContourFilter> ContFilter;
   ContFilter->SetInputConnection(windowToImageFilter->GetOutputPort());
   ContFilter->SetValue(0, 255);
@@ -89,7 +90,8 @@ int main(int argc, char* argv[])
   vtkSmartPointer<vtkPolyData> contour = ContFilter->GetOutput();
 
   double bounds_contour[6], center_contour[3];
-  double trans_x = 0., trans_y = 0., trans_z = 0., ratio_x = 0., ratio_y = 0.;
+  double trans_x = 0.0, trans_y = 0.0, trans_z = 0.0, ratio_x = 0.0,
+         ratio_y = 0.0;
   contour->GetBounds(bounds_contour);
 
   ratio_x = (bounds_data[1] - bounds_data[0]) /
@@ -98,7 +100,7 @@ int main(int argc, char* argv[])
       (bounds_contour[3] - bounds_contour[2]);
 
   // Rescale the contour so that it shares the same bounds as the
-  // input data
+  // input data.
   vtkNew<vtkTransform> transform1;
   transform1->Scale(ratio_x, ratio_y, 1.0);
 
@@ -110,7 +112,7 @@ int main(int argc, char* argv[])
   contour = tfilter1->GetOutput();
 
   // Translate the contour so that it shares the same center as the
-  // input data
+  // input data.
   contour->GetCenter(center_contour);
   trans_x = center_data[0] - center_contour[0];
   trans_y = center_data[1] - center_contour[1];
@@ -128,11 +130,11 @@ int main(int argc, char* argv[])
 
   // Render the result : Input data + resulting silhouette
 
-  // Updating the color of the data
+  // Updating the color of the data.
   actor_data->GetProperty()->SetColor(
       colors->GetColor3d("MistyRose").GetData());
 
-  // Create a mapper and actor of the silhouette
+  // Create a mapper and actor of the silhouette.
   vtkNew<vtkPolyDataMapper> mapper_contour;
   mapper_contour->SetInputData(contour);
 
@@ -140,7 +142,7 @@ int main(int argc, char* argv[])
   actor_contour->SetMapper(mapper_contour);
   actor_contour->GetProperty()->SetLineWidth(2.0);
 
-  // 2 renderers and a render window
+  // 2 renderers and a render window.
   vtkNew<vtkRenderer> renderer1;
   renderer1->AddActor(actor_data);
 

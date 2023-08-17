@@ -4,7 +4,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -50,7 +49,7 @@ int main(int, char*[])
   mapper->SetInputConnection(smoothFilter->GetOutputPort());
   mapper->ScalarVisibilityOff();
 
-  // Create an actor for the surface
+  // Create an actor for the surface.
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetDiffuseColor(

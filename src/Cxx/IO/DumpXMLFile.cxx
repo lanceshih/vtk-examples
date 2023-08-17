@@ -50,14 +50,14 @@ int main(int argc, char* argv[])
     return EXIT_FAILURE;
   }
 
-  // Process each file on the command line
+  // Process each file on the command line.
   int f = 1;
   while (f < argc)
   {
     vtkSmartPointer<vtkDataSet> dataSet;
     std::string extension =
         vtksys::SystemTools::GetFilenameLastExtension(argv[f]);
-    // Dispatch based on the file extension
+    // Dispatch based on the file extension.
     if (extension == ".vtu")
     {
       dataSet = ReadAnXMLFile<vtkXMLUnstructuredGridReader>(argv[f]);
@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
     int numberOfCells = dataSet->GetNumberOfCells();
     int numberOfPoints = dataSet->GetNumberOfPoints();
 
-    // Generate a report
+    // Generate a report.
     std::cout << "------------------------" << std::endl;
     std::cout << argv[f] << std::endl
               << " contains a " << std::endl
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
       ++it;
     }
 
-    // Now check for point data
+    // Now check for point data.
     vtkPointData* pd = dataSet->GetPointData();
     if (pd)
     {
@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
       }
     }
 
-    // Now check for cell data
+    // Now check for cell data.
     vtkCellData* cd = dataSet->GetCellData();
     if (cd)
     {
@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
       }
     }
 
-    // Now check for field data
+    // Now check for field data.
     if (dataSet->GetFieldData())
     {
       std::cout << " contains field data with "

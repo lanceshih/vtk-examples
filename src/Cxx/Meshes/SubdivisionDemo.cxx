@@ -1,24 +1,17 @@
 #include <vtkActor.h>
 #include <vtkButterflySubdivisionFilter.h>
 #include <vtkCamera.h>
-#include <vtkCellArray.h>
-#include <vtkCellData.h>
-#include <vtkColor.h>
-#include <vtkDoubleArray.h>
 #include <vtkLegendBoxActor.h>
 #include <vtkLinearSubdivisionFilter.h>
 #include <vtkLoopSubdivisionFilter.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
-#include <vtkPoints.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
-#include <vtkTriangle.h>
 #include <vtkTriangleFilter.h>
 #include <vtkXMLPolyDataReader.h>
 
@@ -51,7 +44,7 @@ int main(int argc, char* argv[])
       vtkSmartPointer<vtkPolyData>::New();*/
   if (argc > 1) // If a file name is specified, open and use the file.
   {
-    // Subdivision filters only work on triangles
+    // Subdivision filters only work on triangles.
     vtkNew<vtkTriangleFilter> triangles;
     triangles->SetInputData(polyData);
     triangles->Update();
@@ -176,7 +169,7 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName)
   {
     extension = fileName.substr(fileName.find_last_of("."));
   }
-  // Make the extension lowercase
+  // Make the extension lowercase.
   std::transform(extension.begin(), extension.end(), extension.begin(),
                  ::tolower);
   if (extension == ".ply")
@@ -231,5 +224,5 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(std::string const& fileName)
     polyData = source->GetOutput();
   }
   return polyData;
-} // namespace
+}
 } // namespace

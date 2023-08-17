@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
   connectivityFilter->ColorRegionsOn();
   connectivityFilter->Update();
 
-  // Visualize
+  // Visualize.
   auto numberOfRegions = connectivityFilter->GetNumberOfExtractedRegions();
   vtkNew<vtkLookupTable> lut;
   lut->SetNumberOfTableValues(std::max(numberOfRegions, 10));
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Silver").GetData());
 
-  // Create a useful view
+  // Create a useful view.
   renderer->ResetCamera();
   renderer->GetActiveCamera()->Azimuth(30);
   renderer->GetActiveCamera()->Elevation(30);
@@ -148,7 +148,7 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName)
 
 void RandomColors(vtkLookupTable* lut, int numberOfColors)
 {
-  // Fill in a few known colors, the rest will be generated if needed
+  // Fill in a few known colors, the rest will be generated if needed.
   vtkNew<vtkNamedColors> colors;
   lut->SetTableValue(0, colors->GetColor4d("Gold").GetData());
   lut->SetTableValue(1, colors->GetColor4d("Banana").GetData());

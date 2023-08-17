@@ -1,4 +1,3 @@
-#include <vtkCellArray.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
@@ -92,7 +91,7 @@ int main(int, char*[])
       MakeUnstructuredGrid(vtkSmartPointer<vtkHexagonalPrism>::New()));
   filenames.push_back("HexagonalPrism.vtk");
 
-  // Write each grid into  a file
+  // Write each grid into a file.
   for (unsigned int i = 0; i < uGrids.size(); ++i)
   {
     std::cout << "Writing: " << filenames[i] << std::endl;
@@ -125,7 +124,7 @@ MakeUnstructuredGrid(vtkSmartPointer<T> aCell)
 
 vtkSmartPointer<vtkUnstructuredGrid> MakePolyVertex()
 {
-  // A polyvertex is a cell represents a set of 0D vertices
+  // A polyvertex is a cell represents a set of 0D vertices.
   int numberOfVertices = 6;
 
   vtkNew<vtkPoints> points;
@@ -153,7 +152,7 @@ vtkSmartPointer<vtkUnstructuredGrid> MakePolyVertex()
 
 vtkSmartPointer<vtkUnstructuredGrid> MakePolyLine()
 {
-  // A polyline is a cell that represents a set of 1D lines
+  // A polyline is a cell that represents a set of 1D lines.
   int numberOfVertices = 5;
 
   vtkNew<vtkPoints> points;
@@ -180,7 +179,7 @@ vtkSmartPointer<vtkUnstructuredGrid> MakePolyLine()
 
 vtkSmartPointer<vtkUnstructuredGrid> MakeTriangleStrip()
 {
-  // A triangle is a cell that represents a triangle strip
+  // A triangle is a cell that represents a triangle strip.
   int numberOfVertices = 10;
 
   vtkNew<vtkPoints> points;
@@ -212,7 +211,7 @@ vtkSmartPointer<vtkUnstructuredGrid> MakeTriangleStrip()
 
 vtkSmartPointer<vtkUnstructuredGrid> MakePolygon()
 {
-  // A polygon is a cell that represents a polygon
+  // A polygon is a cell that represents a polygon.
   int numberOfVertices = 6;
 
   vtkNew<vtkPoints> points;

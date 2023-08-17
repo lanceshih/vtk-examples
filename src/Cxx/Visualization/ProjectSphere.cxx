@@ -32,7 +32,7 @@ int main(int, char*[])
   elevationFilter->Update();
 
   // Deep copy the point data since in some versions of VTK,
-  // the ProjectSphereFilter modifies the input point data
+  // the ProjectSphereFilter modifies the input point data.
   vtkNew<vtkPolyData> pd1;
   pd1->DeepCopy(elevationFilter->GetOutput());
 
@@ -53,15 +53,15 @@ int main(int, char*[])
   vtkNew<vtkActor> actor2;
   actor2->SetMapper(mapper2);
 
-  // A render window
+  // A render window.
   vtkNew<vtkRenderWindow> renderWindow;
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);
@@ -75,7 +75,7 @@ int main(int, char*[])
   leftRenderer->AddActor(actor2);
   rightRenderer->AddActor(actor1);
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
@@ -83,13 +83,13 @@ int main(int, char*[])
   leftRenderer->GetActiveCamera()->Elevation(-30);
   leftRenderer->ResetCamera();
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindow->SetSize(640, 480);
   renderWindow->SetWindowName("ProjectSphere");
 
   renderWindow->Render();
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

@@ -48,7 +48,6 @@
 
 // For glyphing
 #include <vtkArrowSource.h>
-#include <vtkDataSet.h>
 #include <vtkGlyph3D.h>
 #include <vtkMaskPoints.h>
 

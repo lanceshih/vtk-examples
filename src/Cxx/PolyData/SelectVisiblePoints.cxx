@@ -2,9 +2,7 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,6 +11,9 @@
 #include <vtkSelectVisiblePoints.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
+
+#include <iostream>
+#include <string>
 
 namespace {
 class MyInteractor : public vtkInteractorStyleTrackballCamera
@@ -57,7 +58,7 @@ int main(int, char*[])
   pointSource->SetNumberOfPoints(200);
   pointSource->Update();
 
-  // Create an actor and mapper
+  // Create an actor and mapper.
   vtkNew<vtkPolyDataMapper> sphereMapper;
   sphereMapper->SetInputConnection(sphereSource->GetOutputPort());
 
@@ -74,7 +75,7 @@ int main(int, char*[])
   sphereActor->GetProperty()->SetColor(
       colors->GetColor3d("Honeydew").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -83,7 +84,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(sphereActor);
   renderer->AddActor(pointsActor);
   renderer->SetBackground(colors->GetColor3d("ivory_black").GetData());
@@ -97,7 +98,7 @@ int main(int, char*[])
   renderWindowInteractor->SetInteractorStyle(style);
   style->SetVisibleFilter(selectVisiblePoints);
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

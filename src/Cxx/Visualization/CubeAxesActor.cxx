@@ -1,11 +1,8 @@
 #include <vtkActor.h>
-#include <vtkActorCollection.h>
 #include <vtkCamera.h>
-#include <vtkColor.h>
 #include <vtkCubeAxesActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -16,7 +13,7 @@
 
 int main(int, char*[])
 {
-  // Define colors for this example
+  // Define colors for this example.
   vtkNew<vtkNamedColors> colors;
 
   vtkColor3d backgroundColor = colors->GetColor3d("DarkSlateGray");
@@ -25,11 +22,11 @@ int main(int, char*[])
   vtkColor3d axis2Color = colors->GetColor3d("PaleGreen");
   vtkColor3d axis3Color = colors->GetColor3d("LightSkyBlue");
 
-  // Create a superquadric
+  // Create a superquadric.
   vtkNew<vtkSuperquadricSource> superquadricSource;
   superquadricSource->SetPhiRoundness(3.1);
   superquadricSource->SetThetaRoundness(1.0);
-  superquadricSource->Update(); // needed to GetBounds later
+  superquadricSource->Update(); // Needed to GetBounds later
 
   vtkNew<vtkRenderer> renderer;
 

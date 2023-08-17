@@ -29,7 +29,7 @@ void AddShotNoise(vtkImageData* inputImage, vtkImageData* outputImage,
 
 int main(int argc, char* argv[])
 {
-  // Verify input arguments
+  // Verify input arguments.
   if (argc != 2)
   {
     std::cout << "Usage: " << argv[0] << " Filename e.g. TestPattern.png"
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
   renderers.push_back(hybridRenderer);
   renderers.push_back(medianRenderer);
 
-  // Setup viewports for the renderers
+  // Setup viewports for the renderers.
   int rendererSize = 400;
   unsigned int xGridDimensions = 2;
   unsigned int yGridDimensions = 2;
@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
   renderWindowInteractor->SetInteractorStyle(style);
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Renderers share one camera
+  // Renderers share one camera.
   renderWindow->Render();
   renderers[0]->GetActiveCamera()->Dolly(1.5);
   renderers[0]->ResetCameraClippingRange();

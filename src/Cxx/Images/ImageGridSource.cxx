@@ -13,7 +13,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageGridSource> source;
   source->SetFillValue(122);
   source->Update();
@@ -23,28 +23,28 @@ int main(int, char*[])
   castFilter->SetOutputScalarTypeToUnsignedChar();
   castFilter->Update();
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(castFilter->GetOutputPort());
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("CornflowerBlue").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ImageGridSource");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

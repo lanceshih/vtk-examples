@@ -2,7 +2,7 @@
 #include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageStencil.h>
-#include <vtkImageStencilData.h>
+// #include <vtkImageStencilData.h>
 #include <vtkImageToImageStencil.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
@@ -22,10 +22,10 @@ int main(int, char*[])
   vtkNew<vtkNamedColors> colors;
 
   vtkNew<vtkImageData> image1;
-  CreateColorImage(image1, 0); // Create a red image
+  CreateColorImage(image1, 0); // Create a red image.
 
   vtkNew<vtkImageData> image2;
-  CreateColorImage(image2, 1); // Create a green image
+  CreateColorImage(image2, 1); // Create a green image.
 
   vtkNew<vtkImageData> mask;
   CreateMask(mask);
@@ -42,28 +42,28 @@ int main(int, char*[])
   stencil->SetInputData(image1);
   stencil->Update();
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(stencil->GetOutputPort());
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ImageStencil");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   renderWindow->Render();

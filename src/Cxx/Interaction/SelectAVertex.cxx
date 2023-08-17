@@ -1,20 +1,9 @@
 #include <vtkActor.h>
-#include <vtkAreaPicker.h>
 #include <vtkCamera.h>
-#include <vtkDataSetMapper.h>
-#include <vtkDataSetSurfaceFilter.h>
-#include <vtkExtractGeometry.h>
-#include <vtkGlyph3D.h>
-#include <vtkIdFilter.h>
-#include <vtkIdTypeArray.h>
 #include <vtkInteractorStyleTrackballActor.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
-#include <vtkPlanes.h>
-#include <vtkPointData.h>
 #include <vtkPointPicker.h>
-#include <vtkPointSource.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
@@ -23,13 +12,12 @@
 #include <vtkRenderer.h>
 #include <vtkRendererCollection.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkVertexGlyphFilter.h>
 
 namespace {
 
-// Define interaction style
+// Define interaction style.
 class InteractorStyle2 : public vtkInteractorStyleTrackballActor
 {
 public:
@@ -42,7 +30,7 @@ public:
     this->Move = false;
     this->PointPicker = vtkSmartPointer<vtkPointPicker>::New();
 
-    // Setup ghost glyph
+    // Setup ghost glyph.
     vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
     points->InsertNextPoint(0, 0, 0);
     this->MovePolyData = vtkSmartPointer<vtkPolyData>::New();
@@ -88,7 +76,7 @@ public:
   }
   void OnMiddleButtonDown() override
   {
-    // Get the selected point
+    // Get the selected point.
     int x = this->Interactor->GetEventPosition()[0];
     int y = this->Interactor->GetEventPosition()[1];
     this->FindPokedRenderer(x, y);
@@ -152,7 +140,7 @@ int main(int, char*[])
   glyphFilter->SetInputData(input);
   glyphFilter->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(glyphFilter->GetOutputPort());
 

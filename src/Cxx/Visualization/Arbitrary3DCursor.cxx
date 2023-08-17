@@ -1,4 +1,5 @@
 #include <vtkActor.h>
+#include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
 #include <vtkConeSource.h>
 #include <vtkGlyph3D.h>
@@ -18,11 +19,13 @@
 #include <vtkTextProperty.h>
 #include <vtkXMLPolyDataReader.h>
 
+#include <iostream>
 #include <sstream>
+#include <string>
 
 // This does the actual work: updates the probe.
-// Callback for the interaction
-class vtkmyPWCallback : public vtkCommand
+// Callback for the interaction.
+class vtkmyPWCallback : public vtkCallbackCommand
 {
 public:
   vtkmyPWCallback() = default;
@@ -77,7 +80,7 @@ int main(int argc, char* argv[])
   probe->SetInputData(point);
   probe->SetSourceData(inputPolyData);
 
-  // create glyph
+  // Create glyph.
   vtkNew<vtkConeSource> cone;
   cone->SetResolution(16);
 
@@ -109,8 +112,7 @@ int main(int argc, char* argv[])
   textActor->SetInput("cursor:");
   textActor->GetTextProperty()->SetColor(colors->GetColor3d("White").GetData());
 
-  // Create the RenderWindow, Render1er and both Actors
-  //
+  // Create the RenderWindow, Render1er and both Actors.
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(ren1);
@@ -127,7 +129,6 @@ int main(int argc, char* argv[])
   myCallback->PositionActor = textActor;
 
   // The point widget is used probe the dataset.
-  //
   vtkNew<vtkPointWidget> pointWidget;
   pointWidget->SetInteractor(iren);
   pointWidget->SetInputData(inputPolyData);
@@ -139,8 +140,7 @@ int main(int argc, char* argv[])
   ren1->AddActor(actor);
   ren1->AddActor2D(textActor);
 
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer, set the background and size.
   ren1->GradientBackgroundOn();
   ren1->SetBackground(colors->GetColor3d("SlateGray").GetData());
   ren1->SetBackground2(colors->GetColor3d("Wheat").GetData());
@@ -149,8 +149,8 @@ int main(int argc, char* argv[])
   renWin->SetWindowName("Arbitrary3DCursor");
   renWin->Render();
   pointWidget->On();
-  // render the image
-  //
+
+  // Render the image
   iren->Initialize();
   renWin->Render();
 

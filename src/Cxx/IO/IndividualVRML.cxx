@@ -1,9 +1,7 @@
 #include <vtkAxesActor.h>
 #include <vtkCamera.h>
-#include <vtkDataSet.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -33,7 +31,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // VRML Import
+  // VRML Import.
   vtkNew<vtkVRMLImporter> importer;
   importer->SetFileName(filename.c_str());
   importer->Read();

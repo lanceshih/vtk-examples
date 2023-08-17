@@ -1,11 +1,8 @@
 #include <vtkActor.h>
-#include <vtkColor.h>
 #include <vtkContourFilter.h>
-#include <vtkImageData.h>
 #include <vtkImplicitBoolean.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkOutlineFilter.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>

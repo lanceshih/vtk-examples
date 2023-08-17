@@ -16,6 +16,9 @@
 #include <vtkStructuredGridReader.h>
 #include <vtkTubeFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int argc, char* argv[])
 {
   if (argc < 2)

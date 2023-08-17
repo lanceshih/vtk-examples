@@ -1,18 +1,17 @@
-#include <vtkCellArray.h>
 #include <vtkCellLocator.h>
 #include <vtkDelaunay2D.h>
 #include <vtkDoubleArray.h>
 #include <vtkImageData.h>
-#include <vtkLine.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkProbeFilter.h>
-#include <vtkTriangle.h>
 #include <vtkXMLPolyDataWriter.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -21,7 +20,7 @@ int main(int, char*[])
   image->AllocateScalars(VTK_DOUBLE, 1);
 
   // Create a random set of heights on a grid. This is often called a
-  //"terrain map"
+  //"terrain map".
   vtkNew<vtkPoints> points;
 
   vtkNew<vtkMinimalStandardRandomSequence> randomSequence;
@@ -38,11 +37,11 @@ int main(int, char*[])
     }
   }
 
-  // add the grid points to a polydata object
+  // Add the grid points to a polydata object.
   vtkNew<vtkPolyData> polydata;
   polydata->SetPoints(points);
 
-  // triangulate the grid points
+  // Triangulate the grid points.
   vtkNew<vtkDelaunay2D> delaunay;
   delaunay->SetInputData(polydata);
   delaunay->Update();
@@ -52,7 +51,7 @@ int main(int, char*[])
   writer->SetInputConnection(delaunay->GetOutputPort());
   writer->Write();
 
-  // Add some points to interpolate
+  // Add some points to interpolate.
   vtkNew<vtkPoints> probePoints;
   probePoints->InsertNextPoint(5.2, 3.2, 0);
   probePoints->InsertNextPoint(5.0, 3.0, 0);
@@ -76,7 +75,7 @@ int main(int, char*[])
     cout << "doubleData->GetValue(" << i << "): " << val << endl;
   }
 
-  // Now find the elevation with a CellLocator
+  // Now find the elevation with a CellLocator.
   vtkNew<vtkCellLocator> cellLocator;
   cellLocator->SetDataSet(delaunay->GetOutput());
   cellLocator->BuildLocator();

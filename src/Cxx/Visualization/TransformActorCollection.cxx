@@ -4,13 +4,11 @@
 #include <vtkCubeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkTransform.h>
 
@@ -20,7 +18,7 @@ int main(int, char*[])
 
   vtkNew<vtkRenderer> renderer;
 
-  // Create a cone
+  // Create a cone.
   vtkNew<vtkConeSource> coneSource;
   coneSource->SetHeight(3);
 
@@ -30,7 +28,7 @@ int main(int, char*[])
   coneActor->SetMapper(coneMapper);
   coneActor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create a cube
+  // Create a cube.
   vtkNew<vtkCubeSource> cubeSource;
 
   vtkNew<vtkPolyDataMapper> cubeMapper;
@@ -39,7 +37,7 @@ int main(int, char*[])
   cubeActor->SetMapper(cubeMapper);
   cubeActor->GetProperty()->SetColor(colors->GetColor3d("Cornsilk").GetData());
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
 
   vtkNew<vtkPolyDataMapper> sphereMapper;
@@ -57,7 +55,7 @@ int main(int, char*[])
   actorCollection->InitTraversal();
 
   vtkNew<vtkTransform> transform;
-  transform->PostMultiply(); // this is the key line
+  transform->PostMultiply(); // This is the key line.
   transform->Translate(5.0, 0, 0);
 
   // actorCollection->SetUserTransform(transform);
@@ -69,7 +67,7 @@ int main(int, char*[])
     renderer->AddActor(actor);
   }
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
 
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -78,10 +76,10 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

@@ -9,11 +9,8 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
 #include <vtkUnstructuredGridReader.h>
 #include <vtkXMLPolyDataWriter.h>
-#include <vtkXMLUnstructuredGridWriter.h>
 
 int main(int argc, char* argv[])
 {

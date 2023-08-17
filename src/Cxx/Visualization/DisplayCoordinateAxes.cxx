@@ -6,12 +6,10 @@
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkPropAssembly.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 
 int main(int, char*[])
@@ -25,7 +23,7 @@ int main(int, char*[])
 
   vtkPolyData* polydata = sphereSource->GetOutput();
 
-  // Create a mapper
+  // Create a mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputData(polydata);
 
@@ -34,7 +32,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetWindowName("DisplayCoordinateAxes");
@@ -44,7 +42,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
@@ -66,7 +64,7 @@ int main(int, char*[])
   renderer->ResetCamera();
   renderWindow->Render();
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

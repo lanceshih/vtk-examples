@@ -1,5 +1,4 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkDelaunay3D.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
@@ -15,11 +14,14 @@
 #include <vtkUnstructuredGrid.h>
 #include <vtkVertexGlyphFilter.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> bigSphereSource;
   bigSphereSource->SetCenter(0.0, 0.0, 0.0);
   bigSphereSource->SetRadius(4);
@@ -79,7 +81,7 @@ int main(int, char*[])
     smallSphereSource->GetOutput()->GetPoint(i, point);
 
     double pcoords[3];
-    // The number of weights >= max number of nodes in each cell
+    // The number of weights >= max number of nodes in each cell.
     double weights[4];
     int subId;
     vtkIdType cellId = delaunay3D->GetOutput()->FindCell(
@@ -103,7 +105,7 @@ int main(int, char*[])
   vertexGlyphFilter->SetInputData(polyDataInside);
   vertexGlyphFilter->Update();
 
-  // Mapper and actor for points inside
+  // Mapper and actor for points inside.
   vtkNew<vtkPolyDataMapper> pointsInsideMapper;
   pointsInsideMapper->SetInputConnection(vertexGlyphFilter->GetOutputPort());
   vtkNew<vtkActor> pointsInsideActor;

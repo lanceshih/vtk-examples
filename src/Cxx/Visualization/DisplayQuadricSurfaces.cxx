@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkContourFilter.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>
@@ -45,7 +44,7 @@ int main(int, char*[])
 namespace {
 void Sphere()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, 1, 0, 0, 0, 0, 0, 0, 0);
 
@@ -57,7 +56,7 @@ void Sphere()
 
 void EllipticParaboloid()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, 0, 0, 0, 0, 0, 0, -1, 0);
 
@@ -69,7 +68,7 @@ void EllipticParaboloid()
 
 void HyperbolicParaboloid()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, -1, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -81,7 +80,7 @@ void HyperbolicParaboloid()
 
 void Cylinder()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, 0, 0, 0, 0, 0, 0, 0, 0);
 
@@ -93,7 +92,7 @@ void Cylinder()
 
 void HyperboloidOneSheet()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, -1, 0, 0, 0, 0, 0, 0, 0);
 
@@ -105,7 +104,7 @@ void HyperboloidOneSheet()
 
 void HyperboloidTwoSheets()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, -1, 0, 0, 0, 0, 0, 0, 0);
 
@@ -117,7 +116,7 @@ void HyperboloidTwoSheets()
 
 void Ellipsoid()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, 2, 0, 0, 0, 0, 0, 0, 0);
 
@@ -129,7 +128,7 @@ void Ellipsoid()
 
 void Cone()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(1, 1, -1, 0, 0, 0, 0, 0, 0, 0);
 
@@ -140,7 +139,7 @@ void Cone()
 
 void Other()
 {
-  // create the quadric function definition
+  // Create the quadric function definition.
   vtkNew<vtkQuadric> quadric;
   quadric->SetCoefficients(.5, 1, .2, 0, .1, 0, 0, .2, 0, 0);
 
@@ -155,7 +154,7 @@ void PlotFunction(vtkQuadric* quadric, double value)
 
   vtkNew<vtkNamedColors> colors;
 
-  // sample the quadric function
+  // Sample the quadric function.
   vtkNew<vtkSampleFunction> sample;
   sample->SetSampleDimensions(50, 50, 50);
   sample->SetImplicitFunction(quadric);
@@ -163,43 +162,43 @@ void PlotFunction(vtkQuadric* quadric, double value)
   double bounds[6]{-10, 11, -10, 10, -10, 10};
   sample->SetModelBounds(bounds);
 
-  // Create five surfaces F(x,y,z) = constant between range specified
+  // Create five surfaces F(x,y,z) = constant between range specified.
   /*
-  vtkContourFilter *contours = vtkContourFilter::New();
-  contours->SetInput(sample->GetOutput());
+  vtkNew<vtkContourFilter> contours;
+  contours->SetInputConnection(sample->GetOutputPort());
   contours->GenerateValues(5, 0.0, 1.2);
   */
 
-  // create the 0 isosurface
+  // Create the 0 isosurface.
   vtkNew<vtkContourFilter> contours;
   contours->SetInputConnection(sample->GetOutputPort());
   contours->GenerateValues(1, value, value);
 
-  // map the contours to graphical primitives
+  // Map the contours to graphical primitives.
   vtkNew<vtkPolyDataMapper> contourMapper;
   contourMapper->SetInputConnection(contours->GetOutputPort());
   contourMapper->SetScalarRange(0.0, 1.2);
 
-  // create an actor for the contours
+  // Create an actor for the contours.
   vtkNew<vtkActor> contourActor;
   contourActor->SetMapper(contourMapper);
 
   // -- create a box around the function to indicate the sampling volume --
 
-  // create outline
+  // Create outline.
   vtkNew<vtkOutlineFilter> outline;
   outline->SetInputConnection(sample->GetOutputPort());
 
-  // map it to graphics primitives
+  // Map it to graphics primitives.
   vtkNew<vtkPolyDataMapper> outlineMapper;
   outlineMapper->SetInputConnection(outline->GetOutputPort());
 
-  // create an actor for it
+  // Create an actor for it.
   vtkNew<vtkActor> outlineActor;
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // setup the window
+  // Setup the window.
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(ren1);
@@ -208,12 +207,12 @@ void PlotFunction(vtkQuadric* quadric, double value)
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // add the actors to the scene
+  // Add the actors to the scene.
   ren1->AddActor(contourActor);
   ren1->AddActor(outlineActor);
   ren1->SetBackground(colors->GetColor3d("AliceBlue").GetData());
 
-  // render and interact
+  // Render and interact.
   renWin->Render();
   ren1->GetActiveCamera()->Azimuth(-55);
   ren1->GetActiveCamera()->Elevation(15);

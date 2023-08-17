@@ -3,8 +3,6 @@
 #include <vtkCubeSource.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -18,7 +16,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Setup sphere
+  // Setup a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
   vtkNew<vtkPolyDataMapper> sphereMapper;
@@ -28,7 +26,7 @@ int main(int, char*[])
   sphereActor->GetProperty()->SetColor(
       colors->GetColor3d("MistyRose").GetData());
 
-  // Setup cube
+  // Setup a cube.
   vtkNew<vtkCubeSource> cubeSource;
   cubeSource->Update();
   vtkNew<vtkPolyDataMapper> cubeMapper;
@@ -38,7 +36,7 @@ int main(int, char*[])
   cubeActor->GetProperty()->SetColor(
       colors->GetColor3d("MediumSeaGreen").GetData());
 
-  // There will be one render window
+  // There will be one render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->SetWindowName("SideBySideViewports");
@@ -47,7 +45,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
@@ -63,7 +61,7 @@ int main(int, char*[])
   rightRenderer->SetViewport(rightViewport);
   rightRenderer->SetBackground(colors->GetColor3d("CadetBlue").GetData());
 
-  // Add the sphere to the left and the cube to the right
+  // Add the sphere to the left and the cube to the right.
   leftRenderer->AddActor(sphereActor);
   rightRenderer->AddActor(cubeActor);
 

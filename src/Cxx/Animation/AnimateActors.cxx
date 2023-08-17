@@ -3,7 +3,6 @@
 #include <vtkAnimationCue.h>
 #include <vtkAnimationScene.h>
 #include <vtkCamera.h>
-#include <vtkColor.h>
 #include <vtkCommand.h>
 #include <vtkConeSource.h>
 #include <vtkLogger.h>
@@ -14,7 +13,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 
 int main(int argc, char* argv[])
@@ -54,19 +52,20 @@ int main(int argc, char* argv[])
   ren1->AddActor(sphere);
 
   // Generate a cone
-  auto coneSource = vtkSmartPointer<vtkConeSource>::New();
+  vtkNew<vtkConeSource> coneSource;
   coneSource->SetResolution(31);
 
-  auto coneMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+  vtkNew<vtkPolyDataMapper> coneMapper;
   coneMapper->SetInputConnection(coneSource->GetOutputPort());
-  auto cone = vtkSmartPointer<vtkActor>::New();
+  // auto cone = vtkSmartPointer<vtkActor>::New();
+  vtkNew<vtkActor> cone;
   cone->SetMapper(coneMapper);
   cone->GetProperty()->SetDiffuseColor(coneColor.GetData());
 
   ren1->AddActor(cone);
 
   // Create an Animation Scene
-  auto scene = vtkSmartPointer<vtkAnimationScene>::New();
+  vtkNew<vtkAnimationScene> scene;
   if (argc >= 2 && strcmp(argv[1], "-real") == 0)
   {
     vtkLogF(INFO, "real-time mode");
@@ -85,12 +84,12 @@ int main(int argc, char* argv[])
                      &vtkWindow::Render);
 
   // Create an Animation Cue for each actor
-  auto cue1 = vtkSmartPointer<vtkAnimationCue>::New();
+  vtkNew<vtkAnimationCue> cue1;
   cue1->SetStartTime(5);
   cue1->SetEndTime(23);
   scene->AddCue(cue1);
 
-  auto cue2 = vtkSmartPointer<vtkAnimationCue>::New();
+  vtkNew<vtkAnimationCue> cue2;
   cue2->SetStartTime(1);
   cue2->SetEndTime(10);
   scene->AddCue(cue2);

@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCleanPolyData.h>
 #include <vtkDataSetSurfaceFilter.h>
 #include <vtkExtractSelection.h>
 #include <vtkFillHolesFilter.h>
@@ -8,7 +7,6 @@
 #include <vtkInformation.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPolyDataNormals.h>
@@ -20,7 +18,6 @@
 #include <vtkSelectionNode.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkUnstructuredGrid.h>
 
 #include <vtkBYUReader.h>
 #include <vtkOBJReader.h>
@@ -59,12 +56,12 @@ int main(int argc, char* argv[])
     SetNormals(input->GetPointData()->GetNormals());
 #endif
   // Visualize
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> originalMapper;
   originalMapper->SetInputData(input);
 
@@ -86,7 +83,7 @@ int main(int argc, char* argv[])
       colors->GetColor3d("NavajoWhite").GetData());
   filledActor->SetBackfaceProperty(backfaceProp);
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> leftRenderer;
   leftRenderer->SetViewport(leftViewport);
 
@@ -103,7 +100,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   leftRenderer->AddActor(originalActor);
   rightRenderer->AddActor(filledActor);
   leftRenderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
@@ -118,10 +115,10 @@ int main(int argc, char* argv[])
 
   rightRenderer->SetBackground(colors->GetColor3d("LightSlateGray").GetData());
 
-  // Share the camera
+  // Share the camera.
 
   rightRenderer->SetActiveCamera(leftRenderer->GetActiveCamera());
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
 
   renderWindowInteractor->Start();
@@ -131,15 +128,15 @@ int main(int argc, char* argv[])
 
 void GenerateData(vtkPolyData* input)
 {
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
-  // Remove some cells
+  // Remove some cells.
   vtkNew<vtkIdTypeArray> ids;
   ids->SetNumberOfComponents(1);
 
-  // Set values
+  // Set values.
   ids->InsertNextValue(2);
   ids->InsertNextValue(10);
 
@@ -165,7 +162,7 @@ void GenerateData(vtkPolyData* input)
 
   input->ShallowCopy(surfaceFilter->GetOutput());
 }
-// Snippets
+
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName)
 {

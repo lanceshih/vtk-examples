@@ -1,9 +1,7 @@
 #include <vtkActor.h>
-#include <vtkInteractorStyleTrackball.h>
-#include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkInteractorStyleSwitch.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkPropCollection.h>
 #include <vtkProperty.h>
@@ -35,11 +33,11 @@ int main(int, char*[])
   sphereSource2->SetRadius(3.0);
   sphereSource2->Update();
 
-  // Create a mapper
+  // Create a mapper.
   vtkNew<vtkPolyDataMapper> mapper2;
   mapper2->SetInputConnection(sphereSource2->GetOutputPort());
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkActor> actor2;
   actor2->SetMapper(mapper2);
   actor2->GetProperty()->SetColor(colors->GetColor3d("Honeydew").GetData());
@@ -50,31 +48,30 @@ int main(int, char*[])
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("HideActor");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor1);
   renderer->AddActor(actor2);
   renderer->SetBackground(colors->GetColor3d("LightSlateGray").GetData());
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindow->Render();
 
-  vtkNew<vtkInteractorStyleTrackballCamera> style;
+  vtkNew<vtkInteractorStyleSwitch> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
-
-  renderWindowInteractor->Start();
+  // renderWindowInteractor->Start();
 
   // Change the background color so we know we are done with the original two
-  // sphere display
+  // sphere display.
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
 
-  // Hide one actor at a time
+  // Hide one actor at a time.
   vtkPropCollection* props =
-      renderer->GetViewProps(); // iterate through and set each visibility to 0
+      renderer->GetViewProps(); // iterate through and set each visibility to 0.
   props->InitTraversal();
   for (int i = 0; i < props->GetNumberOfItems(); i++)
   {
@@ -82,9 +79,8 @@ int main(int, char*[])
 
     renderer->ResetCamera();
     renderWindow->Render();
-
-    renderWindowInteractor->Start();
   }
+  renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
 }

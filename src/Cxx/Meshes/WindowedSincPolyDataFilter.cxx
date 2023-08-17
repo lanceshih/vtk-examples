@@ -1,6 +1,5 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -50,12 +49,12 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> leftRenderer;
   renderWindow->AddRenderer(leftRenderer);
   leftRenderer->SetViewport(leftViewport);
@@ -66,7 +65,7 @@ int main(int, char*[])
   rightRenderer->SetViewport(rightViewport);
   rightRenderer->SetBackground(colors->GetColor3d("DodgerBlue").GetData());
 
-  // Add the sphere to the left and the smoothed sphere to the right
+  // Add the sphere to the left and the smoothed sphere to the right.
   leftRenderer->AddActor(inputActor);
   rightRenderer->AddActor(smoothedActor);
 

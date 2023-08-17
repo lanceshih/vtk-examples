@@ -1,10 +1,8 @@
 #include <vtkActor.h>
 #include <vtkBillboardTextActor3D.h>
-#include <vtkCallbackCommand.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,7 +11,9 @@
 #include <vtkSphereSource.h>
 #include <vtkTextProperty.h>
 
+#include <iostream>
 #include <sstream>
+#include <string>
 
 namespace {
 void ActorCallback(vtkObject* caller, long unsigned int vtkNotUsed(eventId),

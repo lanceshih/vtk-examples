@@ -15,7 +15,6 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkTimerLog.h>
 #include <vtksys/SystemTools.hxx>
 
 #include <algorithm>

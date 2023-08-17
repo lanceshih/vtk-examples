@@ -67,6 +67,11 @@ int main(int argc, char* argv[])
     std::cout << "Usage: " << argv[0] << " filename [figure]" << std::endl;
     std::cout << "where: filename is the file cow.g" << std::endl;
     std::cout << "       figure is 0, 1, or 2, default 0" << std::endl;
+    std::cout
+        << "Options 0, 1 and 2 are provided to let you generate"
+           " approximations to the following figures:\n Figure 3-32,"
+           " Figure 3-33a and Figure 3-33b in Chapter 3 of the VTK Textbook."
+        << std::endl;
     return EXIT_FAILURE;
   }
 

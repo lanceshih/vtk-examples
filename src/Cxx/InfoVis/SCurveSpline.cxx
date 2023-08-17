@@ -5,7 +5,6 @@
 #include <vtkParametricSpline.h>
 #include <vtkPointSource.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>

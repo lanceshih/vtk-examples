@@ -1,6 +1,8 @@
-#include <vtkArrayRange.h>
 #include <vtkDenseArray.h>
 #include <vtkNew.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {
@@ -9,7 +11,7 @@ int main(int, char*[])
 
   for (unsigned int i = 0; i < 5; i++)
   {
-    array->SetValue(i, 0, 2.0);
+    array->SetValue(i, 0, 2.0 + i);
     double val = array->GetValue(i, 0);
     std::cout << "val: " << val << std::endl;
   }

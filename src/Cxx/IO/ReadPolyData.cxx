@@ -6,12 +6,11 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkXMLPolyDataReader.h>
 
 int main(int argc, char* argv[])
 {
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 2)
   {
     std::cerr << "Usage: " << argv[0] << " Filename(.vtp) e.g. Torso.vtp"
@@ -23,7 +22,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // Read all the data from the file
+  // Read all the data from the file.
   vtkNew<vtkXMLPolyDataReader> reader;
   reader->SetFileName(filename.c_str());
   reader->Update();

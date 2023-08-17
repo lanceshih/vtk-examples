@@ -3,7 +3,6 @@
 #include <vtkDijkstraGraphGeodesicPath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -15,7 +14,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere
+  // Create a sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->Update();
 
@@ -26,7 +25,7 @@ int main(int, char*[])
   dijkstra->SetEndVertex(7);
   dijkstra->Update();
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> pathMapper;
   pathMapper->SetInputConnection(dijkstra->GetOutputPort());
 
@@ -35,7 +34,7 @@ int main(int, char*[])
   pathActor->GetProperty()->SetColor(colors->GetColor3d("HotPink").GetData());
   pathActor->GetProperty()->SetLineWidth(4);
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
@@ -43,7 +42,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -52,7 +51,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(actor);
   renderer->AddActor(pathActor);
   renderer->SetBackground(colors->GetColor3d("MidnightBlue").GetData());
@@ -64,7 +63,7 @@ int main(int, char*[])
   camera->SetDistance(3);
   camera->Zoom(1.5);
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
 
   renderWindowInteractor->Start();

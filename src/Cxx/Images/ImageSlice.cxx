@@ -8,7 +8,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 
 namespace {
 
@@ -29,26 +28,26 @@ int main(int, char*[])
   vtkNew<vtkImageSlice> imageSlice;
   imageSlice->SetMapper(imageResliceMapper);
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> renderer;
   renderer->AddViewProp(imageSlice);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("NavajoWhite").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(300, 300);
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ImageSlice");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

@@ -1,7 +1,5 @@
 #include <vtkImageActor.h>
-#include <vtkImageCanvasSource2D.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageMandelbrotSource.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageSinusoidSource.h>

@@ -16,6 +16,9 @@
 #include <vtkStructuredGridOutlineFilter.h>
 #include <vtkWarpScalar.h>
 
+#include <iostream>
+#include <string>
+
 // This example demonstrates how to extract "computational planes" from a
 // structured dataset. Structured data has a natural, logical coordinate
 // system based on i-j-k indices. Specifying imin,imax, jmin,jmax, kmin,kmax
@@ -98,7 +101,7 @@ int main(int argc, char* argv[])
   outlineActor->SetMapper(outlineMapper);
   outlineActor->GetProperty()->SetColor(colors->GetColor3d("Black").GetData());
 
-  // Create the usual graphics stuff/
+  // Create the usual graphics stuff.
   //
   vtkNew<vtkRenderer> ren1;
   vtkNew<vtkRenderWindow> renWin;
@@ -121,7 +124,7 @@ int main(int argc, char* argv[])
   ren1->GetActiveCamera()->SetViewUp(0.060772, -0.319905, 0.945498);
   iren->Initialize();
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   iren->Start();

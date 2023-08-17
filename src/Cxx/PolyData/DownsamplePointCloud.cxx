@@ -3,7 +3,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -46,7 +45,7 @@ int main(int, char*[])
   cleanedActor->GetProperty()->SetColor(colors->GetColor3d("Lime").GetData());
   cleanedActor->GetProperty()->SetPointSize(3);
 
-  // There will be one render window
+  // There will be one render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->SetWindowName("DownsamplePointCloud");
@@ -55,7 +54,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};

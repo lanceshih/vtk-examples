@@ -4,7 +4,6 @@
 #include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -71,8 +70,8 @@ int main(int, char*[])
   renderWindow->Render();
 
   // Place the widget. Must be done after a render so that the
-  // viewport is defined.
-  // Here the widget placement is in normalized display coordinates
+  // viewport is defined..
+  // Here the widget placement is in normalized display coordinates.
   vtkNew<vtkCoordinate> upperRight;
   upperRight->SetCoordinateSystemToNormalizedDisplay();
   upperRight->SetValue(1.0, 1.0);
@@ -113,7 +112,7 @@ void CreateImage(vtkImageData* image, std::string const& color1,
     dc2[i] = c2[i];
   }
 
-  // Specify the size of the image data
+  // Specify the size of the image data.
   image->SetDimensions(10, 10, 1);
   image->AllocateScalars(VTK_UNSIGNED_CHAR, 3);
 

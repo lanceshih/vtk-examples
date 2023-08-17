@@ -1,7 +1,6 @@
 #include <vtkAxis.h>
 #include <vtkChartBox.h>
 #include <vtkComputeQuartiles.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkIntArray.h>
 #include <vtkLookupTable.h>
@@ -18,7 +17,7 @@
 //----------------------------------------------------------------------------
 int main(int, char*[])
 {
-  // Set up a 2D scene, add an XY chart to it
+  // Set up a 2D scene, add an XY chart to it.
   vtkNew<vtkContextView> view;
   view->GetRenderWindow()->SetSize(400, 400);
   view->GetRenderWindow()->SetMultiSamples(0);
@@ -26,7 +25,7 @@ int main(int, char*[])
   vtkNew<vtkChartBox> chart;
   view->GetScene()->AddItem(chart);
 
-  // Creates a vtkPlotBox input table
+  // Creates a vtkPlotBox input table.
   int numParam = 5;
   vtkNew<vtkTable> inputBoxPlotTable;
 
@@ -76,7 +75,7 @@ int main(int, char*[])
   chart->GetTitleProperties()->SetFontSize(16);
   chart->GetYAxis()->SetTitle("Speed of Light (km/s - 299000)");
 
-  // Set the labels
+  // Set the labels.
   vtkNew<vtkStringArray> labels;
   labels->SetNumberOfValues(5);
   labels->SetValue(0, "Run 1");
@@ -86,7 +85,7 @@ int main(int, char*[])
   labels->SetValue(4, "Run 5");
   chart->GetPlot(0)->SetLabels(labels);
 
-  // Render the scene
+  // Render the scene.
   view->GetRenderWindow()->SetMultiSamples(0);
   view->GetRenderer()->SetBackground(.8, .8, .8);
   view->GetInteractor()->Initialize();

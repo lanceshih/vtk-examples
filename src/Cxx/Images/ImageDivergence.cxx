@@ -1,9 +1,5 @@
-#include <vtkActor.h>
 #include <vtkImageActor.h>
-#include <vtkImageCanvasSource2D.h>
 #include <vtkImageCast.h>
-#include <vtkImageCorrelation.h>
-#include <vtkImageData.h>
 #include <vtkImageDivergence.h>
 #include <vtkImageGradient.h>
 #include <vtkImageMandelbrotSource.h>
@@ -19,7 +15,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageMandelbrotSource> source;
   source->Update();
 
@@ -28,7 +24,7 @@ int main(int, char*[])
   originalCastFilter->SetOutputScalarTypeToFloat();
   originalCastFilter->Update();
 
-  // Compute the gradient (to produce a vector field)
+  // Compute the gradient (to produce a vector field).
   vtkNew<vtkImageGradient> gradientFilter;
   gradientFilter->SetInputConnection(source->GetOutputPort());
   gradientFilter->Update();
@@ -51,12 +47,12 @@ int main(int, char*[])
   divergenceActor->GetMapper()->SetInputConnection(
       divergenceCastFilter->GetOutputPort());
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(leftViewport);
   originalRenderer->AddActor(originalActor);
@@ -69,20 +65,20 @@ int main(int, char*[])
   divergenceRenderer->ResetCamera();
   divergenceRenderer->SetBackground(colors->GetColor3d("RoyalBlue").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(600, 300);
   renderWindow->AddRenderer(originalRenderer);
   renderWindow->AddRenderer(divergenceRenderer);
   renderWindow->SetWindowName("ImageDivergence");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

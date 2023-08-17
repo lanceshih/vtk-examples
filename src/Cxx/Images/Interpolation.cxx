@@ -1,5 +1,4 @@
 #include <vtkImageData.h>
-#include <vtkImageMapper.h>
 #include <vtkImageProperty.h>
 #include <vtkImageResliceMapper.h>
 #include <vtkImageSlice.h>
@@ -9,7 +8,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 
 namespace {
 
@@ -31,26 +29,26 @@ int main(int, char*[])
   imageSlice->SetMapper(imageResliceMapper);
   imageSlice->GetProperty()->SetInterpolationTypeToNearest();
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> renderer;
   renderer->AddViewProp(imageSlice);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("NavajoWhite").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetSize(300, 300);
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("Interpolation");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

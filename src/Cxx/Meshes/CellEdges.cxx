@@ -1,7 +1,6 @@
-#include <vtkCellArray.h>
 #include <vtkIdList.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
+#include <vtkPoints.h>
 #include <vtkTriangle.h>
 
 int main(int, char*[])

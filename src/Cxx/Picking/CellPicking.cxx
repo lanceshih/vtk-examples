@@ -1,17 +1,13 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkCellPicker.h>
-#include <vtkCommand.h>
 #include <vtkDataSetMapper.h>
 #include <vtkExtractSelection.h>
 #include <vtkIdTypeArray.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPlaneSource.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -26,7 +22,7 @@
 
 namespace {
 
-// Catch mouse events
+// Catch mouse events.
 class MouseInteractorStyle : public vtkInteractorStyleTrackballCamera
 {
 public:
@@ -42,7 +38,7 @@ public:
   {
     vtkNew<vtkNamedColors> colors;
 
-    // Get the location of the click (in window coordinates)
+    // Get the location of the click (in window coordinates).
     int* pos = this->GetInteractor()->GetEventPosition();
 
     vtkNew<vtkCellPicker> picker;
@@ -98,7 +94,7 @@ public:
           ->GetFirstRenderer()
           ->AddActor(selectedActor);
     }
-    // Forward events
+    // Forward events.
     vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
   }
 

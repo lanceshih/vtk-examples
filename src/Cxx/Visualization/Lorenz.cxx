@@ -27,7 +27,7 @@
 
 int main(int, char*[])
 {
-  double Pr = 10.0; // The Lorenz parameters
+  double Pr = 10.0; // The Lorenz parameters.
   double b = 2.667;
   double r = 28.0;
   double x, y, z;       // starting (and current) x, y, z
@@ -43,7 +43,7 @@ int main(int, char*[])
 
   void options(int, char**);
 
-  // take a stab at an integration step size
+  // Take a stab at an integration step size.
   auto xIncr = resolution / (xmax - xmin);
   auto yIncr = resolution / (ymax - ymin);
   auto zIncr = resolution / (zmax - zmin);
@@ -70,7 +70,7 @@ int main(int, char*[])
   randomSequence->Next();
   printf("	starting at %f, %f, %f\n", x, y, z);
 
-  // allocate memory for the slices
+  // Allocate memory for the slices.
   auto sliceSize = resolution * resolution;
   auto numPts = sliceSize * resolution;
   vtkNew<vtkShortArray> scalars;
@@ -81,7 +81,7 @@ int main(int, char*[])
   }
   for (auto j = 0; j < iter; j++)
   {
-    // integrate to next time step
+    // Integrate to next time step.
     auto xx = x + h * Pr * (y - x);
     auto yy = y + h * (x * (r - z) - y);
     auto zz = z + h * (x * y - (b * z));
@@ -90,7 +90,7 @@ int main(int, char*[])
     y = yy;
     z = zz;
 
-    // calculate voxel index
+    // Calculate voxel index.
     if (x < xmax && x > xmin && y < ymax && y > ymin && z < zmax && z > zmin)
     {
       auto xxx = static_cast<short>(static_cast<double>(xx - xmin) * xIncr);
@@ -111,7 +111,7 @@ int main(int, char*[])
                      (zmax - zmin) / resolution);
 
   printf("	contouring...\n");
-  // do the graphics dance
+  // Do the graphics dance.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renWin;
   renWin->AddRenderer(renderer);
@@ -119,17 +119,17 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // create iso-surface
+  // Create iso-surface.
   vtkNew<vtkContourFilter> contour;
   contour->SetInputData(volume);
   contour->SetValue(0, 50);
 
-  // create mapper
+  // Create mapper.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(contour->GetOutputPort());
   mapper->ScalarVisibilityOff();
 
-  // create actor
+  // Create actor.
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("DodgerBlue").GetData());
@@ -140,7 +140,7 @@ int main(int, char*[])
   renWin->SetSize(640, 480);
   renWin->SetWindowName("Lorenz");
 
-  // interact with data
+  // Interact with the data.
   renWin->Render();
 
   auto camera = renderer->GetActiveCamera();

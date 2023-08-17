@@ -1,4 +1,3 @@
-#include <vtkDirectedGraph.h>
 #include <vtkMutableDirectedGraph.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>

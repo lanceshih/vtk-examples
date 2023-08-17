@@ -3,14 +3,12 @@
 #include <vtkDataSetMapper.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkTetra.h>
 #include <vtkUnstructuredGrid.h>
-#include <vtkVertexGlyphFilter.h>
 #include <vtkXMLUnstructuredGridReader.h>
 #include <vtkXMLUnstructuredGridWriter.h>
 
@@ -18,7 +16,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Parse command line arguments
+  // Parse command line arguments.
   if (argc != 2)
   {
     std::cout << "Required arguments: OutputFilename.vtu" << std::endl;
@@ -47,13 +45,13 @@ int main(int argc, char* argv[])
   unstructuredGrid->SetPoints(points);
   unstructuredGrid->SetCells(VTK_TETRA, cellArray);
 
-  // Write file
+  // Write file.
   vtkNew<vtkXMLUnstructuredGridWriter> writer;
   writer->SetFileName(filename.c_str());
   writer->SetInputData(unstructuredGrid);
   writer->Write();
 
-  // Read and display file for verification that it was written correclty
+  // Read and display file for verification that it was written correclty.
   vtkNew<vtkXMLUnstructuredGridReader> reader;
   reader->SetFileName(filename.c_str());
   reader->Update();

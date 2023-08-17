@@ -4,7 +4,6 @@
 #include <vtkCellIterator.h>
 #include <vtkCellLocator.h>
 #include <vtkConnectivityFilter.h>
-#include <vtkDataSetMapper.h>
 #include <vtkGenericCell.h>
 #include <vtkIdTypeArray.h>
 #include <vtkMinimalStandardRandomSequence.h>
@@ -17,12 +16,11 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
-#include <vtkUnstructuredGrid.h>
 #include <vtkXMLPolyDataReader.h>
 
 int main(int argc, char* argv[])
 {
-  // PolyData to process
+  // PolyData to process.
   vtkSmartPointer<vtkPolyData> polyData;
 
   if (argc > 1)
@@ -45,19 +43,18 @@ int main(int argc, char* argv[])
       vtkNew<vtkSphereSource> sphereSource1;
       sphereSource1->SetThetaResolution(10);
       sphereSource1->SetPhiResolution(10);
-      double x, y, z;
-      x = randomSequence->GetRangeValue(4.0, 14.0);
+      auto x = randomSequence->GetRangeValue(4.0, 14.0);
       randomSequence->Next();
-      y = randomSequence->GetRangeValue(-3.0, 5.0);
+      auto y = randomSequence->GetRangeValue(-3.0, 5.0);
       randomSequence->Next();
-      // z = randomSequence->GetRangeValue(4.0, 14.0);
+      // auto z = randomSequence->GetRangeValue(4.0, 14.0);
       randomSequence->Next();
       sphereSource1->SetCenter(x, y, x);
       sphereSource1->SetRadius(1.0);
       appendFilter->AddInputConnection(sphereSource1->GetOutputPort());
     }
 
-    // Large sphere with least polygons
+    // Large sphere with least polygons.
     vtkNew<vtkSphereSource> sphereSource2;
     sphereSource2->SetRadius(10);
     sphereSource2->SetCenter(10, 1, 10);
@@ -76,7 +73,7 @@ int main(int argc, char* argv[])
             << bounds[2] << ", " << bounds[3] << ", " << bounds[4] << ", "
             << bounds[5] << std::endl;
 
-  // Extract all regions and label cells with region number
+  // Extract all regions and label cells with region number.
   vtkNew<vtkConnectivityFilter> connectivityFilter;
   connectivityFilter->SetInputData(polyData);
   connectivityFilter->SetExtractionModeToAllRegions();
@@ -89,7 +86,7 @@ int main(int argc, char* argv[])
   cellLocator->BuildLocator();
 
   // Now fire a ray from outside the bounds to the center and find a
-  // cell. This cell should be on the outside surface
+  // cell. This cell should be on the outside surface.
   double rayStart[3];
   for (unsigned int i = 0; i < 3; i++)
   {
@@ -110,7 +107,7 @@ int main(int argc, char* argv[])
   std::cout << "CellData at " << cellId << ": " << outsideRegionId << std::endl;
 
   // Build a polydata from cells that are not in the outside surface
-  // Iterate over the original cells
+  // Iterate over the original cells.
   vtkNew<vtkPolyData> insidePolyData;
   insidePolyData->Allocate();
   insidePolyData->SetPoints(connectivityFilter->GetOutput()->GetPoints());
@@ -121,7 +118,7 @@ int main(int argc, char* argv[])
   for (it->InitTraversal(); !it->IsDoneWithTraversal();
        it->GoToNextCell(), ++originalCellId)
   {
-    //  Retain cell if it is NOT an outside cell
+    //  Retain cell if it is NOT an outside cell.
     if (cd->GetTuple1(originalCellId) != outsideRegionId)
     {
       it->GetCell(cell);
@@ -130,7 +127,7 @@ int main(int argc, char* argv[])
   }
   it->Delete();
 
-  // Create a mapper and actor for original data
+  // Create a mapper and actor for original data.
   vtkNew<vtkPolyDataMapper> originalMapper;
   originalMapper->SetInputData(polyData);
 
@@ -142,7 +139,7 @@ int main(int argc, char* argv[])
   originalActor->GetProperty()->SetOpacity(.5);
   originalActor->GetProperty()->SetColor(colors->GetColor3d("Gold").GetData());
 
-  // Create a mapper and actor for extracted data
+  // Create a mapper and actor for extracted data.
   vtkNew<vtkPolyDataMapper> extractedMapper;
   extractedMapper->SetInputData(insidePolyData);
 
@@ -153,7 +150,7 @@ int main(int argc, char* argv[])
   extractedActor->GetProperty()->SetOpacity(0.5);
   extractedActor->GetProperty()->BackfaceCullingOn();
 
-  // Create a renderer
+  // Create a renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(originalActor);
   renderer->AddActor(extractedActor);
@@ -164,7 +161,8 @@ int main(int argc, char* argv[])
 
   extractedActor->SetPosition((bounds[1] - bounds[0]) / 1.9, 0, 0);
   originalActor->SetPosition(-(bounds[1] - bounds[0]) / 1.9, 0, 0);
-  // Create a render window
+
+  // Create a render window.
   vtkNew<vtkRenderWindow> renwin;
   renwin->AddRenderer(renderer);
   renwin->SetSize(512, 512);

@@ -1,11 +1,8 @@
 #include <vtkCellArray.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyLine.h>
-#include <vtkTriangle.h>
 #include <vtkUnstructuredGrid.h>
-#include <vtkXMLPolyDataWriter.h>
 #include <vtkXMLUnstructuredGridWriter.h>
 
 int main(int, char*[])

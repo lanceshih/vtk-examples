@@ -13,7 +13,7 @@ int main(int, char*[])
   vtkNew<vtkImageSinusoidSource> sinusoidSource;
   sinusoidSource->Update();
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkImageViewer2> imageViewer;
   imageViewer->SetInputConnection(sinusoidSource->GetOutputPort());
   imageViewer->GetRenderWindow()->SetSize(500, 500);
@@ -22,13 +22,13 @@ int main(int, char*[])
       colors->GetColor3d("DimGray").GetData());
   imageViewer->GetRenderWindow()->SetWindowName("ImageSinusoidSource");
 
-  // Set up an interactor that does not respond to mouse events
+  // Set up an interactor that does not respond to mouse events.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   imageViewer->GetRenderWindow()->SetInteractor(renderWindowInteractor);
   renderWindowInteractor->SetInteractorStyle(0);
   imageViewer->Render();
 
-  // Start the event loop
+  // Start the event loop.
   renderWindowInteractor->Initialize();
   renderWindowInteractor->Start();
 

@@ -1,12 +1,10 @@
-#include <vtkActor.h>
-#include <vtkCommand.h>
+#include <vtkCallbackCommand.h>
 #include <vtkImageActor.h>
 #include <vtkImageCanvasSource2D.h>
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointHandleRepresentation2D.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkProperty2D.h>
 #include <vtkRenderWindow.h>
@@ -15,12 +13,13 @@
 #include <vtkSeedRepresentation.h>
 #include <vtkSeedWidget.h>
 #include <vtkSmartPointer.h>
-#include <vtkSphereSource.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 namespace {
-class vtkSeedImageCallback : public vtkCommand
+class vtkSeedImageCallback : public vtkCallbackCommand
 {
 public:
   static vtkSeedImageCallback* New()
@@ -91,15 +90,15 @@ int main(int /* argc */, char* /* argv */[])
     drawColor1[i] = color1[i];
     drawColor2[i] = color2[i];
   }
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageCanvasSource2D> drawing;
   drawing->SetScalarTypeToUnsignedChar();
   drawing->SetNumberOfScalarComponents(3);
   drawing->SetExtent(0, 20, 0, 50, 0, 0);
-  // Make a blue background
+  // Make a blue background.
   drawing->SetDrawColor(drawColor1.data());
   drawing->FillBox(0, 20, 0, 50);
-  // Make a red circle
+  // Make a red circle.
   drawing->SetDrawColor(drawColor2.data());
   drawing->DrawCircle(9, 10, 5);
   drawing->Update();
@@ -107,7 +106,7 @@ int main(int /* argc */, char* /* argv */[])
   vtkNew<vtkImageActor> imageActor;
   imageActor->SetInputData(drawing->GetOutput());
 
-  // Create a renderer and render window
+  // Create a renderer and render window.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(imageActor);
   renderer->SetBackground(colors->GetColor3d("DarkSlateGray").GetData());
@@ -116,11 +115,11 @@ int main(int /* argc */, char* /* argv */[])
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("SeedWidgetImage");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Setup interactor style
+  // Setup interactor style.
   vtkNew<vtkInteractorStyleImage> interactorStyleImage;
   renderWindowInteractor->SetInteractorStyle(interactorStyleImage);
 
@@ -130,7 +129,7 @@ int main(int /* argc */, char* /* argv */[])
   vtkNew<vtkSeedRepresentation> rep;
   rep->SetHandleRepresentation(handle);
 
-  // Seed widget
+  // Seed widget.
   vtkNew<vtkSeedWidget> seedWidget;
   seedWidget->SetInteractor(renderWindowInteractor);
   seedWidget->SetRepresentation(rep);

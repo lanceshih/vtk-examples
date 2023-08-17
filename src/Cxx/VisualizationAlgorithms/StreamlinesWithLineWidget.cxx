@@ -39,9 +39,12 @@ This is used to test the code.
 #include <vtkStructuredGrid.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 namespace {
 
-class EnableActorCallback : public vtkCommand
+class EnableActorCallback : public vtkCallbackCommand
 {
 public:
   static EnableActorCallback* New()
@@ -59,7 +62,7 @@ public:
 };
 
 // The Line Widget callback.
-class LWCallback : public vtkCommand
+class LWCallback : public vtkCallbackCommand
 {
 public:
   static LWCallback* New()
@@ -95,6 +98,7 @@ int main(int argc, char* argv[])
     std::cout << "       illustration, if non-zero, reproduce Fig 7-39 of the "
                  "VTK Textbook."
               << std::endl;
+    std::cout << "e.g. combxyz.bin combq.bin 10 1" << std::endl;
     return EXIT_FAILURE;
   }
   auto numOfStreamLines = 25;
@@ -262,6 +266,11 @@ int main(int argc, char* argv[])
   }
   else
   {
+    lineWidget->EnabledOn();
+    streamline->VisibilityOn();
+    lineWidget->GetPolyData(seeds);
+    renWin->Render();
+
     cam->SetClippingRange(3.95297, 50);
     cam->SetFocalPoint(9.71821, 0.458166, 29.3999);
     cam->SetPosition(2.7439, -37.3196, 38.7167);

@@ -4,7 +4,6 @@
 #include <vtkLogoWidget.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkProperty2D.h>
@@ -21,7 +20,7 @@ int main(int, char*[])
   vtkNew<vtkNamedColors> colors;
   // colors->SetColor("Bkg", 0.2, 0.3, 0.4);
 
-  // A sphere
+  // A sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(0.0, 0.0, 0.0);
   sphereSource->SetRadius(4.0);
@@ -36,7 +35,7 @@ int main(int, char*[])
   actor->SetMapper(mapper);
   actor->GetProperty()->SetColor(colors->GetColor3d("MistyRose").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -44,11 +43,11 @@ int main(int, char*[])
 
   renderer->AddActor(actor);
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageCanvasSource2D> drawing;
   drawing->SetScalarTypeToUnsignedChar();
   drawing->SetNumberOfScalarComponents(3);
@@ -64,7 +63,7 @@ int main(int, char*[])
     drawColor2[i] = color2[i];
   }
 
-  // Clear the image
+  // Clear the image.
   // Note: SetDrawColour() uses double values of the rgb colors in the
   //       range [0 ... 255]
   //       So SetDrawColour(255, 255, 255) is white.

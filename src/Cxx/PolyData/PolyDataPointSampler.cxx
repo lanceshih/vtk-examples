@@ -20,6 +20,9 @@
 
 #include <vtksys/SystemTools.hxx>
 
+#include <iostream>
+#include <string>
+
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
 }
@@ -67,7 +70,6 @@ int main(int argc, char* argv[])
   originalActor->GetProperty()->SetColor(
       colors->GetColor3d("Banana").GetData());
 
-  ////
   vtkNew<vtkSphereSource> sampleSource;
   sampleSource->SetRadius(radius * 0.75);
 
@@ -85,8 +87,7 @@ int main(int argc, char* argv[])
   sampleActor->SetMapper(sampleMapper);
   sampleActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
 
-  // Create graphics stuff
-  //
+  // Create graphics stuff.
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
@@ -98,13 +99,11 @@ int main(int argc, char* argv[])
   vtkNew<vtkRenderWindowInteractor> iren;
   iren->SetRenderWindow(renWin);
 
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer, set the background and size.
   ren1->AddActor(originalActor);
   ren1->AddActor(sampleActor);
 
-  // Generate an interesting view
-  //
+  // Generate an interesting view.
   ren1->GetActiveCamera()->SetPosition(1, 0, 0);
   ren1->GetActiveCamera()->SetFocalPoint(0, 1, 0);
   ren1->GetActiveCamera()->SetViewUp(0, 0, 1);

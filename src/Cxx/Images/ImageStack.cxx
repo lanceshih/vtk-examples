@@ -1,5 +1,4 @@
 #include <vtkImageData.h>
-#include <vtkImageMapper.h>
 #include <vtkImageProperty.h>
 #include <vtkImageSlice.h>
 #include <vtkImageSliceMapper.h>
@@ -40,31 +39,31 @@ int main(int, char*[])
   imageSlice2->SetMapper(imageSliceMapper2);
   imageSlice2->GetProperty()->SetOpacity(.5);
 
-  // Stack
+  // Stack.
   vtkNew<vtkImageStack> imageStack;
   imageStack->AddImage(imageSlice1);
   imageStack->AddImage(imageSlice2);
   // imageStack->SetActiveLayer(1);
 
-  // Setup renderers
+  // Setup renderers.
   vtkNew<vtkRenderer> renderer;
   renderer->AddViewProp(imageStack);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("ImageStack");
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
 
   vtkNew<vtkInteractorStyleImage> style;
 
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

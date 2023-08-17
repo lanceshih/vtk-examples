@@ -1,4 +1,3 @@
-#include <vtkCellArray.h>
 #include <vtkNew.h>
 #include <vtkPoints.h>
 #include <vtkStructuredGrid.h>
@@ -6,7 +5,7 @@
 
 int main(int, char*[])
 {
-  // Create a grid
+  // Create a grid.
   vtkNew<vtkStructuredGrid> structuredGrid;
 
   vtkNew<vtkPoints> points;
@@ -18,11 +17,11 @@ int main(int, char*[])
   points->InsertNextPoint(0, 2, 0);
   points->InsertNextPoint(1, 2, 1);
 
-  // Specify the dimensions of the grid
+  // Specify the dimensions of the grid.
   structuredGrid->SetDimensions(2, 3, 1);
   structuredGrid->SetPoints(points);
 
-  // Write file
+  // Write file.
   vtkNew<vtkXMLStructuredGridWriter> writer;
   writer->SetFileName("output.vts");
   writer->SetInputData(structuredGrid);

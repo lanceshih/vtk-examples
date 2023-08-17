@@ -1,13 +1,10 @@
 #include <vtkExtractCells.h>
 #include <vtkIdList.h>
-#include <vtkLine.h>
 #include <vtkLineSource.h>
 #include <vtkModifiedBSPTree.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkSphereSource.h>
 
 #include <vtkActor.h>

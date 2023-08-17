@@ -1,9 +1,10 @@
 #include <vtkDoubleArray.h>
-#include <vtkMultiBlockDataSet.h>
 #include <vtkNew.h>
 #include <vtkPCAStatistics.h>
-#include <vtkStringArray.h>
 #include <vtkTable.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {

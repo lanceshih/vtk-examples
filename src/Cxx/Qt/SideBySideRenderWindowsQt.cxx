@@ -3,13 +3,11 @@
 
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
-#include <vtkDataObjectToTable.h>
 #include <vtkElevationFilter.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkQtTableView.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
@@ -64,21 +62,21 @@ SideBySideRenderWindowsQt::SideBySideRenderWindowsQt(QWidget* parent)
   vtkNew<vtkActor> cubeActor;
   cubeActor->SetMapper(cubeMapper);
 
-  // VTK Renderer
+  // VTK Renderer.
   vtkNew<vtkRenderer> leftRenderer;
   leftRenderer->AddActor(sphereActor);
   leftRenderer->SetBackground(colors->GetColor3d("LightSteelBlue").GetData());
 
   vtkNew<vtkRenderer> rightRenderer;
 
-  // Add Actor to renderer
+  // Add Actor to renderer.
   rightRenderer->AddActor(cubeActor);
   rightRenderer->GetActiveCamera()->Azimuth(60);
   rightRenderer->ResetCamera();
   rightRenderer->GetActiveCamera()->Zoom(0.8);
   rightRenderer->SetBackground(colors->GetColor3d("LightSteelBlue").GetData());
 
-  // VTK/Qt wedded
+  // VTK/Qt wedded.
 #if VTK890
   this->ui->qvtkWidgetLeft->renderWindow()->AddRenderer(leftRenderer);
   this->ui->qvtkWidgetRight->renderWindow()->AddRenderer(rightRenderer);
@@ -87,7 +85,7 @@ SideBySideRenderWindowsQt::SideBySideRenderWindowsQt(QWidget* parent)
   this->ui->qvtkWidgetRight->GetRenderWindow()->AddRenderer(rightRenderer);
 #endif
 
-  // Set up action signals and slots
+  // Set up action signals and slots.
   connect(this->ui->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
 }
 

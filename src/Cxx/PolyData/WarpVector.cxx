@@ -62,8 +62,8 @@ int main(int, char*[])
   polydata->GetPointData()->SetActiveVectors(warpData->GetName());
 
   // WarpVector will use the array marked as active vector in polydata
-  // it has to be a 3 component array
-  // with the same number of tuples as points in polydata
+  // it has to be a 3 component array with the same number of
+  // tuples as points in polydata.
   vtkNew<vtkWarpVector> warpVector;
   warpVector->SetInputData(polydata);
   warpVector->Update();

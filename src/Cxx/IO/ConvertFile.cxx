@@ -1,6 +1,5 @@
 #include <vtkNew.h>
 #include <vtkPLYWriter.h>
-#include <vtkPolyData.h>
 #include <vtkXMLPolyDataReader.h>
 
 int main(int argc, char* argv[])

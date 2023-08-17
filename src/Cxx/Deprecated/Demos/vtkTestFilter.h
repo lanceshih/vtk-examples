@@ -2,7 +2,6 @@
 #define __vtkTestFilter_h
 
 #include <vtkPolyDataAlgorithm.h>
-#include <vtkSmartPointer.h>
 
 class vtkTestFilter : public vtkPolyDataAlgorithm
 {
@@ -32,4 +31,4 @@ private:
   void operator=(const vtkTestFilter&); // Not implemented.
 };
 
-#endif
+#endif // __vtkTestFilter_h

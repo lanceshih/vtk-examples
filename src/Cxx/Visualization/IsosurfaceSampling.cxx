@@ -1,6 +1,5 @@
 #include <vtkActor.h>
 #include <vtkCylinder.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
@@ -12,7 +11,6 @@
 #include <vtkRenderer.h>
 #include <vtkSampleFunction.h>
 #include <vtkSphere.h>
-#include <vtkUnsignedCharArray.h>
 #include <vtkVersion.h>
 
 // vtkFlyingEdges3D was introduced in VTK >= 8.2
@@ -38,7 +36,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sampled sphere
+  // Create a sampled sphere.
   vtkNew<vtkSphere> implicitSphere;
   double radius = 1.0;
   implicitSphere->SetRadius(radius);
@@ -58,7 +56,7 @@ int main(int argc, char* argv[])
   isoSphere->SetValue(0, 1.0);
   isoSphere->SetInputConnection(sampledSphere->GetOutputPort());
 
-  // Create a sampled cylinder
+  // Create a sampled cylinder.
   vtkNew<vtkCylinder> implicitCylinder;
   implicitCylinder->SetRadius(radius / 2.0);
   vtkNew<vtkSampleFunction> sampledCylinder;
@@ -66,13 +64,13 @@ int main(int argc, char* argv[])
   sampledCylinder->SetModelBounds(xMin, xMax, xMin, xMax, xMin, xMax);
   sampledCylinder->SetImplicitFunction(implicitCylinder);
 
-  // Probe cylinder with the sphere isosurface
+  // Probe cylinder with the sphere isosurface.
   vtkNew<vtkProbeFilter> probeCylinder;
   probeCylinder->SetInputConnection(0, isoSphere->GetOutputPort());
   probeCylinder->SetInputConnection(1, sampledCylinder->GetOutputPort());
   probeCylinder->Update();
 
-  // Restore the original normals
+  // Restore the original normals.
   probeCylinder->GetOutput()->GetPointData()->SetNormals(
       isoSphere->GetOutput()->GetPointData()->GetNormals());
 
@@ -80,7 +78,7 @@ int main(int argc, char* argv[])
             << probeCylinder->GetOutput()->GetScalarRange()[0] << ", "
             << probeCylinder->GetOutput()->GetScalarRange()[1] << std::endl;
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkPolyDataMapper> mapSphere;
   mapSphere->SetInputConnection(probeCylinder->GetOutputPort());
   mapSphere->SetScalarRange(probeCylinder->GetOutput()->GetScalarRange());

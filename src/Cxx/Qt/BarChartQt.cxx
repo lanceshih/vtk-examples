@@ -3,13 +3,11 @@
 
 #include <vtkAxis.h>
 #include <vtkChartXY.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkIntArray.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPen.h>
 #include <vtkPlot.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -18,6 +16,8 @@
 #include <vtkTextProperty.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1
@@ -28,7 +28,7 @@
 #endif
 
 namespace {
-// Monthly circulation data
+// Monthly circulation data.
 int data_2008[] = {10822, 10941, 9979,  10370, 9460, 11228,
                    15093, 12231, 10160, 9816,  9384, 7892};
 int data_2009[] = {9058,  9474,  9979,  9408, 8900, 11569,
@@ -57,7 +57,7 @@ BarChartQt::BarChartQt(QWidget* parent)
 
   vtkNew<vtkChartXY> chart;
 
-  // Set various properties
+  // Set various properties.
   vtkAxis* xAxis = chart->GetAxis(vtkAxis::BOTTOM);
   xAxis->SetTitle("Monthly");
   xAxis->GetTitleProperties()->SetColor(axisColor.GetData());
@@ -116,7 +116,7 @@ BarChartQt::BarChartQt(QWidget* parent)
     table->SetValue(i, 3, data_2010[i]);
   }
 
-  // Add multiple line plots, setting the colors etc
+  // Add multiple line plots, setting the colors etc.
   vtkPlot* line = 0;
 
   line = chart->AddPlot(vtkChart::BAR);
@@ -146,7 +146,7 @@ BarChartQt::BarChartQt(QWidget* parent)
   this->ui->qvtkWidget->SetRenderWindow(view->GetRenderWindow());
 #endif
 
-  // Set up action signals and slots
+  // Set up action signals and slots.
   connect(this->ui->actionExit, SIGNAL(triggered()), this, SLOT(slotExit()));
 }
 

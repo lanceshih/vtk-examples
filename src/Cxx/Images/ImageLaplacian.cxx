@@ -1,6 +1,5 @@
 #include <vtkImageActor.h>
 #include <vtkImageCast.h>
-#include <vtkImageData.h>
 #include <vtkImageLaplacian.h>
 #include <vtkImageMandelbrotSource.h>
 #include <vtkImageMapper3D.h>
@@ -15,7 +14,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create an image
+  // Create an image.
   vtkNew<vtkImageMandelbrotSource> source;
   source->Update();
 
@@ -33,7 +32,7 @@ int main(int, char*[])
   castLaplacian->SetOutputScalarTypeToFloat();
   castLaplacian->Update();
 
-  // Define viewport ranges
+  // Define viewport ranges.
   // (xmin, ymin, xmax, ymax)
   double leftViewport[4] = {0.0, 0.0, 0.5, 1.0};
   double rightViewport[4] = {0.5, 0.0, 1.0, 1.0};
@@ -56,7 +55,7 @@ int main(int, char*[])
 
   interactor->SetRenderWindow(renderWindow);
 
-  // Setup both renderers
+  // Setup both renderers.
   vtkNew<vtkRenderer> originalRenderer;
   originalRenderer->SetViewport(leftViewport);
   originalRenderer->SetBackground(colors->GetColor3d("Sienna").GetData());

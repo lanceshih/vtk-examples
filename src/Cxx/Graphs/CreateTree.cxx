@@ -20,7 +20,6 @@
 #include <vtkGraphLayoutView.h>
 #include <vtkMutableDirectedGraph.h>
 #include <vtkNew.h>
-#include <vtkRandomGraphSource.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>

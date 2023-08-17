@@ -2,7 +2,6 @@
 
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkCellData.h>
 #include <vtkClipVolume.h>
 #include <vtkColor.h>
 #include <vtkDataSetMapper.h>
@@ -19,7 +18,6 @@
 #include <vtkPointData.h>
 #include <vtkPoints.h>
 #include <vtkProperty.h>
-#include <vtkRenderStepsPass.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>

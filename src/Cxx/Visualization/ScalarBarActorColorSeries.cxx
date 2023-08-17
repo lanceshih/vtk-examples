@@ -18,7 +18,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sphere fora some geometry
+  // Create a sphere fora some geometry.
   vtkNew<vtkSphereSource> sphere;
   sphere->SetCenter(0, 0, 0);
   sphere->SetRadius(1);
@@ -26,7 +26,7 @@ int main(int, char*[])
   sphere->SetThetaResolution(60);
   sphere->Update();
 
-  // Create scalar data to associate with the vertices of the sphere
+  // Create scalar data to associate with the vertices of the sphere.
   int numPts = sphere->GetOutput()->GetPoints()->GetNumberOfPoints();
   vtkNew<vtkFloatArray> scalars;
   scalars->SetNumberOfValues(numPts);
@@ -53,7 +53,7 @@ int main(int, char*[])
   scalarBar->SetTitle("Beachball");
   scalarBar->SetNumberOfLabels(4);
 
-  // Create a lookup table to share between the mapper and the scalarbar
+  // Create a lookup table to share between the mapper and the scalarbar.
   vtkNew<vtkLookupTable> seriesLut;
 
   vtkNew<vtkColorSeries> series;
@@ -64,7 +64,7 @@ int main(int, char*[])
   mapper->SetLookupTable(seriesLut);
   scalarBar->SetLookupTable(seriesLut);
 
-  // Create a renderer and render window
+  // Create a renderer and render window.
   vtkNew<vtkRenderer> renderer;
 
   renderer->GradientBackgroundOn();
@@ -79,11 +79,11 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->AddActor2D(scalarBar);
 
-  // Render the scene (lights and cameras are created automatically)
+  // Render the scene (lights and cameras are created automatically).
   renderWindow->Render();
   renderWindowInteractor->Start();
 

@@ -1,11 +1,12 @@
 #include <vtkCellIterator.h>
 #include <vtkCellTypes.h>
 #include <vtkGenericCell.h>
-#include <vtkGenericDataSet.h>
 #include <vtkPointSet.h>
 #include <vtkXMLGenericDataObjectReader.h>
 
+#include <iostream>
 #include <map>
+#include <string>
 
 int main(int argc, char* argv[])
 {

@@ -99,7 +99,7 @@ int main(int, char*[])
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
 
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
@@ -107,7 +107,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   renderer->AddActor(actor);
 
   renderWindow->SetSize(1200, 400);

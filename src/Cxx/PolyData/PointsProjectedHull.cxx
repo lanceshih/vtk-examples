@@ -16,9 +16,10 @@
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
 #include <vtkTubeFilter.h>
-#include <vtkXMLPolyDataWriter.h>
 
+#include <iostream>
 #include <memory>
+#include <string>
 
 int main(int, char*[])
 {
@@ -33,7 +34,7 @@ int main(int, char*[])
   pointSource->SetNumberOfPoints(40);
   pointSource->Update();
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkGlyph3DMapper> pointMapper;
   pointMapper->SetInputConnection(pointSource->GetOutputPort());
   pointMapper->SetSourceConnection(sphere->GetOutputPort());
@@ -61,10 +62,10 @@ int main(int, char*[])
               << ")" << std::endl;
     xHullPoints->InsertNextPoint(0.0, yval, zval);
   }
-  // Insert the first point again to close the loop
+  // Insert the first point again to close the loop.
   xHullPoints->InsertNextPoint(0.0, pts[0], pts[1]);
 
-  // Display the x hull
+  // Display the x hull.
   vtkNew<vtkPolyLine> xPolyLine;
   xPolyLine->GetPointIds()->SetNumberOfIds(xHullPoints->GetNumberOfPoints());
 
@@ -73,26 +74,26 @@ int main(int, char*[])
     xPolyLine->GetPointIds()->SetId(i, i);
   }
 
-  // Create a cell array to store the lines in and add the lines to it
+  // Create a cell array to store the lines in and add the lines to it.
   vtkNew<vtkCellArray> cells;
   cells->InsertNextCell(xPolyLine);
 
-  // Create a polydata to store everything in
+  // Create a polydata to store everything in.
   vtkNew<vtkPolyData> polyData;
 
-  // Add the points to the dataset
+  // Add the points to the dataset.
   polyData->SetPoints(xHullPoints);
 
-  // Add the lines to the dataset
+  // Add the lines to the dataset.
   polyData->SetLines(cells);
 
-  // Create tubes around the lines
+  // Create tubes around the lines.
   vtkNew<vtkTubeFilter> tubes;
   tubes->SetInputData(polyData);
   tubes->SetRadius(0.005);
   tubes->SetNumberOfSides(21);
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkPolyDataMapper> xHullMapper;
   xHullMapper->SetInputConnection(tubes->GetOutputPort());
 
@@ -100,7 +101,7 @@ int main(int, char*[])
   xHullActor->SetMapper(xHullMapper);
   xHullActor->GetProperty()->SetColor(colors->GetColor3d("Tomato").GetData());
 
-  // Setup render window, renderer, and interactor
+  // Setup render window, renderer, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -113,7 +114,7 @@ int main(int, char*[])
   renderer->AddActor(xHullActor);
   renderer->AddActor(pointActor);
 
-  // Rotate camera
+  // Rotate camera.
   renderer->GetActiveCamera()->Azimuth(90);
   renderer->ResetCamera();
 

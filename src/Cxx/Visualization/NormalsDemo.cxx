@@ -1,8 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCleanPolyData.h>
-#include <vtkColor.h>
-#include <vtkImplicitBoolean.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
@@ -34,7 +32,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("White").GetData());
 
@@ -44,7 +42,7 @@ int main(int argc, char* argv[])
   backgroundColors.push_back(colors->GetColor3d("NavajoWhite"));
   backgroundColors.push_back(colors->GetColor3d("Tan"));
 
-  // Create a renderer for each view port
+  // Create a renderer for each view port.
   std::vector<vtkSmartPointer<vtkRenderer>> ren;
   ren.push_back(vtkSmartPointer<vtkRenderer>::New());
   ren.push_back(vtkSmartPointer<vtkRenderer>::New());
@@ -53,7 +51,7 @@ int main(int argc, char* argv[])
   ren[1]->SetViewport(1.0 / 3.0, 0, 2.0 / 3.0, 1); // Normals (no split)
   ren[2]->SetViewport(2.0 / 3.0, 0, 1, 1);         // Normals (split)
 
-  // Shared camera
+  // Shared camera.
   vtkNew<vtkCamera> camera;
 
   vtkNew<vtkPolyDataNormals> normals;
@@ -81,7 +79,7 @@ int main(int argc, char* argv[])
     vtkNew<vtkPolyData> normalsPolyData;
     normalsPolyData->DeepCopy(normals->GetOutput());
 
-    // mapper
+    // Mapper
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputData(normalsPolyData);
     mapper->ScalarVisibilityOff();
@@ -94,20 +92,20 @@ int main(int argc, char* argv[])
     actor->GetProperty()->SetSpecularPower(20);
     actor->GetProperty()->SetSpecular(.5);
 
-    // add the actor
+    // Add the actor.
     ren[i]->SetBackground(backgroundColors[i].GetData());
     ren[i]->SetActiveCamera(camera);
     ren[i]->AddActor(actor);
   }
 
-  // render window
+  // Render window.
   vtkNew<vtkRenderWindow> renwin;
   renwin->AddRenderer(ren[0]);
   renwin->AddRenderer(ren[1]);
   renwin->AddRenderer(ren[2]);
   renwin->SetWindowName("NormalsDemo");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> interactor;
   interactor->SetRenderWindow(renwin);
 

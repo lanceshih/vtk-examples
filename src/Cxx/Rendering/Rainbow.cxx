@@ -14,6 +14,9 @@
 #include <vtkStructuredGridGeometryFilter.h>
 #include <vtkStructuredGridOutlineFilter.h>
 
+#include <iostream>
+#include <string>
+
 // This example demonstrates the use and manipulation of lookup tables.
 
 // First create a simple pipeline that reads a structured grid
@@ -23,6 +26,7 @@
 // Note: The Update method is manually invoked because it causes the
 // reader to read; later on we use the output of the reader to set
 // a range for the scalar values.
+
 int main(int argc, char* argv[])
 {
   if (argc < 3)
@@ -141,7 +145,7 @@ int main(int argc, char* argv[])
     vtkNew<vtkActor> outlineActor;
     outlineActor->SetMapper(outlineMapper);
 
-    // Create the RenderWindow, Renderer and both Actors
+    // Create the RenderWindow, Renderer and both Actors.
     //
     renderers[r]->AddActor(outlineActor);
     renderers[r]->AddActor(planeActor);
@@ -158,10 +162,7 @@ int main(int argc, char* argv[])
     renderWindow->AddRenderer(renderers[r]);
   }
 
-  // vtkNew<vtkLookupTable> lut;
-
-  // Add the actors to the renderer, set the background and size
-  //
+  // Add the actors to the renderer, set the background and size.
 
   renderWindow->SetSize(rendererSize * xGridDimensions,
                         rendererSize * yGridDimensions);

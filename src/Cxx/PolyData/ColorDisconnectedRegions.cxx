@@ -15,7 +15,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Create some spheres
+  // Create some spheres.
   vtkNew<vtkSphereSource> sphereSource1;
   sphereSource1->Update();
 
@@ -39,7 +39,7 @@ int main(int, char*[])
   connectivityFilter->ColorRegionsOn();
   connectivityFilter->Update();
 
-  // Visualize
+  // Visualize.
   vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(connectivityFilter->GetOutputPort());
   mapper->SetScalarRange(connectivityFilter->GetOutput()

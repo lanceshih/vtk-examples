@@ -10,6 +10,7 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
+#include <vtkSphereSource.h>
 
 #include <vtkBYUReader.h>
 #include <vtkOBJReader.h>
@@ -19,10 +20,6 @@
 #include <vtkSphereSource.h>
 #include <vtkXMLPolyDataReader.h>
 #include <vtksys/SystemTools.hxx>
-
-#include <vtkColor.h>
-#include <vtkNamedColors.h>
-#include <vtkSphereSource.h>
 
 #include <algorithm>
 #include <vector>

@@ -1,7 +1,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkDataSetMapper.h>
-#include <vtkImageData.h>
 #include <vtkImageDataToPointSet.h>
 #include <vtkImageShrink3D.h>
 #include <vtkMetaImageReader.h>
@@ -10,7 +9,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlane.h>
-#include <vtkPointSet.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -23,6 +21,12 @@
 
 int main(int argc, char* argv[])
 {
+  if (argc < 2)
+  {
+    cout << "Usage: " << argv[0] << " file.mhd e.g. FullHead.mhd" << endl;
+    return EXIT_FAILURE;
+  }
+
   vtkNew<vtkMetaImageReader> reader;
   reader->SetFileName(argv[1]);
   reader->Update();

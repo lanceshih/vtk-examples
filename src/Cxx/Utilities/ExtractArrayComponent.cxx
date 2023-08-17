@@ -4,6 +4,9 @@
 #include <vtkPointData.h>
 #include <vtkPolyData.h>
 
+#include <iostream>
+#include <string>
+
 int main(int, char*[])
 {
   vtkNew<vtkPoints> points;
@@ -25,10 +28,10 @@ int main(int, char*[])
   vtkNew<vtkArrayCalculator> arrayCalculator;
   arrayCalculator->SetInputData(polydata);
   arrayCalculator->AddVectorArrayName("InputArray");
-  arrayCalculator->SetFunction(
-      "InputArray . jHat"); // Extract component '1' from the InputArray by
-                            // taking the dot product of each tuple with the
-                            // vector (0,1,0)
+  // Extract component '1' from the InputArray by
+  // taking the dot product of each tuple with the
+  // vector (0,1,0)
+  arrayCalculator->SetFunction("dot(InputArray,jHat)");
   arrayCalculator->SetResultArrayName("OutputArray");
   arrayCalculator->Update();
 

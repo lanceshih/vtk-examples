@@ -2,7 +2,7 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>
-#include <vtkRectilinearGridGeometryFilter.h>
+// #include <vtkRectilinearGridGeometryFilter.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>

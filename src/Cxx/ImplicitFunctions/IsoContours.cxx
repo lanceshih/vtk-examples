@@ -1,14 +1,11 @@
 #include <vtkActor.h>
-#include <vtkCellArray.h>
 #include <vtkCommand.h>
 #include <vtkContourFilter.h>
-#include <vtkFloatArray.h>
 #include <vtkImageData.h>
 #include <vtkInteractorStyleUser.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOutlineFilter.h>
-#include <vtkPointData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -51,22 +48,22 @@ int main(int, char*[])
   vtkNew<vtkImageData> data;
   CreateData(data);
 
-  // Create an isosurface
+  // Create an isosurface.
   vtkNew<vtkContourFilter> contourFilter;
   contourFilter->SetInputData(data);
   contourFilter->GenerateValues(1, 10,
                                 10); // (numContours, rangeStart, rangeEnd)
 
-  // Map the contours to graphical primitives
+  // Map the contours to graphical primitives.
   vtkNew<vtkPolyDataMapper> contourMapper;
   contourMapper->SetInputConnection(contourFilter->GetOutputPort());
 
-  // Create an actor for the contours
+  // Create an actor for the contours.
   vtkNew<vtkActor> contourActor;
   contourActor->SetMapper(contourMapper);
   contourActor->GetProperty()->SetLineWidth(5);
 
-  // Create the outline
+  // Create the outline.
   vtkNew<vtkOutlineFilter> outlineFilter;
   outlineFilter->SetInputData(data);
 
@@ -120,9 +117,8 @@ int main(int, char*[])
   interactor->Start();
 
   return EXIT_SUCCESS;
-
-  return EXIT_SUCCESS;
 }
+
 namespace {
 void CreateData(vtkImageData* data)
 {

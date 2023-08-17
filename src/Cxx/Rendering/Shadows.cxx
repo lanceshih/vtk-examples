@@ -1,16 +1,13 @@
-// test baking shadow maps
+// Test baking shadow maps.
 
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkCameraPass.h>
-#include <vtkCellArray.h>
 #include <vtkCubeSource.h>
 #include <vtkLight.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkOpenGLRenderer.h>
-#include <vtkOpenGLTexture.h>
-#include <vtkPlaneSource.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderPassCollection.h>
@@ -34,6 +31,8 @@
 #include <vtksys/SystemTools.hxx>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 namespace {
 vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
@@ -42,14 +41,13 @@ vtkSmartPointer<vtkPolyData> ReadPolyData(const char* fileName);
 //----------------------------------------------------------------------------
 int main(int argc, char* argv[])
 {
-  // Read the polyData
+  // Read the polyData.
   auto polyData = ReadPolyData(argc > 1 ? argv[1] : "");
-  ;
 
   vtkNew<vtkNamedColors> colors;
-  colors->SetColor("HighNoonSun", 1.0, 1.0, .9843, 1.0); // Color temp. 5400k
+  colors->SetColor("HighNoonSun", 1.0, 1.0, .9843, 1.0); // Color temp. 5400k.
   colors->SetColor("100W Tungsten", 1.0, .8392, .6667,
-                   1.0); // Color temp. 2850k
+                   1.0); // Color temp. 2850k.
 
   vtkNew<vtkRenderer> renderer;
   renderer->SetBackground(colors->GetColor3d("Silver").GetData());
@@ -91,7 +89,7 @@ int main(int argc, char* argv[])
   actor->GetProperty()->SetOpacity(1.0);
   renderer->AddActor(actor);
 
-  // add a plane
+  // Add a plane.
   std::array<double, 6> bounds;
   polyData->GetBounds(bounds.data());
 
@@ -99,7 +97,7 @@ int main(int argc, char* argv[])
   range[0] = bounds[1] - bounds[0];
   range[1] = bounds[3] - bounds[2];
   range[2] = bounds[5] - bounds[4];
-  std::cout << "range: " << range[0] << "," << range[1] << "," << range[2]
+  std::cout << "Range: " << range[0] << "," << range[1] << "," << range[2]
             << std::endl;
   double expand = 1.0;
   auto thickness = range[2] * 0.1;
@@ -131,7 +129,7 @@ int main(int argc, char* argv[])
   vtkNew<vtkCameraPass> cameraP;
   cameraP->SetDelegatePass(seq);
 
-  // tell the renderer to use our render pass pipeline
+  // Tell the renderer to use our render pass pipeline.
   vtkOpenGLRenderer* glrenderer =
       dynamic_cast<vtkOpenGLRenderer*>(renderer.GetPointer());
   glrenderer->SetPass(cameraP);

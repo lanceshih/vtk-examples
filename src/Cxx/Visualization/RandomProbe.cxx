@@ -2,7 +2,6 @@
 #include <vtkCone.h>
 #include <vtkDataSetMapper.h>
 #include <vtkGlyph3D.h>
-#include <vtkImageData.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPointData.h>
@@ -13,11 +12,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSampleFunction.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkThreshold.h>
 #include <vtkThresholdPoints.h>
-#include <vtkUnsignedCharArray.h>
 
 int main(int argc, char* argv[])
 {
@@ -29,7 +26,7 @@ int main(int argc, char* argv[])
 
   vtkNew<vtkNamedColors> colors;
 
-  // Create a sampled cone
+  // Create a sampled cone.
   vtkNew<vtkCone> implicitCone;
   implicitCone->SetAngle(30.0);
 
@@ -52,7 +49,7 @@ int main(int argc, char* argv[])
   randomPoints->SetDistributionToUniform();
   randomPoints->SetRadius(xMax);
 
-  // Probe the cone dataset with random points
+  // Probe the cone dataset with random points.
   vtkNew<vtkProbeFilter> randomProbe;
   randomProbe->SetInputConnection(0, randomPoints->GetOutputPort());
   randomProbe->SetInputConnection(1, thresholdCone->GetOutputPort());
@@ -71,7 +68,7 @@ int main(int argc, char* argv[])
   glyph->SetSourceConnection(sphere->GetOutputPort());
   glyph->SetInputConnection(selectPoints->GetOutputPort());
 
-  // Create a mapper and actor
+  // Create a mapper and actor.
   vtkNew<vtkDataSetMapper> mapper;
   mapper->SetInputConnection(glyph->GetOutputPort());
   mapper->ScalarVisibilityOff();

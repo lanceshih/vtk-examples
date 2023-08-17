@@ -1,5 +1,4 @@
 #include <vtkActor.h>
-#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
@@ -9,7 +8,9 @@
 #include <vtkRenderer.h>
 #include <vtkStructuredGrid.h>
 #include <vtkStructuredGridOutlineFilter.h>
-#include <vtkXMLStructuredGridWriter.h>
+
+#include <iostream>
+#include <string>
 
 int main(int, char*[])
 {

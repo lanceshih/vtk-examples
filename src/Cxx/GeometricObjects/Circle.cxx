@@ -1,13 +1,12 @@
-// Classes specific to this example
-#include <vtkPolyData.h>
+// Classes specific to this example.
 #include <vtkPolyDataMapper.h>
 #include <vtkRegularPolygonSource.h>
-// Generic VTK pipeline elements
+// Generic VTK pipeline elements.
 #include <vtkActor.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-// Auxiliary class
+// Auxiliary classes.
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkProperty.h>

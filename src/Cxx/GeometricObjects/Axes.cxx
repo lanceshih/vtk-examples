@@ -4,7 +4,6 @@
 #include <vtkCaptionActor2D.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -55,7 +54,7 @@ int main(int, char*[])
   // properties of the axes labels can be set as follows
   // this sets the x axis label to red
   // axes->GetXAxisCaptionActor2D()->GetCaptionTextProperty()->SetColor(
-  //   colors->GetColor3d("Red").GetData());
+  //  colors->GetColor3d("Red").GetData());
 
   // the actual text of the axis label can be changed:
   // axes->SetXAxisLabelText("test");

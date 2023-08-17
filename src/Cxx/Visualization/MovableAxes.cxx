@@ -2,6 +2,7 @@
 #include <vtkAssembly.h>
 #include <vtkAssemblyPath.h>
 #include <vtkAxesActor.h>
+#include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
 #include <vtkConeSource.h>
 #include <vtkFollower.h>
@@ -9,7 +10,6 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
-#include <vtkProp3DCollection.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -19,7 +19,7 @@
 
 namespace {
 //----------------------------------------------------------------------------
-class vtkPositionCallback : public vtkCommand
+class vtkPositionCallback : public vtkCallbackCommand
 {
 public:
   static vtkPositionCallback* New()
@@ -92,18 +92,18 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(coneActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
   // vtkAxesActor is currently not designed to work with
   // vtkInteractorStyleTrackballActor since it is a hybrid object containing
   // both vtkProp3D's and vtkActor2D's, the latter of which does not have a 3D
-  // position that can be manipulated
+  // position that can be manipulated.
   vtkNew<vtkAxesActor> axes;
 
-  // get a copy of the axes' constituent 3D actors and put them into a
-  // vtkAssembly so they can be manipulated as one prop
+  // Get a copy of the axes' constituent 3D actors and put them into a
+  // vtkAssembly so they can be manipulated as one prop.
   vtkNew<vtkPropCollection> collection;
   axes->GetActors(collection);
 
@@ -118,7 +118,7 @@ int main(int, char*[])
 
   renderer->AddActor(movableAxes);
 
-  // create our own labels that will follow and face the camera
+  // Create our own labels that will follow and face the camera.
   vtkNew<vtkFollower> xLabel;
   vtkNew<vtkVectorText> xText;
   vtkNew<vtkPolyDataMapper> xTextMapper;
@@ -158,7 +158,7 @@ int main(int, char*[])
   zLabel->PickableOff();
   renderer->AddActor(zLabel);
 
-  // custom callback to set the positions of the labels
+  // Custom callback to set the positions of the labels.
   vtkNew<vtkPositionCallback> callback;
   callback->XLabel = xLabel;
   callback->YLabel = yLabel;
@@ -173,7 +173,7 @@ int main(int, char*[])
   renderWindowInteractor->SetInteractorStyle(style);
   style->AddObserver(vtkCommand::InteractionEvent, callback);
 
-  // begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

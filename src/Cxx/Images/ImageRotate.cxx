@@ -1,10 +1,8 @@
-#include <vtkImageActor.h>
 #include <vtkImageData.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
 #include <vtkImageReslice.h>
 #include <vtkImageViewer2.h>
-#include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkRenderWindow.h>
@@ -17,7 +15,7 @@ int main(int argc, char* argv[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // Verify command line arguments
+  // Verify command line arguments.
   if (argc < 2)
   {
     std::cout << "Usage: " << argv[0] << " InputFilename e.g. Gourds.png"
@@ -40,10 +38,10 @@ int main(int argc, char* argv[])
   double bounds[6];
   reader->GetOutput()->GetBounds(bounds);
 
-  // Rotate about the center of the image
+  // Rotate about the center of the image.
   vtkNew<vtkTransform> transform;
 
-  // Compute the center of the image
+  // Compute the center of the image.
   double center[3];
   center[0] = (bounds[1] + bounds[0]) / 2.0;
   center[1] = (bounds[3] + bounds[2]) / 2.0;
@@ -54,7 +52,7 @@ int main(int argc, char* argv[])
   transform->RotateWXYZ(angle, 0, 0, 1);
   transform->Translate(-center[0], -center[1], -center[2]);
 
-  // Reslice does all of the work
+  // Reslice does all of the work.
   vtkNew<vtkImageReslice> reslice;
   reslice->SetInputConnection(reader->GetOutputPort());
   reslice->SetResliceTransform(transform);
@@ -66,8 +64,9 @@ int main(int argc, char* argv[])
                            reader->GetOutput()->GetOrigin()[1],
                            reader->GetOutput()->GetOrigin()[2]);
   reslice->SetOutputExtent(
-      reader->GetOutput()->GetExtent()); // Use a larger extent than the
-                                         // original image's to prevent clipping
+      reader->GetOutput()
+          ->GetExtent()); // Use a larger extent than the
+                          // original image's to prevent clipping.
 
   // Visualize
   vtkNew<vtkImageViewer2> imageViewer;

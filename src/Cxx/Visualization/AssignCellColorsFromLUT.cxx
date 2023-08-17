@@ -63,7 +63,7 @@ void MakeLUT(size_t const& tableSize, vtkLookupTable* lut)
   lut->SetNumberOfTableValues(static_cast<vtkIdType>(tableSize));
   lut->Build();
 
-  // Fill in a few known colors, the rest will be generated if needed
+  // Fill in a few known colors, the rest will be generated if needed.
   lut->SetTableValue(0, nc->GetColor4d("Black").GetData());
   lut->SetTableValue(1, nc->GetColor4d("Banana").GetData());
   lut->SetTableValue(2, nc->GetColor4d("Tomato").GetData());
@@ -129,7 +129,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> nc;
 
-  // Provide some geometry
+  // Provide some geometry.
   int resolution = 3;
   vtkNew<vtkPlaneSource> plane11;
   plane11->SetXResolution(resolution);
@@ -139,12 +139,12 @@ int main(int, char*[])
   plane12->SetXResolution(resolution);
   plane12->SetYResolution(resolution);
 
-  // Create a lookup table to map cell data to colors
+  // Create a lookup table to map cell data to colors.
   vtkNew<vtkLookupTable> lut1;
   vtkNew<vtkLookupTable> lut2;
   int tableSize = std::max(resolution * resolution + 1, 10);
 
-  // Force an update so we can set cell data
+  // Force an update so we can set cell data.
   plane11->Update();
   plane12->Update();
 
@@ -168,7 +168,7 @@ int main(int, char*[])
   MakeCellData(tableSize, lut2, colorData2);
   plane12->GetOutput()->GetCellData()->SetScalars(colorData2);
 
-  // Setup actor and mapper
+  // Setup actor and mapper.
   vtkNew<vtkPolyDataMapper> mapper11;
   mapper11->SetInputConnection(plane11->GetOutputPort());
   // Now, instead of doing this:
@@ -233,7 +233,7 @@ int main(int, char*[])
   vtkNew<vtkRenderer> ren21;
   vtkNew<vtkRenderer> ren22;
 
-  // Setup the render windows
+  // Setup the render windows.
   vtkNew<vtkRenderWindow> renWin;
   renWin->SetSize(600, 600);
   renWin->SetWindowName("AssignCellColorsFromLUT");

@@ -7,7 +7,6 @@
 // Rendering
 #include <vtkActorCollection.h>
 #include <vtkCamera.h>
-#include <vtkDataSet.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyData.h>
@@ -21,7 +20,6 @@
 // Pipeline
 #include <vtkAppendPolyData.h>
 #include <vtkCellData.h>
-#include <vtkMatrix4x4.h>
 #include <vtkTransform.h>
 #include <vtkTransformPolyDataFilter.h>
 #include <vtkUnsignedCharArray.h>
@@ -43,9 +41,9 @@ int main(int argc, char* argv[])
 
   std::string fileName = argv[1];
   std::string extension = "";
-  int filePrefixArgOffset = 0; // depends on importer
+  int filePrefixArgOffset = 0; // Depends on importer.
 
-  // Make the extension lowercase
+  // Make the extension lowercase.
   std::transform(extension.begin(), extension.end(), extension.begin(),
                  ::tolower);
   if (fileName.find_last_of(".") != std::string::npos)

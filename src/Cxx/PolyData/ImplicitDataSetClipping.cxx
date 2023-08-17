@@ -7,7 +7,6 @@
 #include <vtkDataSetWriter.h>
 #include <vtkIdFilter.h>
 #include <vtkIdTypeArray.h>
-#include <vtkImplicitDataSet.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPolyDataMapper.h>
@@ -22,6 +21,9 @@
 #if VTK_VERSION_NUMBER >= 89000000000ULL
 #define VTK890 1
 #endif
+
+#include <iostream>
+#include <string>
 
 namespace {
 void WritePolyData(vtkPolyData* const polyData, const std::string& filename);
@@ -48,7 +50,7 @@ int main(int, char*[])
             << " and " << sphereSource->GetOutput()->GetNumberOfCells()
             << " cells. " << std::endl;
 
-  // Add ids to the points and cells of the sphere
+  // Add ids to the points and cells of the sphere.
   vtkNew<vtkIdFilter> cellIdFilter;
   cellIdFilter->SetInputConnection(sphereSource->GetOutputPort());
   cellIdFilter->SetCellIds(true);
@@ -91,7 +93,7 @@ int main(int, char*[])
 
   WriteDataSet(clipper->GetOutput(), "clipper.vtp");
 
-  // Get the clipped cell ids
+  // Get the clipped cell ids.
   vtkPolyData* clipped = clipper->GetOutput();
 
   std::cout << "There are " << clipped->GetNumberOfPoints()
@@ -108,7 +110,7 @@ int main(int, char*[])
               << std::endl;
   }
 
-  // Create a mapper and actor for clipped sphere
+  // Create a mapper and actor for clipped sphere.
   vtkNew<vtkPolyDataMapper> clippedMapper;
   clippedMapper->SetInputConnection(clipper->GetOutputPort());
   clippedMapper->ScalarVisibilityOff();
@@ -118,7 +120,7 @@ int main(int, char*[])
   clippedActor->GetProperty()->SetRepresentationToWireframe();
   clippedActor->GetProperty()->SetColor(colors->GetColor3d("Yellow").GetData());
 
-  // Create a mapper and actor for cube
+  // Create a mapper and actor for cube.
   vtkNew<vtkPolyDataMapper> cubeMapper;
   cubeMapper->SetInputConnection(cubeSource->GetOutputPort());
 
@@ -128,7 +130,7 @@ int main(int, char*[])
   cubeActor->GetProperty()->SetOpacity(0.5);
   cubeActor->GetProperty()->SetColor(colors->GetColor3d("Blue").GetData());
 
-  // Create a renderer, render window, and interactor
+  // Create a renderer, render window, and interactor.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -137,20 +139,19 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actor to the scene
+  // Add the actor to the scene.
   renderer->AddActor(clippedActor);
   renderer->AddActor(cubeActor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Generate an interesting view
-  //
+  // Generate an interesting view.
   renderer->ResetCamera();
   renderer->GetActiveCamera()->Azimuth(-30);
   renderer->GetActiveCamera()->Elevation(30);
   renderer->GetActiveCamera()->Dolly(1.0);
   renderer->ResetCameraClippingRange();
 
-  // Render and interact
+  // Render and interact.
   renderWindow->Render();
   renderWindowInteractor->Start();
 

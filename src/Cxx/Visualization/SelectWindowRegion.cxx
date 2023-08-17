@@ -10,6 +10,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
+#include <iostream>
+#include <string>
+
 namespace {
 
 void SelectionChangedCallbackFunction(vtkObject* caller,
@@ -19,7 +22,7 @@ void SelectionChangedCallbackFunction(vtkObject* caller,
 
 int main(int argc, char* argv[])
 {
-  // Parse input arguments
+  // Parse input arguments.
   if (argc != 2)
   {
     std::cout << "Required parameters: Filename e.g. Ox.jpg" << std::endl;
@@ -30,40 +33,40 @@ int main(int argc, char* argv[])
 
   std::string inputFilename = argv[1];
 
-  // Read the image
+  // Read the image.
   vtkNew<vtkJPEGReader> jPEGReader;
   jPEGReader->SetFileName(inputFilename.c_str());
   jPEGReader->Update();
 
-  // Create an actor
+  // Create an actor.
   vtkNew<vtkImageActor> actor;
   actor->GetMapper()->SetInputConnection(jPEGReader->GetOutputPort());
 
-  // Setup the SelectionChangedEvent callback
+  // Setup the SelectionChangedEvent callback.
   vtkNew<vtkCallbackCommand> selectionChangedCallback;
   selectionChangedCallback->SetCallback(SelectionChangedCallbackFunction);
 
-  // Setup renderer
+  // Setup renderer.
   vtkNew<vtkRenderer> renderer;
   renderer->AddActor(actor);
   renderer->ResetCamera();
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Setup render window
+  // Setup render window.
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("SelectWindowRegion");
 
-  // Setup 2D interaction style
+  // Setup 2D interaction style.
   vtkNew<vtkInteractorStyleRubberBand2D> style;
   style->AddObserver(vtkCommand::SelectionChangedEvent,
                      selectionChangedCallback);
 
-  // Setup render window interactor
+  // Setup render window interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetInteractorStyle(style);
 
-  // Render and start interaction
+  // Render and start interaction.
   renderWindowInteractor->SetRenderWindow(renderWindow);
   renderWindow->Render();
   renderWindowInteractor->Initialize();

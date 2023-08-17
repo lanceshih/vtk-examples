@@ -1,17 +1,12 @@
 #include <vtkAxis.h>
 #include <vtkChartXY.h>
-#include <vtkContextScene.h>
 #include <vtkContextView.h>
 #include <vtkFloatArray.h>
-#include <vtkIdList.h>
-#include <vtkKdTree.h>
 #include <vtkKdTreePointLocator.h>
-#include <vtkMath.h>
 #include <vtkMinimalStandardRandomSequence.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPlot.h>
-#include <vtkPoints.h>
 #include <vtkPolyData.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
@@ -19,7 +14,6 @@
 #include <vtkSphereSource.h>
 #include <vtkTable.h>
 #include <vtkTimerLog.h>
-#include <vtkXMLPolyDataReader.h>
 
 #include <time.h>
 #include <vector>
