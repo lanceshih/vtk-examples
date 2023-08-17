@@ -18,6 +18,7 @@
 #include <vtkTubeFilter.h>
 
 #include <iostream>
+#include <memory>
 #include <string>
 
 int main(int, char*[])
