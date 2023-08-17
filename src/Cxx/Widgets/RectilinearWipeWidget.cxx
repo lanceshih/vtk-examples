@@ -1,6 +1,4 @@
-#include <vtkCommand.h>
 #include <vtkImageActor.h>
-#include <vtkImageData.h>
 #include <vtkImageMapper3D.h>
 #include <vtkImageReader2.h>
 #include <vtkImageReader2Factory.h>
@@ -18,8 +16,11 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 
+#include <iostream>
+#include <string>
+
 namespace {
-// Define interaction style
+// Define interaction style.
 class WipeInteractorStyle : public vtkInteractorStyleImage
 {
 public:
@@ -94,7 +95,7 @@ int main(int argc, char* argv[])
   {
     wipeMode = atoi(argv[3]);
   }
-  // Read the images
+  // Read the images.
   vtkNew<vtkImageReader2Factory> readerFactory;
   vtkSmartPointer<vtkImageReader2> reader1;
   reader1.TakeReference(readerFactory->CreateImageReader2(argv[1]));
@@ -104,14 +105,14 @@ int main(int argc, char* argv[])
   reader2.TakeReference(readerFactory->CreateImageReader2(argv[2]));
   reader2->SetFileName(argv[2]);
 
-  // Create a wipe pipeline
+  // Create a wipe pipeline.
   vtkNew<vtkImageRectilinearWipe> wipe;
   wipe->SetInputConnection(0, reader1->GetOutputPort());
   wipe->SetInputConnection(1, reader2->GetOutputPort());
   wipe->SetPosition(256, 256);
   wipe->SetWipe(wipeMode);
 
-  // Create the RenderWindow, Renderer and both Actors
+  // Create the RenderWindow, Renderer and both Actors.
   //
   vtkNew<vtkRenderer> ren1;
   ren1->SetBackground(colors->GetColor3d("Wheat").GetData());
@@ -132,7 +133,7 @@ int main(int argc, char* argv[])
 
   // VTK widgets consist of two parts: the widget part that handles
   // event processing; and the widget representation that defines how
-  // the widget appears in the scene
+  // the widget appears in the scene,
   // (i.e., matters pertaining to geometry).
   vtkNew<vtkRectilinearWipeWidget> wipeWidget;
   wipeWidget->SetInteractor(iren);
@@ -146,12 +147,12 @@ int main(int argc, char* argv[])
   wipeWidgetRep->GetProperty()->SetLineWidth(2.0);
   wipeWidgetRep->GetProperty()->SetOpacity(0.75);
 
-  // Add the actors to the renderer, set the background and size
+  // Add the actors to the renderer, set the background and size.
   //
   ren1->AddActor(wipeActor);
   renWin->SetSize(300, 300);
 
-  // render the image
+  // Render the image.
   //
   renWin->Render();
   wipeWidget->On();

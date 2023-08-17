@@ -1,4 +1,3 @@
-#include <vtkActor.h>
 #include <vtkCallbackCommand.h>
 #include <vtkImageAccumulate.h>
 #include <vtkImageActor.h>
@@ -10,18 +9,17 @@
 #include <vtkInteractorStyleImage.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPNGWriter.h>
 #include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkPolyDataToImageStencil.h>
 #include <vtkPolygon.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSphereSource.h>
 
 #include <array>
+#include <iostream>
+#include <string>
 
 namespace {
 void CallbackFunction(vtkObject* caller, long unsigned int eventId,

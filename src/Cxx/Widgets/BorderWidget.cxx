@@ -6,9 +6,7 @@
 #include <vtkLookupTable.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkObjectFactory.h>
 #include <vtkPlatonicSolidSource.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -72,7 +70,7 @@ int main(int, char*[])
   renderer->GetActiveCamera()->Azimuth(180.0);
   renderWindow->SetWindowName("BorderWidget");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
@@ -81,17 +79,17 @@ int main(int, char*[])
   borderWidget->CreateDefaultRepresentation();
   borderWidget->SelectableOff();
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("SteelBlue").GetData());
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindowInteractor->Initialize();
   renderer->ResetCamera();
   renderWindow->Render();
   borderWidget->On();
 
-  // Begin mouse interaction
+  // Begin mouse interaction.
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
@@ -139,10 +137,10 @@ void vtkCustomBorderWidget::EndSelectAction(vtkAbstractWidget* w)
 {
   vtkBorderWidget* borderWidget = dynamic_cast<vtkBorderWidget*>(w);
 
-  // Get the actual box coordinates/planes
+  // Get the actual box coordinates/planes.
   // vtkNew<vtkPolyData> polydata;
 
-  // Get the bottom left corner
+  // Get the bottom left corner.
   auto lowerLeft =
       static_cast<vtkBorderRepresentation*>(borderWidget->GetRepresentation())
           ->GetPosition();

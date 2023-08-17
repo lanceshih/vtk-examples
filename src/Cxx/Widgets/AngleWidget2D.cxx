@@ -1,14 +1,10 @@
-#include <vtkActor.h>
 #include <vtkAngleRepresentation2D.h>
 #include <vtkAngleWidget.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkSphereSource.h>
 
 int main(int /* argc */, char* /* argv */[])
 {

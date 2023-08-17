@@ -1,12 +1,12 @@
 #include <vtkActor.h>
-#include <vtkCallbackCommand.h>
+//#include <vtkCallbackCommand.h>
 #include <vtkCamera.h>
 #include <vtkCaptionActor2D.h>
 #include <vtkCaptionRepresentation.h>
 #include <vtkCaptionWidget.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
+//#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -32,7 +32,7 @@ int main(int, char*[])
   actor->GetProperty()->SetColor(
       colors->GetColor3d("DarkOliveGreen").GetData());
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -42,7 +42,7 @@ int main(int, char*[])
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Create the widget and its representation
+  // Create the widget and its representation.
   vtkNew<vtkCaptionRepresentation> captionRepresentation;
   captionRepresentation->GetCaptionActor2D()->SetCaption("Test caption");
   captionRepresentation->GetCaptionActor2D()
@@ -57,7 +57,7 @@ int main(int, char*[])
   captionWidget->SetInteractor(renderWindowInteractor);
   captionWidget->SetRepresentation(captionRepresentation);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("Blue").GetData());
 

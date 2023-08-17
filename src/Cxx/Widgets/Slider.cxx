@@ -1,10 +1,8 @@
 #include <vtkActor.h>
+#include <vtkCamera.h>
 #include <vtkCallbackCommand.h>
-#include <vtkCommand.h>
-#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
@@ -13,16 +11,13 @@
 #include <vtkSliderRepresentation3D.h>
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
-#include <vtkWidgetEvent.h>
-#include <vtkWidgetEventTranslator.h>
 
 namespace {
 // The callback does the work.
 // The callback keeps a pointer to the sphere whose resolution is
 // controlled. After constructing the callback, the program sets the
-// SphereSource of the callback to
-// the object to be controlled.
-class vtkSliderCallback : public vtkCommand
+// SphereSource of the callback to the object to be controlled.
+class vtkSliderCallback : public vtkCallbackCommand
 {
 public:
   static vtkSliderCallback* New()
@@ -51,7 +46,7 @@ int main(int, char*[])
 {
   vtkNew<vtkNamedColors> colors;
 
-  // A sphere
+  // A sphere.
   vtkNew<vtkSphereSource> sphereSource;
   sphereSource->SetCenter(0.0, 0.0, 0.0);
   sphereSource->SetRadius(4.0);
@@ -68,21 +63,21 @@ int main(int, char*[])
   actor->GetProperty()->SetEdgeColor(colors->GetColor3d("Tomato").GetData());
   actor->GetProperty()->EdgeVisibilityOn();
 
-  // A renderer and render window
+  // A renderer and render window.
   vtkNew<vtkRenderer> renderer;
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("Slider");
 
-  // An interactor
+  // An interactor.
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  // Add the actors to the scene
+  // Add the actors to the scene.
   renderer->AddActor(actor);
   renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
-  // Render an image (lights and cameras are created automatically)
+  // Render an image (lights and cameras are created automatically).
   renderWindow->Render();
 
   vtkNew<vtkSliderRepresentation3D> sliderRep;
@@ -109,6 +104,7 @@ int main(int, char*[])
 
   sliderWidget->AddObserver(vtkCommand::InteractionEvent, callback);
 
+  renderer->GetActiveCamera()->Dolly(0.9);
   renderWindowInteractor->Initialize();
   renderWindow->Render();
 
