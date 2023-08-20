@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import json
@@ -6,7 +6,7 @@ import re
 import time
 from collections import defaultdict
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePath
 from urllib.request import urlopen
 
 
@@ -37,7 +37,8 @@ Note:
     parser.add_argument('-f', '--format_json', help='Format the JSON file.', action='store_true')
 
     args = parser.parse_args()
-    return args.vtk_examples, args.coverage_dest, args.columns, args.excluded_columns, args.add_vtk_html, args.format_json
+    return (args.vtk_examples, args.coverage_dest, args.columns, args.excluded_columns,
+            args.add_vtk_html, args.format_json)
 
 
 @dataclass(frozen=True)
@@ -47,6 +48,45 @@ class Links:
     """
     vtk_docs: str = 'https://www.vtk.org/doc/nightly/html/'
     vtk_examples: str = 'https://examples.vtk.org/site/'
+
+
+@dataclass(frozen=True)
+class Patterns:
+    """
+    Regular Expression patterns for matching files and classes.
+    """
+
+    # Suffixes
+    suffix_patterns = dict()
+    suffix_patterns['CSharp'] = re.compile(r'(?i)^.*(\.cs)$')
+    suffix_patterns['Cxx_Implementation'] = re.compile(r'(?i)^.*(\.cpp|\.cxx|\.c|\.cc)$')
+    suffix_patterns['Cxx_Interface'] = re.compile(r'(?i)^.*(\.h|\.hpp|\.hxx|\.hh|\.txx)$')
+    suffix_patterns['Cxx'] = re.compile(r'(?i)^.*(\.h|\.hpp|\.hxx|\.hh|\.txx|\.cpp|\.cxx|\.c|\.cc)$')
+    suffix_patterns['Java'] = re.compile(r'(?i)^.*(\.java)$')
+    suffix_patterns['Python'] = re.compile(r'(?i)^.*(\.py)$')
+
+    cxx_class_includes = re.compile(
+        r'^[ \t]*#include +<(vtk[A-Za-z0-9]+).h>$'  # match: #include <vtkClass.h>
+    )
+
+    class_patterns = dict()
+    class_patterns['CSharp'] = re.compile(r'(vtk[A-Za-z0-9]+)')  # match: vtkClass
+    class_patterns['Cxx'] = re.compile(r'(vtk[A-Za-z0-9]+)')  # match: vtkClass
+    class_patterns['Java'] = re.compile(r'(vtk[A-Za-z0-9]+)')  # match: vtkClass
+    class_patterns['Python'] = re.compile(r'(vtk[A-Za-z0-9]+)')  # match: vtkClass
+    class_patterns['VTK Doc'] = re.compile(r'^(vtk[A-Za-z0-9]+)$')  # match ^vtkClass$
+
+    # Skip some lines in the files.
+    skip_patterns = re.compile(
+        r'(^ *$)|'  # Empty lines.
+        r'(^ *[(|)]+$)|'  # Single opening or closing bracket.
+        r'(^ *[{|}]+$)'  # Single opening or closing curly brace.
+    )
+
+    # We want the first match, hence the use of ?.
+    # Adding a ? on a quantifier (?, * or +) makes it non-greedy.
+    # Selecting only objects marked as classes.
+    vtk_html_class_pattern = re.compile(r'<span class=\"icon\">C.*?href=\"(.*?)\" target=\"_self\">(.*?)</a>')
 
 
 class ElapsedTime:
@@ -127,43 +167,32 @@ class VTKClassesInExamples:
 
     def get_vtk_classes_from_html(self):
         """
-        Parse the html file, getting a list of the classes.
+        Parse the html file, getting a dict keyed on the vtk class name
+         and the value us the html file name defining the class.
         """
-        vtk_only_pattern = re.compile(r'^(vtk[A-Za-z0-9]+)$')
-        # We want the first match, hence the use of ?.
-        # Adding a ? on a quantifier (?, * or +) makes it non-greedy.
-        # Selecting only objects marked as classes.
-        vtk_class_pattern = re.compile(r'<span class=\"icon\">C.*?href=\"(.*?)\" target=\"_self\">(.*?)</a>')
-        links = Links()
-        vtk_docs_link = f'{links.vtk_docs}annotated.html'
-
+        vtk_docs_link = f'{Links.vtk_docs}annotated.html'
+        print('Extracting the VTK Class data from the VTK Documentation.')
         try:
             f = urlopen(vtk_docs_link)
             for line in f:
-                s = re.findall(vtk_class_pattern, line.decode('utf-8'))
+                s = re.findall(Patterns.vtk_html_class_pattern, line.decode('utf-8'))
                 if s:
                     for item in s:
                         # We only want vtk classes
                         if item[0].startswith('classvtk'):
-                            m = vtk_only_pattern.match(item[1])
+                            m = Patterns.class_patterns['VTK Doc'].match(item[1])
                             if m:
                                 self.vtk_classes[item[1]] = item[0]
                             continue
             f.close()
         except IOError:
             print(f'Unable to open the URL: {vtk_docs_link}')
+        print(f'   {len(self.vtk_classes)} VTK Classes found')
 
     def get_example_file_paths(self):
         """
         For each example, get the example file paths.
         """
-
-        # Set up our patterns.
-        suffix_patterns = dict()
-        suffix_patterns['CSharp'] = re.compile(r'\.cs$')
-        suffix_patterns['Cxx'] = re.compile(r'\.(hxx|HXX|hpp|HPP|[hH]\+\+|[hH]|cpp|CPP|cxx|CXX|[cC]\+\+|txx|TXX)$')
-        suffix_patterns['Java'] = re.compile(r'\.java$')
-        suffix_patterns['Python'] = re.compile(r'\.py$')
 
         # Set up our folders to exclude.
         excluded_dirs = dict()
@@ -175,7 +204,7 @@ class VTKClassesInExamples:
             excluded_dirs[d] = sorted(['Deprecated', 'Snippets'] + excluded_dirs[d])
 
         for eg in self.example_types:
-            # Get the paths to the examples in a particular sub directory e.g Cxx.
+            # Get the paths to the examples in a particular subdirectory e.g. Cxx.
             file_paths = defaultdict(list)
             directory = self.base_path / eg
             # Does the directory exist?
@@ -189,60 +218,356 @@ class VTKClassesInExamples:
             for subdir in subdirs:
                 path_list = [f for f in subdir.iterdir() if f.is_file()]
                 for path in path_list:
-                    m = suffix_patterns[eg].match(path.suffix)
+                    m = Patterns.suffix_patterns[eg].match(path.suffix)
                     if m:
                         key = '/'.join(path.parts[-3:-1])
                         file_paths[key].append(path)
+
+            # The key is the language/folder and the value is a list of files in path.
             self.example_file_paths[eg] = file_paths
+
+    def get_csharp_vtk_classes_from_examples(self, eg='CSharp'):
+        if eg != 'CSharp':
+            print(f'Expected CSharp, got {eg}')
+            return
+        print(f'   Processing the {eg} examples.')
+        implementation_classes = defaultdict(lambda: defaultdict(set))
+        for k, v in self.example_file_paths[eg].items():
+            for fn in v:
+                multiline_comment = False
+                content = fn.read_text().split('\n')
+                for line in content:
+                    # Skip some lines.
+                    if Patterns.skip_patterns.match(line):
+                        continue
+
+                    # Deal with comments.
+                    #  First single line comments: // ...
+                    pos = line.find('//')
+                    if pos != -1:
+                        line = line[0:pos]
+                    # Now multi-line comments: /* ... */
+                    pos = line.find('/*')
+                    if not multiline_comment:
+                        if pos != -1:
+                            end_pos = line.find('*/')
+                            # Assume just one comment in the line
+                            if end_pos > pos:
+                                line = line[0:pos] + line[end_pos + 2:]
+                            else:
+                                multiline_comment = True
+                                continue
+                    else:
+                        end_pos = line.find('*/')
+                        if end_pos >= 0:
+                            line = line[end_pos + 2:]
+                            multiline_comment = False
+                            if not line:
+                                continue
+                        else:
+                            continue
+
+                    # The line could be empty.
+                    m = Patterns.skip_patterns.match(line)
+                    if m:
+                        continue
+
+                    for m in Patterns.class_patterns[eg].finditer(line):
+                        if m:
+                            implementation_classes[k][fn].add(m.group())
+
+        if not implementation_classes:
+            print(f'Warning: No {eg} files found.')
+
+        res = defaultdict(lambda: defaultdict(set))
+        for k, v in implementation_classes.items():
+            for kk, vv in v.items():
+                for c in vv:
+                    if c in self.vtk_classes:
+                        res[c][k].add(Path(kk).stem)
+
+        print(f'      {len(res)} VTK Classes used.')
+        #  [vtkClass][language/folder][a set of stem names in that language/folder]
+        self.classes_used[eg] = res
+
+    def get_cxx_vtk_classes_from_examples(self, eg='Cxx'):
+        if eg != 'Cxx':
+            print(f'Expected Cxx, got {eg}')
+            return
+        print(f'   Processing the {eg} examples.')
+        interface_classes = defaultdict(lambda: defaultdict(set))
+        implementation_classes = defaultdict(lambda: defaultdict(set))
+        for k, v in self.example_file_paths[eg].items():
+            for fn in v:
+                multiline_comment = False
+
+                content = fn.read_text().split('\n')
+                for line in content:
+                    # Skip some lines.
+                    if Patterns.skip_patterns.match(line):
+                        continue
+
+                    # Deal with comments.
+                    #  First single line comments: // ...
+                    pos = line.find('//')
+                    if pos != -1:
+                        line = line[0:pos]
+                    # Now multi-line comments: /* ... */
+                    pos = line.find('/*')
+                    if not multiline_comment:
+                        if pos != -1:
+                            end_pos = line.find('*/')
+                            # Assume just one comment in the line
+                            if end_pos > pos:
+                                line = line[0:pos] + line[end_pos + 2:]
+                            else:
+                                multiline_comment = True
+                                continue
+                    else:
+                        end_pos = line.find('*/')
+                        if end_pos >= 0:
+                            line = line[end_pos + 2:]
+                            multiline_comment = False
+                            if not line:
+                                continue
+                        else:
+                            continue
+
+                    m = Patterns.cxx_class_includes.match(line)
+                    if m:
+                        if m.lastindex:
+                            c = m.group(m.lastindex)
+                            interface_classes[k][fn].add(c)
+                            continue
+
+                    for m in Patterns.class_patterns[eg].finditer(line):
+                        if m:
+                            implementation_classes[k][fn].add(m.group())
+
+        if not interface_classes:
+            print(f'Warning: No {eg} interface files found.')
+        if not implementation_classes:
+            print(f'Warning: No {eg} implementation files found.')
+
+        # Merge interface_classes and implementation_classes into all_vtk_classes
+        all_vtk_classes = defaultdict(lambda: defaultdict(set))
+        for k, fn_classes in interface_classes.items():
+            if k in implementation_classes:
+                for fn, c in fn_classes.items():
+                    all_vtk_classes[k][fn] = interface_classes[k][fn] | implementation_classes[k][fn]
+            else:
+                all_vtk_classes[k] = interface_classes[k]
+        for k, fn_classes in implementation_classes.items():
+            if k in interface_classes:
+                continue
+            else:
+                all_vtk_classes[k] = implementation_classes[k]
+
+        # Search for interface file names.
+        # We are assuming lowercase suffixes.
+        h_cxx = defaultdict(lambda: defaultdict(set))
+        suffixes = ['.cpp', '.cxx', '.c', '.cc']
+        for k, fn_classes in all_vtk_classes.items():
+            for fn in fn_classes.keys():
+                m = Patterns.suffix_patterns['Cxx_Interface'].match(fn.suffix)
+                if m:
+                    for sfx in suffixes:
+                        h_cxx[k][fn].add(fn.with_suffix(sfx))
+        pass
+        for k, fn_classes in h_cxx.items():
+            for fn, fn_implementations in fn_classes.items():
+                x = all_vtk_classes[k].get(fn, None)
+                if x:
+                    for fn1 in fn_implementations:
+                        y = all_vtk_classes[k].get(fn1, None)
+                        if y:
+                            pass
+                            # Merge and add the classes into the implementation file.
+                            all_vtk_classes[k][fn1] = y | x
+        # Now remove the interface files.
+        for k, fn_classes in h_cxx.items():
+            for fn in fn_classes.keys():
+                # There is a possibility that the key is not present.
+                all_vtk_classes[k].pop(fn, None)
+
+        res = defaultdict(lambda: defaultdict(set))
+        for k, v in all_vtk_classes.items():
+            for kk, vv in v.items():
+                for c in vv:
+                    if c in self.vtk_classes:
+                        res[c][k].add(Path(kk).stem)
+
+        print(f'      {len(res)} VTK Classes used.')
+        #  [vtkClass][language/folder][a set of stem names in that language/folder]
+        self.classes_used[eg] = res
+
+    def get_java_vtk_classes_from_examples(self, eg='Java'):
+        if eg != 'Java':
+            print(f'Expected Java, got {eg}')
+            return
+        print(f'   Processing the {eg} examples.')
+        implementation_classes = defaultdict(lambda: defaultdict(set))
+        for k, v in self.example_file_paths[eg].items():
+            for fn in v:
+                multiline_comment = False
+
+                content = fn.read_text().split('\n')
+                for line in content:
+                    # Skip some lines.
+                    if Patterns.skip_patterns.match(line):
+                        continue
+
+                    # Deal with comments.
+                    #  First single line comments: // ...
+                    pos = line.find('//')
+                    if pos != -1:
+                        line = line[0:pos]
+                    # Now multi-line comments: /* ... */
+                    pos = line.find('/*')
+                    if not multiline_comment:
+                        if pos != -1:
+                            end_pos = line.find('*/')
+                            # Assume just one comment in the line
+                            if end_pos > pos:
+                                line = line[0:pos] + line[end_pos + 2:]
+                            else:
+                                multiline_comment = True
+                                continue
+                    else:
+                        end_pos = line.find('*/')
+                        if end_pos >= 0:
+                            line = line[end_pos + 2:]
+                            multiline_comment = False
+                            if not line:
+                                continue
+                        else:
+                            continue
+
+                    # The line could be empty.
+                    m = Patterns.skip_patterns.match(line)
+                    if m:
+                        continue
+
+                    for m in Patterns.class_patterns[eg].finditer(line):
+                        if m:
+                            implementation_classes[k][fn].add(m.group())
+
+        if not implementation_classes:
+            print(f'Warning: No {eg} files found.')
+
+        res = defaultdict(lambda: defaultdict(set))
+        for k, v in implementation_classes.items():
+            for kk, vv in v.items():
+                for c in vv:
+                    if c in self.vtk_classes:
+                        res[c][k].add(Path(kk).stem)
+
+        print(f'      {len(res)} VTK Classes used.')
+        #  [vtkClass][language/folder][a set of stem names in that language/folder]
+        self.classes_used[eg] = res
+
+    def get_python_vtk_classes_from_examples(self, eg='Python'):
+        if eg != 'Python':
+            print(f'Expected Python, got {eg}')
+            return
+        print(f'   Processing the {eg} examples.')
+        implementation_classes = defaultdict(lambda: defaultdict(set))
+        multi_line = ['"""', "'''"]
+        for k, v in self.example_file_paths[eg].items():
+            for fn in v:
+                ml = None
+                multiline_comment = False
+                content = fn.read_text().split('\n')
+                for line in content:
+                    # Skip some lines.
+                    m = Patterns.skip_patterns.match(line)
+                    if m:
+                        continue
+                    # Deal with comments.
+                    #  First single line comments: # ...
+                    pos = line.find('#')
+                    if pos != -1:
+                        line = line[0:pos]
+                    # Now multi-line comments: """ ... """ or ''' ... '''
+                    if '"""' in line or "'''" in line:
+                        for m in multi_line:
+                            pos = line.find(m)
+                            pos_rev = line.rfind(m)
+                            if pos != -1 and pos_rev >= pos + 3:
+                                line = line[0:pos] + line[pos_rev + 3:]
+                                # Assume just one comment in the line
+                                pos = -1
+                                break
+                            if pos != -1:
+                                ml = m
+                                break
+                        if not multiline_comment:
+                            if pos != -1:
+                                end_pos = line.find(ml)
+                                # Assume just one comment in the line
+                                if end_pos > pos:
+                                    line = line[0:pos] + line[end_pos + 3:]
+                                else:
+                                    multiline_comment = True
+                                    continue
+                        else:
+                            end_pos = line.find(ml)
+                            if end_pos >= 0:
+                                line = line[end_pos + 3:]
+                                multiline_comment = False
+                                ml = None
+                                if not line:
+                                    continue
+                            else:
+                                continue
+
+                    # The line could be empty.
+                    m = Patterns.skip_patterns.match(line)
+                    if m:
+                        continue
+
+                    for m in Patterns.class_patterns[eg].finditer(line):
+                        if m:
+                            implementation_classes[k][fn].add(m.group())
+
+        if not implementation_classes:
+            print(f'Warning: No {eg} files found.')
+
+        res = defaultdict(lambda: defaultdict(set))
+        for k, v in implementation_classes.items():
+            for kk, vv in v.items():
+                for c in vv:
+                    if c in self.vtk_classes:
+                        res[c][k].add(Path(kk).stem)
+
+        print(f'      {len(res)} VTK Classes used.')
+        #  [vtkClass][language/folder][a set of stem names in that language/folder]
+        self.classes_used[eg] = res
 
     def get_vtk_classes_from_examples(self):
         """
         Find the vtk classes used in the examples.
         """
-
-        # Set up our patterns.
-        class_patterns = dict()
-        class_patterns['CSharp'] = re.compile(r'^[A-Za-z0-9=. <>()_\t]+(vtk[A-Za-z0-9]+)')
-        class_patterns['Cxx'] = re.compile(
-            r'^[ \t]*#include[ ]+<(vtk[A-Za-z0-9]+)+.h>$|'  # match: #include <vtkClass.h>
-            r'.*[< ]+(vtk[A-Za-z0-9]+)[> ]|'  # match: <vtkClass>
-            r'.*[= ]+(vtk[A-Za-z0-9]+)[ ]*::New'  # match: vtkClass::New()
-        )
-        class_patterns['Java'] = re.compile(r'^[A-Za-z0-9=. _\t]+new[ ]+(vtk[A-Za-z0-9]+)[ ]*\(')
-        class_patterns['Python'] = re.compile(r'^[ ]*(vtk[A-Za-z0-9]+)|'  # vtkSomeClass at the start of a line
-                                              r'(vtk[A-Za-z0-9]+)[,\n]|'  # match vtkSomeClass at the end of a line
-                                              r'^[A-Za-z0-9=. ()_\t]+(vtk[A-Za-z0-9]+)[ ]*\('  # x = vtkSomeClass()
-                                              )
-        # Skip some lines in the files.
-        skip_patterns = re.compile(
-            r'(^ *$)|'  # Empty lines.
-            r'(^ *[(|\)]+$)|'  # Single opening or closing bracket.
-            r'(^ *[{|}]+$)'  # Single opening or closing curly brace.
-        )
         print('Extracting the classes used in the examples.')
+        # self.example_types = ['CSharp', 'Cxx', 'Java', 'Python']
         for eg in self.example_types:
-            print('  Processing the', eg, 'examples.')
-            res = defaultdict(lambda: defaultdict(set))
-            for k, v in self.example_file_paths[eg].items():
-                for fn in v:
-                    # print(fn)
-                    # Open and read the file building a set of classes.
-                    content = fn.read_text().split('\n')
-                    for line in content:
-                        if skip_patterns.match(line):
-                            continue
-                        m = class_patterns[eg].match(line)
-                        if m:
-                            c = m.group(m.lastindex)
-                            if c in self.vtk_classes:
-                                res[c][k].add(Path(fn).stem)
-            self.classes_used[eg] = res
+            if eg == 'CSharp':
+                self.get_csharp_vtk_classes_from_examples(eg)
+            elif eg == 'Cxx':
+                self.get_cxx_vtk_classes_from_examples(eg)
+            elif eg == 'Java':
+                self.get_java_vtk_classes_from_examples(eg)
+            elif eg == 'Python':
+                self.get_python_vtk_classes_from_examples(eg)
+            else:
+                print(f'Unknown example type {eg}.')
 
     def get_crossreferences(self):
         """
         Cross-reference the VTK classes to the corresponding
          VTK Example(s) by language(s).
         """
+        print('Cross-referencing VTK Classes and VTK Examples by Language')
         links = Links()
         vtk_examples_link = links.vtk_examples
         vtk_docs_link = links.vtk_docs
@@ -266,6 +591,7 @@ class VTKClassesInExamples:
         """
         Make a table of classes used for each set of examples.
         """
+        print('Making a table of used classes by Language.')
         links = Links()
         vtk_docs_link = links.vtk_docs
 
@@ -337,7 +663,7 @@ class VTKClassesInExamples:
                     for path, fn in paths.items():
                         for f in fn:
                             # NOTE: Need leading '/'
-                            tmp[f] = eg_fmt.format(f, '/' + path + '/' + f)
+                            tmp[f] = eg_fmt.format(f, '/' + PurePath(path).as_posix() + '/' + f)
                     tmp_keys = list(sorted(list(tmp.keys()), key=lambda x: (x.lower(), x.swapcase())))
                     for k in tmp_keys:
                         f_list += tmp[k] + ' '
@@ -353,6 +679,7 @@ class VTKClassesInExamples:
         """
         Make a table of classes that are not used for each set of examples.
         """
+        print('Making a table of unused classes by Language.')
         links = Links()
         vtk_docs_link = links.vtk_docs
 
@@ -416,6 +743,7 @@ class VTKClassesInExamples:
         self.get_crossreferences()
         self.get_used_classes()
         self.get_unused_classes()
+        pass
 
     def generate_files(self):
         if not self.output_path.is_dir():
@@ -426,12 +754,14 @@ class VTKClassesInExamples:
             fn = self.output_path / 'vtk_classes.txt'
             fn.write_text(keys)
         if self.vtk_examples_xref:
+            print('Writing vtk_vtk-examples_xref.json')
             fn = self.output_path / 'vtk_vtk-examples_xref.json'
             with open(fn, 'w') as outfile:
                 if self.format_json:
                     json.dump(self.vtk_examples_xref, outfile, indent=2)
                 else:
                     json.dump(self.vtk_examples_xref, outfile)
+        print('Writing the VTKClassesUsed.md and VTKClassesNotUsed.md by language.')
         for eg in self.example_types:
             fn = self.output_path / (eg + 'VTKClassesUsed.md')
             fn.write_text('\n'.join(self.classes_used_table[eg]))
@@ -448,7 +778,7 @@ def main():
         return
     if not coverage_path.is_dir():
         print(f'The path: {coverage_path} does not exist.')
-        print(f'Creating it.')
+        print(f'It will be created.')
     vtk_classes = VTKClassesInExamples(source_path, coverage_dest, columns, excluded_columns, add_vtk_html, format_json)
     vtk_classes.build_tables()
     vtk_classes.generate_files()

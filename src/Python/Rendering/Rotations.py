@@ -24,7 +24,7 @@ from vtkmodules.vtkRenderingCore import (
 
 
 def main():
-    '''
+    """
         To match the illustrations in VTKTextbook.pdf, use BkgColor as the background and
           Wheat as the cow colour.
         Also comment out the lines:
@@ -32,16 +32,16 @@ def main():
           modelActor->GetProperty()->SetSpecularPower(30);
         and use cow.g as the input data.
 
-    '''
+    """
     file_name, figure, actor_color = get_program_parameters()
     rotate(file_name, figure, actor_color)
 
 
 def rotate(file_name, figure, actor_color):
-    ''''
+    """
     This is where we do the rotations.
 
-    '''
+    """
     # Create renderer stuff
     #
     colors = vtkNamedColors()
