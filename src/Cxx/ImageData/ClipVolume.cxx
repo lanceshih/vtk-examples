@@ -3,7 +3,6 @@
 #include <vtkActor.h>
 #include <vtkCamera.h>
 #include <vtkClipVolume.h>
-#include <vtkColor.h>
 #include <vtkDataSetMapper.h>
 #include <vtkDoubleArray.h>
 #include <vtkExecutive.h>
