@@ -1,37 +1,33 @@
 #include <vtkActor.h>
 #include <vtkGraphicsFactory.h>
+#include <vtkNew.h>
 #include <vtkPNGWriter.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkWindowToImageFilter.h>
 
 int main(int, char*[])
 {
   // Setup offscreen rendering
-  vtkSmartPointer<vtkGraphicsFactory> graphics_factory =
-      vtkSmartPointer<vtkGraphicsFactory>::New();
+  vtkNew<vtkGraphicsFactory> graphics_factory;
   graphics_factory->SetOffScreenOnlyMode(1);
   graphics_factory->SetUseMesaClasses(1);
 
   // Create a sphere
-  vtkSmartPointer<vtkSphereSource> sphereSource =
-      vtkSmartPointer<vtkSphereSource>::New();
+  vtkNew<vtkSphereSource> sphereSource;
 
   // Create a mapper and actor
-  vtkSmartPointer<vtkPolyDataMapper> mapper =
-      vtkSmartPointer<vtkPolyDataMapper>::New();
+  vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
-  vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+  vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
 
   // A renderer and render window
-  vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-  vtkSmartPointer<vtkRenderWindow> renderWindow =
-      vtkSmartPointer<vtkRenderWindow>::New();
+  vtkNew<vtkRenderer> renderer;
+  vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetOffScreenRendering(1);
   renderWindow->AddRenderer(renderer);
 
@@ -41,12 +37,11 @@ int main(int, char*[])
 
   renderWindow->Render();
 
-  vtkSmartPointer<vtkWindowToImageFilter> windowToImageFilter =
-      vtkSmartPointer<vtkWindowToImageFilter>::New();
+  vtkNew<vtkWindowToImageFilter> windowToImageFilter;
   windowToImageFilter->SetInput(renderWindow);
   windowToImageFilter->Update();
 
-  vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
+  vtkNew<vtkPNGWriter> writer;
   writer->SetFileName("screenshot.png");
   writer->SetInputConnection(windowToImageFilter->GetOutputPort());
   writer->Write();
