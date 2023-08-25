@@ -1,19 +1,5 @@
-#include <vtkVersion.h>
-
-#include <iostream>
-#include <string>
-
-#if VTK_MAJOR_VERSION >= 6
-int main(int, char* argv[])
-{
-  std::cout << argv[0] << " requires VTK 5.10 or earlier. This VTK version is "
-            << vtkVersion::GetVTKVersion() << std::endl;
-  return EXIT_SUCCESS;
-}
-#else
 #include <vtkActor.h>
 #include <vtkGraphicsFactory.h>
-#include <vtkImagingFactory.h>
 #include <vtkPNGWriter.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkRenderWindow.h>
@@ -29,10 +15,6 @@ int main(int, char*[])
       vtkSmartPointer<vtkGraphicsFactory>::New();
   graphics_factory->SetOffScreenOnlyMode(1);
   graphics_factory->SetUseMesaClasses(1);
-
-  vtkSmartPointer<vtkImagingFactory> imaging_factory =
-      vtkSmartPointer<vtkImagingFactory>::New();
-  imaging_factory->SetUseMesaClasses(1);
 
   // Create a sphere
   vtkSmartPointer<vtkSphereSource> sphereSource =
@@ -71,4 +53,3 @@ int main(int, char*[])
 
   return EXIT_SUCCESS;
 }
-#endif
