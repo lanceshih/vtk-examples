@@ -1,8 +1,10 @@
 #include <vtkActor.h>
 #include <vtkGraphicsFactory.h>
+#include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkPNGWriter.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
 #include <vtkSphereSource.h>
@@ -10,6 +12,8 @@
 
 int main(int, char*[])
 {
+  vtkNew<vtkNamedColors> colors;
+
   // Setup offscreen rendering
   vtkNew<vtkGraphicsFactory> graphics_factory;
   graphics_factory->SetOffScreenOnlyMode(1);
@@ -24,6 +28,7 @@ int main(int, char*[])
 
   vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
+  actor->GetProperty()->SetColor(colors->GetColor3d("White").GetData());
 
   // A renderer and render window
   vtkNew<vtkRenderer> renderer;
@@ -33,7 +38,7 @@ int main(int, char*[])
 
   // Add the actors to the scene
   renderer->AddActor(actor);
-  renderer->SetBackground(1, 1, 1); // Background color white
+  renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
   renderWindow->Render();
 
