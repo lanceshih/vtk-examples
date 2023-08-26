@@ -1,74 +1,55 @@
-#include <vtkVersion.h>
-
-#include <iostream>
-#include <string>
-
-#if VTK_MAJOR_VERSION >= 6
-int main(int, char* argv[])
-{
-  std::cout << argv[0] << " requires VTK 5.10 or earlier. This VTK version is "
-            << vtkVersion::GetVTKVersion() << std::endl;
-  return EXIT_SUCCESS;
-}
-#else
 #include <vtkActor.h>
 #include <vtkGraphicsFactory.h>
-#include <vtkImagingFactory.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
 #include <vtkPNGWriter.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
-#include <vtkSmartPointer.h>
 #include <vtkSphereSource.h>
 #include <vtkWindowToImageFilter.h>
 
 int main(int, char*[])
 {
+  vtkNew<vtkNamedColors> colors;
+
   // Setup offscreen rendering
-  vtkSmartPointer<vtkGraphicsFactory> graphics_factory =
-      vtkSmartPointer<vtkGraphicsFactory>::New();
+  vtkNew<vtkGraphicsFactory> graphics_factory;
   graphics_factory->SetOffScreenOnlyMode(1);
   graphics_factory->SetUseMesaClasses(1);
 
-  vtkSmartPointer<vtkImagingFactory> imaging_factory =
-      vtkSmartPointer<vtkImagingFactory>::New();
-  imaging_factory->SetUseMesaClasses(1);
-
   // Create a sphere
-  vtkSmartPointer<vtkSphereSource> sphereSource =
-      vtkSmartPointer<vtkSphereSource>::New();
+  vtkNew<vtkSphereSource> sphereSource;
 
   // Create a mapper and actor
-  vtkSmartPointer<vtkPolyDataMapper> mapper =
-      vtkSmartPointer<vtkPolyDataMapper>::New();
+  vtkNew<vtkPolyDataMapper> mapper;
   mapper->SetInputConnection(sphereSource->GetOutputPort());
 
-  vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+  vtkNew<vtkActor> actor;
   actor->SetMapper(mapper);
+  actor->GetProperty()->SetColor(colors->GetColor3d("White").GetData());
 
   // A renderer and render window
-  vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-  vtkSmartPointer<vtkRenderWindow> renderWindow =
-      vtkSmartPointer<vtkRenderWindow>::New();
+  vtkNew<vtkRenderer> renderer;
+  vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->SetOffScreenRendering(1);
   renderWindow->AddRenderer(renderer);
 
   // Add the actors to the scene
   renderer->AddActor(actor);
-  renderer->SetBackground(1, 1, 1); // Background color white
+  renderer->SetBackground(colors->GetColor3d("SlateGray").GetData());
 
   renderWindow->Render();
 
-  vtkSmartPointer<vtkWindowToImageFilter> windowToImageFilter =
-      vtkSmartPointer<vtkWindowToImageFilter>::New();
+  vtkNew<vtkWindowToImageFilter> windowToImageFilter;
   windowToImageFilter->SetInput(renderWindow);
   windowToImageFilter->Update();
 
-  vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
+  vtkNew<vtkPNGWriter> writer;
   writer->SetFileName("screenshot.png");
   writer->SetInputConnection(windowToImageFilter->GetOutputPort());
   writer->Write();
 
   return EXIT_SUCCESS;
 }
-#endif
