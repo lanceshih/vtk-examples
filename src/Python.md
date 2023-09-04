@@ -365,6 +365,9 @@ This section includes vtkUnstructuredGrid.
 | Example Name | Description | Image |
 | -------------- | ------------- | ------- |
 [CheckVTKVersion](/Python/Utilities/CheckVTKVersion) | Check the VTK version and provide alternatives for different VTK versions.
+[ColorMapToLUT_JSON](/Python/Utilities/ColorMapToLUT_JSON) | Take an JSON description of a colormap and convert it to a VTK colormap.
+[ColorMapToLUT_XML](/Python/Utilities/ColorMapToLUT_XML) | Take an XML description of a colormap and convert it to a VTK colormap.
+[ColorMapToLUT](/Python/Utilities/ColorMapToLUT) | Use vtkDiscretizableColorTransferFunction to generate a VTK colormap.
 [ConstrainedDelaunay2D](/Python/Filtering/ConstrainedDelaunay2D) | Perform a 2D Delaunay triangulation on a point set respecting a specified boundary.
 [Delaunay2D](/Python/Filtering/Delaunay2D) |
 [LUTUtilities](/Python/Utilities/LUTUtilities) | A utility class for vtkLookupTable allowing you to output the table contents or to compare tables.

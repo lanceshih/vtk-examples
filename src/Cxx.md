@@ -635,6 +635,7 @@ This section includes vtkUnstructuredGrid.
 [Casting](/Cxx/PolyData/Casting) | Casting VTK objects.
 [CheckVTKVersion](/Cxx/Utilities/CheckVTKVersion) | Check VTK Version and provide alternatives for different VTK versions
 [ColorLookupTable](/Cxx/Utilities/ColorLookupTable) | Color Lookup Table.
+[ColorMapToLUT](/Cxx/Utilities/ColorMapToLUT) | Use vtkDiscretizableColorTransferFunction to generate a VTK colormap.
 [ColorTransferFunction](/Cxx/Utilities/ColorTransferFunction) | Color Transfer Function.
 [CommandSubclass](/Cxx/Utilities/CommandSubclass) | Instead of using a callback function, it is more powerful to subclass vtkCommand.
 [ConstrainedDelaunay2D](/Cxx/Filtering/ConstrainedDelaunay2D) | Perform a 2D Delaunay triangulation on a point set respecting a specified boundary.
