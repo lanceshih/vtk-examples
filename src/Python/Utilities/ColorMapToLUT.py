@@ -84,7 +84,7 @@ def get_ctf():
     ctf.AddRGBPoint(1, 0.56, 0.055999999999999994, 0.055999999999999994)
 
     ctf.SetNumberOfValues(7)
-    ctf.DiscretizeOn()
+    ctf.DiscretizeOff()
 
     return ctf
 
