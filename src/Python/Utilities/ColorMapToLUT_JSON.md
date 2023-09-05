@@ -2,7 +2,30 @@
 
 Generate a VTK colormap from an ParaView JSON description of a colormap.
 
-A cone is rendered to demonstrate the resultant colormap. C++ and Python functions can also be generated which implement the colormap. These can be copied into [ColorMapToLUT.cxx]() or [ColorMapToLUT.py]() or into your own code.
+A cone is rendered to demonstrate the resultant colormap.
+
+The option `-gPython` generates this Python function:
+
+``` Python
+def get_ctf():
+    ...
+    return ctf
+```
+
+The option `-gC++` Generates this C++ function: 
+
+``` C++
+?vtkNew?<?vtkDiscretizableColorTransferFunction?> getCTF() 
+{
+  ...
+  return ctf;
+}
+```
+
+So that you can copy/paste these directly into your code. Or they can replace the existing function in:
+
+ - [ColorMapToLUT.py](../ColorMapToLUT)
+ - [ColorMapToLUT.cxx](../../../Cxx/Utilities/ColorMapToLUT)
 
 This program was inspired by this discussion: [Replacement default color map and background palette](https://discourse.paraview.org/t/replacement-default-color-map-and-background-palette/12712), the **Fast** colormap from this discussion is used as test data here.
 

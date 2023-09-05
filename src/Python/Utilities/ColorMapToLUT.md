@@ -2,10 +2,18 @@
 
 Demonstrate a cone using the vtkDiscretizableColorTransferFunction to generate the colormap.
 
-These two Python programs can be used to generate the function `def get_ctf(): ...` or `vtkNew<vtkDiscretizableColorTransferFunction> getCTF() ...` for either an XML description of a colormap or a JSON one.
+The Python programs:
 
 - [ColorMapToLUT_XML](../ColorMapToLUT_XML/)
 - [ColorMapToLUT_JSON](../ColorMapToLUT_JSON/)
+
+ can be used to generate the following function from either an XML description of a colormap or a JSON one:
+
+``` Python
+def get_ctf():
+    ...
+    return ctf
+```
 
 Feel free to use either of these programs to generate different colormaps until you find one you like.
 
