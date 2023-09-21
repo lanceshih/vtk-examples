@@ -449,6 +449,7 @@ This section includes vtkUnstructuredGrid.
 [Cone4](/Python/Rendering/Cone4) | Modifying properties and transformation matrix based on the VTK example Cone4.py.
 [DiffuseSpheres](/Python/Rendering/DiffuseSpheres) | Demonstrates the effect of diffuse lighting on spheres.
 [FlatVersusGouraud](/Python/Rendering/FlatVersusGouraud) | Flat and Gouraud shading. Different shading methods can dramatically improve the look of an object represented with polygons. On the top, flat shading uses a constant surface normal across each polygon. On the bottom, Gouraud shading interpolates normals from polygon vertices to give a smoother look.
+[GradientBackground](/Python/Rendering/GradientBackground) | Demonstrates the background shading options.
 [Mace](/Python/Rendering/Mace) | An example of multiple inputs and outputs.
 [Model](/Python/Rendering/Model) | Illustrative diagram of graphics objects.
 [MotionBlur](/Python/Rendering/MotionBlur) | Example of motion blur.
